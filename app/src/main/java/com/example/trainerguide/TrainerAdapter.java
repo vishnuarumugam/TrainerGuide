@@ -27,8 +27,13 @@ public class TrainerAdapter extends  RecyclerView.Adapter<TrainerAdapter.ViewHol
         System.out.println("items Trainer");
 
         holder.name.setText(trainers.get(position).getName());
-        holder.experiance.setText(trainers.get(position).getExperience().toString());
-        holder.fees.setText(trainers.get(position).getFees().toString());
+
+        if(trainers.get(position).getExperience() != null){
+        holder.experiance.setText(trainers.get(position).getExperience().toString());}
+
+        if(trainers.get(position).getFees() != null){
+        holder.fees.setText(trainers.get(position).getFees().toString());}
+
         Picasso.get().load(trainers.get(position).getImage())
                 .fit()
                 .placeholder(R.drawable.ic_share)
