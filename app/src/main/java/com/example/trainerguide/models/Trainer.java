@@ -7,8 +7,8 @@ import java.util.List;
 public class Trainer extends User {
     private List<UserMetaData> usersList;
 
-    public Trainer(String userId, String name, Double bmr, Date dateOfBirth, String gender, Double weight, Double height, Date accCreateDttm, boolean isTrainer, Date lastModDttm, String image, String email, List<BmrProgress> bmrReport, List<UserMetaData> usersList) {
-        super(userId, name, bmr, dateOfBirth, gender, weight, height, accCreateDttm, isTrainer, lastModDttm, image, email, bmrReport);
+    public Trainer(String userId, String name, Double bmr, Double bmi, Date dateOfBirth, String gender, Double weight, Double height, Date accCreateDttm, boolean isTrainer, Date lastModDttm, String image, String email, List<BmrProgress> bmrReport, List<UserMetaData> usersList) {
+        super(userId, name, bmr,bmi, dateOfBirth, gender, weight, height, accCreateDttm, isTrainer, lastModDttm, image, email, bmrReport);
         this.usersList = usersList;
     }
 

@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         createAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,RegistrationForm.class));
+                startActivity(new Intent(MainActivity.this,SelectProfileType.class));
                 finish();
             }
         });

@@ -37,7 +37,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class RegistrationForm extends AppCompatActivity implements FragmentProfile.FragmentProfileListener {
+public class RegistrationForm extends AppCompatActivity{
 
     private EditText name, email, mobileNumber, password, confirmPassword;
     private TextInputLayout txtLayPassword, txtLayConPassword;
@@ -49,27 +49,25 @@ public class RegistrationForm extends AppCompatActivity implements FragmentProfi
     private StorageTask uploadTask;
     private String imageDownloadUrl;
     private Uri fileUri;
-
-    @Override
-    public void OnCardClicked(boolean IsTrainer) {
-        IsTrainerProfile = IsTrainer;
-    }
+    DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration_form);
-        boolean value = getIntent().getExtras().getBoolean("IsTrainer");
+        // Get the passed Intent value from Profile Select Activity
+        IsTrainerProfile = getIntent().getExtras().getBoolean("IsTrainer");
+
+        // Initializing the Components
         name = findViewById(R.id.userRgrName_Input);
         email = findViewById(R.id.userRgrEmail_Input);
         mobileNumber = findViewById(R.id.userRgrMobile_Input);
         password = findViewById(R.id.userRgrPassword_Input);
         confirmPassword = findViewById(R.id.userRgrConPassword_Input);
-        storageReference = FirebaseStorage.getInstance().getReference("FitnessGuide");
-
         registerButton = findViewById(R.id.rgrButton);
         txtLayPassword = findViewById(R.id.txtLayRgrPassword_Input);
         txtLayConPassword = findViewById(R.id.txtLayRgrConPassword_Input);
+        storageReference = FirebaseStorage.getInstance().getReference("FitnessGuide");
 
         userInputValidation = new UserInputValidation();
 
@@ -99,20 +97,24 @@ public class RegistrationForm extends AppCompatActivity implements FragmentProfi
                     Toast.makeText(RegistrationForm.this, "In", Toast.LENGTH_SHORT).show();
 
                     //Upload Details in Firebase FirstTime
-                    final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("FitnessGuide");
+                    databaseReference = FirebaseDatabase.getInstance().getReference();
                     userId = name.getText().toString() + System.currentTimeMillis();
-
-                    // Upload Profile Picture into FireBase Storage
-
-                    uploadFile(userId);
 
                     // Upload Profile Picture into FireBase Database with Profile Picture metadata
                     if (IsTrainerProfile) {
                         Trainer trainer = new Trainer(userId, name.getText().toString(), "Male", Calendar.getInstance().getTime(), IsTrainerProfile, Calendar.getInstance().getTime(), "image", email.getText().toString());
                         databaseReference.child("Trainer").child(userId).setValue(trainer);
+
+                        // Upload Profile Picture into FireBase Storage
+                        uploadFile(userId,trainer);
+
                     } else {
                         User user = new User(userId, name.getText().toString(), "Male", Calendar.getInstance().getTime(), IsTrainerProfile, Calendar.getInstance().getTime(), "image", email.getText().toString());
                         databaseReference.child("User").child(userId).setValue(user);
+
+                        // Upload Profile Picture into FireBase Storage
+                        uploadFile(userId,user);
+
                     }
                     startActivity(new Intent(RegistrationForm.this, HomeScreen.class));
                 } else {
@@ -130,7 +132,7 @@ public class RegistrationForm extends AppCompatActivity implements FragmentProfi
         return mime.getExtensionFromMimeType(CR.getType(fileUri));
     }
 
-    private void uploadFile(String userId) {
+    private void uploadFile(final String userId, final Trainer trainer) {
         // Pick the default Image from the MipMap Folder
         // Path under FireBase Storage --> FitnessGuide/(Trainer|User)/UserId.(jpg|png)
 
@@ -138,11 +140,7 @@ public class RegistrationForm extends AppCompatActivity implements FragmentProfi
         final StorageReference fileReference;
         fileUri = Uri.fromFile(new File(file.getPath()));
         if (fileUri != null) {
-            if (IsTrainerProfile) {
-                fileReference = storageReference.child("Trainer").child(userId + "." + getExtension(file));
-            } else {
-                fileReference = storageReference.child("User").child(userId + "." + getExtension(file));
-            }
+            fileReference = storageReference.child("Trainer").child(userId + "." + getExtension(file));
             uploadTask = fileReference.putFile(file)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
@@ -150,7 +148,8 @@ public class RegistrationForm extends AppCompatActivity implements FragmentProfi
                             fileReference.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Uri> task) {
-                                    setImageUri(task.getResult().toString());
+                                    trainer.setImage(task.getResult().toString());
+                                    databaseReference.child("Trainer").child(userId).setValue(trainer);
                                 }
                             });
                         }
@@ -164,11 +163,39 @@ public class RegistrationForm extends AppCompatActivity implements FragmentProfi
         } else {
             Toast.makeText(this, "image File not available", Toast.LENGTH_SHORT).show();
         }
-
     }
-    // Sets the Image metaData
-    private void setImageUri(String url) {
-        imageDownloadUrl = url;
+
+    private void uploadFile(final String userId, final User user) {
+        // Pick the default Image from the MipMap Folder
+        // Path under FireBase Storage --> FitnessGuide/(Trainer|User)/UserId.(jpg|png)
+
+        Uri file = Uri.parse("android.resource://" + this.getPackageName() + "/" + R.mipmap.profile);
+        final StorageReference fileReference;
+        fileUri = Uri.fromFile(new File(file.getPath()));
+        if (fileUri != null) {
+            fileReference = storageReference.child("User").child(userId + "." + getExtension(file));
+            uploadTask = fileReference.putFile(file)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            fileReference.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Uri> task) {
+                                    user.setImage(task.getResult().toString());
+                                    databaseReference.child("User").child(userId).setValue(user);
+                                }
+                            });
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(RegistrationForm.this, "Image Upload Failed", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        } else {
+            Toast.makeText(this, "image File not available", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private Boolean RegistrationValidation() {

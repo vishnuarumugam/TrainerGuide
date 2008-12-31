@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ProfileSelect"></activity>
+        <activity android:name=".SelectProfileType"></activity>
         <activity android:name=".ProfileScreen" />
         <activity android:name=".TraineesScreen" />
         <activity android:name=".HomeScreen">
@@ -22,7 +22,7 @@
         <activity android:name=".TrainerGuideScreen" />
         <activity android:name=".ForgotPasswordForm" />
         <activity android:name=".RegistrationForm" />
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>

@@ -19,11 +19,35 @@ public class User {
     private Date accCreateDttm;
     private boolean isTrainer;
     private Date lastModDttm;
+    private Double bmi;
+
+    public Double getBmi() {
+        return bmi;
+    }
+
+    public Double bmiCalculation(Double weight, Double height)
+    {
+        Double weightBmi = weight;
+        Double heightBmi = height/100;
+        Double bmi = weightBmi/heightBmi;
+        return bmi;
+    }
+
+    public void setBmi(Double weight, Double height) {
+        Double bmi = bmiCalculation(weight,height);
+        this.bmi = bmi;
+    }
+
+    public void setBmr(Double weight, Double height,String gender, Integer age) {
+        Double bmi = bmrCalculation(weight,height,gender,age);
+        this.bmi = bmi;
+    }
+
     private String image;
     private String email;
     private List<BmrProgress> bmrReport;
 
-    public User(String userId, String name, Double bmr, Date dateOfBirth, String gender, Double weight, Double height, Date accCreateDttm, boolean isTrainer, Date lastModDttm, String image, String email, List<BmrProgress> bmrReport) {
+    public User(String userId, String name, Double bmr, Double bmi, Date dateOfBirth, String gender, Double weight, Double height, Date accCreateDttm, boolean isTrainer, Date lastModDttm, String image, String email, List<BmrProgress> bmrReport) {
         this.userId = userId;
         this.name = name;
         this.bmr = bmr;
@@ -36,6 +60,7 @@ public class User {
         this.lastModDttm = lastModDttm;
         this.image = image;
         this.email = email;
+        this.bmi = bmi;
         this.bmrReport = bmrReport;
     }
     public User(String userId, String name, String gender, Date accCreateDttm, boolean isTrainer, Date lastModDttm, String image, String email) {
@@ -46,6 +71,7 @@ public class User {
         this.gender = gender;
         this.weight = 0.00;
         this.height = 0.00;
+        this.bmi = 0.00;
         this.accCreateDttm = accCreateDttm;
         this.isTrainer = isTrainer;
         this.lastModDttm = lastModDttm;
@@ -95,9 +121,9 @@ public class User {
         return bmr;
     }
 
-    public void setBmr(Double bmr) {
-        this.bmr = bmr;
-    }
+    //public void setBmr(Double bmr) {
+    //    this.bmr = bmr;
+    //}
 
     public Date getDateOfBirth() {
         return dateOfBirth;
