@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "279091034634",
+    "firebase_url": "https://trainerguide-14d03.firebaseio.com",
+    "project_id": "trainerguide-14d03",
+    "storage_bucket": "trainerguide-14d03.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:279091034634:android:d0d4c472be9f762062fdf3",
+        "android_client_info": {
+          "package_name": "com.example.trainerguide"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "279091034634-b4flq68usabpv4tbp3bsmm4rivvtfdqn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCe-i7GQHWeFaf0YO2NYZGtYxiOobOrCos"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "279091034634-b4flq68usabpv4tbp3bsmm4rivvtfdqn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

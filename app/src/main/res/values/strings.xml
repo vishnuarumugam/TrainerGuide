@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Trainer Guide</string>
+    <string name="Navigation_Drawer_Open">Open Navigation Drawer</string>
+    <string name="Navigation_Drawer_Close">Close Navigation Drawer</string>
+</resources>
