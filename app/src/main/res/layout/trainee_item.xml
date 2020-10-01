@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/traineeParent"
+    android:id="@+id/parent"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="10dp"
-    app:cardCornerRadius="15dp"
-    android:elevation="15dp">
+    android:elevation="15dp"
+    app:cardCornerRadius="10dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="10dp">
 
         <RelativeLayout
             android:id="@+id/traineeItem"
@@ -18,31 +19,37 @@
             android:layout_height="match_parent">
 
                 <TextView
+                    android:id="@+id/traineeItemNameLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/traineeItemNameLabel"
+                    android:layout_marginLeft="10dp"
                     android:hint="UserName:"/>
                 <TextView
+                    android:id="@+id/traineeItemName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/traineeItemName"
+                    android:layout_marginLeft="5dp"
                     android:layout_toRightOf="@id/traineeItemNameLabel"
-                    android:layout_marginLeft="5dp"/>
+                    android:hint="Vishnu"/>
 
                 <TextView
+                    android:id="@+id/traineeItemBmrLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/traineeItemBmrLabel"
                     android:layout_below="@+id/traineeItemNameLabel"
+                    android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
                     android:hint="BMR:"/>
 
                 <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/traineeItemBmr"
-                android:layout_toRightOf="@id/traineeItemName"
-                android:layout_marginLeft="5dp"/>
+                    android:id="@+id/traineeItemBmr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/traineeItemName"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@id/traineeItemBmrLabel"
+                    android:hint="25" />
 
 
 
