@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,6 +13,8 @@ import android.widget.Toast;
 
 import com.example.trainerguide.validation.UserInputValidation;
 import com.google.android.material.textfield.TextInputLayout;
+
+import java.util.logging.Logger;
 
 public class ForgotPasswordForm extends AppCompatActivity {
 
@@ -33,12 +36,19 @@ public class ForgotPasswordForm extends AppCompatActivity {
         layout_Otp = findViewById(R.id.fgpLay_txtOtp);
         layout_pwd = findViewById(R.id.fgpLay_txtLayPwd);
 
+        userInputValidation = new UserInputValidation();
+
         btnFgp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                System.out.println("******* in *******" + btnFgp.getText().toString());
 
-                if(btnFgp.getText().toString().equals("Generate OTP")) {
+                String btnOption = btnFgp.getText().toString();
+
+                if(btnOption.equals("Generate OTP")) {
                     String emailValid = userInputValidation.emailValidation(txtemail.getText().toString());
+                    System.out.println("******* generate otp *******"+emailValid);
+
                     if (emailValid.equals("Valid")){
                         Toast.makeText(ForgotPasswordForm.this, btnFgp.getText().toString(), Toast.LENGTH_SHORT).show();
                         layout_Otp.setVisibility(View.VISIBLE);
@@ -51,10 +61,10 @@ public class ForgotPasswordForm extends AppCompatActivity {
                     }
                 }
 
-                else if (btnFgp.getText().toString().equals("Verify OTP")) {
+                else if (btnOption.equals("Verify OTP")) {
 
                     String otpValid = userInputValidation.otpNumberValidation(txtOtp.getText().toString());
-
+                    System.out.println("******* Verify OTP *******");
                     if (otpValid.equals("Valid")){
                         layout_pwd.setVisibility(View.VISIBLE);
                         layout_CnfrmPwd.setVisibility(View.VISIBLE);
@@ -66,7 +76,10 @@ public class ForgotPasswordForm extends AppCompatActivity {
                     }
                 }
 
-                else if (btnFgp.getText().toString().equals("Change Password")) {
+                else if (btnOption.equals("Change Password")) {
+
+                    System.out.println("******* Change Password *******");
+
 
                     if ( ChangePasswordValidation() ){
 
@@ -80,6 +93,9 @@ public class ForgotPasswordForm extends AppCompatActivity {
                         }
 
                     }
+                }
+                else{
+                    Toast.makeText(ForgotPasswordForm.this, "error", Toast.LENGTH_SHORT).show();
                 }
             }
         });

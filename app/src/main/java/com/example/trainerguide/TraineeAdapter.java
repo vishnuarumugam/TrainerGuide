@@ -11,25 +11,29 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.trainerguide.models.User;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class TraineeAdapter extends RecyclerView.Adapter<TraineeAdapter.ViewHolder> {
 
-    private ArrayList<Trainee> trainee = new ArrayList<>();
+    private List<User> trainee = new ArrayList<>();
     private Context context;
 
 
-    public ArrayList<Trainee> getTrainee() {
+    /*public ArrayList<User> getTrainee() {
         return trainee;
     }
 
-    public void setTrainee(ArrayList<Trainee> trainee){
+    public void setTrainee(ArrayList<User> trainee){
         this.trainee = trainee;
         notifyDataSetChanged();
-    }
+    }*/
 
-    public TraineeAdapter(Context context){
+    public TraineeAdapter(Context context,List<User> trainee){
         this.context=context;
+        this.trainee=trainee;
     }
 
     @NonNull

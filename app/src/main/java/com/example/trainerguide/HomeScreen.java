@@ -18,10 +18,10 @@ import com.google.android.material.navigation.NavigationView;
 
 public class HomeScreen extends AppCompatActivity {
 
-    DrawerLayout drawerLayout;
-    NavigationView navigationView;
-    Toolbar toolbar;
-    MenuItem profileMenu, logoutMenu, shareMenu, ratingMenu, traineeMenu;
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
+    private Toolbar toolbar;
+    private MenuItem profileMenu, logoutMenu, shareMenu, ratingMenu, traineeMenu;
 
 
     @Override
@@ -37,12 +37,6 @@ public class HomeScreen extends AppCompatActivity {
         toolbar.setBackgroundColor(getResources().getColor(R.color.black));
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
 
-        /*navigationView.bringToFront();
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.Navigation_Drawer_Open,R.string.Navigation_Drawer_Close);
-        toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.appleGreen));
-
-        drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();*/
         ActionBarDrawerToggle toggle = CommonNavigator.navigatorInitmethod(drawerLayout,navigationView,toolbar,this);
         toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.appleGreen));
 
@@ -55,14 +49,16 @@ public class HomeScreen extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.nav_profile:
-                        Toast.makeText(HomeScreen.this, "profile1", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(HomeScreen.this,ProfileScreen.class));
+                        finish();
                         break;
                     case R.id.nav_trainees:
-                        System.out.println("Inside ");
                         startActivity(new Intent(HomeScreen.this,TraineesScreen.class));
+                        finish();
                         break;
                     case R.id.nav_logout:
                         startActivity(new Intent(HomeScreen.this,MainActivity.class));
+                        finish();
                         break;
                     default:
                         Toast.makeText(HomeScreen.this, "profile", Toast.LENGTH_SHORT).show();
@@ -87,8 +83,6 @@ public class HomeScreen extends AppCompatActivity {
         {
             super.onBackPressed();
         }
-
-
     }
 
 

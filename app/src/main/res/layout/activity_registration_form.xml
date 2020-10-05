@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#A4A4A4"
+    android:background="@color/grey"
     tools:context=".RegistrationForm">
 
 
@@ -33,7 +33,7 @@
                 android:background="@drawable/round_shape"
                 android:hint="Name"
                 android:inputType="text"
-                android:textColor="#000000"/>
+                android:textColor="@color/black"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -50,7 +50,7 @@
                 android:background="@drawable/round_shape"
                 android:hint="Email address"
                 android:inputType="textEmailAddress"
-                android:textColor="#000000"/>
+                android:textColor="@color/black"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -67,7 +67,7 @@
                 android:background="@drawable/round_shape"
                 android:hint="Mobile No"
                 android:inputType="number"
-                android:textColor="#000000"/>
+                android:textColor="@color/black"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -87,7 +87,7 @@
                 android:background="@drawable/round_shape"
                 android:hint="Password"
                 android:inputType="textPassword"
-                android:textColor="#000000"/>
+                android:textColor="@color/black"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -106,10 +106,35 @@
                 android:background="@drawable/round_shape"
                 android:hint="Confirm Password"
                 android:inputType="textPassword"
-                android:textColor="#000000"/>
+                android:textColor="@color/black"/>
 
         </com.google.android.material.textfield.TextInputLayout>
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:theme="@style/RadioButtonStyle"
+            android:orientation="horizontal">
 
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Male"
+                android:textStyle="bold"
+                android:textColor="@color/white" />
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:padding="10dp"
+                android:text="Female"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                />
+
+        </RadioGroup>
         <Button
             android:id="@+id/rgrButton"
             android:layout_width="match_parent"
@@ -119,7 +144,7 @@
             android:layout_marginBottom="30dp"
             android:backgroundTint="@color/appleGreen"
             android:text="CREATE"
-            android:textColor="#000000"
+            android:textColor="@color/black"
             android:textSize="16dp"
             android:textStyle="bold"/>
 

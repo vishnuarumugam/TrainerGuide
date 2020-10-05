@@ -19,21 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:context=".HomeScreen">
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/tool_bar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#000000"
-                android:minHeight="?attr/actionBarSize"
-                android:theme="?attr/actionBarTheme"
-                app:title="Trainer Guide"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:navigationIcon="@drawable/ic_menu">
-            </androidx.appcompat.widget.Toolbar>
+            <include layout="@layout/common_toolbar"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

@@ -9,7 +9,7 @@
     tools:context=".TraineesScreen"
     tools:openDrawer="start">
 
-    <!--include layout="@layout/common_navigator"/>-->
+    <include layout="@layout/common_navigator"/>
 
 
     <ScrollView

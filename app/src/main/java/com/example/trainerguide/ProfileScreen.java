@@ -6,26 +6,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.Toast;
 
-import com.example.trainerguide.models.User;
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class TraineesScreen extends AppCompatActivity {
+public class ProfileScreen extends AppCompatActivity {
 
     //Navigation view variables
     private DrawerLayout drawerLayout;
@@ -33,23 +21,13 @@ public class TraineesScreen extends AppCompatActivity {
     private Toolbar toolbar;
     private MenuItem profileMenu, logoutMenu, shareMenu, ratingMenu, traineeMenu;
 
-    //Recycler view variables
-    private RecyclerView traineeRecycler;
-    private List<User> traineesList = new ArrayList<>();
-    private TraineeAdapter traineeAdapter;
-
-    //Firebase variables
-    private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users");
-    private ValueEventListener valueEventListener;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_trainees_screen);
+        setContentView(R.layout.activity_profile_screen);
 
         //Navigation view variables
-        drawerLayout = findViewById(R.id.trainee_drawer_layout);
+        drawerLayout = findViewById(R.id.profile_drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.tool_bar);
 
@@ -69,13 +47,14 @@ public class TraineesScreen extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.nav_profile:
-                        startActivity(new Intent(TraineesScreen.this,ProfileScreen.class));
-                        finish();
                         break;
                     case R.id.nav_trainees:
+                        startActivity(new Intent(ProfileScreen.this,TraineesScreen.class));
+                        finish();
                         break;
                     case R.id.nav_logout:
-                        startActivity(new Intent(TraineesScreen.this,MainActivity.class));
+                        startActivity(new Intent(ProfileScreen.this,MainActivity.class));
+                        finish();
                         break;
                     default:
                         break;
@@ -84,36 +63,7 @@ public class TraineesScreen extends AppCompatActivity {
             }
         });
 
-        //Recycler view variables
-        traineeRecycler = findViewById(R.id.traineeRecycler);
-        traineeRecycler.setLayoutManager(new LinearLayoutManager(this));
-        traineeAdapter = new TraineeAdapter(TraineesScreen.this,traineesList);
-        traineeRecycler.setAdapter(traineeAdapter);
-        //Method to populate Trainee data
-        valueEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                for (DataSnapshot dataSnapshot:snapshot.getChildren()){
-                     User user = dataSnapshot.getValue(User.class);
-                     traineesList.add(user);
-                }
-
-                traineeAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
     }
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        databaseReference.removeEventListener(valueEventListener);
-    }
-
     @Override
     public void onBackPressed()
     {

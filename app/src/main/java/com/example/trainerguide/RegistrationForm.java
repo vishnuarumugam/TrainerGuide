@@ -4,19 +4,30 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.trainerguide.models.BmrProgress;
+import com.example.trainerguide.models.User;
 import com.example.trainerguide.validation.UserInputValidation;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 public class RegistrationForm extends AppCompatActivity {
 
     private EditText name,  email, mobileNumber, password, confirmPassword;
     private TextInputLayout txtLayPassword, txtLayConPassword;
     private Button registerButton;
+    private static String userId;
+    UserInputValidation userInputValidation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +44,25 @@ public class RegistrationForm extends AppCompatActivity {
         txtLayPassword = findViewById(R.id.txtLayRgrPassword_Input);
         txtLayConPassword = findViewById(R.id.txtLayRgrConPassword_Input);
 
+        userInputValidation = new UserInputValidation();
+
+        password.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                txtLayPassword.setPasswordVisibilityToggleEnabled(true);
+                password.setError(null);
+                return false;
+            }
+        });
+
+        confirmPassword.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                txtLayConPassword.setPasswordVisibilityToggleEnabled(true);
+                confirmPassword.setError(null);
+                return false;
+            }
+        });
 
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,6 +70,15 @@ public class RegistrationForm extends AppCompatActivity {
 
                 if ( RegistrationValidation() ){
                     Toast.makeText(RegistrationForm.this, "In", Toast.LENGTH_SHORT).show();
+
+                    //Upload Details in Firebase FirstTime
+                    final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users");
+                    userId=name.getText().toString()+System.currentTimeMillis();
+                    BmrProgress bmrProgress = new BmrProgress(Calendar.getInstance().getTime(),1.00);
+                    List<BmrProgress> lstBmrProg = new ArrayList<>();
+                    lstBmrProg.add(bmrProgress);
+                    User user = new User(userId,name.getText().toString(),0.00,Calendar.getInstance().getTime(),"Male",0.00,0.00, Calendar.getInstance().getTime(),false,Calendar.getInstance().getTime(),"image",email.getText().toString(),lstBmrProg);
+                    databaseReference.child(userId).setValue(user);
                     startActivity(new Intent(RegistrationForm.this,HomeScreen.class));
                 }
                 else {
@@ -51,8 +90,6 @@ public class RegistrationForm extends AppCompatActivity {
     }
 
     private Boolean RegistrationValidation() {
-
-        UserInputValidation userInputValidation =  new UserInputValidation();
 
         String nameValid = userInputValidation.userNameValidation(name.getText().toString());
         String emailValid = userInputValidation.emailValidation(email.getText().toString());
@@ -70,6 +107,7 @@ public class RegistrationForm extends AppCompatActivity {
             else {
                 txtLayConPassword.setPasswordVisibilityToggleEnabled(false);
                 confirmPassword.setError("Confirm Password doesn't match with Password");
+                return false;
             }
         }
         else{
@@ -92,11 +130,9 @@ public class RegistrationForm extends AppCompatActivity {
                 txtLayConPassword.setPasswordVisibilityToggleEnabled(false);
                 confirmPassword.setError("Password cannot be empty");
             }
-            return true;
+            return false;
 
         }
-
-        return false;
     }
 
 
