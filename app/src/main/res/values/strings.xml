@@ -2,4 +2,7 @@
     <string name="app_name">Trainer Guide</string>
     <string name="Navigation_Drawer_Open">Open Navigation Drawer</string>
     <string name="Navigation_Drawer_Close">Close Navigation Drawer</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="Trainer">Trainer</string>
+    <string name="Trainee">Trainee</string>
 </resources>

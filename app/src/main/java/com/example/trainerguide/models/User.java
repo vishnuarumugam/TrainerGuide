@@ -3,6 +3,7 @@ package com.example.trainerguide.models;
 import android.view.View;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -37,7 +38,21 @@ public class User {
         this.email = email;
         this.bmrReport = bmrReport;
     }
-
+    public User(String userId, String name, String gender, Date accCreateDttm, boolean isTrainer, Date lastModDttm, String image, String email) {
+        this.userId = userId;
+        this.name = name;
+        this.bmr = 0.0;
+        this.dateOfBirth = Calendar.getInstance().getTime();
+        this.gender = gender;
+        this.weight = 0.00;
+        this.height = 0.00;
+        this.accCreateDttm = accCreateDttm;
+        this.isTrainer = isTrainer;
+        this.lastModDttm = lastModDttm;
+        this.image = image;
+        this.email = email;
+        this.bmrReport = new ArrayList<>();
+    }
     public User() {
     }
 
