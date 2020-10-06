@@ -103,7 +103,7 @@ public class UserInputValidation {
             return "OTP cannot be empty";
         }
 
-        else if ((otpNumber.toString().matches(characters)) && (otpNumber.length()<6)){
+        else if ((otpNumber.toString().matches(characters)) || (otpNumber.length()<6)){
             return "Invalid OTP number";
         }
         return "Valid";

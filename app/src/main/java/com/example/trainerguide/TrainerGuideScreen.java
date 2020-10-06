@@ -2,9 +2,12 @@ package com.example.trainerguide;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Pair;
+import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -39,6 +42,13 @@ public class TrainerGuideScreen extends AppCompatActivity {
             @Override
             public void run() {
                 Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                Pair[] pair = new Pair[1];
+                pair[0] = new Pair<View,String>(img,"logo_Img");
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                    ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation(TrainerGuideScreen.this,pair);
+                    startActivity(intent,activityOptions.toBundle());
+
+                }
                 startActivity(intent);
                 finish();
             }
