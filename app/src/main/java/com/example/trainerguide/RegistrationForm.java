@@ -21,13 +21,20 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class RegistrationForm extends AppCompatActivity {
+public class RegistrationForm extends AppCompatActivity implements ProfileSelectDialog.ProfileCardSelectListener {
 
     private EditText name,  email, mobileNumber, password, confirmPassword;
     private TextInputLayout txtLayPassword, txtLayConPassword;
     private Button registerButton;
     private static String userId;
     UserInputValidation userInputValidation;
+    private boolean IsTrainerProfile;
+
+    @Override
+    public void profile(boolean IsTrainer) {
+        IsTrainerProfile = IsTrainer;
+        System.out.println("*****IsTrainer******"+IsTrainer);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +50,8 @@ public class RegistrationForm extends AppCompatActivity {
         registerButton = findViewById(R.id.rgrButton);
         txtLayPassword = findViewById(R.id.txtLayRgrPassword_Input);
         txtLayConPassword = findViewById(R.id.txtLayRgrConPassword_Input);
+
+        OpenDialog();
 
         userInputValidation = new UserInputValidation();
 
@@ -87,6 +96,11 @@ public class RegistrationForm extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void OpenDialog() {
+        ProfileSelectDialog profileSelectDialog = new ProfileSelectDialog();
+        profileSelectDialog.show(getSupportFragmentManager(),"Profile Select");
     }
 
     private Boolean RegistrationValidation() {
