@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class RegistrationForm extends AppCompatActivity implements ProfileSelectDialog.ProfileCardSelectListener {
+public class RegistrationForm extends AppCompatActivity{
 
     private EditText name,  email, mobileNumber, password, confirmPassword;
     private TextInputLayout txtLayPassword, txtLayConPassword;
@@ -31,16 +31,10 @@ public class RegistrationForm extends AppCompatActivity implements ProfileSelect
     private boolean IsTrainerProfile;
 
     @Override
-    public void profile(boolean IsTrainer) {
-        IsTrainerProfile = IsTrainer;
-        System.out.println("*****IsTrainer******"+IsTrainer);
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration_form);
-
+        boolean value = getIntent().getExtras().getBoolean("IsTrainer");
         name = findViewById(R.id.userRgrName_Input);
         email = findViewById(R.id.userRgrEmail_Input);
         mobileNumber = findViewById(R.id.userRgrMobile_Input);
@@ -50,8 +44,6 @@ public class RegistrationForm extends AppCompatActivity implements ProfileSelect
         registerButton = findViewById(R.id.rgrButton);
         txtLayPassword = findViewById(R.id.txtLayRgrPassword_Input);
         txtLayConPassword = findViewById(R.id.txtLayRgrConPassword_Input);
-
-        OpenDialog();
 
         userInputValidation = new UserInputValidation();
 
@@ -98,10 +90,6 @@ public class RegistrationForm extends AppCompatActivity implements ProfileSelect
         });
     }
 
-    private void OpenDialog() {
-        ProfileSelectDialog profileSelectDialog = new ProfileSelectDialog();
-        profileSelectDialog.show(getSupportFragmentManager(),"Profile Select");
-    }
 
     private Boolean RegistrationValidation() {
 
