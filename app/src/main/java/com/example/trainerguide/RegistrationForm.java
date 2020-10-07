@@ -18,14 +18,18 @@ import android.widget.Toast;
 import com.example.trainerguide.models.BmrProgress;
 import com.example.trainerguide.models.Trainer;
 import com.example.trainerguide.models.User;
+import com.example.trainerguide.models.UserMetaData;
 import com.example.trainerguide.validation.UserInputValidation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -50,6 +54,7 @@ public class RegistrationForm extends AppCompatActivity{
     private String imageDownloadUrl;
     private Uri fileUri;
     DatabaseReference databaseReference;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,6 +128,67 @@ public class RegistrationForm extends AppCompatActivity{
 
             }
         });
+    }
+
+    public void crudOperations(String value)
+    {
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        if(value.equals("Add")) {
+            databaseReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                        Trainer trainerobj = postSnapshot.getValue(Trainer.class);
+                        UserMetaData user = new UserMetaData("Sathish" + System.currentTimeMillis(), "Sathish", 0.00, trainerobj.getImage());
+                        trainerobj.setUser(user);
+                        databaseReference.child("Trainer").child(userId).setValue(trainerobj);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
+        if(value.equals("Update")) {
+            databaseReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                        Trainer trainerobj = postSnapshot.getValue(Trainer.class);
+                        List<UserMetaData> users =  trainerobj.getUsersList();
+                        users.get(0).setBmr(1.0);
+                        trainerobj.setUsersList(users);
+                        databaseReference.child("Trainer").child(userId).setValue(trainerobj);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
+        if(value.equals("Delete")) {
+            databaseReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                        Trainer trainerobj = postSnapshot.getValue(Trainer.class);
+                        List<UserMetaData> users =  trainerobj.getUsersList();
+                        users.remove(users.get(0));
+                        trainerobj.setUsersList(users);
+                        databaseReference.child("Trainer").child(userId).setValue(trainerobj);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
     }
 
     // Resolve the extension of the Image File selected
