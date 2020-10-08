@@ -56,6 +56,10 @@ public class HomeScreen extends AppCompatActivity {
                         startActivity(new Intent(HomeScreen.this,TraineesScreen.class));
                         finish();
                         break;
+                    case R.id.nav_trainer:
+                        startActivity(new Intent(HomeScreen.this,TrainerScreen.class));
+                        finish();
+                        break;
                     case R.id.nav_logout:
                         startActivity(new Intent(HomeScreen.this,MainActivity.class));
                         finish();

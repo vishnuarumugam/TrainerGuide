@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/parent"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:layout_marginTop="10dp"
+    android:backgroundTint="@color/grey"
+    app:cardCornerRadius="10dp"
+    android:layout_marginHorizontal="10dp"
+    app:cardElevation="5dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <RelativeLayout
+            android:id="@+id/trainerItem"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/trainerProfileImage"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="10dp"
+                android:src="@mipmap/profile" />
+
+
+            <TextView
+                android:id="@+id/trainerItemNameLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_toRightOf="@id/trainerProfileImage"
+                android:text="UserName:"
+                android:textColor="@color/black"
+                android:textStyle="italic"/>
+            <TextView
+                android:id="@+id/trainerItemName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="20dp"
+                android:layout_toRightOf="@id/trainerItemNameLabel"
+                android:hint="Vishnu"
+                android:textColor="@color/black"
+                android:textStyle="bold|italic"/>
+
+            <TextView
+                android:id="@+id/trainerItemBmiLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/trainerItemNameLabel"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/trainerProfileImage"
+                android:text="BMI:"
+                android:textColor="@color/black"
+                android:textStyle="italic"/>
+
+            <TextView
+                android:id="@+id/trainerItemBmi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/trainerItemName"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/trainerItemBmiLabel"
+                android:hint="25"
+                android:textColor="@color/black"
+                android:textStyle="bold|italic"/>
+        </RelativeLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

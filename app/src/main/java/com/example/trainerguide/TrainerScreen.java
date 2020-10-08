@@ -12,8 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.Toast;
 
+import com.example.trainerguide.models.Trainer;
 import com.example.trainerguide.models.User;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
@@ -25,7 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TraineesScreen extends AppCompatActivity {
+public class TrainerScreen extends AppCompatActivity {
 
     //Navigation view variables
     private DrawerLayout drawerLayout;
@@ -34,19 +34,18 @@ public class TraineesScreen extends AppCompatActivity {
     private MenuItem profileMenu, logoutMenu, shareMenu, ratingMenu, traineeMenu;
 
     //Recycler view variables
-    private RecyclerView traineeRecycler;
-    private List<User> traineesList = new ArrayList<>();
-    private TraineeAdapter traineeAdapter;
+    private RecyclerView trainerRecycler;
+    private List<Trainer> trainersList = new ArrayList<>();
+    private TrainerAdapter trainerAdapter;
 
     //Firebase variables
-    private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users");
+    private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Trainer");
     private ValueEventListener valueEventListener;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_trainees_screen);
+        setContentView(R.layout.activity_trainer_screen);
 
         //Navigation view variables
         drawerLayout = findViewById(R.id.trainee_drawer_layout);
@@ -69,16 +68,16 @@ public class TraineesScreen extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.nav_profile:
-                        startActivity(new Intent(TraineesScreen.this,ProfileScreen.class));
+                        startActivity(new Intent(TrainerScreen.this,ProfileScreen.class));
                         finish();
                         break;
                     case R.id.nav_trainees:
+                        startActivity(new Intent(TrainerScreen.this,TraineesScreen.class));
                         break;
                     case R.id.nav_trainer:
-                        startActivity(new Intent(TraineesScreen.this,TrainerScreen.class));
                         break;
                     case R.id.nav_logout:
-                        startActivity(new Intent(TraineesScreen.this,MainActivity.class));
+                        startActivity(new Intent(TrainerScreen.this,MainActivity.class));
                         break;
                     default:
                         break;
@@ -88,21 +87,19 @@ public class TraineesScreen extends AppCompatActivity {
         });
 
         //Recycler view variables
-        traineeRecycler = findViewById(R.id.traineeRecycler);
-        traineeRecycler.setLayoutManager(new LinearLayoutManager(this));
-        traineeAdapter = new TraineeAdapter(TraineesScreen.this,traineesList);
-        traineeRecycler.setAdapter(traineeAdapter);
-        //Method to populate Trainee data
+        trainerRecycler = findViewById(R.id.traineeRecycler);
+        trainerRecycler.setLayoutManager(new LinearLayoutManager(this));
+        trainerAdapter = new TrainerAdapter(trainersList,TrainerScreen.this);
+        trainerRecycler.setAdapter(trainerAdapter);
+
         valueEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
                 for (DataSnapshot dataSnapshot:snapshot.getChildren()){
-                     User user = dataSnapshot.getValue(User.class);
-                     traineesList.add(user);
+                    Trainer trainer = dataSnapshot.getValue(Trainer.class);
+                    trainersList.add(trainer);
                 }
-
-                traineeAdapter.notifyDataSetChanged();
+                trainerAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -110,7 +107,9 @@ public class TraineesScreen extends AppCompatActivity {
 
             }
         });
+
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -118,8 +117,7 @@ public class TraineesScreen extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed()
-    {
+    public void onBackPressed() {
         if(drawerLayout.isDrawerOpen(GravityCompat.START))
         {
             drawerLayout.closeDrawer((GravityCompat.START));
