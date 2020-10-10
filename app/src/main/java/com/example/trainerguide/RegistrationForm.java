@@ -130,7 +130,10 @@ public class RegistrationForm extends AppCompatActivity{
                                 // Upload Profile Picture into FireBase Storage
                                 uploadFile(userId,user);
                             }
-                            startActivity(new Intent(RegistrationForm.this, HomeScreen.class));
+                            Intent intent = new Intent(RegistrationForm.this, HomeScreen.class);
+                            intent.putExtra("UserId",fAuth.getCurrentUser().getUid());
+                            startActivity(intent);
+
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override

@@ -55,7 +55,9 @@ public class MainActivity extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(AuthResult authResult) {
                                     Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(MainActivity.this,HomeScreen.class));
+                                    Intent intent = new Intent(MainActivity.this,HomeScreen.class);
+                                    intent.putExtra("UserId",fAuth.getCurrentUser().getUid());
+                                    startActivity(intent);
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                         @Override
