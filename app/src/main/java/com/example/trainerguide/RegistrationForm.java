@@ -25,6 +25,8 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -54,7 +56,8 @@ public class RegistrationForm extends AppCompatActivity{
     private String imageDownloadUrl;
     private Uri fileUri;
     DatabaseReference databaseReference;
-
+    // FireBase Authentication
+    FirebaseAuth fAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +76,8 @@ public class RegistrationForm extends AppCompatActivity{
         txtLayPassword = findViewById(R.id.txtLayRgrPassword_Input);
         txtLayConPassword = findViewById(R.id.txtLayRgrConPassword_Input);
         storageReference = FirebaseStorage.getInstance().getReference("FitnessGuide");
+
+        fAuth = FirebaseAuth.getInstance();
 
         userInputValidation = new UserInputValidation();
 
@@ -101,29 +106,40 @@ public class RegistrationForm extends AppCompatActivity{
                 if (RegistrationValidation()) {
                     Toast.makeText(RegistrationForm.this, "In", Toast.LENGTH_SHORT).show();
 
-                    //Upload Details in Firebase FirstTime
-                    databaseReference = FirebaseDatabase.getInstance().getReference();
-                    userId = name.getText().toString() + System.currentTimeMillis();
+                    // Firebase Authentication User Creation
+                    fAuth.createUserWithEmailAndPassword(email.getText().toString().trim(),password.getText().toString().trim())
+                            .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                        @Override
+                        public void onSuccess(AuthResult authResult) {
+                            //Upload Details in Firebase FirstTime
+                            databaseReference = FirebaseDatabase.getInstance().getReference();
+                            userId = fAuth.getCurrentUser().getUid();
 
-                    // Upload Profile Picture into FireBase Database with Profile Picture metadata
-                    if (IsTrainerProfile) {
-                        Trainer trainer = new Trainer(userId, name.getText().toString(), "Male", Calendar.getInstance().getTime(), IsTrainerProfile, Calendar.getInstance().getTime(), "image", email.getText().toString());
-                        databaseReference.child("Trainer").child(userId).setValue(trainer);
+                            // Upload Profile Picture into FireBase Database with Profile Picture metadata
+                            if (IsTrainerProfile) {
+                                Trainer trainer = new Trainer(userId, name.getText().toString(), "Male", Calendar.getInstance().getTime(), IsTrainerProfile, Calendar.getInstance().getTime(), "image", email.getText().toString());
+                                databaseReference.child("Trainer").child(userId).setValue(trainer);
 
-                        // Upload Profile Picture into FireBase Storage
-                        uploadFile(userId,trainer);
+                                // Upload Profile Picture into FireBase Storage
+                                uploadFile(userId,trainer);
 
-                    } else {
-                        User user = new User(userId, name.getText().toString(), "Male", Calendar.getInstance().getTime(), IsTrainerProfile, Calendar.getInstance().getTime(), "image", email.getText().toString());
-                        databaseReference.child("User").child(userId).setValue(user);
+                            } else {
+                                User user = new User(userId, name.getText().toString(), "Male", Calendar.getInstance().getTime(), IsTrainerProfile, Calendar.getInstance().getTime(), "image", email.getText().toString());
+                                databaseReference.child("User").child(userId).setValue(user);
 
-                        // Upload Profile Picture into FireBase Storage
-                        uploadFile(userId,user);
-
-                    }
-                    startActivity(new Intent(RegistrationForm.this, HomeScreen.class));
+                                // Upload Profile Picture into FireBase Storage
+                                uploadFile(userId,user);
+                            }
+                            startActivity(new Intent(RegistrationForm.this, HomeScreen.class));
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(RegistrationForm.this, "Profile Creation Failed", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 } else {
-                    Toast.makeText(RegistrationForm.this, "Out", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegistrationForm.this, "Validation Failed", Toast.LENGTH_SHORT).show();
                 }
 
             }
