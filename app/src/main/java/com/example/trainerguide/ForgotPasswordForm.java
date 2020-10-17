@@ -32,14 +32,8 @@ public class ForgotPasswordForm extends AppCompatActivity {
         setContentView(R.layout.activity_forgot_password_form);
 
         txtemail = findViewById(R.id.userFgpEmail_Input);
-        txtOtp = findViewById(R.id.userFgpOtp_Input);
-        txtCnfrmPwd = findViewById(R.id.fgpCnfrmPassword_Input);
-        txtPwd = findViewById(R.id.userFgpPassword_Input);
         final Button btnFgp = findViewById(R.id.btnFgp);
 
-        layout_CnfrmPwd = findViewById(R.id.fgpLay_txtCnfrmPwd);
-        layout_Otp = findViewById(R.id.fgpLay_txtOtp);
-        layout_pwd = findViewById(R.id.fgpLay_txtLayPwd);
 
         // FireBase Initialization
         fAuth = FirebaseAuth.getInstance();

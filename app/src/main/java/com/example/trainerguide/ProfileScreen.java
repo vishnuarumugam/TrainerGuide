@@ -11,12 +11,16 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -27,22 +31,40 @@ import android.widget.Toast;
 import com.example.trainerguide.models.Trainer;
 import com.example.trainerguide.models.User;
 import com.example.trainerguide.models.UserMetaData;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class ProfileScreen extends AppCompatActivity {
+
+    // Reqd variables for Image File choosing and Storing
+    private static final int PICK_IMAGE = 1;
+    private Uri imageUri;
+    private StorageTask uploadTask;
+
+    //Firestore
+    private StorageReference storageReference;
 
     //Navigation view variables
     private DrawerLayout drawerLayout;
@@ -144,6 +166,14 @@ public class ProfileScreen extends AppCompatActivity {
         profileRecyclerFood.setLayoutManager(new GridLayoutManager(this,2));
         profileAdapterFood = new ProfileAdapter(foodAllergy, ProfileScreen.this);
         profileRecyclerFood.setAdapter(profileAdapterFood);
+
+        profileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Filechooser();
+                uploadFile();
+            }
+        });
 
 
         dobRelativeLay.setOnClickListener(new View.OnClickListener() {
@@ -250,6 +280,66 @@ public class ProfileScreen extends AppCompatActivity {
 
     }
 
+    private void Filechooser()
+    {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent, PICK_IMAGE);
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == PICK_IMAGE && resultCode == RESULT_OK && data != null && data.getData()!= null)
+        {
+            imageUri = data.getData();
+        }
+    }
+
+    private String getExtension(Uri uri) {
+        ContentResolver CR = getContentResolver();
+        MimeTypeMap mime = MimeTypeMap.getSingleton();
+        return mime.getExtensionFromMimeType(CR.getType(imageUri));
+    }
+
+    private void uploadFile() {
+        if(imageUri!= null)
+        {
+            final StorageReference fileReference = storageReference.child("User").child(FirebaseAuth.getInstance().getUid());
+            final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(path);
+
+            uploadTask = fileReference.putFile(imageUri)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            fileReference.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Uri> task) {
+                                    HashMap<String,Object> imageMetaData = new HashMap<>();
+                                    String image = task.getResult().toString();
+                                    imageMetaData.put("image",image);
+                                    databaseReference.updateChildren(imageMetaData);
+                                    Toast.makeText(ProfileScreen.this, "Successfully Updated", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(ProfileScreen.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
+        else{
+            Toast.makeText(this, "File not selected", Toast.LENGTH_SHORT).show();
+        }
+
+
+    }
 
     //Method to populate Trainee data
     public void populateRecyclerData(){
