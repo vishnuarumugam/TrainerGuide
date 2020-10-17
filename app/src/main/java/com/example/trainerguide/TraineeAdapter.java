@@ -5,6 +5,7 @@ import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,13 +13,15 @@ import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.trainerguide.models.User;
+import com.example.trainerguide.models.UserMetaData;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TraineeAdapter extends RecyclerView.Adapter<TraineeAdapter.ViewHolder> {
 
-    private List<User> trainee = new ArrayList<>();
+    private List<UserMetaData> trainee = new ArrayList<>();
     private Context context;
 
 
@@ -31,7 +34,7 @@ public class TraineeAdapter extends RecyclerView.Adapter<TraineeAdapter.ViewHold
         notifyDataSetChanged();
     }*/
 
-    public TraineeAdapter(Context context,List<User> trainee){
+    public TraineeAdapter(Context context,List<UserMetaData> trainee){
         this.context=context;
         this.trainee=trainee;
     }
@@ -50,9 +53,14 @@ public class TraineeAdapter extends RecyclerView.Adapter<TraineeAdapter.ViewHold
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onBindViewHolder(@NonNull TraineeAdapter.ViewHolder holder, int position) {
-
+        System.out.println("items Trainee");
         holder.name.setText(trainee.get(position).getName());
-        holder.bmr.setText(trainee.get(position).getBmr().toString());
+        holder.bmi.setText(trainee.get(position).getBmi().toString());
+        Picasso.get().load(trainee.get(position).getImage())
+                .placeholder(R.drawable.ic_share)
+                .fit()
+                .centerCrop()
+                .into(holder.profilePic);
 
     }
 
@@ -63,13 +71,15 @@ public class TraineeAdapter extends RecyclerView.Adapter<TraineeAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView name,bmr;
+        TextView name,bmi;
+        ImageView profilePic;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             name = itemView.findViewById(R.id.traineeItemName);
-            bmr = itemView.findViewById(R.id.traineeItemBmr);
+            bmi = itemView.findViewById(R.id.traineeItemBmi);
+            profilePic = itemView.findViewById(R.id.traineeProfileImage);
 
         }
 

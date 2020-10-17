@@ -9,72 +9,553 @@
     tools:context=".ProfileScreen"
     tools:openDrawer="start">
 
-    <!--include layout="@layout/common_navigator"/>-->
+   <include layout="@layout/common_navigator"/>
 
     <ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/common_toolbar"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:context=".HomeScreen"
-            android:layout_margin="5dp">
-            
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:background="#FFFFFF">
+
+
+
+            <ImageButton
+                android:id="@+id/profileImage"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintCircleRadius="5dp"
+                app:layout_constraintDimensionRatio="H,16:9"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:src="@mipmap/profile"
+                android:scaleType="fitCenter"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="20dp"
+                app:layout_constraintTop_toBottomOf="@id/profileImage">
 
-                <include layout="@layout/common_toolbar"/>
-                
-                <RelativeLayout
+                <!-- Account Info Design-->
+                <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="5dp">
+                    android:layout_height="wrap_content"
+                    android:id="@+id/accCardView"
+                    app:cardCornerRadius="0dp"
+                    android:elevation="10dp">
 
-                    <ImageButton
-                        android:layout_width="200dp"
-                        android:layout_height="200dp"
-                        android:layout_centerHorizontal="true"
-                        android:id="@+id/profileImage"
-                        android:layout_marginTop="30dp"
-                        android:elevation="10dp"/>
-
-                    <com.google.android.material.card.MaterialCardView
+                    <RelativeLayout
                         android:layout_width="match_parent"
+                        android:id="@+id/accRelativeLabel"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/profileImage"
-                        android:layout_marginTop="10dp">
+                        android:padding="10dp">
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:id="@+id/profileAccImage"
+                            android:src="@drawable/ic_profile_account"
+                            android:scaleType="fitCenter"
+                            android:elevation="5dp"
+                            android:layout_marginStart="5dp"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/profileAccount"
+                            android:layout_toRightOf="@id/profileAccImage"
+                            android:layout_marginStart="10dp"
+                            android:layout_alignTop="@id/profileAccImage"
+                            android:text="Account"
+                            style="@style/TextAppearance.AppCompat.Title"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/profileAccountLabel"
+                            android:layout_toRightOf="@id/profileAccImage"
+                            android:layout_marginStart="10dp"
+                            android:layout_below="@id/profileAccount"
+                            android:text="Change number, Email Address"
+                            style="@style/TextAppearance.AppCompat.Body1"/>
+
+                        <TextView
+                            android:id="@+id/profileAccDrop"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_alignBottom="@id/profileAccountLabel"
+                            android:layout_marginEnd="10dp"
+                            android:background="@drawable/ic_dropdown_arrow_down"
+                            android:layout_alignParentEnd="true"/>
 
                         <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="wrap_content"
+                            android:id="@+id/accRelativeCollapse"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginTop="10dp"
+                            android:visibility="gone"
+                            android:layout_below="@id/profileAccImage">
 
-                            <TextView
-                                android:layout_width="wrap_content"
+                            <RelativeLayout
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:id="@+id/profileNameLabel"
-                                android:hint="Name"/>
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/profileNameLabel"/>
+                                android:id="@+id/profilePhoneRelativeLay">
 
+                                <ImageView
+                                    android:id="@+id/profilePhoneImage"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:src="@drawable/ic_phone"
+                                    android:layout_margin="15dp" />
+                                <TextView
+                                    android:id="@+id/profilePhoneNumber"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="9597978967"
+                                    style="@style/TextAppearance.AppCompat.Medium"
+                                    android:layout_toRightOf="@id/profilePhoneImage"
+                                    android:layout_alignTop="@id/profilePhoneImage"/>
+
+                                <TextView
+                                    android:id="@+id/profilePhoneLabel"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Mobile"
+                                    style="@style/TextAppearance.AppCompat.Body1"
+                                    android:layout_toRightOf="@id/profilePhoneImage"
+                                    android:layout_below="@id/profilePhoneNumber" />
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/profileEmailRelativeLay"
+                                android:layout_below="@+id/profilePhoneRelativeLay">
+
+                                <ImageView
+                                    android:id="@+id/profileEmailImage"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:src="@drawable/ic_email"
+                                    android:layout_margin="15dp"/>
+                                <TextView
+                                    android:id="@+id/profileEmailId"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="vishnuarumugam95@gmail.com"
+                                    style="@style/TextAppearance.AppCompat.Medium"
+                                    android:layout_toRightOf="@id/profileEmailImage"
+                                    android:layout_alignTop="@id/profileEmailImage"/>
+                                <TextView
+                                    android:id="@+id/profileEmailLabel"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Email"
+                                    style="@style/TextAppearance.AppCompat.Body1"
+                                    android:layout_toRightOf="@id/profileEmailImage"
+                                    android:layout_below="@id/profileEmailId" />
+                            </RelativeLayout>
 
                         </RelativeLayout>
+                    </RelativeLayout>
+                </com.google.android.material.card.MaterialCardView>
 
-                    </com.google.android.material.card.MaterialCardView>
+                <!-- Personal Info Design-->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/personalInfoCardView"
+                    app:cardCornerRadius="0dp"
+                    android:elevation="10dp">
 
-                </RelativeLayout>
-                
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:id="@+id/personalRelativeLabel"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp">
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:id="@+id/profilePersonalImage"
+                            android:src="@drawable/ic_info"
+                            android:scaleType="fitCenter"
+                            android:elevation="5dp"
+                            android:layout_marginStart="5dp"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/profilePersonalInfo"
+                            android:layout_toRightOf="@id/profilePersonalImage"
+                            android:layout_marginStart="10dp"
+                            android:layout_alignTop="@id/profilePersonalImage"
+                            android:text="Personal Info"
+                            style="@style/TextAppearance.AppCompat.Title"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/profilePersonalInfoLabel"
+                            android:layout_toRightOf="@id/profilePersonalImage"
+                            android:layout_marginStart="10dp"
+                            android:layout_below="@id/profilePersonalInfo"
+                            android:text="DOB, Weight, Height"
+                            style="@style/TextAppearance.AppCompat.Body1"/>
+
+                        <TextView
+                            android:id="@+id/profilePersonalInfoDrop"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_alignBottom="@id/profilePersonalInfoLabel"
+                            android:layout_marginEnd="10dp"
+                            android:background="@drawable/ic_dropdown_arrow_down"
+                            android:layout_alignParentEnd="true"/>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/personalRelativeCollapse"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginTop="10dp"
+                            android:visibility="gone"
+                            android:layout_below="@id/profilePersonalImage">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/dobRelativeLay">
+
+                                <ImageView
+                                    android:id="@+id/profileDobImage"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:src="@drawable/ic_dob"
+                                    android:layout_margin="15dp" />
+                                <TextView
+                                    android:id="@+id/profileDob"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="10/08/1995"
+                                    style="@style/TextAppearance.AppCompat.Medium"
+                                    android:layout_toRightOf="@id/profileDobImage"
+                                    android:layout_alignTop="@id/profileDobImage"/>
+
+                                <TextView
+                                    android:id="@+id/profileDobLabel"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Date of Birth"
+                                    style="@style/TextAppearance.AppCompat.Body1"
+                                    android:layout_toRightOf="@id/profileDobImage"
+                                    android:layout_below="@id/profileDob" />
+
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/weightRelativeLay"
+                                android:layout_below="@id/dobRelativeLay">
+
+                                <ImageView
+                                    android:id="@+id/profileWeightImage"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:src="@drawable/ic_weight"
+
+                                    android:layout_margin="15dp"/>
+                                <TextView
+                                    android:id="@+id/profileWeight"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="84 in kgs"
+                                    style="@style/TextAppearance.AppCompat.Medium"
+                                    android:layout_toRightOf="@id/profileWeightImage"
+                                    android:layout_alignTop="@id/profileWeightImage"/>
+                                <TextView
+                                    android:id="@+id/profileWeightLabel"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Weight"
+                                    style="@style/TextAppearance.AppCompat.Body1"
+                                    android:layout_toRightOf="@id/profileWeightImage"
+                                    android:layout_below="@id/profileWeight" />
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/heightRelativeLay"
+                                android:layout_below="@id/weightRelativeLay">
+
+                                <ImageView
+                                    android:id="@+id/profileHeightImage"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:src="@drawable/ic_height"
+                                    android:layout_margin="15dp"/>
+                                <TextView
+                                    android:id="@+id/profileHeight"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="180 in cms"
+                                    style="@style/TextAppearance.AppCompat.Medium"
+                                    android:layout_toRightOf="@id/profileHeightImage"
+                                    android:layout_alignTop="@id/profileHeightImage"/>
+                                <TextView
+                                    android:id="@+id/profileHeightLabel"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Height"
+                                    style="@style/TextAppearance.AppCompat.Body1"
+                                    android:layout_toRightOf="@id/profileHeightImage"
+                                    android:layout_below="@id/profileHeight" />
+                            </RelativeLayout>
+
+                        </RelativeLayout>
+                    </RelativeLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Food Info Design-->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/foodInfoCardView"
+                    app:cardCornerRadius="0dp"
+                    android:elevation="10dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:id="@+id/foodInfoRelativeLabel"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp">
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:id="@+id/profileFoodInfoImage"
+                            android:src="@mipmap/food_icon"
+                            android:scaleType="fitCenter"
+                            android:elevation="5dp"
+                            android:layout_marginStart="5dp"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/profileFoodInfo"
+                            android:layout_toRightOf="@id/profileFoodInfoImage"
+                            android:layout_marginStart="10dp"
+                            android:layout_alignTop="@id/profileFoodInfoImage"
+                            android:text="Food Preferences"
+                            style="@style/TextAppearance.AppCompat.Title"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/profileFoodInfoLabel"
+                            android:layout_toRightOf="@id/profileFoodInfoImage"
+                            android:layout_marginStart="10dp"
+                            android:layout_below="@id/profileFoodInfo"
+                            android:text="Food type, Allergy"
+                            style="@style/TextAppearance.AppCompat.Body1"/>
+
+                        <TextView
+                            android:id="@+id/profileFoodInfoDrop"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_alignBottom="@id/profileFoodInfoLabel"
+                            android:layout_marginEnd="10dp"
+                            android:background="@drawable/ic_dropdown_arrow_down"
+                            android:layout_alignParentEnd="true"/>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/foodInfoRelativeCollapse"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginTop="10dp"
+                            android:visibility="visible"
+                            android:layout_below="@id/profileFoodInfoImage">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/foodTypeRelativeLay">
+
+                                <ImageView
+                                    android:id="@+id/profileFoodTypeImage"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:src="@mipmap/food_type"
+                                    android:layout_margin="15dp" />
+                                <TextView
+                                    android:id="@+id/profileFoodType"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Non - Vegeterian"
+                                    style="@style/TextAppearance.AppCompat.Medium"
+                                    android:layout_toRightOf="@id/profileFoodTypeImage"
+                                    android:layout_alignTop="@id/profileFoodTypeImage"/>
+
+                                <TextView
+                                    android:id="@+id/profileFoodTypeLabel"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Food Type"
+                                    style="@style/TextAppearance.AppCompat.Body1"
+                                    android:layout_toRightOf="@id/profileFoodTypeImage"
+                                    android:layout_below="@id/profileFoodType" />
+
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/foodAllergyRelativeLay"
+                                android:layout_below="@id/foodTypeRelativeLay">
+
+                                <ImageView
+                                    android:id="@+id/profileFoodAllergyImage"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:src="@mipmap/food_allergy"
+                                    android:layout_margin="15dp"/>
+                                <TextView
+                                    android:id="@+id/profileFoodAllergy"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Food Allergy"
+                                    style="@style/TextAppearance.AppCompat.Medium"
+                                    android:layout_toRightOf="@id/profileFoodAllergyImage"
+                                    android:layout_alignTop="@id/profileFoodAllergyImage"/>
+                                <!--<TextView
+                                    android:id="@+id/profileFoodAllergyLabel"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Food Allergy"
+                                    style="@style/TextAppearance.AppCompat.Body1"
+                                    android:layout_toRightOf="@id/profileFoodAllergyImage"
+                                    android:layout_below="@id/profileFoodAllergy"/>-->
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_below="@id/profileFoodAllergyImage"
+                                    android:id="@+id/profileRecyclerFoodIssues" />
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/profileOtherRelativeLayFood"
+                            android:visibility="gone"
+                            android:layout_below="@+id/profileRecyclerFoodIssues">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/foodAllergyOtherLabel"
+                                    android:text="Other : " />
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_toRightOf="@+id/foodAllergyOtherLabel"
+                                    android:text=" Description"
+                                    android:id="@+id/foodAllergyOther"/>
+                                </RelativeLayout>
+
+                        </RelativeLayout>
+                    </RelativeLayout>
+                    </RelativeLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Health Info Design-->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/healthInfoCardView"
+                    app:cardCornerRadius="0dp"
+                    android:elevation="10dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:id="@+id/healthInfoRelativeLabel"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp">
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:id="@+id/profileHealthInfoImage"
+                            android:src="@mipmap/health_issues"
+                            android:scaleType="fitCenter"
+                            android:elevation="5dp"
+                            android:layout_marginStart="5dp"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/profileHealthInfo"
+                            android:layout_toRightOf="@id/profileHealthInfoImage"
+                            android:layout_marginStart="10dp"
+                            android:layout_alignTop="@id/profileHealthInfoImage"
+                            android:text="Health Issues"
+                            style="@style/TextAppearance.AppCompat.Title"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/profileHealthInfoLabel"
+                            android:layout_toRightOf="@id/profileHealthInfoImage"
+                            android:layout_marginStart="10dp"
+                            android:layout_below="@id/profileHealthInfo"
+                            android:text="Problems in Health"
+                            style="@style/TextAppearance.AppCompat.Body1"/>
+
+                        <TextView
+                            android:id="@+id/profileHealthInfoDrop"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_alignBottom="@id/profileHealthInfoLabel"
+                            android:layout_marginEnd="10dp"
+                            android:background="@drawable/ic_dropdown_arrow_down"
+                            android:layout_alignParentEnd="true"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/healthInfoLinearCollapse"
+                            android:layout_alignParentBottom="true"
+                            android:visibility="visible"
+                            android:orientation="vertical"
+                            android:layout_below="@id/profileHealthInfoImage">
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:id="@+id/profileRecyclerHealth" />
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+                </com.google.android.material.card.MaterialCardView>
+
             </LinearLayout>
-                
-            
-            
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+
+    </LinearLayout>
+
+</ScrollView>
 
 
 </androidx.drawerlayout.widget.DrawerLayout>

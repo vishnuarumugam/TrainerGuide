@@ -27,7 +27,7 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginLeft="10dp"
-                android:src="@mipmap/profile" />
+                />
 
 
             <TextView
@@ -52,25 +52,25 @@
                     android:textStyle="bold|italic"/>
 
                 <TextView
-                    android:id="@+id/traineeItemBmrLabel"
+                    android:id="@+id/traineeItemBmiLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/traineeItemNameLabel"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_toRightOf="@id/traineeProfileImage"
-                    android:text="BMR:"
+                    android:text="BMI:"
                     android:textColor="@color/black"
                     android:textStyle="italic"/>
 
                 <TextView
-                    android:id="@+id/traineeItemBmr"
+                    android:id="@+id/traineeItemBmi"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/traineeItemName"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="10dp"
-                    android:layout_toRightOf="@id/traineeItemBmrLabel"
+                    android:layout_toRightOf="@id/traineeItemBmiLabel"
                     android:hint="25"
                     android:textColor="@color/black"
                     android:textStyle="bold|italic"/>

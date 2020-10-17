@@ -10,19 +10,23 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ProfileScreen"></activity>
-        <activity android:name=".TraineesScreen"></activity>
+        <activity android:name=".TraineesScreen"/>
+        <activity android:name=".TrainerScreen"/>
+
         <activity android:name=".HomeScreen">
+
+        </activity>
+        <activity android:name=".TrainerGuideScreen"></activity>
+        <activity android:name=".ForgotPasswordForm"></activity>
+        <activity android:name=".RegistrationForm"></activity>
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TrainerGuideScreen"></activity>
-        <activity android:name=".ForgotPasswordForm"></activity>
-        <activity android:name=".RegistrationForm"></activity>
-        <activity android:name=".MainActivity">
-        </activity>
+        <activity android:name=".SelectProfileType"/>
     </application>
 
 </manifest>

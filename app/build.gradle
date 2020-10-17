@@ -39,6 +39,12 @@ dependencies {
     //Project Needs
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'com.android.support:multidex:1.0.3'
+    //Picasso
+    implementation 'com.squareup.picasso:picasso:2.71828'
+    //Graph View
+    implementation 'com.jjoe64:graphview:4.2.2'
+
+
 
 
 }

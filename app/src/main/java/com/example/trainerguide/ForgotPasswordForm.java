@@ -1,5 +1,6 @@
 package com.example.trainerguide;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -12,7 +13,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.trainerguide.validation.UserInputValidation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.logging.Logger;
 
@@ -21,6 +25,7 @@ public class ForgotPasswordForm extends AppCompatActivity {
     private EditText txtemail, txtOtp, txtPwd, txtCnfrmPwd;
     private TextInputLayout layout_Otp, layout_pwd,layout_CnfrmPwd;
     private UserInputValidation userInputValidation;
+    private FirebaseAuth fAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,67 +41,28 @@ public class ForgotPasswordForm extends AppCompatActivity {
         layout_Otp = findViewById(R.id.fgpLay_txtOtp);
         layout_pwd = findViewById(R.id.fgpLay_txtLayPwd);
 
+        // FireBase Initialization
+        fAuth = FirebaseAuth.getInstance();
+
         userInputValidation = new UserInputValidation();
 
         btnFgp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("******* in *******" + btnFgp.getText().toString());
-
-                String btnOption = btnFgp.getText().toString();
-
-                if(btnOption.equals("Generate OTP")) {
-                    String emailValid = userInputValidation.emailValidation(txtemail.getText().toString());
-                    System.out.println("******* generate otp *******"+emailValid);
-
-                    if (emailValid.equals("Valid")){
-                        Toast.makeText(ForgotPasswordForm.this, btnFgp.getText().toString(), Toast.LENGTH_SHORT).show();
-                        layout_Otp.setVisibility(View.VISIBLE);
-                        layout_pwd.setVisibility(View.GONE);
-                        layout_CnfrmPwd.setVisibility(View.GONE);
-                        btnFgp.setText("Verify OTP");
-                    }
-                    else {
-                        txtemail.setError(emailValid);
-                    }
-                }
-
-                else if (btnOption.equals("Verify OTP")) {
-
-                    String otpValid = userInputValidation.otpNumberValidation(txtOtp.getText().toString());
-                    System.out.println("******* Verify OTP *******");
-                    if (otpValid.equals("Valid")){
-                        layout_pwd.setVisibility(View.VISIBLE);
-                        layout_CnfrmPwd.setVisibility(View.VISIBLE);
-                        layout_Otp.setVisibility(View.GONE);
-                        btnFgp.setText("Change Password");
-                    }
-                    else {
-                        txtOtp.setError(otpValid);
-                    }
-                }
-
-                else if (btnOption.equals("Change Password")) {
-
-                    System.out.println("******* Change Password *******");
-
-
-                    if ( ChangePasswordValidation() ){
-
-                        if (txtPwd.getText().toString().equals(txtCnfrmPwd.getText().toString())){
-                            startActivity(new Intent(ForgotPasswordForm.this,MainActivity.class));
+                // Forgot Password Link sending to Email
+                fAuth.sendPasswordResetEmail(txtemail.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(ForgotPasswordForm.this, "Password Link sent to your Email", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                        } else {
+                            Toast.makeText(ForgotPasswordForm.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
 
                         }
-                        else {
-                            layout_CnfrmPwd.setPasswordVisibilityToggleEnabled(false);
-                            txtCnfrmPwd.setError("Confirm Password doesn't match with Password");
-                        }
 
                     }
-                }
-                else{
-                    Toast.makeText(ForgotPasswordForm.this, "error", Toast.LENGTH_SHORT).show();
-                }
+                });
             }
         });
     }

@@ -3,7 +3,9 @@ package com.example.trainerguide.models;
 import android.view.View;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 public class User {
@@ -18,11 +20,16 @@ public class User {
     private Date accCreateDttm;
     private boolean isTrainer;
     private Date lastModDttm;
+    private Double bmi;
     private String image;
     private String email;
     private List<BmrProgress> bmrReport;
+    private HashMap<String,String> healthIssues;
+    private HashMap<String,String> foodAllergy;
 
-    public User(String userId, String name, Double bmr, Date dateOfBirth, String gender, Double weight, Double height, Date accCreateDttm, boolean isTrainer, Date lastModDttm, String image, String email, List<BmrProgress> bmrReport) {
+    public User(String userId, String name, Double bmr, Double bmi, Date dateOfBirth, String gender,
+                Double weight, Double height, Date accCreateDttm, boolean isTrainer, Date lastModDttm,
+                String image, String email, List<BmrProgress> bmrReport, HashMap<String,String> healthIssues, HashMap<String,String> foodAllergy) {
         this.userId = userId;
         this.name = name;
         this.bmr = bmr;
@@ -35,9 +42,28 @@ public class User {
         this.lastModDttm = lastModDttm;
         this.image = image;
         this.email = email;
+        this.bmi = bmi;
         this.bmrReport = bmrReport;
+        this.healthIssues = healthIssues;
+        this.foodAllergy = foodAllergy;
     }
 
+    public User(String userId, String name, String gender, Date accCreateDttm, boolean isTrainer, Date lastModDttm, String image, String email) {
+        this.userId = userId;
+        this.name = name;
+        this.bmr = 0.0;
+        this.dateOfBirth = Calendar.getInstance().getTime();
+        this.gender = gender;
+        this.weight = 0.00;
+        this.height = 0.00;
+        this.bmi = 0.00;
+        this.accCreateDttm = accCreateDttm;
+        this.isTrainer = isTrainer;
+        this.lastModDttm = lastModDttm;
+        this.image = image;
+        this.email = email;
+        this.bmrReport = new ArrayList<>();
+    }
     public User() {
     }
 
@@ -76,12 +102,22 @@ public class User {
         this.name = name;
     }
 
+    public void setBmr(Double weight, Double height,String gender, Integer age) {
+        Double bmi = bmrCalculation(weight,height,gender,age);
+        this.bmi = bmi;
+    }
+
     public Double getBmr() {
         return bmr;
     }
 
-    public void setBmr(Double bmr) {
-        this.bmr = bmr;
+    public void setBmi(Double weight, Double height) {
+        Double bmi = bmiCalculation(weight,height);
+        this.bmi = bmi;
+    }
+
+    public Double getBmi() {
+        return bmi;
     }
 
     public Date getDateOfBirth() {
@@ -177,5 +213,28 @@ public class User {
             bmr = bmr - 161;
         }
         return bmr;
+    }
+
+    public Double bmiCalculation(Double weight, Double height) {
+        Double weightBmi = weight;
+        Double heightBmi = height/100;
+        Double bmi = weightBmi/heightBmi;
+        return bmi;
+    }
+
+    public HashMap<String,String> getHealthIssues() {
+        return healthIssues;
+    }
+
+    public void setHealthIssues(HashMap<String,String> healthIssues) {
+        this.healthIssues = healthIssues;
+    }
+
+    public HashMap<String,String> getfoodAllergy() {
+        return foodAllergy;
+    }
+
+    public void setfoodAllergy(HashMap<String,String> foodAllergy) {
+        this.foodAllergy = foodAllergy;
     }
 }

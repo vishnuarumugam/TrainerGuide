@@ -1,0 +1,57 @@
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/parent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:backgroundTint="#FACC2E"
+    app:cardCornerRadius="10dp"
+    android:layout_margin="15dp"
+    android:layout_marginHorizontal="10dp"
+    app:cardElevation="5dp"
+    app:layout_constraintCircleRadius="5dp">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="#FACC2E">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_centerVertical="true"
+                android:id="@+id/profileItemTextRelativeLay">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/profileItem"
+                    android:layout_centerInParent="true"
+                    android:text="Thyroid"
+                    android:textColor="#FFFFFF"
+                    style="@style/TextAppearance.AppCompat.Medium"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="5dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/profileItemClose"
+                    android:background="@drawable/ic_close"
+                    android:layout_centerInParent="true"
+                    android:layout_alignParentEnd="true"/>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+</com.google.android.material.card.MaterialCardView>

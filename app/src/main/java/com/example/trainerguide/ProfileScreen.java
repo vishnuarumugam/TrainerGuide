@@ -1,17 +1,46 @@
 package com.example.trainerguide;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.transition.AutoTransition;
+import android.transition.TransitionManager;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.trainerguide.models.Trainer;
+import com.example.trainerguide.models.User;
+import com.example.trainerguide.models.UserMetaData;
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class ProfileScreen extends AppCompatActivity {
 
@@ -20,6 +49,34 @@ public class ProfileScreen extends AppCompatActivity {
     private NavigationView navigationView;
     private Toolbar toolbar;
     private MenuItem profileMenu, logoutMenu, shareMenu, ratingMenu, traineeMenu;
+
+    //Recycler view variables
+    private RecyclerView profileRecyclerHealth, profileRecyclerFood;
+    private List<String> healthItems = new ArrayList<>();
+    private List<String> foodAllergy = new ArrayList<>();
+    private ProfileAdapter profileAdapter, profileAdapterFood;
+    private RelativeLayout profileOtherRelativeLayFood;
+
+
+    //Trainer Data
+    private static Trainer trainer = new Trainer();
+
+
+    //ProfileScreen Variables
+    private ImageButton profileImage;
+    MaterialCardView accCardView, personalInfoCardView, foodInfoCardView, healthInfoCardView;
+    TextView profileAccDrop, profilePersonalInfoDrop, profileFoodInfoDrop, profileWeight, profileHeight, profileHealthInfoDrop, foodAllergyOther;
+    RelativeLayout accRelativeCollapse, personalRelativeCollapse, foodInfoRelativeCollapse, dobRelativeLay;
+    LinearLayout healthInfoLinearCollapse;
+
+    private String userId;
+    private String path;
+
+    //Common variables
+    private Intent intent;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,9 +95,132 @@ public class ProfileScreen extends AppCompatActivity {
         ActionBarDrawerToggle toggle = CommonNavigator.navigatorInitmethod(drawerLayout,navigationView,toolbar,this);
         toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.appleGreen));
 
+
+        //ProfileScreen variables
+        profileImage = findViewById(R.id.profileImage);
+
+            //Account Info variables
+            accCardView = findViewById(R.id.accCardView);
+            profileAccDrop = findViewById(R.id.profileAccDrop);
+            accRelativeCollapse = findViewById(R.id.accRelativeCollapse);
+            //Personal Info variables
+            personalInfoCardView = findViewById(R.id.personalInfoCardView);
+            profilePersonalInfoDrop = findViewById(R.id.profilePersonalInfoDrop);
+            personalRelativeCollapse = findViewById(R.id.personalRelativeCollapse);
+            profileWeight = findViewById(R.id.profileWeight);
+            profileHeight = findViewById(R.id.profileHeight);
+            dobRelativeLay = findViewById(R.id.dobRelativeLay);
+
+            //Food Info variables
+            foodInfoCardView = findViewById(R.id.foodInfoCardView);
+            profileFoodInfoDrop = findViewById(R.id.profileFoodInfoDrop);
+            foodInfoRelativeCollapse = findViewById(R.id.foodInfoRelativeCollapse);
+            profileOtherRelativeLayFood = findViewById(R.id.profileOtherRelativeLayFood);
+            foodAllergyOther = findViewById(R.id.foodAllergyOther);
+
+        //Health Info variables
+        healthInfoCardView = findViewById(R.id.healthInfoCardView);
+        healthInfoLinearCollapse = findViewById(R.id.healthInfoLinearCollapse);
+        profileHealthInfoDrop = findViewById(R.id.profileHealthInfoDrop);
+
         //Menu Item variables
         profileMenu = findViewById(R.id.nav_profile);
         traineeMenu = findViewById(R.id.nav_trainees);
+        //User Info variables
+        userId = getIntent().getStringExtra("UserId");
+        path = "Trainer/" + userId;
+
+        //Get User Details
+        PopulateUserDetails();
+
+        //Health Recycler view variables
+        profileRecyclerHealth = findViewById(R.id.profileRecyclerHealth);
+        profileRecyclerHealth.setLayoutManager(new GridLayoutManager(this,2));
+        profileAdapter = new ProfileAdapter(healthItems, ProfileScreen.this);
+        profileRecyclerHealth.setAdapter(profileAdapter);
+
+        //Food Recycler view variables
+        profileRecyclerFood = findViewById(R.id.profileRecyclerFoodIssues);
+        profileRecyclerFood.setLayoutManager(new GridLayoutManager(this,2));
+        profileAdapterFood = new ProfileAdapter(foodAllergy, ProfileScreen.this);
+        profileRecyclerFood.setAdapter(profileAdapterFood);
+
+
+        dobRelativeLay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(ProfileScreen.this, "DOb Clicked", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        accCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (accRelativeCollapse.getVisibility() == View.GONE){
+                    TransitionManager.beginDelayedTransition(accCardView,new AutoTransition());
+                    accRelativeCollapse.setVisibility(View.VISIBLE);
+                    profileAccDrop.setBackgroundResource(R.drawable.ic_baseline_arrow_drop_up);
+
+                }else {
+                    TransitionManager.beginDelayedTransition(accCardView,new AutoTransition());
+                    accRelativeCollapse.setVisibility(View.GONE);
+                    profileAccDrop.setBackgroundResource(R.drawable.ic_dropdown_arrow_down);
+                }
+            }
+        });
+
+        personalInfoCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (personalRelativeCollapse.getVisibility() == View.GONE){
+                    TransitionManager.beginDelayedTransition(personalInfoCardView,new AutoTransition());
+                    personalRelativeCollapse.setVisibility(View.VISIBLE);
+                    profilePersonalInfoDrop.setBackgroundResource(R.drawable.ic_baseline_arrow_drop_up);
+
+                }else {
+                    TransitionManager.beginDelayedTransition(personalInfoCardView,new AutoTransition());
+                    personalRelativeCollapse.setVisibility(View.GONE);
+                    profilePersonalInfoDrop.setBackgroundResource(R.drawable.ic_dropdown_arrow_down);
+                }
+            }
+        });
+
+        foodInfoCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (foodInfoRelativeCollapse.getVisibility() == View.GONE){
+                    TransitionManager.beginDelayedTransition(foodInfoCardView,new AutoTransition());
+                    foodInfoRelativeCollapse.setVisibility(View.VISIBLE);
+                    profileFoodInfoDrop.setBackgroundResource(R.drawable.ic_baseline_arrow_drop_up);
+
+                }else {
+                    TransitionManager.beginDelayedTransition(foodInfoCardView,new AutoTransition());
+                    foodInfoRelativeCollapse.setVisibility(View.GONE);
+                    profileFoodInfoDrop.setBackgroundResource(R.drawable.ic_dropdown_arrow_down);
+                }
+            }
+        });
+
+        healthInfoCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (healthInfoLinearCollapse.getVisibility() == View.GONE){
+                    TransitionManager.beginDelayedTransition(healthInfoCardView,new AutoTransition());
+                    healthInfoLinearCollapse.setVisibility(View.VISIBLE);
+                    profileHealthInfoDrop.setBackgroundResource(R.drawable.ic_baseline_arrow_drop_up);
+
+                }else {
+                    TransitionManager.beginDelayedTransition(healthInfoCardView,new AutoTransition());
+                    healthInfoLinearCollapse.setVisibility(View.GONE);
+                    profileHealthInfoDrop.setBackgroundResource(R.drawable.ic_dropdown_arrow_down);
+                }
+            }
+        });
+
         //Method to re-direct the page from menu
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -49,11 +229,15 @@ public class ProfileScreen extends AppCompatActivity {
                     case R.id.nav_profile:
                         break;
                     case R.id.nav_trainees:
-                        startActivity(new Intent(ProfileScreen.this,TraineesScreen.class));
+                        intent=new Intent(ProfileScreen.this,TraineesScreen.class);
+                        System.out.println("***Pro***H**"+userId+"**S******");
+                        intent.putExtra("UserId",userId);
+                        startActivity(intent);
                         finish();
                         break;
                     case R.id.nav_logout:
-                        startActivity(new Intent(ProfileScreen.this,MainActivity.class));
+                        intent=new Intent(ProfileScreen.this,MainActivity.class);
+                        startActivity(intent);
                         finish();
                         break;
                     default:
@@ -63,6 +247,99 @@ public class ProfileScreen extends AppCompatActivity {
             }
         });
 
+
+    }
+
+
+    //Method to populate Trainee data
+    public void populateRecyclerData(){
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(path+"/healthIssues");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                healthItems = new ArrayList<>();
+
+                for(DataSnapshot healthIssue : snapshot.getChildren()){
+
+                    healthItems.add(healthIssue.getValue().toString());
+                }
+
+                profileAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+    }
+
+    public void PopulateUserDetails(){
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(path);
+
+        System.out.println(path);
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                System.out.println("********OnDataChange*******");
+                Trainer user = snapshot.getValue(Trainer.class);
+                trainer = user;
+                System.out.println("********"+user+"*******");
+                //profileName.setText(user.getName());
+                profileWeight.setText(user.getWeight().toString() + " in kgs");
+                profileHeight.setText(user.getHeight().toString() + " in cms");
+                Picasso.get().load(user.getImage())
+                        .placeholder(R.drawable.ic_share)
+                        .fit()
+                        .centerCrop()
+                        .into(profileImage);
+
+
+                //Health Issue Recycler View Data
+                if(user.getHealthIssues()!=null) {
+                    healthItems.clear();
+
+                    for (Map.Entry healthIssue : user.getHealthIssues().entrySet()) {
+
+                        if (!"Others".equals(healthIssue.getKey())){
+                            healthItems.add(healthIssue.getValue().toString());
+                        }
+                        else{
+
+                        }
+
+
+                    }
+                    profileAdapter.notifyDataSetChanged();
+                }
+
+                //Food Allergy Recycler View Data
+                if(user.getfoodAllergy()!=null) {
+                    foodAllergy.clear();
+                    for (Map.Entry  foodAllergyItem : user.getfoodAllergy().entrySet()) {
+
+                        if (!"Others".equals(foodAllergyItem.getKey())){
+                            foodAllergy.add(foodAllergyItem.getValue().toString());
+                        }
+                        else{
+                            profileOtherRelativeLayFood.setVisibility(View.VISIBLE);
+                            foodAllergyOther.setText(foodAllergyItem.getValue().toString());
+
+                        }
+                    }
+                }
+                profileAdapterFood.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
     @Override
     public void onBackPressed()

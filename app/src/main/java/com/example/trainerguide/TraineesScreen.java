@@ -14,7 +14,9 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.trainerguide.models.Trainer;
 import com.example.trainerguide.models.User;
+import com.example.trainerguide.models.UserMetaData;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,6 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class TraineesScreen extends AppCompatActivity {
@@ -35,13 +38,18 @@ public class TraineesScreen extends AppCompatActivity {
 
     //Recycler view variables
     private RecyclerView traineeRecycler;
-    private List<User> traineesList = new ArrayList<>();
+    private List<UserMetaData> traineesList = new ArrayList<>();
     private TraineeAdapter traineeAdapter;
 
     //Firebase variables
-    private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users");
     private ValueEventListener valueEventListener;
 
+    //User Detail variables
+    private String userId;
+    private String path;
+
+    //Common variables
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +60,7 @@ public class TraineesScreen extends AppCompatActivity {
         drawerLayout = findViewById(R.id.trainee_drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.tool_bar);
-
+        System.out.println("InsideTrainess");
         //Toolbar customisation
         setSupportActionBar(toolbar);
         toolbar.setBackgroundColor(getResources().getColor(R.color.black));
@@ -63,16 +71,23 @@ public class TraineesScreen extends AppCompatActivity {
         //Menu Item variables
         profileMenu = findViewById(R.id.nav_profile);
         traineeMenu = findViewById(R.id.nav_trainees);
+
         //Method to re-direct the page from menu
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.nav_profile:
-                        startActivity(new Intent(TraineesScreen.this,ProfileScreen.class));
+                        intent = new Intent(TraineesScreen.this,ProfileScreen.class);
+                        intent.putExtra("UserId",userId);
+                        startActivity(intent);
                         finish();
                         break;
                     case R.id.nav_trainees:
+                        break;
+                    case R.id.nav_trainer:
+                        startActivity(new Intent(TraineesScreen.this,TrainerScreen.class));
+                        finish();
                         break;
                     case R.id.nav_logout:
                         startActivity(new Intent(TraineesScreen.this,MainActivity.class));
@@ -88,30 +103,48 @@ public class TraineesScreen extends AppCompatActivity {
         traineeRecycler = findViewById(R.id.traineeRecycler);
         traineeRecycler.setLayoutManager(new LinearLayoutManager(this));
         traineeAdapter = new TraineeAdapter(TraineesScreen.this,traineesList);
-        traineeRecycler.setAdapter(traineeAdapter);
-        //Method to populate Trainee data
-        valueEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
+
+        userId = getIntent().getStringExtra("UserId");
+        path = "Trainer/" + userId + "/usersList";
+        //path = "Trainer/" + userId;
+        System.out.println("******"+userId+"******");
+        populateTraineesData();
+
+
+    }
+
+    //Method to populate Trainee data
+    public void populateTraineesData(){
+        System.out.println("******T**"+userId+"**S******");
+        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(path);;
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                System.out.println("********OnDataChange*******");
+                //Trainer trainerobj = snapshot.getValue(Trainer.class);
+                //HashMap<String,UserMetaData> users =  trainerobj.getUsersList();
 
-                for (DataSnapshot dataSnapshot:snapshot.getChildren()){
-                     User user = dataSnapshot.getValue(User.class);
-                     traineesList.add(user);
+                for(DataSnapshot users : snapshot.getChildren()){
+                    traineesList.add(users.getValue(UserMetaData.class));
                 }
-
+                //traineesList.addAll(users);
                 traineeAdapter.notifyDataSetChanged();
-            }
+
+                /*UserMetaData user = new UserMetaData("Satha" + System.currentTimeMillis(), "Satha", 0.00, "image");
+                *//*trainerobj.setUser(user);
+                databaseReference.setValue(trainerobj);*//*
+                HashMap hash= new HashMap();
+                hash.put(user.getUserId(),user);
+                databaseReference.child(user.getUserId()).setValue(user);*/
+                }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+                System.out.println("********onCancelled*******");
 
             }
         });
-    }
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        databaseReference.removeEventListener(valueEventListener);
+            traineeRecycler.setAdapter(traineeAdapter);
     }
 
     @Override
@@ -126,4 +159,5 @@ public class TraineesScreen extends AppCompatActivity {
             super.onBackPressed();
         }
     }
+
 }
