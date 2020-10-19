@@ -24,6 +24,16 @@
 
                 <include layout="@layout/common_toolbar"/>
 
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/searchBox"
+                    android:layout_margin="15dp"
+                    android:backgroundTint="#F4F4F4"
+                    android:hint="\tSearch Trainer Name"
+                    android:background="@drawable/round_shape"
+                    />
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

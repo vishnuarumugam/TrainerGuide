@@ -11,7 +11,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.MenuItem;
+import android.widget.EditText;
 
 import com.example.trainerguide.models.Trainer;
 import com.example.trainerguide.models.User;
@@ -32,6 +35,7 @@ public class TrainerScreen extends AppCompatActivity {
     private NavigationView navigationView;
     private Toolbar toolbar;
     private MenuItem profileMenu, logoutMenu, shareMenu, ratingMenu, traineeMenu;
+    private EditText searchBox;
 
     //Recycler view variables
     private RecyclerView trainerRecycler;
@@ -51,6 +55,25 @@ public class TrainerScreen extends AppCompatActivity {
         drawerLayout = findViewById(R.id.trainer_drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.tool_bar);
+
+        //Search Box
+        searchBox = findViewById(R.id.searchBox);
+        searchBox.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                filter(s.toString());
+            }
+        });
 
         //Toolbar customisation
         setSupportActionBar(toolbar);
@@ -109,6 +132,18 @@ public class TrainerScreen extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void filter(String Searchtext) {
+        ArrayList<Trainer> filteredList = new ArrayList<>();
+        for(Trainer trainer : trainersList)
+        {
+            if(trainer.getName().toLowerCase().contains(Searchtext.toLowerCase()))
+            {
+                filteredList.add(trainer);
+            }
+        }
+        trainerAdapter.filterList(filteredList);
     }
 
     @Override

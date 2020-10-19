@@ -8,6 +8,33 @@ import java.util.Map;
 
 public class Trainer extends User {
     private HashMap<String,UserMetaData> usersList;
+    private String fees;
+    private String description;
+    private String experience;
+
+    public String getFees() {
+        return fees;
+    }
+
+    public void setFees(String fees) {
+        this.fees = fees;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getExperience() {
+        return experience;
+    }
+
+    public void setExperience(String experience) {
+        this.experience = experience;
+    }
 
     public HashMap<String,UserMetaData> getUsersList() {
         return usersList;
@@ -26,7 +53,10 @@ public class Trainer extends User {
         this.usersList = usersList;
     }
 
-    public Trainer(String userId, String name, Double bmr, Double bmi, Date dateOfBirth, String gender, Double weight, Double height, Date accCreateDttm, boolean isTrainer, Date lastModDttm, String image, String email, List<BmrProgress> bmrReport, HashMap<String,UserMetaData> usersList,HashMap<String,String> healthIssues, HashMap<String,String> foodAllergy) {
+    public Trainer(String userId, String name, Double bmr, Double bmi, Date dateOfBirth, String gender, Double weight, Double height, Date accCreateDttm, boolean isTrainer,
+                   Date lastModDttm, String image, String email, List<BmrProgress> bmrReport, String fees, String description, String experience,
+                   HashMap<String,UserMetaData> usersList,HashMap<String,String> healthIssues,
+                   HashMap<String,String> foodAllergy) {
         super(userId, name, bmr,bmi, dateOfBirth, gender, weight, height, accCreateDttm, isTrainer, lastModDttm, image, email, bmrReport,new HashMap<String, String>(),new HashMap<String, String>());
         this.usersList = usersList;
     }

@@ -27,7 +27,8 @@ public class TrainerAdapter extends  RecyclerView.Adapter<TrainerAdapter.ViewHol
         System.out.println("items Trainer");
 
         holder.name.setText(trainers.get(position).getName());
-        holder.bmi.setText(trainers.get(position).getBmr().toString());
+        holder.experiance.setText(trainers.get(position).getExperience().toString());
+        holder.fees.setText(trainers.get(position).getFees().toString());
         Picasso.get().load(trainers.get(position).getImage())
                 .fit()
                 .placeholder(R.drawable.ic_share)
@@ -48,19 +49,25 @@ public class TrainerAdapter extends  RecyclerView.Adapter<TrainerAdapter.ViewHol
         return trainers.size();
     }
 
+    public void filterList(ArrayList<Trainer> filteredList){
+        trainers = filteredList;
+        notifyDataSetChanged();
+    }
+
     public TrainerAdapter(List<Trainer> trainers, Context context) {
         this.trainers = trainers;
         this.context = context;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        TextView name, bmi;
+        TextView name, experiance, fees;
         ImageView profileImage;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.trainerItemName);
-            bmi = itemView.findViewById(R.id.trainerItemBmi);
+            experiance = itemView.findViewById(R.id.trainerItemExp);
+            fees = itemView.findViewById(R.id.trainerItemFee);
             profileImage = itemView.findViewById(R.id.trainerProfileImage);
         }
     }
