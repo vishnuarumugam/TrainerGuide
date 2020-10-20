@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
@@ -76,6 +77,7 @@ public class ProfileScreen extends AppCompatActivity {
     private NavigationView navigationView;
     private Toolbar toolbar;
     private MenuItem profileMenu, logoutMenu, shareMenu, ratingMenu, traineeMenu;
+    private ProgressDialog progressDialog;
 
     //Recycler view variables
     private RecyclerView profileRecyclerHealth, profileRecyclerFood;
@@ -84,10 +86,8 @@ public class ProfileScreen extends AppCompatActivity {
     private ProfileAdapter profileAdapter, profileAdapterFood;
     private RelativeLayout profileOtherRelativeLayFood;
 
-
     //Trainer Data
     private static Trainer trainer = new Trainer();
-
 
     //ProfileScreen Variables
     private ImageButton profileImage;
@@ -102,13 +102,13 @@ public class ProfileScreen extends AppCompatActivity {
     //Common variables
     private Intent intent;
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_screen);
+
+        //Initialize Progress Dialog
+        progressDialog = new ProgressDialog(getApplicationContext());
 
         //Navigation view variables
         drawerLayout = findViewById(R.id.profile_drawer_layout);
@@ -400,6 +400,12 @@ public class ProfileScreen extends AppCompatActivity {
     public void PopulateUserDetails(){
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(path);
+        //Show Progress Dialog
+        progressDialog.show();
+        //Set Content
+        progressDialog.setContentView(R.layout.progressdialog);
+        //Set Transparent Background
+        progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 
         System.out.println(path);
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -417,6 +423,9 @@ public class ProfileScreen extends AppCompatActivity {
                         .fit()
                         .centerCrop()
                         .into(profileImage);
+
+                //Dismiss Progress Dialog
+                progressDialog.dismiss();
 
 
                 //Health Issue Recycler View Data
