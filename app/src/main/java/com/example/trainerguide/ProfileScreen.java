@@ -48,6 +48,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
@@ -102,13 +103,17 @@ public class ProfileScreen extends AppCompatActivity {
     //Common variables
     private Intent intent;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_screen);
 
+        storageReference = FirebaseStorage.getInstance().getReference();
+
+
         //Initialize Progress Dialog
-        progressDialog = new ProgressDialog(getApplicationContext());
+        progressDialog = new ProgressDialog(this);
 
         //Navigation view variables
         drawerLayout = findViewById(R.id.profile_drawer_layout);
@@ -176,7 +181,6 @@ public class ProfileScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Filechooser();
-                uploadFile();
             }
         });
 
@@ -265,7 +269,6 @@ public class ProfileScreen extends AppCompatActivity {
                         break;
                     case R.id.nav_trainees:
                         intent=new Intent(ProfileScreen.this,TraineesScreen.class);
-                        System.out.println("***Pro***H**"+userId+"**S******");
                         intent.putExtra("UserId",userId);
                         startActivity(intent);
                         finish();
@@ -299,13 +302,17 @@ public class ProfileScreen extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         if(requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE && resultCode == RESULT_OK)
         {
             Uri uri = CropImage.getPickImageResultUri(this,data);
+            imageUri = uri;
             if(CropImage.isReadExternalStoragePermissionsRequired(this,uri))
             {
-                imageUri = uri;
+
                 requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},0);
+                StartCrop(imageUri);
+
             }
             else {
                 StartCrop(imageUri);
@@ -316,7 +323,7 @@ public class ProfileScreen extends AppCompatActivity {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if(resultCode == RESULT_OK)
             {
-                imageUri = result.getUri();
+                uploadFile(result.getUri());
             }
         }
     }
@@ -334,11 +341,14 @@ public class ProfileScreen extends AppCompatActivity {
         return mime.getExtensionFromMimeType(CR.getType(imageUri));
     }
 
-    private void uploadFile() {
+    private void uploadFile(Uri imageUri) {
+
         if(imageUri!= null)
         {
-            final StorageReference fileReference = storageReference.child("User").child(FirebaseAuth.getInstance().getUid());
+
+            final StorageReference fileReference = storageReference.child("FitnessGuide/Trainer").child(FirebaseAuth.getInstance().getUid()+".null");
             final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(path);
+
 
             uploadTask = fileReference.putFile(imageUri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {

@@ -7,7 +7,7 @@
         <item name="colorAccent">@color/colorAccent</item>-->
     </style>
 
-    <style name="RadioButtonStyle" parent="Theme.MaterialComponents.Light">
+    <style name="RadioButtonStyle" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorAccent">@color/appleGreen</item>
     </style>
 

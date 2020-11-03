@@ -45,11 +45,10 @@ public class MainActivity extends AppCompatActivity {
 
         Button loginButton = findViewById(R.id.btnLogin);
 
-       /* if(fAuth!=null)
+        if(fAuth!=null)
         {
             startActivity(new Intent(getApplicationContext(),HomeScreen.class));
-        }*/
-
+        }
 
 
         loginButton.setOnClickListener(new View.OnClickListener() {
