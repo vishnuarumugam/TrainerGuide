@@ -231,23 +231,23 @@ public class TrainerScreen extends AppCompatActivity {
 
     private void parseResult(JSONArray jsonArray) {
         //Use for loop
-        for(int i=0; i<jsonArray.length(); i++){
+        for(int i=1; i<jsonArray.length(); i++){
             try {
-                if(trainersList.size()+limit > i){
+                if(i <= trainersList.size()+limit && i >= trainersList.size()){
+                    //Initialize JSON object
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    //Initialize Trainer Data
+                    Trainer trainer = new Trainer();
+                    //SetImage
+                    trainer.setImage(jsonObject.getString("image"));
+                    //trainer.setDescription(jsonObject.getString(""));
+                    //trainer.setExperience(jsonObject.getString(""));
+                    //trainer.setFees(jsonObject.getString(""));
 
+                    //Add Data
+                    trainersList.add(trainer);
                 }
-                //Initialize JSON object
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                //Initialize Trainer Data
-                Trainer trainer = new Trainer();
-                //SetImage
-                trainer.setImage(jsonObject.getString("image"));
-                //trainer.setDescription(jsonObject.getString(""));
-                //trainer.setExperience(jsonObject.getString(""));
-                //trainer.setFees(jsonObject.getString(""));
 
-                //Add Data
-                trainersList.add(trainer);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
