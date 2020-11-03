@@ -231,9 +231,10 @@ public class TrainerScreen extends AppCompatActivity {
 
     private void parseResult(JSONArray jsonArray) {
         //Use for loop
+
         for(int i=1; i<jsonArray.length(); i++){
             try {
-                if(i <= trainersList.size()+limit && i >= trainersList.size()){
+                if(i <= trainersList.size()+limit && i >= trainersList.size() && trainersList.size() <= jsonArray.length()){
                     //Initialize JSON object
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
                     //Initialize Trainer Data
