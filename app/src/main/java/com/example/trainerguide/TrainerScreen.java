@@ -186,11 +186,11 @@ public class TrainerScreen extends AppCompatActivity {
         //Create interface
         PaginationInterface paginationInterface = retrofit.create((PaginationInterface.class));
         //Initialize Call
-        Call<String> call = paginationInterface.STRING_CALL(page,limit);
+        Call<Trainer> call = paginationInterface.STRING_CALL(page,limit);
 
-        call.enqueue(new Callback<String>() {
+        call.enqueue(new Callback<Trainer>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
+            public void onResponse(Call<Trainer> call, Response<Trainer> response) {
                 //Check Condition
                 if(response.isSuccessful() && response.body() != null){
                     // When response is successful and not empty
@@ -198,7 +198,7 @@ public class TrainerScreen extends AppCompatActivity {
                     progressBar.setVisibility(View.GONE);
 
                     try {
-                        JSONObject object = new JSONObject(response.body());
+                        /*JSONObject object = new JSONObject(response.body());
 
                         Iterator x = object.keys();
                         JSONArray jsonArray = new JSONArray();
@@ -206,12 +206,12 @@ public class TrainerScreen extends AppCompatActivity {
                         while (x.hasNext()){
                             String key = (String) x.next();
                             jsonArray.put(object.get(key));
-                        }
+                        }*/
 
                         //jsonArray.getJSONObject(1)
                         //JSONArray Jarray  = (JSONArray) object.getJSONArray("Trainer");
                         //Initialize JSON Array
-                        //JSONArray jsonArray = new JSONArray(response.body());
+                        JSONArray jsonArray = new JSONArray(response.body());
                         //Parse JSON Array
                         parseResult(jsonArray);
                     } catch (JSONException e) {
@@ -221,7 +221,7 @@ public class TrainerScreen extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(Call<Trainer> call, Throwable t) {
 
             }
         });
@@ -234,7 +234,7 @@ public class TrainerScreen extends AppCompatActivity {
 
         for(int i=1; i<jsonArray.length(); i++){
             try {
-                if(i <= trainersList.size()+limit && i >= trainersList.size() && trainersList.size() <= jsonArray.length()){
+                //if(i <= trainersList.size()+limit && i >= trainersList.size() && trainersList.size() <= jsonArray.length()){
                     //Initialize JSON object
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
                     //Initialize Trainer Data
@@ -247,7 +247,7 @@ public class TrainerScreen extends AppCompatActivity {
 
                     //Add Data
                     trainersList.add(trainer);
-                }
+               // }
 
             } catch (JSONException e) {
                 e.printStackTrace();
