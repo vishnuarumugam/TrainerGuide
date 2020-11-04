@@ -61,6 +61,7 @@ public class TrainerScreen extends AppCompatActivity {
     private RecyclerView trainerRecycler;
     private List<Trainer> trainersList = new ArrayList<>();
     private TrainerAdapter trainerAdapter;
+    private String startAt=null;
 
     //Firebase variables
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Trainer");
@@ -140,7 +141,7 @@ public class TrainerScreen extends AppCompatActivity {
         trainerRecycler.setAdapter(trainerAdapter);
 
         //Pagination Get Data
-        getData(page,limit);
+        getData("$key",null,limit);
 
         nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
@@ -153,7 +154,7 @@ public class TrainerScreen extends AppCompatActivity {
                     //Show Progress Bar
                     progressBar.setVisibility(View.VISIBLE);
                     //Call Method
-                    getData(page,limit);
+                    getData("$key",startAt,limit);
                 }
             }
         });
@@ -176,7 +177,7 @@ public class TrainerScreen extends AppCompatActivity {
 
     }
 
-    private void getData(int page, int limit) {
+    private void getData(String orderBy, String startAt, int limit) {
         //Initialize Retrofit
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -186,7 +187,7 @@ public class TrainerScreen extends AppCompatActivity {
         //Create interface
         PaginationInterface paginationInterface = retrofit.create((PaginationInterface.class));
         //Initialize Call
-        Call<String> call = paginationInterface.STRING_CALL(page,limit);
+        Call<String> call = paginationInterface.STRING_CALL(orderBy, startAt,limit);
 
         call.enqueue(new Callback<String>() {
             @Override
@@ -236,9 +237,9 @@ public class TrainerScreen extends AppCompatActivity {
     private void parseResult(JSONArray jsonArray) {
         //Use for loop
 
-        for(int i=1; i<jsonArray.length(); i++){
+        for(int i=0; i<jsonArray.length()-1; i++){
             try {
-                if(i <= trainersList.size()+limit && i >= trainersList.size() && trainersList.size() <= jsonArray.length()){
+                //if(i <= trainersList.size()+limit && i >= trainersList.size() && trainersList.size() <= jsonArray.length()){
                     //Initialize JSON object
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
                     //Initialize Trainer Data
@@ -251,11 +252,20 @@ public class TrainerScreen extends AppCompatActivity {
 
                     //Add Data
                     trainersList.add(trainer);
-                }
+                //}
+
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+        }
+        try {
+            if(jsonArray.length()-1 <0) {
+                JSONObject jsonObject = jsonArray.getJSONObject(jsonArray.length() - 1);
+                startAt = jsonObject.getString("userId");
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
 
         //Initialize Adapter
