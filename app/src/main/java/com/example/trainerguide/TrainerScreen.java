@@ -48,7 +48,7 @@ public class TrainerScreen extends AppCompatActivity {
     //Pagination
     NestedScrollView nestedScrollView;
     ProgressBar progressBar;
-    int page =1,limit = 3;
+    int page =1,limit = 2;
 
     //Navigation view variables
     private DrawerLayout drawerLayout;
@@ -186,32 +186,36 @@ public class TrainerScreen extends AppCompatActivity {
         //Create interface
         PaginationInterface paginationInterface = retrofit.create((PaginationInterface.class));
         //Initialize Call
-        Call<Trainer> call = paginationInterface.STRING_CALL(page,limit);
+        Call<String> call = paginationInterface.STRING_CALL(page,limit);
 
-        call.enqueue(new Callback<Trainer>() {
+        call.enqueue(new Callback<String>() {
             @Override
-            public void onResponse(Call<Trainer> call, Response<Trainer> response) {
+            public void onResponse(Call<String> call, Response<String> response) {
                 //Check Condition
+                System.out.println("**call*"+call);
+
                 if(response.isSuccessful() && response.body() != null){
                     // When response is successful and not empty
                     //Hide progress bar
                     progressBar.setVisibility(View.GONE);
 
                     try {
-                        /*JSONObject object = new JSONObject(response.body());
+                        JSONObject object = new JSONObject(response.body());
 
                         Iterator x = object.keys();
+
+                        System.out.println("**object*"+object);
                         JSONArray jsonArray = new JSONArray();
 
                         while (x.hasNext()){
                             String key = (String) x.next();
                             jsonArray.put(object.get(key));
-                        }*/
+                        }
 
                         //jsonArray.getJSONObject(1)
                         //JSONArray Jarray  = (JSONArray) object.getJSONArray("Trainer");
                         //Initialize JSON Array
-                        JSONArray jsonArray = new JSONArray(response.body());
+                        //JSONArray jsonArray = new JSONArray(response.body());
                         //Parse JSON Array
                         parseResult(jsonArray);
                     } catch (JSONException e) {
@@ -221,7 +225,7 @@ public class TrainerScreen extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Trainer> call, Throwable t) {
+            public void onFailure(Call<String> call, Throwable t) {
 
             }
         });
@@ -234,20 +238,20 @@ public class TrainerScreen extends AppCompatActivity {
 
         for(int i=1; i<jsonArray.length(); i++){
             try {
-                //if(i <= trainersList.size()+limit && i >= trainersList.size() && trainersList.size() <= jsonArray.length()){
+                if(i <= trainersList.size()+limit && i >= trainersList.size() && trainersList.size() <= jsonArray.length()){
                     //Initialize JSON object
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
                     //Initialize Trainer Data
                     Trainer trainer = new Trainer();
                     //SetImage
                     trainer.setImage(jsonObject.getString("image"));
-                    //trainer.setDescription(jsonObject.getString(""));
-                    //trainer.setExperience(jsonObject.getString(""));
+                    //trainer.setDescription(jsonObject.getString("email"));
+                    trainer.setExperience(jsonObject.getString("email"));
                     //trainer.setFees(jsonObject.getString(""));
 
                     //Add Data
                     trainersList.add(trainer);
-               // }
+                }
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -255,6 +259,7 @@ public class TrainerScreen extends AppCompatActivity {
         }
 
         //Initialize Adapter
+        System.out.println("size"+trainersList.size());
         trainerAdapter = new TrainerAdapter(trainersList,TrainerScreen.this);
         //Set Adapter
         trainerRecycler.setAdapter(trainerAdapter);

@@ -8,7 +8,7 @@ import retrofit2.http.Query;
 
 public interface PaginationInterface {
     @GET("/Trainer.json")
-    Call<Trainer> STRING_CALL(
+    Call<String> STRING_CALL(
             @Query("page") int page,
             @Query("limit") int limit
     );
