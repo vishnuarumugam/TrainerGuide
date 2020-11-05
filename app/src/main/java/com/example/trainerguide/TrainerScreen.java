@@ -52,6 +52,7 @@ public class TrainerScreen extends AppCompatActivity {
     int page =1,limit = 3;
     private String startAt="\"\"";
     Boolean scroll = true;
+
     //Navigation view variables
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;

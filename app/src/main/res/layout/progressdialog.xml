@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center">
 <LinearLayout
     android:layout_width="wrap_content"
@@ -9,7 +11,22 @@
     android:padding="25dp"
     android:orientation="vertical"
     android:background="@drawable/round_shape">
-    <ProgressBar
+    <com.agrawalsuneet.dotsloader.loaders.LazyLoader
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lazyloader"
+        android:layout_margin="20dp"
+        android:layout_marginTop="30dp"
+        app:lazyloader_animDur="500"
+        app:lazyloader_dotsDist="10dp"
+        app:lazyloader_dotsRadius="10dp"
+        app:lazyloader_firstDelayDur="150"
+        app:lazyloader_firstDotColor="@color/grey"
+        app:lazyloader_interpolator="@android:anim/decelerate_interpolator"
+        app:lazyloader_secondDelayDur="300"
+        app:lazyloader_secondDotColor="@color/appleGreen"
+        app:lazyloader_thirdDotColor="@color/black" />
+    <!--<ProgressBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <TextView
@@ -18,7 +35,7 @@
         android:text="Loading..."
         android:textSize="25dp"
         android:textStyle="italic|bold"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="10dp"/>-->
 
 </LinearLayout>
 </RelativeLayout>
