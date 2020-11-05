@@ -27,6 +27,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.core.SyncEngine;
 import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
@@ -48,8 +49,9 @@ public class TrainerScreen extends AppCompatActivity {
     //Pagination
     NestedScrollView nestedScrollView;
     ProgressBar progressBar;
-    int page =1,limit = 2;
-
+    int page =1,limit = 3;
+    private String startAt="\"\"";
+    Boolean scroll = true;
     //Navigation view variables
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
@@ -61,7 +63,7 @@ public class TrainerScreen extends AppCompatActivity {
     private RecyclerView trainerRecycler;
     private List<Trainer> trainersList = new ArrayList<>();
     private TrainerAdapter trainerAdapter;
-    private String startAt=null;
+
 
     //Firebase variables
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Trainer");
@@ -141,20 +143,29 @@ public class TrainerScreen extends AppCompatActivity {
         trainerRecycler.setAdapter(trainerAdapter);
 
         //Pagination Get Data
-        getData("$key",null,limit);
+        System.out.println("initial");
+        getData("\"$key\"",startAt,limit);
+        nestedScrollView.isSmoothScrollingEnabled();
 
         nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
                 //Check Condition
+                System.out.println("scroll");
                 if(scrollY == v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight()){
                     //When reach last item position
-                    //Increase page Size
-                    page++;
-                    //Show Progress Bar
-                    progressBar.setVisibility(View.VISIBLE);
-                    //Call Method
-                    getData("$key",startAt,limit);
+
+                    if (scroll == true){
+                        scroll=false;
+                        //Increase page Size
+                        page++;
+                        //Show Progress Bar
+                        progressBar.setVisibility(View.VISIBLE);
+                        //Call Method
+                        System.out.println("second");
+                        getData("\"$key\"",startAt,limit);
+                    }
+
                 }
             }
         });
@@ -179,7 +190,7 @@ public class TrainerScreen extends AppCompatActivity {
 
     private void getData(String orderBy, String startAt, int limit) {
         //Initialize Retrofit
-
+        System.out.println("us"+startAt);
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://trainerguide-14d03.firebaseio.com")
                 .addConverterFactory(ScalarsConverterFactory.create())
@@ -193,7 +204,6 @@ public class TrainerScreen extends AppCompatActivity {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 //Check Condition
-                System.out.println("**call*"+call);
 
                 if(response.isSuccessful() && response.body() != null){
                     // When response is successful and not empty
@@ -205,7 +215,6 @@ public class TrainerScreen extends AppCompatActivity {
 
                         Iterator x = object.keys();
 
-                        System.out.println("**object*"+object);
                         JSONArray jsonArray = new JSONArray();
 
                         while (x.hasNext()){
@@ -227,7 +236,7 @@ public class TrainerScreen extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-
+                System.out.println("*********failure*********");
             }
         });
 
@@ -238,11 +247,13 @@ public class TrainerScreen extends AppCompatActivity {
         //Use for loop
 
         for(int i=0; i<jsonArray.length()-1; i++){
+            System.out.println("inside for");
+
             try {
                 //if(i <= trainersList.size()+limit && i >= trainersList.size() && trainersList.size() <= jsonArray.length()){
                     //Initialize JSON object
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
-                    //Initialize Trainer Data
+                //Initialize Trainer Data
                     Trainer trainer = new Trainer();
                     //SetImage
                     trainer.setImage(jsonObject.getString("image"));
@@ -259,10 +270,49 @@ public class TrainerScreen extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+
+        try {
+            if(jsonArray.length() > 0) {
+                JSONObject jsonObject1;
+                System.out.println("jsonArray.length()"+jsonArray.length());
+
+                if (jsonArray.length() < limit){
+                    System.out.println("inside array");
+                    jsonObject1 = jsonArray.getJSONObject(jsonArray.length()-1);
+                    Trainer trainer = new Trainer();
+                    System.out.println("user"+jsonObject1.getString("userId"));
+                    //SetImage
+                    trainer.setImage(jsonObject1.getString("image"));
+                    //trainer.setDescription(jsonObject.getString("email"));
+                    trainer.setExperience(jsonObject1.getString("email"));
+                    //trainer.setFees(jsonObject.getString(""));
+
+                    //Add Data
+                    scroll=false;
+                    trainersList.add(trainer);
+                }
+                else{
+                    scroll=true;
+                    System.out.println("startAt1");
+                    jsonObject1 = jsonArray.getJSONObject(jsonArray.length() - 1);
+                    startAt = "\""+jsonObject1.getString("userId")+"\"";
+                    System.out.println("startAt"+startAt);
+                }
+
+            }
+
+        }
+        catch (JSONException e1) {
+            e1.printStackTrace();
+        }
+
+
         try {
             if(jsonArray.length()-1 <0) {
+                System.out.println("startAt2");
                 JSONObject jsonObject = jsonArray.getJSONObject(jsonArray.length() - 1);
-                startAt = jsonObject.getString("userId");
+                startAt = "\""+jsonObject.getString("userId")+"\"";
+
             }
         } catch (JSONException e) {
             e.printStackTrace();

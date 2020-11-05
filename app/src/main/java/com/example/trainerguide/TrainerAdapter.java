@@ -24,8 +24,6 @@ public class TrainerAdapter extends  RecyclerView.Adapter<TrainerAdapter.ViewHol
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        System.out.println("items Trainer");
-
         holder.name.setText(trainers.get(position).getName());
 
         if(trainers.get(position).getExperience() != null){
