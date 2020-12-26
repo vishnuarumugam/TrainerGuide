@@ -8,6 +8,9 @@ import java.util.Map;
 
 public class Trainer extends User {
     private HashMap<String,UserMetaData> usersList;
+    private String fees;
+    private String description;
+    private String experience;
 
     public HashMap<String,UserMetaData> getUsersList() {
         return usersList;
@@ -38,4 +41,28 @@ public class Trainer extends User {
 
     public Trainer() {
     }
+    public String getFees() {
+        return fees;
+    }
+
+    public void setFees(String fees) {
+        this.fees = fees;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getExperience() {
+        return experience;
+    }
+
+    public void setExperience(String experience) {
+        this.experience = experience;
+    }
+
 }

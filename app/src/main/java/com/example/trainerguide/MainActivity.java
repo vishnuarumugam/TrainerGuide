@@ -3,8 +3,11 @@ package com.example.trainerguide;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,7 +20,11 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.auth.User;
 
@@ -30,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
     private TextInputLayout txtLayPassword;
     private FirebaseAuth fAuth;
     private FirebaseFirestore fStore;
+    DatabaseReference databaseReferenceTrainer, databaseReferenceTrainee;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +54,23 @@ public class MainActivity extends AppCompatActivity {
 
         Button loginButton = findViewById(R.id.btnLogin);
 
-       /* if(fAuth!=null)
+
+        final SharedPreferences sp;
+        sp=PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        //sp = getSharedPreferences("IsLoggedIn",MODE_PRIVATE);
+        Boolean status = sp.getBoolean("IsLoggedIn",false);
+        System.out.println("status"+status);
+
+        if(status)
+            {
+                startActivity(new Intent(getApplicationContext(),HomeScreen.class));
+            finish();
+        }
+
+        /*if(fAuth!=null)
         {
             startActivity(new Intent(getApplicationContext(),HomeScreen.class));
         }*/
-
 
 
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -65,9 +86,55 @@ public class MainActivity extends AppCompatActivity {
                                     Intent intent = new Intent(MainActivity.this,HomeScreen.class);
                                     intent.putExtra("UserId",fAuth.getCurrentUser().getUid());
 
-
-
                                     startActivity(intent);
+                                    try {
+                                        databaseReferenceTrainer = FirebaseDatabase.getInstance().getReference().child("Trainer");
+                                    }catch(Exception ex){}
+                                    try {
+                                        databaseReferenceTrainee = FirebaseDatabase.getInstance().getReference().child("User");
+                                    }
+                                    catch (Exception ex){}
+                                    //SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                                    SharedPreferences.Editor editor = sp.edit();
+                                    editor.putString("userId", fAuth.getCurrentUser().getUid());
+                                    editor.putBoolean("IsLoggedIn",true);
+                                    editor.commit();
+
+                                    Boolean status1 = sp.getBoolean("IsLoggedIn",false);
+                                    System.out.println("status1"+status1);
+                                    finish();
+
+                                    final String[] profileType = new String[1];
+                                    databaseReferenceTrainer.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            if(snapshot.hasChild(fAuth.getCurrentUser().getUid())){
+                                                profileType[0] = "Trainer";
+                                            }else{
+                                                databaseReferenceTrainee.addListenerForSingleValueEvent(new ValueEventListener() {
+                                                    @Override
+                                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                        if(snapshot.hasChild(fAuth.getCurrentUser().getUid())){
+                                                            profileType[0] = "Trainee";
+                                                        }else{
+                                                            Toast.makeText(MainActivity.this, "Not Found", Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    }
+
+                                                    @Override
+                                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                                    }
+                                                });
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
+                                    editor.putString("ProfileType", profileType[0]);
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                         @Override
@@ -91,6 +158,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this,ForgotPasswordForm.class));
+                finish();
             }
         });
 

@@ -29,7 +29,8 @@ public class User {
 
     public User(String userId, String name, Double bmr, Double bmi, Date dateOfBirth, String gender,
                 Double weight, Double height, Date accCreateDttm, boolean isTrainer, Date lastModDttm,
-                String image, String email, List<BmrProgress> bmrReport, HashMap<String,String> healthIssues, HashMap<String,String> foodAllergy) {
+                String image, String email, List<BmrProgress> bmrReport, HashMap<String,String> healthIssues,
+                HashMap<String,String> foodAllergy) {
         this.userId = userId;
         this.name = name;
         this.bmr = bmr;
@@ -237,4 +238,5 @@ public class User {
     public void setfoodAllergy(HashMap<String,String> foodAllergy) {
         this.foodAllergy = foodAllergy;
     }
+
 }

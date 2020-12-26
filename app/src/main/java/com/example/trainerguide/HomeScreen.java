@@ -8,7 +8,9 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -97,6 +99,13 @@ public class HomeScreen extends AppCompatActivity {
                         break;
                     case R.id.nav_logout:
                         startActivity(new Intent(HomeScreen.this,MainActivity.class));
+                        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                        SharedPreferences.Editor editor = settings.edit();
+                        editor.remove("userId");
+                        editor.remove("ProfileType");
+                        editor.remove("IsLoggedIn");
+                        //editor.putBoolean("IsLoggedIn",false);
+                        editor.commit();
                         finish();
                         break;
                     default:
@@ -121,12 +130,12 @@ public class HomeScreen extends AppCompatActivity {
                 System.out.println("********HSOnDataChange*******");
                 Trainer user = snapshot.getValue(Trainer.class);
 
-                LineGraphSeries<DataPoint> progressDatapoint = new LineGraphSeries<>(new DataPoint[]{
+                /*LineGraphSeries<DataPoint> progressDatapoint = new LineGraphSeries<>(new DataPoint[]{
                         new DataPoint(0,user.getBmi()),
                         new DataPoint(1,19),
                 });
 
-                progressGraphView.addSeries(progressDatapoint);
+                progressGraphView.addSeries(progressDatapoint);*/
 
             }
 

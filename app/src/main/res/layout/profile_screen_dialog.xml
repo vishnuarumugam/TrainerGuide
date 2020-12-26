@@ -1,0 +1,549 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:gravity="center">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/profileDialogClose"
+        android:src="@drawable/ic_close"
+        android:layout_marginTop="7dp"
+        android:layout_marginRight="7dp"
+        android:elevation="5dp"
+        android:layout_alignParentRight="true"/>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="15dp"
+        app:cardCornerRadius="25dp"
+        app:cardBackgroundColor="@color/white"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/profileDobDialogTitleLin"
+                android:orientation="vertical"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="25dp"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:id="@+id/profileDobDialogImg"
+                    android:src="@drawable/ic_dob"
+                    android:elevation="5dp"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/profileDobDialogTitle"
+                    android:layout_marginHorizontal="20dp"
+                    android:textAlignment="center"
+                    android:layout_marginTop="15dp"
+                    android:elevation="10dp"
+                    android:text="Title"
+                    android:textColor="@color/grey"
+                    android:textStyle="bold"
+                    style="@style/TextAppearance.AppCompat.Body1"
+                    android:textSize="25dp"/>
+
+                <DatePicker
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/profileDobDialogDatePicker"
+                    android:layout_marginTop="15dp"
+                    android:layout_gravity="center"
+                    android:theme="@style/DialogDatePicker"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/profileDobDialogUpdate"
+                    android:layout_gravity="center"
+                    android:text="UPDATE"
+                    android:backgroundTint="@color/yellow"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/profileWeightDialogTitleLin"
+                android:layout_marginTop="25dp"
+                android:visibility="visible"
+                android:layout_marginBottom="25dp">
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:id="@+id/profileWeightDialogImg"
+                    android:src="@drawable/ic_weight"
+                    android:elevation="5dp"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/profileWeightDialogTitle"
+                    android:layout_marginHorizontal="20dp"
+                    android:textAlignment="center"
+                    android:layout_marginTop="15dp"
+                    android:elevation="10dp"
+                    android:text="Title"
+                    android:textColor="@color/grey"
+                    android:textStyle="bold"
+                    style="@style/TextAppearance.AppCompat.Body1"
+                    android:textSize="25dp"/>
+
+
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/profileWeightDialogInput"
+                        android:theme="@style/DialogEditText"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="15dp"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:id="@+id/profileWeightDialogUpdate"
+                    android:layout_marginTop="10dp"
+                    android:text="UPDATE"
+                    android:backgroundTint="@color/yellow"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/profileHeightDialogTitleLin"
+                android:layout_marginTop="25dp"
+                android:visibility="gone"
+                android:layout_marginBottom="25dp">
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:id="@+id/profileHeightDialogImg"
+                    android:src="@drawable/ic_height"
+                    android:elevation="5dp"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/profileHeightDialogTitle"
+                    android:layout_marginHorizontal="20dp"
+                    android:textAlignment="center"
+                    android:layout_marginTop="15dp"
+                    android:elevation="10dp"
+                    android:text="Title"
+                    android:textColor="@color/grey"
+                    android:textStyle="bold"
+                    style="@style/TextAppearance.AppCompat.Body1"
+                    android:textSize="25dp"/>
+
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/profileHeightDialogInput"
+                    android:hint="Height"
+                    android:theme="@style/DialogEditText"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="15dp"/>
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:id="@+id/profileHeightDialogUpdate"
+                    android:layout_marginTop="10dp"
+                    android:text="UPDATE"
+                    android:backgroundTint="@color/yellow"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/profileFoodTypeDialogTitleLin"
+                android:layout_marginTop="25dp"
+                android:visibility="gone"
+                android:layout_marginBottom="25dp">
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:id="@+id/profileFoodTypeDialogImg"
+                    android:src="@mipmap/food_type"
+                    android:elevation="5dp"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/profileFoodTypeDialogTitle"
+                    android:layout_marginHorizontal="20dp"
+                    android:textAlignment="center"
+                    android:layout_marginTop="15dp"
+                    android:elevation="10dp"
+                    android:text="Food Type"
+                    android:textColor="@color/grey"
+                    android:textStyle="bold"
+                    style="@style/TextAppearance.AppCompat.Body1"
+                    android:textSize="25dp"/>
+
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:elevation="0dp"
+                    android:background="@drawable/dialog_radio_round"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:theme="@style/DialogRadioButton"
+                        android:layout_margin="5dp"
+                        android:text="Veg"
+                        style="@style/TextAppearance.AppCompat.Body1"/>
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Veg with Egg"
+                        android:theme="@style/DialogRadioButton"
+                        android:layout_margin="5dp"
+                        style="@style/TextAppearance.AppCompat.Body1"/>
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Non - Veg"
+                        android:theme="@style/DialogRadioButton"
+                        android:layout_margin="5dp"
+                        style="@style/TextAppearance.AppCompat.Body1"/>
+
+                </RadioGroup>
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:id="@+id/profileFoodTypeDialogUpdate"
+                    android:layout_marginTop="10dp"
+                    android:text="UPDATE"
+                    android:backgroundTint="@color/yellow"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/profileFoodAllergyDialogTitleLin"
+                android:layout_marginTop="25dp"
+                android:visibility="gone"
+                android:layout_marginBottom="25dp">
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:id="@+id/profileFoodAllergyDialogImg"
+                    android:src="@mipmap/food_allergy"
+                    android:elevation="5dp"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/profileFoodAllergyDialogTitle"
+                    android:layout_marginHorizontal="20dp"
+                    android:textAlignment="center"
+                    android:layout_marginTop="15dp"
+                    android:elevation="10dp"
+                    android:text="Food Allergies"
+                    android:textColor="@color/grey"
+                    android:textStyle="bold"
+                    style="@style/TextAppearance.AppCompat.Body1"
+                    android:textSize="25dp"/>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:background="@drawable/dialog_radio_round">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/foodAllergyRelLeft"
+                        android:layout_marginLeft="10dp"
+                        android:layout_alignParentLeft="true">
+
+                        <com.google.android.material.checkbox.MaterialCheckBox
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/diaryFoodAllergy"
+                            android:text="Diary"
+                            android:theme="@style/DialogCheckBox"
+                            android:layout_alignParentLeft="true"/>
+
+                        <com.google.android.material.checkbox.MaterialCheckBox
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/wheatFoodAllergy"
+                            android:text="Wheat"
+                            android:theme="@style/DialogCheckBox"
+                            android:layout_below="@+id/diaryFoodAllergy"/>
+
+                        <com.google.android.material.checkbox.MaterialCheckBox
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Nuts"
+                            android:theme="@style/DialogCheckBox"
+                            android:layout_below="@+id/wheatFoodAllergy"/>
+
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/foodAllergyRelRight"
+                        android:layout_marginRight="10dp"
+                        android:layout_centerInParent="true"
+                        android:layout_alignParentRight="true">
+
+                        <com.google.android.material.checkbox.MaterialCheckBox
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/seaFoodAllergy"
+                            android:text="Sea Food"
+                            android:theme="@style/DialogCheckBox"
+                            android:layout_alignParentLeft="true"/>
+
+                        <com.google.android.material.checkbox.MaterialCheckBox
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/muttonFoodAllergy"
+                            android:text="Mutton"
+                            android:theme="@style/DialogCheckBox"
+                            android:layout_below="@+id/seaFoodAllergy"/>
+
+                        <com.google.android.material.checkbox.MaterialCheckBox
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Chicken"
+                            android:theme="@style/DialogCheckBox"
+                            android:layout_below="@+id/muttonFoodAllergy"/>
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:counterEnabled="true"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginHorizontal="10dp"
+                        app:counterMaxLength="30">
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="Other"
+                            android:maxLength="30"
+                            android:background="@drawable/round_shape"
+                            android:textColorHint="@color/black">
+
+                        </EditText>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:id="@+id/profileFoodAllergyDialogUpdate"
+                    android:layout_marginTop="10dp"
+                    android:text="UPDATE"
+                    android:backgroundTint="@color/yellow"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/profileHealthInfoDialogTitleLin"
+                android:layout_marginTop="25dp"
+                android:visibility="gone"
+                android:layout_marginBottom="25dp">
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:id="@+id/profileHealthInfoDialogImg"
+                    android:src="@mipmap/health_issues"
+                    android:elevation="5dp"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/profileHealthInfoDialogTitle"
+                    android:layout_marginHorizontal="20dp"
+                    android:textAlignment="center"
+                    android:layout_marginTop="15dp"
+                    android:elevation="10dp"
+                    android:text="Health Issues"
+                    android:textColor="@color/grey"
+                    android:textStyle="bold"
+                    style="@style/TextAppearance.AppCompat.Body1"
+                    android:textSize="25dp"/>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:background="@drawable/dialog_radio_round">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/healthInfoRelLeft"
+                        android:layout_marginLeft="10dp"
+                        android:layout_alignParentLeft="true">
+
+                        <com.google.android.material.checkbox.MaterialCheckBox
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/diabetesHealthIssue"
+                            android:text="Diabetes"
+                            android:theme="@style/DialogCheckBox"
+                            android:layout_alignParentLeft="true"/>
+
+                        <com.google.android.material.checkbox.MaterialCheckBox
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/cholesterolHealthIssue"
+                            android:text="Cholesterol"
+                            android:theme="@style/DialogCheckBox"
+                            android:layout_below="@+id/diabetesHealthIssue"/>
+
+                        <com.google.android.material.checkbox.MaterialCheckBox
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Thyroid"
+                            android:theme="@style/DialogCheckBox"
+                            android:layout_below="@+id/cholesterolHealthIssue"/>
+
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/healthInfoRelRight"
+                        android:layout_marginRight="10dp"
+                        android:layout_centerInParent="true"
+                        android:layout_alignParentRight="true">
+
+                        <com.google.android.material.checkbox.MaterialCheckBox
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/bpHealthIssue"
+                            android:text="Blood Pressure"
+                            android:theme="@style/DialogCheckBox"
+                            android:layout_alignParentLeft="true"/>
+
+                        <com.google.android.material.checkbox.MaterialCheckBox
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/heartHealthIssue"
+                            android:text="Heart Problem"
+                            android:theme="@style/DialogCheckBox"
+                            android:layout_below="@+id/bpHealthIssue"/>
+
+                        <com.google.android.material.checkbox.MaterialCheckBox
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Physical Injury"
+                            android:theme="@style/DialogCheckBox"
+                            android:layout_below="@+id/heartHealthIssue"/>
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:counterEnabled="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginHorizontal="10dp"
+                    app:counterMaxLength="30">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="Other"
+                        android:maxLength="30"
+                        android:background="@drawable/round_shape"
+                        android:textColorHint="@color/black">
+
+                    </EditText>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:id="@+id/profileHealthInfoDialogUpdate"
+                    android:layout_marginTop="10dp"
+                    android:text="UPDATE"
+                    android:backgroundTint="@color/yellow"/>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+</RelativeLayout>

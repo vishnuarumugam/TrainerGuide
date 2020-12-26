@@ -5,9 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.MimeTypeMap;
@@ -15,7 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.trainerguide.models.BmrProgress;
+import com.example.trainerguide.models.Trainee;
 import com.example.trainerguide.models.Trainer;
 import com.example.trainerguide.models.User;
 import com.example.trainerguide.validation.UserInputValidation;
@@ -29,15 +30,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 public class RegistrationForm extends AppCompatActivity{
 
@@ -124,15 +122,26 @@ public class RegistrationForm extends AppCompatActivity{
                                         uploadFile(userId,trainer);
 
                                     } else {
-                                        User user = new User(userId, name.getText().toString(), "Male", Calendar.getInstance().getTime(), IsTrainerProfile, Calendar.getInstance().getTime(), "image", email.getText().toString());
-                                        databaseReference.child("User").child(userId).setValue(user);
+                                        System.out.println(IsTrainerProfile);
+                                        Trainee trainee = new Trainee(userId, name.getText().toString(), "Male", Calendar.getInstance().getTime(), IsTrainerProfile, Calendar.getInstance().getTime(), "image", email.getText().toString(),null);
+                                        databaseReference.child("User").child(userId).setValue(trainee);
 
                                         // Upload Profile Picture into FireBase Storage
-                                        uploadFile(userId,user);
+                                        uploadFile(userId,trainee);
                                     }
                                     Intent intent = new Intent(RegistrationForm.this, HomeScreen.class);
                                     intent.putExtra("UserId",fAuth.getCurrentUser().getUid());
                                     startActivity(intent);
+                                    SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                                    SharedPreferences.Editor editor = settings.edit();
+                                    editor.putString("userId", fAuth.getCurrentUser().getUid());
+                                    editor.putBoolean("IsLoggedIn",true);
+                                    if(IsTrainerProfile) {
+                                    editor.putString("ProfileType", "Trainer");}
+                                    else {
+                                        editor.putString("ProfileType", "Trainee");}
+
+                                    finish();
 
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
@@ -189,7 +198,7 @@ public class RegistrationForm extends AppCompatActivity{
         }
     }
 
-    private void uploadFile(final String userId, final User user) {
+    private void uploadFile(final String userId, final Trainee user) {
         // Pick the default Image from the MipMap Folder
         // Path under FireBase Storage --> FitnessGuide/(Trainer|User)/UserId.(jpg|png)
 

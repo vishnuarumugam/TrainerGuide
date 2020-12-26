@@ -3,16 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/parent"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
-    android:layout_marginTop="10dp"
-    android:backgroundTint="@color/grey"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="10dp"
+    android:backgroundTint="@color/white"
     app:cardCornerRadius="10dp"
     android:layout_marginHorizontal="10dp"
     app:cardElevation="5dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:id="@+id/trainerConLayout"
+        android:layout_marginRight="20dp">
 
 
         <RelativeLayout
@@ -20,60 +22,133 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/trainerProfileImage"
+            <androidx.cardview.widget.CardView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_marginLeft="10dp"
-                android:src="@mipmap/profile" />
+                android:id="@+id/trainerProfileImageCard"
+                app:cardCornerRadius="50dp"
+                android:layout_margin="10dp"
+                android:layout_centerVertical="true"
+                android:elevation="5dp">
+
+                <ImageView
+                    android:id="@+id/trainerProfileImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@mipmap/profile"
+                    android:scaleType="centerCrop"
+                    />
+
+            </androidx.cardview.widget.CardView>
+
+
 
 
             <TextView
                 android:id="@+id/trainerItemNameLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="20dp"
-                android:layout_toRightOf="@id/trainerProfileImage"
-                android:text="UserName:"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/trainerProfileImageCard"
+                android:text="Trainer Name:"
                 android:textColor="@color/black"
                 android:textStyle="italic"/>
             <TextView
                 android:id="@+id/trainerItemName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/trainerItemNameLabel"
-                android:hint="Vishnu"
+                android:text="Vishnu"
                 android:textColor="@color/black"
                 android:textStyle="bold|italic"/>
 
             <TextView
-                android:id="@+id/trainerItemBmiLabel"
+                android:id="@+id/trainerItemExpLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/trainerItemNameLabel"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_toRightOf="@id/trainerProfileImage"
-                android:text="BMI:"
+                android:layout_margin="5dp"
+                android:layout_toRightOf="@id/trainerProfileImageCard"
+                android:text="Experiance"
                 android:textColor="@color/black"
                 android:textStyle="italic"/>
 
             <TextView
-                android:id="@+id/trainerItemBmi"
+                android:id="@+id/trainerItemExp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/trainerItemName"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="10dp"
-                android:layout_toRightOf="@id/trainerItemBmiLabel"
-                android:hint="25"
+                android:layout_margin="5dp"
+                android:layout_toRightOf="@id/trainerItemExpLabel"
+                android:text="5 yrs"
                 android:textColor="@color/black"
                 android:textStyle="bold|italic"/>
+
+            <TextView
+                android:id="@+id/trainerItemFeeLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/trainerItemExpLabel"
+                android:layout_margin="5dp"
+                android:layout_toRightOf="@id/trainerProfileImageCard"
+                android:text="Subscription Fee"
+                android:textColor="@color/black"
+                android:textStyle="italic"/>
+
+            <TextView
+                android:id="@+id/trainerItemFee"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/trainerItemExp"
+                android:layout_margin="5dp"
+                android:layout_toRightOf="@id/trainerItemFeeLabel"
+                android:text="2000/- per month"
+                android:textColor="@color/black"
+                android:textStyle="bold|italic"/>
+
+
+            <RatingBar
+                android:id="@+id/ratingBar"
+                style="@style/RatingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_toRightOf="@+id/trainerProfileImageCard"
+                android:layout_below="@+id/trainerItemFee"
+                android:numStars="5"
+                android:rating="2.5" />
+
+            <!--<ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_add"
+                android:layout_below="@+id/ratingBar"
+                android:layout_toRightOf="@+id/trainerProfileImageCard"
+                android:id="@+id/traineeAdd"/>-->
+
+            <!--<ImageButton
+                android:layout_width="20dp"
+                android:layout_height="match_parent"
+                android:id="@+id/moreInfo"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/ic_moreinfo"
+                />-->
+
         </RelativeLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="match_parent"
+        android:id="@+id/moreInfo"
+        android:layout_gravity="right"
+        android:src="@drawable/ic_moreinfo"
+        />
+
 
 </com.google.android.material.card.MaterialCardView>

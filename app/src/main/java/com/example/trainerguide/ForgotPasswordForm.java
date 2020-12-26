@@ -22,8 +22,7 @@ import java.util.logging.Logger;
 
 public class ForgotPasswordForm extends AppCompatActivity {
 
-    private EditText txtemail, txtOtp, txtPwd, txtCnfrmPwd;
-    private TextInputLayout layout_Otp, layout_pwd,layout_CnfrmPwd;
+    private EditText txtEmail;
     private UserInputValidation userInputValidation;
     private FirebaseAuth fAuth;
     @Override
@@ -31,15 +30,8 @@ public class ForgotPasswordForm extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot_password_form);
 
-        txtemail = findViewById(R.id.userFgpEmail_Input);
-        txtOtp = findViewById(R.id.userFgpOtp_Input);
-        txtCnfrmPwd = findViewById(R.id.fgpCnfrmPassword_Input);
-        txtPwd = findViewById(R.id.userFgpPassword_Input);
+        txtEmail = findViewById(R.id.userFgpEmail_Input);
         final Button btnFgp = findViewById(R.id.btnFgp);
-
-        layout_CnfrmPwd = findViewById(R.id.fgpLay_txtCnfrmPwd);
-        layout_Otp = findViewById(R.id.fgpLay_txtOtp);
-        layout_pwd = findViewById(R.id.fgpLay_txtLayPwd);
 
         // FireBase Initialization
         fAuth = FirebaseAuth.getInstance();
@@ -50,7 +42,7 @@ public class ForgotPasswordForm extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Forgot Password Link sending to Email
-                fAuth.sendPasswordResetEmail(txtemail.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                fAuth.sendPasswordResetEmail(txtEmail.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
@@ -67,18 +59,5 @@ public class ForgotPasswordForm extends AppCompatActivity {
         });
     }
 
-    private boolean ChangePasswordValidation() {
-        String passwordValid = userInputValidation.passwordValidation(txtPwd.getText().toString(),"ChangePassword");
-        if (!passwordValid.equals("Valid")){
-                txtPwd.setError(passwordValid);
-                return false;
-        }
-        if (txtCnfrmPwd.getText().toString().isEmpty()){
-            layout_CnfrmPwd.setPasswordVisibilityToggleEnabled(false);
-            txtCnfrmPwd.setError("Password cannot be empty");
-            return false;
-        }
-        return true;
-    }
 
 }
