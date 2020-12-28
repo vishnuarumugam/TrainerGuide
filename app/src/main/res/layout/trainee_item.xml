@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/parent"
+    android:id="@+id/trainee_item_parent"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="wrap_content"
     android:layout_marginTop="10dp"
-    android:backgroundTint="@color/grey"
+    android:backgroundTint="@color/white"
     app:cardCornerRadius="10dp"
     android:layout_marginHorizontal="10dp"
     app:cardElevation="5dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginRight="20dp">
 
 
         <RelativeLayout
@@ -20,15 +21,24 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-
-
-            <ImageView
-                android:id="@+id/traineeProfileImage"
+            <androidx.cardview.widget.CardView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_marginLeft="10dp"
-                />
+                android:id="@+id/traineeProfileImageCard"
+                app:cardCornerRadius="50dp"
+                android:layout_margin="10dp"
+                android:layout_centerVertical="true"
+                android:elevation="5dp">
 
+                <ImageView
+                    android:id="@+id/traineeProfileImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@mipmap/profile"
+                    android:scaleType="centerCrop"
+                    />
+
+            </androidx.cardview.widget.CardView>
 
             <TextView
                     android:id="@+id/traineeItemNameLabel"
@@ -36,7 +46,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="20dp"
-                    android:layout_toRightOf="@id/traineeProfileImage"
+                    android:layout_toRightOf="@id/traineeProfileImageCard"
                     android:text="UserName:"
                     android:textColor="@color/black"
                     android:textStyle="italic"/>
@@ -58,7 +68,7 @@
                     android:layout_below="@+id/traineeItemNameLabel"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
-                    android:layout_toRightOf="@id/traineeProfileImage"
+                    android:layout_toRightOf="@id/traineeProfileImageCard"
                     android:text="BMI:"
                     android:textColor="@color/black"
                     android:textStyle="italic"/>
@@ -74,13 +84,40 @@
                     android:hint="25"
                     android:textColor="@color/black"
                     android:textStyle="bold|italic"/>
-        </RelativeLayout>
 
+            <TextView
+                android:id="@+id/traineeItemSubscriptionLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/traineeItemBmiLabel"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/traineeProfileImageCard"
+                android:text="Goal :"
+                android:textColor="@color/black"
+                android:textStyle="italic"/>
+
+            <TextView
+                android:id="@+id/traineeItemSubscription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/traineeItemBmi"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/traineeItemBmiLabel"
+                android:hint="25"
+                android:textColor="@color/black"
+                android:textStyle="bold|italic"/>
+        </RelativeLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-
-
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="match_parent"
+        android:id="@+id/moreInfo"
+        android:layout_gravity="right"
+        android:src="@drawable/ic_moreinfo"
+        />
 
 </com.google.android.material.card.MaterialCardView>

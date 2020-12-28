@@ -12,14 +12,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".TrainerProfileView"></activity>
+        <activity android:name=".TraineeProfileview"></activity>
+        <activity android:name=".TrainerProfileView" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
         <activity android:name=".ProfileScreen" />
         <activity android:name=".TraineesScreen" />
         <activity android:name=".TrainerScreen" />
-        <activity android:name=".HomeScreen"></activity>
+        <activity android:name=".HomeScreen" />
         <activity android:name=".TrainerGuideScreen" />
         <activity android:name=".ForgotPasswordForm" />
         <activity android:name=".RegistrationForm" />

@@ -338,38 +338,6 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
         intent.putExtra("TrainerUserId",trainer.getUserId());
         startActivity(intent);
         finish();
-/*
-        databaseReferenceAdd.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Trainee trainee = snapshot.getValue(Trainee.class);
-                if(trainee.getTrainerId() == "") {
-                    if (trainee.isTrainer() == false) {
-                        UserMetaData traineeMetadata = new UserMetaData();
-                        traineeMetadata.setUserId(trainee.getUserId());
-                        traineeMetadata.setBmi(trainee.getBmi());
-                        traineeMetadata.setName(trainee.getName());
-                        traineeMetadata.setImage(trainee.getImage());
-                        trainee.setTrainerId(trainer.getUserId());
-                        HashMap<String, Object> trainerId = new HashMap<>();
-                        trainerId.put("trainerId", trainer.getUserId());
-                        databaseReferenceAdd.updateChildren(trainerId);
-                        databaseReference.child(trainer.getUserId() + "/usersList/" + trainee.getUserId()).setValue(trainee);
-                    }
-                }
-                else
-                {
-                    AlertDialogBox alertDialogBox = new AlertDialogBox();
-                    alertDialogBox.show(getSupportFragmentManager(),"Alert");
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });*/
     }
 
 }

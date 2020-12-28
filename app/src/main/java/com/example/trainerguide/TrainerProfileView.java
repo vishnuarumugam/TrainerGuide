@@ -64,7 +64,7 @@ public class TrainerProfileView extends AppCompatActivity {
         traineruserId = getIntent().getStringExtra("TrainerUserId");
 
         //Navigation view variables
-        drawerLayout = findViewById(R.id.trainee_view_drawer_layout);
+        drawerLayout = findViewById(R.id.trainer_view_drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.tool_bar);
 
@@ -132,6 +132,43 @@ public class TrainerProfileView extends AppCompatActivity {
                 });
             }
         });
+
+        //Method to re-direct the page from menu
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.nav_profile:
+                        startActivity(new Intent(TrainerProfileView.this,ProfileScreen.class));
+                        finish();
+                        break;
+                    case R.id.nav_trainees:
+                        startActivity(new Intent(TrainerProfileView.this,TraineesScreen.class));
+                        finish();
+                        break;
+                    case R.id.nav_trainer:
+                        startActivity(new Intent(TrainerProfileView.this,TrainerScreen.class));
+                        finish();
+                        break;
+                    case R.id.nav_logout:
+                        startActivity(new Intent(TrainerProfileView.this,MainActivity.class));
+                        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                        SharedPreferences.Editor editor = settings.edit();
+                        editor.remove("userId");
+                        editor.remove("ProfileType");
+                        editor.remove("IsLoggedIn");
+                        //editor.putBoolean("IsLoggedIn",false);
+                        editor.commit();
+                        finish();
+                        break;
+                    default:
+                        Toast.makeText(TrainerProfileView.this, "profile", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+                return false;
+            }
+        });
+
     }
 
 
@@ -171,45 +208,6 @@ public class TrainerProfileView extends AppCompatActivity {
 
             }
         });
-
-
-        //Method to re-direct the page from menu
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.nav_profile:
-                        startActivity(new Intent(TrainerProfileView.this,ProfileScreen.class));
-                        finish();
-                        break;
-                    case R.id.nav_trainees:
-                        startActivity(new Intent(TrainerProfileView.this,TraineesScreen.class));
-                        finish();
-                        break;
-                    case R.id.nav_trainer:
-                        startActivity(new Intent(TrainerProfileView.this,TrainerScreen.class));
-                        finish();
-                        break;
-                    case R.id.nav_logout:
-                        startActivity(new Intent(TrainerProfileView.this,MainActivity.class));
-                        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                        SharedPreferences.Editor editor = settings.edit();
-                        editor.remove("userId");
-                        editor.remove("ProfileType");
-                        editor.remove("IsLoggedIn");
-                        //editor.putBoolean("IsLoggedIn",false);
-                        editor.commit();
-                        finish();
-                        break;
-                    default:
-                        Toast.makeText(TrainerProfileView.this, "profile", Toast.LENGTH_SHORT).show();
-                        break;
-                }
-                return false;
-            }
-        });
-
-
     }
 
 

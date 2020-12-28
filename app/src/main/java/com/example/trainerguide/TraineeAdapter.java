@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.trainerguide.models.User;
 import com.example.trainerguide.models.UserMetaData;
+import com.google.android.material.card.MaterialCardView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ public class TraineeAdapter extends RecyclerView.Adapter<TraineeAdapter.ViewHold
 
     private List<UserMetaData> trainee = new ArrayList<>();
     private Context context;
-
+    private OnAddClickListener addlistener;
 
     /*public ArrayList<User> getTrainee() {
         return trainee;
@@ -48,7 +49,7 @@ public class TraineeAdapter extends RecyclerView.Adapter<TraineeAdapter.ViewHold
     }
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
-    public void onBindViewHolder(@NonNull TraineeAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull TraineeAdapter.ViewHolder holder, final int position) {
         System.out.println("items Trainee");
         holder.name.setText(trainee.get(position).getName());
         holder.bmi.setText(trainee.get(position).getBmi().toString());
@@ -57,6 +58,14 @@ public class TraineeAdapter extends RecyclerView.Adapter<TraineeAdapter.ViewHold
                 .fit()
                 .centerCrop()
                 .into(holder.profilePic);
+        holder.traineeProfileClick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                trainee.get(position);
+                System.out.println(position);
+                addlistener.onAddclick(position);
+            }
+        });
 
     }
 
@@ -69,6 +78,7 @@ public class TraineeAdapter extends RecyclerView.Adapter<TraineeAdapter.ViewHold
 
         TextView name,bmi;
         ImageView profilePic;
+        MaterialCardView traineeProfileClick;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -76,10 +86,18 @@ public class TraineeAdapter extends RecyclerView.Adapter<TraineeAdapter.ViewHold
             name = itemView.findViewById(R.id.traineeItemName);
             bmi = itemView.findViewById(R.id.traineeItemBmi);
             profilePic = itemView.findViewById(R.id.traineeProfileImage);
-
+            traineeProfileClick = itemView.findViewById(R.id.trainee_item_parent);
         }
 
 
 
+    }
+
+    public interface OnAddClickListener{
+        void onAddclick(int position);
+    }
+
+    public void setOnAddClickListener(TraineeAdapter.OnAddClickListener listener){
+        addlistener = listener;
     }
 }

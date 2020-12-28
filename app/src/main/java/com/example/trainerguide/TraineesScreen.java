@@ -44,7 +44,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
-public class TraineesScreen extends AppCompatActivity {
+public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.OnAddClickListener{
 
     //Navigation view variables
     private DrawerLayout drawerLayout;
@@ -237,6 +237,7 @@ public class TraineesScreen extends AppCompatActivity {
                 userMetaData.setImage(jsonObject.getString("image"));
                 userMetaData.setName(jsonObject.getString("name"));
                 userMetaData.setBmi(jsonObject.getDouble("bmi"));
+                userMetaData.setUserId(jsonObject.getString("userId"));
 
                 //Add Data
                 traineesList.add(userMetaData);
@@ -257,6 +258,7 @@ public class TraineesScreen extends AppCompatActivity {
                     userMetaData.setImage(jsonObject1.getString("image"));
                     userMetaData.setName(jsonObject1.getString("name"));
                     userMetaData.setBmi(jsonObject1.getDouble("bmi"));
+                    userMetaData.setUserId(jsonObject1.getString("userId"));
 
                     //Add Data
                     scroll=false;
@@ -294,6 +296,7 @@ public class TraineesScreen extends AppCompatActivity {
         traineeAdapter = new TraineeAdapter(TraineesScreen.this, traineesList);
         //Set Adapter
         traineeRecycler.setAdapter(traineeAdapter);
+        traineeAdapter.setOnAddClickListener(TraineesScreen.this);
     }
 
     //Method to populate Trainee data
@@ -328,7 +331,7 @@ public class TraineesScreen extends AppCompatActivity {
 
             }
         });
-            traineeRecycler.setAdapter(traineeAdapter);
+        traineeRecycler.setAdapter(traineeAdapter);
     }
 
     @Override
@@ -342,6 +345,19 @@ public class TraineesScreen extends AppCompatActivity {
         {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    public void onAddclick(int position) {
+        final UserMetaData trainee = traineesList.get(position);
+
+        System.out.println("***"+trainee.getUserId()+"*****"+position);
+        System.out.println("***"+traineesList.size()+"***** size");
+
+        Intent intent = new Intent(TraineesScreen.this,TraineeProfileview.class);
+        intent.putExtra("TraineeUserId",trainee.getUserId());
+        startActivity(intent);
+        finish();
     }
 
 }
