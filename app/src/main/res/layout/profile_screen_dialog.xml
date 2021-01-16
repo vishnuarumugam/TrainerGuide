@@ -88,7 +88,7 @@
                 android:orientation="vertical"
                 android:id="@+id/profileWeightDialogTitleLin"
                 android:layout_marginTop="25dp"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:layout_marginBottom="25dp">
 
                 <ImageView
@@ -435,7 +435,7 @@
                 android:orientation="vertical"
                 android:id="@+id/profileHealthInfoDialogTitleLin"
                 android:layout_marginTop="25dp"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:layout_marginBottom="25dp">
 
                 <ImageView
@@ -519,14 +519,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:id="@+id/heartHealthIssue"
-                            android:text="Heart Problem"
+                            android:text="Heart Problems"
                             android:theme="@style/DialogCheckBox"
                             android:layout_below="@+id/bpHealthIssue"/>
 
                         <com.google.android.material.checkbox.MaterialCheckBox
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Physical Injury"
+                            android:text="Physical Injuries"
                             android:theme="@style/DialogCheckBox"
                             android:layout_below="@+id/heartHealthIssue"/>
 
