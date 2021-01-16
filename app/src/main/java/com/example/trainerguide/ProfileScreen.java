@@ -18,11 +18,13 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
 import android.view.MenuItem;
@@ -63,11 +65,15 @@ import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static java.lang.Math.round;
 
 public class ProfileScreen extends AppCompatActivity implements View.OnClickListener {
 
@@ -106,6 +112,9 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
 
     private String userId;
     private String path;
+    private String userProfileUpdateValue;
+    private User user;
+
 
     //Common variables
     private Intent intent;
@@ -148,44 +157,49 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         //ProfileScreen variables
         profileImage = findViewById(R.id.profileImage);
 
-            //Account Info variables
-            accCardView = findViewById(R.id.accCardView);
-            profileAccDrop = findViewById(R.id.profileAccDrop);
-            accRelativeCollapse = findViewById(R.id.accRelativeCollapse);
-            //Personal Info variables
-            personalInfoCardView = findViewById(R.id.personalInfoCardView);
-            profilePersonalInfoDrop = findViewById(R.id.profilePersonalInfoDrop);
-            personalRelativeCollapse = findViewById(R.id.personalRelativeCollapse);
-            profileWeight = findViewById(R.id.profileWeight);
-            profileHeight = findViewById(R.id.profileHeight);
-            profileEmailId = findViewById(R.id.profileEmailId);
-            profileDob = findViewById(R.id.profileDob);
-            dobRelativeLay = findViewById(R.id.dobRelativeLay);
-            weightRelativeLay = findViewById(R.id.weightRelativeLay);
-            heightRelativeLay = findViewById(R.id.heightRelativeLay);
+        //Account Info variables
+        accCardView = findViewById(R.id.accCardView);
+        profileAccDrop = findViewById(R.id.profileAccDrop);
+        accRelativeCollapse = findViewById(R.id.accRelativeCollapse);
+        //Personal Info variables
+        personalInfoCardView = findViewById(R.id.personalInfoCardView);
+        profilePersonalInfoDrop = findViewById(R.id.profilePersonalInfoDrop);
+        personalRelativeCollapse = findViewById(R.id.personalRelativeCollapse);
+        profileWeight = findViewById(R.id.profileWeight);
+        profileHeight = findViewById(R.id.profileHeight);
+        profileEmailId = findViewById(R.id.profileEmailId);
+        profileDob = findViewById(R.id.profileDob);
+        dobRelativeLay = findViewById(R.id.dobRelativeLay);
+        weightRelativeLay = findViewById(R.id.weightRelativeLay);
+        heightRelativeLay = findViewById(R.id.heightRelativeLay);
 
 
-            //Food Info variables
-            foodInfoCardView = findViewById(R.id.foodInfoCardView);
-            profileFoodInfoDrop = findViewById(R.id.profileFoodInfoDrop);
-            foodInfoRelativeCollapse = findViewById(R.id.foodInfoRelativeCollapse);
-            profileOtherRelativeLayFood = findViewById(R.id.profileOtherRelativeLayFood);
-            foodAllergyOther = findViewById(R.id.foodAllergyOther);
-            foodTypeRelativeLay = findViewById(R.id.foodTypeRelativeLay);
-            foodAllergyRelativeLay = findViewById(R.id.foodAllergyRelativeLay);
+        //Food Info variables
+        foodInfoCardView = findViewById(R.id.foodInfoCardView);
+        profileFoodInfoDrop = findViewById(R.id.profileFoodInfoDrop);
+        foodInfoRelativeCollapse = findViewById(R.id.foodInfoRelativeCollapse);
+        profileOtherRelativeLayFood = findViewById(R.id.profileOtherRelativeLayFood);
+        foodAllergyOther = findViewById(R.id.foodAllergyOther);
+        foodTypeRelativeLay = findViewById(R.id.foodTypeRelativeLay);
+        foodAllergyRelativeLay = findViewById(R.id.foodAllergyRelativeLay);
 
-            //Health Info variables
-            healthInfoCardView = findViewById(R.id.healthInfoCardView);
-            healthInfoRelativeCollapse = findViewById(R.id.healthInfoRelativeCollapse);
-            profileHealthInfoDrop = findViewById(R.id.profileHealthInfoDrop);
-            healthIssuesRelativeLay = findViewById(R.id.healthIssuesRelativeLay);
+        //Health Info variables
+        healthInfoCardView = findViewById(R.id.healthInfoCardView);
+        healthInfoRelativeCollapse = findViewById(R.id.healthInfoRelativeCollapse);
+        profileHealthInfoDrop = findViewById(R.id.profileHealthInfoDrop);
+        healthIssuesRelativeLay = findViewById(R.id.healthIssuesRelativeLay);
 
         //Menu Item variables
         profileMenu = findViewById(R.id.nav_profile);
         traineeMenu = findViewById(R.id.nav_trainees);
         //User Info variables
         userId = getIntent().getStringExtra("UserId");
-        path = "Trainer/" + userId;
+        final SharedPreferences sp;
+        sp= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+        final String userType = sp.getString("ProfileType",null);
+        path = userType+ "/" + userId;
+
 
         //Get User Details
         PopulateUserDetails();
@@ -238,6 +252,9 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         foodTypeRelativeLay.setOnClickListener(this);
         foodAllergyRelativeLay.setOnClickListener(this);
         healthIssuesRelativeLay.setOnClickListener(this);
+        profileDobDialogUpdate.setOnClickListener(this);
+        profileWeightDialogUpdate.setOnClickListener(this);
+        profileHeightDialogUpdate.setOnClickListener(this);
 
         //Update profile picture
         profileImage.setOnClickListener(new View.OnClickListener() {
@@ -316,19 +333,25 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
             }
         });
 
+
+
         //Method to re-direct the page from menu
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
                 switch (item.getItemId()){
                     case R.id.nav_profile:
                         break;
+
                     case R.id.nav_trainees:
-                        intent=new Intent(ProfileScreen.this,TraineesScreen.class);
-                        System.out.println("***Pro***H**"+userId+"**S******");
-                        intent.putExtra("UserId",userId);
-                        startActivity(intent);
-                        finish();
+                        if (userType.equals("Trainer")){
+                            intent=new Intent(ProfileScreen.this,TraineesScreen.class);
+                            System.out.println("***Pro***H**"+userId+"**S******");
+                            intent.putExtra("UserId",userId);
+                            startActivity(intent);
+                            finish();
+                        }
                         break;
                     case R.id.nav_logout:
                         intent=new Intent(ProfileScreen.this,MainActivity.class);
@@ -356,9 +379,22 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
 
         if (profileType.equals("DateOfBirth")){
             profileDobDialogTitleLin.setVisibility(View.VISIBLE);
+            profileDobDialogUpdate.setClickable(false);
             profileDobDialogTitle.setText("Date of birth");
             profileDobDialogDatePicker.setMaxDate(currentDate.getTime());
             profileDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                profileDobDialogDatePicker.setOnDateChangedListener(new DatePicker.OnDateChangedListener() {
+                    @Override
+                    public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                       int  month = monthOfYear + 1;
+                       userProfileUpdateValue = dayOfMonth +"-" + month +"-"+ year;
+                       System.out.println(dayOfMonth +"-" + month +"-"+ year);
+                       profileDobDialogUpdate.setClickable(true);
+
+                    }
+                });
+            }
             profileDialog.show();
         }
         else if (profileType.equals("Weight")){
@@ -425,14 +461,21 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 System.out.println("********OnDataChange*******");
-                Trainer user = snapshot.getValue(Trainer.class);
-                trainer = user;
+                //User user = snapshot.getValue(User.class);
+                user = snapshot.getValue(User.class);
+                //trainer = user;
                 System.out.println("********"+user+"*******");
                 //profileName.setText(user.getName());
-                profileWeight.setText(user.getWeight().toString() + " in kgs");
-                profileHeight.setText(user.getHeight().toString() + " in cms");
-                profileEmailId.setText(user.getEmail().toString());
-                profileDob.setText(user.getDateOfBirth().toString());
+
+                String pattern = "dd-MM-yyyy";
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+
+                /*profileWeight.setText(user.getWeight().toString() + " in kgs");
+                profileHeight.setText(user.getHeight().toString() + " in cms");*/
+                profileWeight.setText(user.getWeight().toString());
+                profileHeight.setText(user.getHeight().toString());
+                profileEmailId.setText(user.getEmail());
+                profileDob.setText(simpleDateFormat.format(user.getDateOfBirth()));
                 Picasso.get().load(user.getImage())
                         .placeholder(R.drawable.ic_share)
                         .fit()
@@ -521,6 +564,16 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
             case R.id.healthIssuesRelativeLay:
                 ShowDialog("HealthIssues");
                 break;
+            case R.id.profileDobDialogUpdate:
+
+                updateProfile("dateOfBirth", userProfileUpdateValue);
+                break;
+            case R.id.profileWeightDialogUpdate:
+                updateProfile("weight", profileWeightDialogInput.getText().toString());
+                break;
+            case R.id.profileHeightDialogUpdate:
+                userProfileUpdateValue = profileWeightDialogInput.getText().toString();
+                updateProfile("height",profileHeightDialogInput.getText().toString());
             default:
                 break;
 
@@ -619,5 +672,62 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
 
 
     }
+
+    private void updateProfile(String userField, String value){
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(path);
+        String pattern = "dd-MM-yyyy";
+        final SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        HashMap hash= new HashMap();
+        User userBmValue = new User();
+        HashMap<String,String> healthIssues = new HashMap<>();
+
+        healthIssues.put("Heart Problem", "Heart Problem");
+
+        System.out.println("inUpdate"+ value);
+        if (userField.equals("dateOfBirth")|| userField.equals("lastModDttm")){
+            Date dateUpdate = null;
+
+
+            try {
+                dateUpdate = simpleDateFormat.parse(value);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            hash.put(userField,dateUpdate);
+        }
+
+        else if (userField.equals("weight") || userField.equals("height")){
+            Double userProfileValue = new Double(value);
+            hash.put(userField,userProfileValue);
+            Double userBmi = null;
+            Double userBmr = null;
+
+            switch (userField){
+
+                case "weight":
+                    userBmi = userBmValue.bmiCalculation(userProfileValue, user.getHeight());
+                    userBmr = userBmValue.bmrCalculation(userProfileValue, user.getHeight(),user.getGender(),25);
+                    break;
+                case "height":
+                    userBmi = userBmValue.bmiCalculation(user.getWeight(), userProfileValue);
+                    userBmr = userBmValue.bmrCalculation(user.getWeight(), userProfileValue,user.getGender(),25);
+                    break;
+                default:
+                    break;
+            }
+
+            hash.put("bmi",round(userBmi));
+            hash.put("bmr",round(userBmr));
+            //hash.put("healthIssues",healthIssues);
+
+        }
+        databaseReference.updateChildren(hash);
+
+
+
+    }
+
+
 
 }

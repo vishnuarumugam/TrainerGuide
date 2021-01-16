@@ -278,7 +278,6 @@
                                         android:id="@+id/profileWeight"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="84 in kgs"
                                         style="@style/TextAppearance.AppCompat.Medium"
                                         android:layout_toRightOf="@id/profileWeightImage"
                                         android:layout_alignTop="@id/profileWeightImage"/>
@@ -286,7 +285,7 @@
                                         android:id="@+id/profileWeightLabel"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Weight"
+                                        android:text="Weight (in kg)"
                                         style="@style/TextAppearance.AppCompat.Body1"
                                         android:layout_toRightOf="@id/profileWeightImage"
                                         android:layout_below="@id/profileWeight" />
@@ -308,7 +307,6 @@
                                         android:id="@+id/profileHeight"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="180 in cms"
                                         style="@style/TextAppearance.AppCompat.Medium"
                                         android:layout_toRightOf="@id/profileHeightImage"
                                         android:layout_alignTop="@id/profileHeightImage"/>
@@ -316,7 +314,7 @@
                                         android:id="@+id/profileHeightLabel"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Height"
+                                        android:text="Height (in cms)"
                                         style="@style/TextAppearance.AppCompat.Body1"
                                         android:layout_toRightOf="@id/profileHeightImage"
                                         android:layout_below="@id/profileHeight" />
@@ -528,7 +526,7 @@
                                 android:layout_height="wrap_content"
                                 android:id="@+id/healthInfoRelativeCollapse"
                                 android:layout_alignParentBottom="true"
-                                android:visibility="visible"
+                                android:visibility="gone"
                                 android:orientation="vertical"
                                 android:layout_below="@id/profileHealthInfoImage">
 
@@ -546,7 +544,8 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:id="@+id/profileOtherRelativeLayHealth"
-                                        android:visibility="gone"
+                                        android:visibility="visible"
+                                        android:layout_marginLeft="20dp"
                                         android:layout_below="@+id/profileRecyclerHealth">
                                         <TextView
                                             android:layout_width="wrap_content"

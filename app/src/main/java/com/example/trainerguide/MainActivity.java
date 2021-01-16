@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth fAuth;
     private FirebaseFirestore fStore;
     DatabaseReference databaseReferenceTrainer, databaseReferenceTrainee;
+    private String profileType;
 
 
     @Override
@@ -82,59 +83,111 @@ public class MainActivity extends AppCompatActivity {
                             .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                                 @Override
                                 public void onSuccess(AuthResult authResult) {
+
+                                    //String path = "Trainer/";
+                                    databaseReferenceTrainer = FirebaseDatabase.getInstance().getReference("Trainer");
+
+                                    databaseReferenceTrainer.addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            System.out.println("********OnDataChange*******");
+
+                                            if(snapshot.hasChild(fAuth.getCurrentUser().getUid())){
+                                                profileType = "Trainer";
+                                            }
+                                            else{
+                                                profileType = "User";
+                                            }
+                                            // = "Trainer";
+
+                                            SharedPreferences.Editor editor = sp.edit();
+                                            editor.putString("userId", fAuth.getCurrentUser().getUid());
+                                            editor.putBoolean("IsLoggedIn",true);
+                                            editor.putString("ProfileType", profileType);
+                                            editor.commit();
+
+
+                                            Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                                            Intent intent = new Intent(MainActivity.this,HomeScreen.class);
+                                            intent.putExtra("UserId",fAuth.getCurrentUser().getUid());
+
+                                            startActivity(intent);
+                                            finish();
+
+
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+                                            System.out.println("DatabaseError");
+
+                                        }
+                                    });
+
+                                    try {
+
+                                    }catch(Exception ex){
+                                        System.out.println("catch");
+                                    }
+
+                                    try {
+                                        databaseReferenceTrainee = FirebaseDatabase.getInstance().getReference().child("User");
+                                        System.out.println("InUser");
+
+                                    }
+                                    catch (Exception ex){}
+                                    //SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                                    /*SharedPreferences.Editor editor = sp.edit();
+                                    editor.putString("userId", fAuth.getCurrentUser().getUid());
+                                    editor.putBoolean("IsLoggedIn",true);
+
+                                    finish();*/
+
+//                                    databaseReferenceTrainer.addListenerForSingleValueEvent(new ValueEventListener() {
+//                                        @Override
+//                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                                            if(snapshot.hasChild(fAuth.getCurrentUser().getUid())){
+//                                                profileType = "Trainer";
+//                                            }else{
+//                                                databaseReferenceTrainee.addListenerForSingleValueEvent(new ValueEventListener() {
+//                                                    @Override
+//                                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                                                        if(snapshot.hasChild(fAuth.getCurrentUser().getUid())){
+//                                                            profileType = "Trainee";
+//                                                        }else{
+//                                                            Toast.makeText(MainActivity.this, "Not Found", Toast.LENGTH_SHORT).show();
+//                                                        }
+//                                                    }
+//
+//                                                    @Override
+//                                                    public void onCancelled(@NonNull DatabaseError error) {
+//
+//                                                    }
+//                                                });
+//                                            }
+//                                        }
+//
+//                                        @Override
+//                                        public void onCancelled(@NonNull DatabaseError error) {
+//                                            System.out.println("cancel");
+//
+//                                        }
+//                                    });
+
+                                    /*SharedPreferences.Editor editor = sp.edit();
+                                    editor.putString("userId", fAuth.getCurrentUser().getUid());
+                                    editor.putBoolean("IsLoggedIn",true);
+                                    editor.putString("ProfileType", profileType);
+                                    editor.commit();
+
+
                                     Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(MainActivity.this,HomeScreen.class);
                                     intent.putExtra("UserId",fAuth.getCurrentUser().getUid());
 
                                     startActivity(intent);
-                                    try {
-                                        databaseReferenceTrainer = FirebaseDatabase.getInstance().getReference().child("Trainer");
-                                    }catch(Exception ex){}
-                                    try {
-                                        databaseReferenceTrainee = FirebaseDatabase.getInstance().getReference().child("User");
-                                    }
-                                    catch (Exception ex){}
-                                    //SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                                    SharedPreferences.Editor editor = sp.edit();
-                                    editor.putString("userId", fAuth.getCurrentUser().getUid());
-                                    editor.putBoolean("IsLoggedIn",true);
-                                    editor.commit();
-
-                                    Boolean status1 = sp.getBoolean("IsLoggedIn",false);
-                                    System.out.println("status1"+status1);
                                     finish();
-
-                                    final String[] profileType = new String[1];
-                                    databaseReferenceTrainer.addListenerForSingleValueEvent(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                            if(snapshot.hasChild(fAuth.getCurrentUser().getUid())){
-                                                profileType[0] = "Trainer";
-                                            }else{
-                                                databaseReferenceTrainee.addListenerForSingleValueEvent(new ValueEventListener() {
-                                                    @Override
-                                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                                        if(snapshot.hasChild(fAuth.getCurrentUser().getUid())){
-                                                            profileType[0] = "Trainee";
-                                                        }else{
-                                                            Toast.makeText(MainActivity.this, "Not Found", Toast.LENGTH_SHORT).show();
-                                                        }
-                                                    }
-
-                                                    @Override
-                                                    public void onCancelled(@NonNull DatabaseError error) {
-
-                                                    }
-                                                });
-                                            }
-                                        }
-
-                                        @Override
-                                        public void onCancelled(@NonNull DatabaseError error) {
-
-                                        }
-                                    });
-                                    editor.putString("ProfileType", profileType[0]);
+*/
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                         @Override

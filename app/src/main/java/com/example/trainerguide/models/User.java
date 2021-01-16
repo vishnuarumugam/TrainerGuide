@@ -216,10 +216,10 @@ public class User {
         return bmr;
     }
 
-    public Double bmiCalculation(Double weight, Double height) {
+    public Double bmiCalculation(double weight, double height) {
         Double weightBmi = weight;
         Double heightBmi = height/100;
-        Double bmi = weightBmi/heightBmi;
+        Double bmi = weightBmi/(heightBmi * heightBmi);
         return bmi;
     }
 
