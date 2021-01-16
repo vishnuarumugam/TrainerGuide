@@ -26,11 +26,12 @@ public class User {
     private List<BmrProgress> bmrReport;
     private HashMap<String,String> healthIssues;
     private HashMap<String,String> foodAllergy;
+    private HashMap<String,String> notifications;
 
     public User(String userId, String name, Double bmr, Double bmi, Date dateOfBirth, String gender,
                 Double weight, Double height, Date accCreateDttm, boolean isTrainer, Date lastModDttm,
                 String image, String email, List<BmrProgress> bmrReport, HashMap<String,String> healthIssues,
-                HashMap<String,String> foodAllergy) {
+                HashMap<String,String> foodAllergy, HashMap<String,String> notifications) {
         this.userId = userId;
         this.name = name;
         this.bmr = bmr;
@@ -47,6 +48,7 @@ public class User {
         this.bmrReport = bmrReport;
         this.healthIssues = healthIssues;
         this.foodAllergy = foodAllergy;
+        this.notifications = notifications;
     }
 
     public User(String userId, String name, String gender, Date accCreateDttm, boolean isTrainer, Date lastModDttm, String image, String email) {
@@ -239,4 +241,11 @@ public class User {
         this.foodAllergy = foodAllergy;
     }
 
+    public HashMap<String, String> getNotifications() {
+        return notifications;
+    }
+
+    public void setNotifications(HashMap<String, String> notifications) {
+        this.notifications = notifications;
+    }
 }
