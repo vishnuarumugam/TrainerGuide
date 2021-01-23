@@ -139,7 +139,7 @@ public class RegistrationForm extends AppCompatActivity{
                                     if(IsTrainerProfile) {
                                     editor.putString("ProfileType", "Trainer");}
                                     else {
-                                        editor.putString("ProfileType", "Trainee");}
+                                        editor.putString("ProfileType", "User");}
 
                                     finish();
 

@@ -30,7 +30,7 @@ public class Trainer extends User {
     }
 
     public Trainer(String userId, String name, Double bmr, Double bmi, Date dateOfBirth, String gender, Double weight, Double height, Date accCreateDttm, boolean isTrainer, Date lastModDttm, String image, String email, List<BmrProgress> bmrReport, HashMap<String,UserMetaData> usersList,HashMap<String,String> healthIssues, HashMap<String,String> foodAllergy) {
-        super(userId, name, bmr,bmi, dateOfBirth, gender, weight, height, accCreateDttm, isTrainer, lastModDttm, image, email, bmrReport,new HashMap<String, String>(),new HashMap<String, String>(),new HashMap<String, String>());
+        super(userId, name, bmr,bmi, dateOfBirth, gender, weight, height, accCreateDttm, isTrainer, lastModDttm, image, email, bmrReport,new HashMap<String, String>(),new HashMap<String, String>(),new HashMap<String, Notification>());
         this.usersList = usersList;
     }
 

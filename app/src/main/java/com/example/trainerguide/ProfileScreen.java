@@ -200,7 +200,6 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         final String userType = sp.getString("ProfileType",null);
         path = userType+ "/" + userId;
 
-
         //Get User Details
         PopulateUserDetails();
 
@@ -352,6 +351,10 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                             startActivity(intent);
                             finish();
                         }
+                        break;
+                    case R.id.nav_notification:
+                        startActivity(new Intent(ProfileScreen.this,NotificationScreen.class));
+                        finish();
                         break;
                     case R.id.nav_logout:
                         intent=new Intent(ProfileScreen.this,MainActivity.class);
