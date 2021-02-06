@@ -167,12 +167,14 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
         final Notification notification = notificationsList.get(position);
         final DatabaseReference databaseReferenceAdd = FirebaseDatabase.getInstance().getReference("User/"+ notification.getUserId());
         final DatabaseReference databaseReferenceUserList = FirebaseDatabase.getInstance().getReference(userPath);
+        final DatabaseReference databaseReferenceNotification = FirebaseDatabase.getInstance().getReference("Trainer"+ "/" + fAuth.getCurrentUser().getUid() + "/");
 
         databaseReferenceAdd.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Trainee trainee = snapshot.getValue(Trainee.class);
-                if(trainee.getTrainerId().equals("") || trainee.getTrainerId() == null) {
+                System.out.println("******()*****"+trainee.getTrainerId());
+                if(trainee.getTrainerId() == null || trainee.getTrainerId().equals("") ) {
                     if (trainee.isTrainer() == false) {
                         UserMetaData traineeMetadata = new UserMetaData();
                         traineeMetadata.setUserId(trainee.getUserId());
@@ -191,12 +193,12 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
                         notify.setTrainer(false);
                         notify.setUserId(traineeMetadata.getUserId());
 
-                        HashMap<String, Notification> notification = new HashMap<>();
+                       /* HashMap<String, Notification> notification = new HashMap<>();
                         HashMap hash= new HashMap();
-                        notification.put(notify.getNotificationId(),notify);
+                        notification.put(notify.getNotificationId(),notify);*/
 
-                        hash.put("Notification",notification);
-                        databaseReference.updateChildren(hash);
+                        //hash.put("Notification",notification);
+                        databaseReference.child(notify.getNotificationId()).setValue(notify);
                         databaseReferenceAdd.updateChildren(trainerId);
                         databaseReferenceUserList.child( "/usersList/" + trainee.getUserId()).setValue(traineeMetadata);
                     }

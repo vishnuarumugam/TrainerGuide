@@ -126,14 +126,16 @@ public class TrainerProfileView extends AppCompatActivity {
                                 notify.setNotificationType("Request");
                                 notify.setTrainer(false);
                                 notify.setUserId(trainee.getUserId());
+/*
 
                                 HashMap<String, Notification> notification = new HashMap<>();
                                 HashMap hash= new HashMap();
 
                                 notification.put(notify.getNotificationId(),notify);
                                 hash.put("Notification",notification);
+*/
 
-                                databaseReference.updateChildren(hash);
+                                databaseReference.child(notify.getNotificationId()).setValue(notify);
                             }
                         }
                         else
