@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.trainerguide.models.Notification;
 import com.example.trainerguide.models.Trainee;
 import com.example.trainerguide.models.Trainer;
 import com.example.trainerguide.models.UserMetaData;
@@ -33,8 +34,10 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class TrainerProfileView extends AppCompatActivity {
 
@@ -80,6 +83,16 @@ public class TrainerProfileView extends AppCompatActivity {
         requestbtn = findViewById(R.id.btnRequest);
         profileimg = findViewById(R.id.trainerImg);
 
+        final SharedPreferences sp;
+        sp= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+        final String userType = sp.getString("ProfileType",null);
+
+        if(userType.equals("Trainer"))
+        {
+            requestbtn.setVisibility(View.GONE);
+        }
+
         //Toolbar customisation
         setSupportActionBar(toolbar);
         toolbar.setBackgroundColor(getResources().getColor(R.color.black));
@@ -96,25 +109,31 @@ public class TrainerProfileView extends AppCompatActivity {
         requestbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(path);
+                final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(path+"/Notification");
                 final DatabaseReference databaseReferenceAdd = FirebaseDatabase.getInstance().getReference("User/"+ FirebaseAuth.getInstance().getCurrentUser().getUid());
 
                 databaseReferenceAdd.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         Trainee trainee = snapshot.getValue(Trainee.class);
+
                         if(trainee.getTrainerId() == "" || trainee.getTrainerId() == null) {
                             if (trainee.isTrainer() == false) {
-                                UserMetaData traineeMetadata = new UserMetaData();
-                                traineeMetadata.setUserId(trainee.getUserId());
-                                traineeMetadata.setBmi(trainee.getBmi());
-                                traineeMetadata.setName(trainee.getName());
-                                traineeMetadata.setImage(trainee.getImage());
-                                trainee.setTrainerId(traineruserId);
-                                HashMap<String, Object> trainerId = new HashMap<>();
-                                trainerId.put("trainerId", traineruserId);
-                                databaseReferenceAdd.updateChildren(trainerId);
-                                databaseReference.child( "/usersList/" + trainee.getUserId()).setValue(trainee);
+                                Notification notify = new Notification();
+                                notify.setNotificationId(UUID.randomUUID().toString());
+                                notify.setNotification(trainee.getName()+" requested for joining as your trainee");
+                                notify.setAddedDate(Calendar.getInstance().getTime());
+                                notify.setNotificationType("Request");
+                                notify.setTrainer(false);
+                                notify.setUserId(trainee.getUserId());
+
+                                HashMap<String, Notification> notification = new HashMap<>();
+                                HashMap hash= new HashMap();
+
+                                notification.put(notify.getNotificationId(),notify);
+                                hash.put("Notification",notification);
+
+                                databaseReference.updateChildren(hash);
                             }
                         }
                         else

@@ -1,10 +1,8 @@
 package com.example.trainerguide.models;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Trainer extends User {
     private HashMap<String,UserMetaData> usersList;
@@ -12,9 +10,6 @@ public class Trainer extends User {
     private String description;
     private String experience;
 
-    public HashMap<String,UserMetaData> getUsersList() {
-        return usersList;
-    }
 
     public void setUser(UserMetaData user) {
         if (this.usersList == null) {
@@ -25,12 +20,9 @@ public class Trainer extends User {
         }
     }
 
-    public void setUsersList(HashMap<String,UserMetaData> usersList) {
-        this.usersList = usersList;
-    }
-
-    public Trainer(String userId, String name, Double bmr, Double bmi, Date dateOfBirth, String gender, Double weight, Double height, Date accCreateDttm, boolean isTrainer, Date lastModDttm, String image, String email, List<BmrProgress> bmrReport, HashMap<String,UserMetaData> usersList,HashMap<String,String> healthIssues, HashMap<String,String> foodAllergy) {
-        super(userId, name, bmr,bmi, dateOfBirth, gender, weight, height, accCreateDttm, isTrainer, lastModDttm, image, email, bmrReport,new HashMap<String, String>(),new HashMap<String, String>(),new HashMap<String, Notification>());
+    public Trainer(String userId, String name, Double bmr, Double bmi, Date dateOfBirth, String gender, Double weight, Double height, Date accCreateDttm, boolean isTrainer, Date lastModDttm, String image, String email, List<BmrProgress> bmrReport, HashMap<String,UserMetaData> usersList,HashMap<String,String> healthIssues, HashMap<String,String> foodAllergy, String foodType, String subscriptionType, String description) {
+        //super(userId, name, bmr,bmi, dateOfBirth, gender, weight, height, accCreateDttm, isTrainer, lastModDttm, image, email, bmrReport,new HashMap<String, String>(),new HashMap<String, String>(),new HashMap<String, Notification>(), foodType, subscriptionType, description);
+        super(userId, name, bmr,bmi, dateOfBirth, gender, weight, height, accCreateDttm, isTrainer, lastModDttm, image, email, bmrReport,healthIssues,foodAllergy,new HashMap<String, Notification>(), foodType, subscriptionType, description);
         this.usersList = usersList;
     }
 
@@ -64,5 +56,15 @@ public class Trainer extends User {
     public void setExperience(String experience) {
         this.experience = experience;
     }
+
+    public void setUsersList(HashMap<String,UserMetaData> usersList) {
+        this.usersList = usersList;
+    }
+
+    public HashMap<String,UserMetaData> getUsersList() {
+        return usersList;
+    }
+
+
 
 }

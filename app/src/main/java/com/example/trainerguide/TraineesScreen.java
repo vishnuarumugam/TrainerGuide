@@ -181,7 +181,10 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
         //Create interface
         PaginationInterface paginationInterface = retrofit.create((PaginationInterface.class));
         //Initialize Call
-        Call<String> call = paginationInterface.STRING_CALL_Trainees(orderBy, startAt,limit);
+        Call<String> call = paginationInterface.STRING_CALL_Trainees(orderBy,startAt,limit);
+        System.out.println("**orderBy  "+orderBy);
+        System.out.println("**startAt  "+startAt);
+        System.out.println("**limit  "+limit);
 
         call.enqueue(new Callback<String>() {
             @Override

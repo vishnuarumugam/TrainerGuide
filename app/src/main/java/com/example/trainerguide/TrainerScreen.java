@@ -179,11 +179,16 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
                 .baseUrl("https://trainerguide-14d03.firebaseio.com")
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .build();
+
+        System.out.println("retrofit"+retrofit.toString());
+        System.out.println("retrofit1");
         //Create interface
         PaginationInterface paginationInterface = retrofit.create((PaginationInterface.class));
         //Initialize Call
-        Call<String> call = paginationInterface.STRING_CALL(orderBy, startAt,limit);
+        Call<String> call = paginationInterface.STRING_CALL(orderBy,startAt,limit);
 
+
+        System.out.println(call);
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {

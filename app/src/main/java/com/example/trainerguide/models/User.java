@@ -27,11 +27,14 @@ public class User {
     private HashMap<String,String> healthIssues;
     private HashMap<String,String> foodAllergy;
     private HashMap<String, Notification> notifications;
+    private String foodType;
+    private String subscriptionType;
+    private String description;
 
     public User(String userId, String name, Double bmr, Double bmi, Date dateOfBirth, String gender,
                 Double weight, Double height, Date accCreateDttm, boolean isTrainer, Date lastModDttm,
                 String image, String email, List<BmrProgress> bmrReport, HashMap<String,String> healthIssues,
-                HashMap<String,String> foodAllergy, HashMap<String,Notification> notifications) {
+                HashMap<String,String> foodAllergy, HashMap<String,Notification> notifications, String foodType, String subscriptionType, String description) {
         this.userId = userId;
         this.name = name;
         this.bmr = bmr;
@@ -49,6 +52,9 @@ public class User {
         this.healthIssues = healthIssues;
         this.foodAllergy = foodAllergy;
         this.notifications = notifications;
+        this.foodType = foodType;
+        this.subscriptionType = subscriptionType;
+        this.description = description;
     }
 
     public User(String userId, String name, String gender, Date accCreateDttm, boolean isTrainer, Date lastModDttm, String image, String email) {
@@ -66,6 +72,13 @@ public class User {
         this.image = image;
         this.email = email;
         this.bmrReport = new ArrayList<>();
+        this.healthIssues = new HashMap<>();
+        this.foodAllergy = new HashMap<>();
+        this.notifications = new HashMap<>();
+        this.foodType = "Not mentioned";
+        this.subscriptionType = "Not mentioned";
+        this.description = "Not mentioned";
+
     }
     public User() {
     }
@@ -83,12 +96,20 @@ public class User {
                 ", accCreateDttm=" + accCreateDttm +
                 ", isTrainer=" + isTrainer +
                 ", lastModDttm=" + lastModDttm +
+                ", bmi=" + bmi +
                 ", image='" + image + '\'' +
                 ", email='" + email + '\'' +
                 ", bmrReport=" + bmrReport +
+                ", healthIssues=" + healthIssues +
+                ", foodAllergy=" + foodAllergy +
+                ", notifications=" + notifications +
+                ", foodType='" + foodType + '\'' +
+                ", subscriptionType='" + subscriptionType + '\'' +
+                ", description='" + description + '\'' +
                 '}';
     }
 
+    
     public String getUserId() {
         return userId;
     }
@@ -233,19 +254,51 @@ public class User {
         this.healthIssues = healthIssues;
     }
 
-    public HashMap<String,String> getfoodAllergy() {
-        return foodAllergy;
-    }
-
-    public void setfoodAllergy(HashMap<String,String> foodAllergy) {
-        this.foodAllergy = foodAllergy;
-    }
-
     public HashMap<String, Notification> getNotifications() {
         return notifications;
     }
 
     public void setNotifications(HashMap<String, Notification> notifications) {
         this.notifications = notifications;
+    }
+
+    public void setBmr(Double bmr) {
+        this.bmr = bmr;
+    }
+
+    public void setBmi(Double bmi) {
+        this.bmi = bmi;
+    }
+
+    public HashMap<String, String> getFoodAllergy() {
+        return foodAllergy;
+    }
+
+    public void setFoodAllergy(HashMap<String, String> foodAllergy) {
+        this.foodAllergy = foodAllergy;
+    }
+
+    public String getFoodType() {
+        return foodType;
+    }
+
+    public void setFoodType(String foodType) {
+        this.foodType = foodType;
+    }
+
+    public String getSubscriptionType() {
+        return subscriptionType;
+    }
+
+    public void setSubscriptionType(String subscriptionType) {
+        this.subscriptionType = subscriptionType;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

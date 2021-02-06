@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.trainerguide.models.Notification;
 import com.example.trainerguide.validation.UserInputValidation;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -28,7 +29,11 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.auth.User;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.PriorityQueue;
+import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private TextInputLayout txtLayPassword;
     private FirebaseAuth fAuth;
     private FirebaseFirestore fStore;
-    DatabaseReference databaseReferenceTrainer, databaseReferenceTrainee;
+    DatabaseReference databaseReferenceTrainer, databaseReference;
     private String profileType;
 
 
@@ -98,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
                                             else{
                                                 profileType = "User";
                                             }
-                                            // = "Trainer";
+                                            databaseReference = FirebaseDatabase.getInstance().getReference(profileType+"/"+fAuth.getCurrentUser().getUid());
 
                                             SharedPreferences.Editor editor = sp.edit();
                                             editor.putString("userId", fAuth.getCurrentUser().getUid());
@@ -124,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
                                         }
                                     });
 
-                                    try {
+                                    /*try {
 
                                     }catch(Exception ex){
                                         System.out.println("catch");
@@ -135,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
                                         System.out.println("InUser");
 
                                     }
-                                    catch (Exception ex){}
+                                    catch (Exception ex){}*/
                                     //SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                                     /*SharedPreferences.Editor editor = sp.edit();
                                     editor.putString("userId", fAuth.getCurrentUser().getUid());

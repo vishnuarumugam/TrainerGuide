@@ -33,6 +33,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <!-- DOB Dialog-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -82,6 +83,7 @@
 
             </LinearLayout>
 
+            <!-- Weight Dialog-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -147,6 +149,7 @@
 
             </LinearLayout>
 
+            <!-- Height Dialog-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -215,6 +218,76 @@
 
             </LinearLayout>
 
+            <!-- Experience Dialog-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/profileExperienceDialogTitleLin"
+                android:layout_marginTop="25dp"
+                android:visibility="visible"
+                android:layout_marginBottom="25dp">
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:id="@+id/profileExperienceDialogImg"
+                    android:src="@drawable/ic_height"
+                    android:elevation="5dp"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/profileExperienceDialogTitle"
+                    android:layout_marginHorizontal="20dp"
+                    android:textAlignment="center"
+                    android:layout_marginTop="15dp"
+                    android:elevation="10dp"
+                    android:text="Experience"
+                    android:textColor="@color/grey"
+                    android:textStyle="bold"
+                    style="@style/TextAppearance.AppCompat.Body1"
+                    android:textSize="25dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/profileExperienceDialogUnit"
+                    android:layout_marginHorizontal="20dp"
+                    android:textAlignment="center"
+                    android:layout_marginTop="15dp"
+                    android:elevation="10dp"
+                    android:text="(in years)"
+                    android:textColor="@color/grey"
+                    android:textStyle="bold"
+                    style="@style/TextAppearance.AppCompat.Body1" />
+
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/profileExperienceDialogInput"
+                    android:hint="Experience"
+                    android:theme="@style/DialogEditText"
+                    android:textAlignment="center"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="15dp"/>
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:id="@+id/profileExperienceDialogUpdate"
+                    android:layout_marginTop="10dp"
+                    android:text="UPDATE"
+                    android:backgroundTint="@color/yellow"/>
+
+
+            </LinearLayout>
+
+            <!-- Food Type Dialog-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -258,6 +331,7 @@
                     <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:id="@+id/vegFoodType"
                         android:theme="@style/DialogRadioButton"
                         android:layout_margin="5dp"
                         android:text="Veg"
@@ -265,6 +339,7 @@
                     <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:id="@+id/vegEggFoodType"
                         android:text="Veg with Egg"
                         android:theme="@style/DialogRadioButton"
                         android:layout_margin="5dp"
@@ -272,6 +347,7 @@
                     <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:id="@+id/nonVegFoodType"
                         android:text="Non - Veg"
                         android:theme="@style/DialogRadioButton"
                         android:layout_margin="5dp"
@@ -291,6 +367,7 @@
 
             </LinearLayout>
 
+            <!-- Food Allergy Dialog-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -356,6 +433,7 @@
                         <com.google.android.material.checkbox.MaterialCheckBox
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:id="@+id/nutsFoodAllergy"
                             android:text="Nuts"
                             android:theme="@style/DialogCheckBox"
                             android:layout_below="@+id/wheatFoodAllergy"/>
@@ -388,6 +466,7 @@
                         <com.google.android.material.checkbox.MaterialCheckBox
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:id="@+id/chickenFoodAllergy"
                             android:text="Chicken"
                             android:theme="@style/DialogCheckBox"
                             android:layout_below="@+id/muttonFoodAllergy"/>
@@ -407,6 +486,7 @@
                         <EditText
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:id="@+id/otherFoodAllergy"
                             android:hint="Other"
                             android:maxLength="30"
                             android:background="@drawable/round_shape"
@@ -429,13 +509,14 @@
 
             </LinearLayout>
 
+            <!-- Health Issues Dialog-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:id="@+id/profileHealthInfoDialogTitleLin"
                 android:layout_marginTop="25dp"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:layout_marginBottom="25dp">
 
                 <ImageView
@@ -494,6 +575,7 @@
                         <com.google.android.material.checkbox.MaterialCheckBox
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:id="@+id/thyroidHealthIssue"
                             android:text="Thyroid"
                             android:theme="@style/DialogCheckBox"
                             android:layout_below="@+id/cholesterolHealthIssue"/>
@@ -526,6 +608,7 @@
                         <com.google.android.material.checkbox.MaterialCheckBox
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:id="@+id/physicalInjuriesHealthIssue"
                             android:text="Physical Injuries"
                             android:theme="@style/DialogCheckBox"
                             android:layout_below="@+id/heartHealthIssue"/>
@@ -545,6 +628,7 @@
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:id="@+id/otherHealthIssue"
                         android:hint="Other"
                         android:maxLength="30"
                         android:background="@drawable/round_shape"
@@ -560,6 +644,87 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:id="@+id/profileHealthInfoDialogUpdate"
+                    android:layout_marginTop="10dp"
+                    android:text="UPDATE"
+                    android:backgroundTint="@color/yellow"/>
+
+
+            </LinearLayout>
+
+            <!-- Subscription Dialog-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/profileSubscriptionDialogTitleLin"
+                android:layout_marginTop="25dp"
+                android:visibility="gone"
+                android:layout_marginBottom="25dp">
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:id="@+id/profileSubscriptionDialogImg"
+                    android:src="@mipmap/food_type"
+                    android:elevation="5dp"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/profileSubscriptionDialogTitle"
+                    android:layout_marginHorizontal="20dp"
+                    android:textAlignment="center"
+                    android:layout_marginTop="15dp"
+                    android:elevation="10dp"
+                    android:text="Subscription Type"
+                    android:textColor="@color/grey"
+                    android:textStyle="bold"
+                    style="@style/TextAppearance.AppCompat.Body1"
+                    android:textSize="25dp"/>
+
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:elevation="0dp"
+                    android:background="@drawable/dialog_radio_round"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/weightLossSubscription"
+                        android:theme="@style/DialogRadioButton"
+                        android:layout_margin="5dp"
+                        android:text="Weight Loss"
+                        style="@style/TextAppearance.AppCompat.Body1"/>
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/weightGainSubscription"
+                        android:text="Weight Gain"
+                        android:theme="@style/DialogRadioButton"
+                        android:layout_margin="5dp"
+                        style="@style/TextAppearance.AppCompat.Body1"/>
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/weightMaintainSubscription"
+                        android:text="Weight Maintain"
+                        android:theme="@style/DialogRadioButton"
+                        android:layout_margin="5dp"
+                        android:visibility="gone"
+                        style="@style/TextAppearance.AppCompat.Body1"/>
+
+                </RadioGroup>
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:id="@+id/profileSubscriptionDialogUpdate"
                     android:layout_marginTop="10dp"
                     android:text="UPDATE"
                     android:backgroundTint="@color/yellow"/>

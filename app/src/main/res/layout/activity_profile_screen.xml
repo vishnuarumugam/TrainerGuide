@@ -227,7 +227,7 @@
                                 android:id="@+id/personalRelativeCollapse"
                                 android:layout_alignParentBottom="true"
                                 android:layout_marginTop="10dp"
-                                android:visibility="gone"
+                                android:visibility="visible"
                                 android:layout_below="@id/profilePersonalImage">
 
                                 <RelativeLayout
@@ -318,6 +318,36 @@
                                         style="@style/TextAppearance.AppCompat.Body1"
                                         android:layout_toRightOf="@id/profileHeightImage"
                                         android:layout_below="@id/profileHeight" />
+                                </RelativeLayout>
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/experienceRelativeLay"
+                                    android:visibility="visible"
+                                    android:layout_below="@id/heightRelativeLay">
+
+                                    <ImageView
+                                        android:id="@+id/profileExperienceImage"
+                                        android:layout_width="30dp"
+                                        android:layout_height="30dp"
+                                        android:src="@drawable/ic_height"
+                                        android:layout_margin="15dp"/>
+                                    <TextView
+                                        android:id="@+id/profileExperience"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        style="@style/TextAppearance.AppCompat.Medium"
+                                        android:layout_toRightOf="@id/profileExperienceImage"
+                                        android:layout_alignTop="@id/profileExperienceImage"/>
+                                    <TextView
+                                        android:id="@+id/profileExperienceLabel"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Experience (in years)"
+                                        style="@style/TextAppearance.AppCompat.Body1"
+                                        android:layout_toRightOf="@id/profileExperienceImage"
+                                        android:layout_below="@id/profileExperience" />
                                 </RelativeLayout>
 
                             </RelativeLayout>
@@ -426,7 +456,9 @@
                                         android:layout_width="30dp"
                                         android:layout_height="30dp"
                                         android:src="@mipmap/food_allergy"
-                                        android:layout_margin="15dp"/>
+                                        android:layout_marginTop="10dp"
+                                        android:layout_marginBottom="2dp"
+                                        android:layout_marginHorizontal="15dp"/>
                                     <TextView
                                         android:id="@+id/profileFoodAllergy"
                                         android:layout_width="wrap_content"
@@ -448,18 +480,21 @@
                                         android:layout_height="wrap_content"
                                         android:id="@+id/profileOtherRelativeLayFood"
                                         android:visibility="gone"
+                                        android:layout_marginLeft="30dp"
                                         android:layout_below="@+id/profileRecyclerFoodIssues">
                                             <TextView
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
                                                 android:id="@+id/foodAllergyOtherLabel"
+                                                android:textStyle="bold"
+                                                android:textSize="16sp"
                                                 android:text="Other : " />
                                             <TextView
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
                                                 android:layout_toRightOf="@+id/foodAllergyOtherLabel"
-                                                android:text=" Description"
-                                                android:id="@+id/foodAllergyOther"/>
+                                                android:id="@+id/foodAllergyOther"
+                                                android:textSize="16sp"/>
                                     </RelativeLayout>
 
                             </RelativeLayout>
@@ -499,7 +534,7 @@
                                 android:layout_toRightOf="@id/profileHealthInfoImage"
                                 android:layout_marginStart="10dp"
                                 android:layout_alignTop="@id/profileHealthInfoImage"
-                                android:text="Health Issues"
+                                android:text="Health Info"
                                 style="@style/TextAppearance.AppCompat.Title"/>
 
                             <TextView
@@ -530,39 +565,103 @@
                                 android:orientation="vertical"
                                 android:layout_below="@id/profileHealthInfoImage">
 
+
                                 <RelativeLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:id="@+id/healthIssuesRelativeLay">
 
+                                    <ImageView
+                                        android:id="@+id/profileHealthIssueImage"
+                                        android:layout_width="30dp"
+                                        android:layout_height="30dp"
+                                        android:src="@mipmap/health_issues"
+                                        android:layout_marginTop="10dp"
+                                        android:layout_marginBottom="2dp"
+                                        android:layout_marginHorizontal="15dp" />
+                                    <TextView
+                                        android:id="@+id/profileHealthIssue"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Health Issues"
+                                        style="@style/TextAppearance.AppCompat.Medium"
+                                        android:layout_toRightOf="@id/profileHealthIssueImage"
+                                        android:layout_alignTop="@id/profileHealthIssueImage"/>
+
                                     <androidx.recyclerview.widget.RecyclerView
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:layout_marginStart="15dp"
-                                        android:id="@+id/profileRecyclerHealth" />
+                                        android:id="@+id/profileRecyclerHealth"
+                                        android:layout_below="@id/profileHealthIssueImage"/>
                                     <RelativeLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:id="@+id/profileOtherRelativeLayHealth"
-                                        android:visibility="visible"
-                                        android:layout_marginLeft="20dp"
+                                        android:visibility="gone"
+                                        android:layout_marginLeft="30dp"
                                         android:layout_below="@+id/profileRecyclerHealth">
                                         <TextView
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:id="@+id/healthIssuesOtherLabel"
+                                            android:textStyle="bold"
+                                            android:textSize="16sp"
                                             android:text="Other : " />
                                         <TextView
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:layout_toRightOf="@+id/healthIssuesOtherLabel"
-                                            android:text=" Description"
-                                            android:id="@+id/healthIssuesOther"/>
+                                            android:id="@+id/healthIssuesOther"
+                                            android:textSize="16sp"/>
                                     </RelativeLayout>
 
                                 </RelativeLayout>
 
                             </RelativeLayout>
+
+                        </RelativeLayout>
+                    </com.google.android.material.card.MaterialCardView>
+                    <!-- Subscription Info Design -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/subscriptionInfoCardView"
+                        app:cardCornerRadius="0dp"
+                        android:elevation="10dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:id="@+id/subscriptionInfoRelativeLabel"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp">
+
+                            <ImageView
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:id="@+id/profileSubscriptionInfoImage"
+                                android:src="@mipmap/health_issues"
+                                android:scaleType="fitCenter"
+                                android:elevation="5dp"
+                                android:layout_marginStart="5dp"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/profileSubscriptionInfo"
+                                android:layout_toRightOf="@id/profileSubscriptionInfoImage"
+                                android:layout_marginStart="10dp"
+                                android:layout_alignTop="@id/profileSubscriptionInfoImage"
+                                android:text="Subscription Type"
+                                style="@style/TextAppearance.AppCompat.Title"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/profileSubscriptionInfoLabel"
+                                android:layout_toRightOf="@id/profileSubscriptionInfoImage"
+                                android:layout_marginStart="10dp"
+                                android:layout_below="@id/profileSubscriptionInfo"
+                                style="@style/TextAppearance.AppCompat.Body1"/>
 
                         </RelativeLayout>
                     </com.google.android.material.card.MaterialCardView>

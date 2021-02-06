@@ -8,8 +8,8 @@ public class Trainee extends User {
     private String TrainerId;
 
     public Trainee(String userId, String name, Double bmr, Double bmi, Date dateOfBirth, String gender, Double weight, Double height, Date accCreateDttm, boolean isTrainer, Date lastModDttm,
-                   String image, String email, List<BmrProgress> bmrReport, HashMap<String, String> healthIssues, HashMap<String, String> foodAllergy, String trainerId, HashMap<String, Notification> notifications) {
-        super(userId, name, bmr, bmi, dateOfBirth, gender, weight, height, accCreateDttm, isTrainer, lastModDttm, image, email, bmrReport, healthIssues, foodAllergy, notifications);
+                   String image, String email, List<BmrProgress> bmrReport, HashMap<String, String> healthIssues, HashMap<String, String> foodAllergy, String trainerId, HashMap<String, Notification> notifications, String foodType, String subscriptionType, String description) {
+        super(userId, name, bmr, bmi, dateOfBirth, gender, weight, height, accCreateDttm, isTrainer, lastModDttm, image, email, bmrReport, healthIssues, foodAllergy, notifications, foodType, subscriptionType, description);
         TrainerId = trainerId;
     }
 

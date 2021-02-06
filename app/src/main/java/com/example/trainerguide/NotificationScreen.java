@@ -13,9 +13,13 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import com.example.trainerguide.models.Notification;
+import com.example.trainerguide.models.Trainee;
 import com.example.trainerguide.models.Trainer;
+import com.example.trainerguide.models.UserMetaData;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -25,9 +29,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
-public class NotificationScreen extends AppCompatActivity implements NotificationAdapter.OnAddClickListener {
+public class NotificationScreen extends AppCompatActivity implements NotificationAdapter.OnAddClickListener,
+        NotificationAdapter.OnApproveClickListener, NotificationAdapter.OnRejectClickListener {
 
     //Navigation view variables
     private DrawerLayout drawerLayout;
@@ -41,10 +49,12 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
     private NotificationAdapter notificationAdapter;
 
     private String userId;
-    private String path;
+    private String path, userPath;
 
     //Firebase variables
     private DatabaseReference databaseReference;
+    private FirebaseAuth fAuth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,13 +65,15 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
         userId = getIntent().getStringExtra("UserId");
         final SharedPreferences sp;
         sp= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        fAuth = FirebaseAuth.getInstance();
 
         final String userType = sp.getString("ProfileType",null);
-        path = userType+ "/" + userId + "/notifications";
+        path = userType+ "/" + fAuth.getCurrentUser().getUid() + "/Notification";
+        userPath = userType+ "/" + fAuth.getCurrentUser().getUid();
         databaseReference = FirebaseDatabase.getInstance().getReference(path);
 
         //Navigation view variables
-        drawerLayout = findViewById(R.id.trainer_drawer_layout);
+        drawerLayout = findViewById(R.id.notification_drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.tool_bar);
 
@@ -99,21 +111,25 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
         });
 
         //Recycler view variables
-        notificationRecycler = findViewById(R.id.trainerRecycler);
+        notificationRecycler = findViewById(R.id.notificationRecycler);
         notificationRecycler.setLayoutManager(new LinearLayoutManager(this));
+        PopulateNotifications();
         notificationAdapter = new NotificationAdapter(notificationsList, NotificationScreen.this);
         notificationRecycler.setAdapter(notificationAdapter);
-
+        notificationAdapter.setOnAddClickListener(NotificationScreen.this);
+        notificationAdapter.setOnApproveClickListener(NotificationScreen.this);
+        notificationAdapter.setOnRejectClickListener(NotificationScreen.this);
     }
 
-    public void PopulateNotifications(String userType){
+    public void PopulateNotifications(){
 
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot:snapshot.getChildren()) {
-                    Notification notification = snapshot.getValue(Notification.class);
-                    notificationsList.add(notification);
+                    Notification notification = dataSnapshot.getValue(Notification.class);
+                    if(notification.getUserId()!=null){
+                    notificationsList.add(notification);}
                 }
                 notificationAdapter.notifyDataSetChanged();
             }
@@ -132,7 +148,7 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
         final SharedPreferences sp;
         sp= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         String userType = sp.getString("ProfileType",null);
-        if(userType == "Trainer")
+        if(trainer.isTrainer())
         {
             intent = new Intent(NotificationScreen.this,TrainerProfileView.class);
             intent.putExtra("TrainerUserId",trainer.getUserId());
@@ -144,5 +160,79 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
         }
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public void onApproveclick(int position) {
+        final Notification notification = notificationsList.get(position);
+        final DatabaseReference databaseReferenceAdd = FirebaseDatabase.getInstance().getReference("User/"+ notification.getUserId());
+        final DatabaseReference databaseReferenceUserList = FirebaseDatabase.getInstance().getReference(userPath);
+
+        databaseReferenceAdd.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Trainee trainee = snapshot.getValue(Trainee.class);
+                if(trainee.getTrainerId().equals("") || trainee.getTrainerId() == null) {
+                    if (trainee.isTrainer() == false) {
+                        UserMetaData traineeMetadata = new UserMetaData();
+                        traineeMetadata.setUserId(trainee.getUserId());
+                        traineeMetadata.setBmi(trainee.getBmi());
+                        traineeMetadata.setName(trainee.getName());
+                        traineeMetadata.setImage(trainee.getImage());
+                        trainee.setTrainerId(fAuth.getCurrentUser().getUid());
+                        HashMap<String, Object> trainerId = new HashMap<>();
+                        trainerId.put("trainerId", fAuth.getCurrentUser().getUid());
+
+                        Notification notify = new Notification();
+                        notify.setNotificationId(UUID.randomUUID().toString());
+                        notify.setNotification(traineeMetadata.getName()+" Added as Trainee");
+                        notify.setAddedDate(Calendar.getInstance().getTime());
+                        notify.setNotificationType("");
+                        notify.setTrainer(false);
+                        notify.setUserId(traineeMetadata.getUserId());
+
+                        HashMap<String, Notification> notification = new HashMap<>();
+                        HashMap hash= new HashMap();
+                        notification.put(notify.getNotificationId(),notify);
+
+                        hash.put("Notification",notification);
+                        databaseReference.updateChildren(hash);
+                        databaseReferenceAdd.updateChildren(trainerId);
+                        databaseReferenceUserList.child( "/usersList/" + trainee.getUserId()).setValue(traineeMetadata);
+                    }
+                }
+                else
+                {
+                    AlertDialogBox alertDialogBox = new AlertDialogBox();
+                    alertDialogBox.show(getSupportFragmentManager(),"Alert");
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+
+    @Override
+    public void onRejectclick(int position) {
+        final Notification notification = notificationsList.get(position);
+
+        databaseReference.orderByKey().equalTo(notification.getNotificationId()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot postsnapshot :snapshot.getChildren()) {
+                    postsnapshot.getRef().removeValue();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }

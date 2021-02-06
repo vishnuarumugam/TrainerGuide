@@ -25,6 +25,8 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     private List<Notification> notification = new ArrayList<>();
     private Context context;
     private NotificationAdapter.OnAddClickListener addlistener;
+    private NotificationAdapter.OnApproveClickListener approvelistener;
+    private NotificationAdapter.OnRejectClickListener rejectlistener;
 
     public NotificationAdapter(List<Notification> notification, Context context) {
         this.notification = notification;
@@ -42,7 +44,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     public void onBindViewHolder(@NonNull NotificationAdapter.ViewHolder holder, final int position) {
         System.out.println("items notification");
         holder.notification.setText(notification.get(position).getNotification());
-        if(notification.get(position).getNotificationType() == "Request")
+        if(notification.get(position).getNotificationType().equals("Request"))
         {
             holder.rejectBtn.setVisibility(View.VISIBLE);
             holder.approvebtn.setVisibility(View.VISIBLE);
@@ -55,6 +57,23 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                 addlistener.onAddclick(position);
             }
         });
+
+        holder.approvebtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                notification.get(position);
+                System.out.println(position);
+                approvelistener.onApproveclick(position);
+            }
+        });
+        holder.rejectBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                notification.get(position);
+                System.out.println(position);
+                rejectlistener.onRejectclick(position);
+            }
+        });
     }
 
     @Override
@@ -65,14 +84,14 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView notification;
-        MaterialCardView notificationClick;
+        Button notificationClick;
         Button approvebtn, rejectBtn;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             notification = itemView.findViewById(R.id.notificationText);
-            notificationClick = itemView.findViewById(R.id.parent);
+            notificationClick = itemView.findViewById(R.id.infobtn);
             approvebtn = itemView.findViewById(R.id.approvebtn);
             rejectBtn = itemView.findViewById(R.id.rejectbtn);
         }
@@ -81,8 +100,20 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     public interface OnAddClickListener{
         void onAddclick(int position);
     }
+    public interface OnApproveClickListener{
+        void onApproveclick(int position);
+    }
+    public interface OnRejectClickListener{
+        void onRejectclick(int position);
+    }
 
     public void setOnAddClickListener(NotificationAdapter.OnAddClickListener listener){
         addlistener = listener;
+    }
+    public void setOnApproveClickListener(NotificationAdapter.OnApproveClickListener listener){
+        approvelistener = listener;
+    }
+    public void setOnRejectClickListener(NotificationAdapter.OnRejectClickListener listener){
+        rejectlistener = listener;
     }
 }

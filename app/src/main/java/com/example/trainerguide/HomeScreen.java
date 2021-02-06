@@ -41,8 +41,8 @@ public class HomeScreen extends AppCompatActivity {
     Intent intent;
 
     //User Detail variables
-    private String userId;
-    private String path = "Trainer/" + userId;
+    private String userId, path, userType;
+
 
     //Progress Graph view
     private GraphView progressGraphView;
@@ -71,10 +71,21 @@ public class HomeScreen extends AppCompatActivity {
         //Graph representation
         progressGraphView = findViewById(R.id.userProgressGraph);
 
-        userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        /*userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         path = "Trainer/" + userId;
-        System.out.println("******H**"+userId+"**S******");
+        System.out.println("******H**"+userId+"**S******");*/
+
+        //User Info variables
+        //userId = getIntent().getStringExtra("UserId");
+        final SharedPreferences sp;
+        sp= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+        userType = sp.getString("ProfileType",null);
+        userId = sp.getString("userId",null);
+        path = userType+ "/" + userId;
+
         PopulateUserDetails();
+
 
         //Method to re-direct the page from menu
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -91,6 +102,10 @@ public class HomeScreen extends AppCompatActivity {
                         intent=new Intent(HomeScreen.this,TraineesScreen.class);
                         intent.putExtra("UserId",userId);
                         startActivity(intent);
+                        finish();
+                        break;
+                    case R.id.nav_notification:
+                        startActivity(new Intent(HomeScreen.this,NotificationScreen.class));
                         finish();
                         break;
                     case R.id.nav_trainer:
@@ -123,12 +138,21 @@ public class HomeScreen extends AppCompatActivity {
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(path);
 
-        System.out.println(path);
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 System.out.println("********HSOnDataChange*******");
-                Trainer user = snapshot.getValue(Trainer.class);
+                if (userType.equals("Trainer")){
+                    System.out.println("Trainer"+snapshot.getValue(Trainer.class));
+                    System.out.println("out");
+                    Trainer user = snapshot.getValue(Trainer.class);
+                }
+
+                else{
+                    System.out.println(snapshot.getValue(User.class));
+                    //User user = snapshot.getValue(User.class);
+
+                }
 
                 /*LineGraphSeries<DataPoint> progressDatapoint = new LineGraphSeries<>(new DataPoint[]{
                         new DataPoint(0,user.getBmi()),
