@@ -41,53 +41,53 @@
             </androidx.cardview.widget.CardView>
 
             <TextView
-                    android:id="@+id/traineeItemNameLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_toRightOf="@id/traineeProfileImageCard"
-                    android:text="UserName:"
-                    android:textColor="@color/black"
-                    android:textStyle="italic"/>
-                <TextView
-                    android:id="@+id/traineeItemName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_toRightOf="@id/traineeItemNameLabel"
-                    android:hint="Vishnu"
-                    android:textColor="@color/black"
-                    android:textStyle="bold|italic"/>
+                android:id="@+id/traineeItemNameLabel"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_toRightOf="@id/traineeProfileImageCard"
+                android:text="Name"
+                android:textColor="@color/black"
+                android:textStyle="italic"/>
+            <TextView
+                android:id="@+id/traineeItemName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="20dp"
+                android:layout_toRightOf="@id/traineeItemNameLabel"
+                android:hint="Vishnu"
+                android:textColor="@color/black"
+                android:textStyle="bold|italic"/>
 
-                <TextView
-                    android:id="@+id/traineeItemBmiLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/traineeItemNameLabel"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_toRightOf="@id/traineeProfileImageCard"
-                    android:text="BMI:"
-                    android:textColor="@color/black"
-                    android:textStyle="italic"/>
+            <TextView
+                android:id="@+id/traineeItemBmiLabel"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/traineeItemNameLabel"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/traineeProfileImageCard"
+                android:text="BMI:"
+                android:textColor="@color/black"
+                android:textStyle="italic"/>
 
-                <TextView
-                    android:id="@+id/traineeItemBmi"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/traineeItemName"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_toRightOf="@id/traineeItemBmiLabel"
-                    android:hint="25"
-                    android:textColor="@color/black"
-                    android:textStyle="bold|italic"/>
+            <TextView
+                android:id="@+id/traineeItemBmi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/traineeItemName"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/traineeItemBmiLabel"
+                android:hint="25"
+                android:textColor="@color/black"
+                android:textStyle="bold|italic"/>
 
             <TextView
                 android:id="@+id/traineeItemSubscriptionLabel"
-                android:layout_width="wrap_content"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/traineeItemBmiLabel"
                 android:layout_marginLeft="10dp"
@@ -105,7 +105,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/traineeItemBmiLabel"
-                android:hint="25"
+                android:hint="WeightLoss"
                 android:textColor="@color/black"
                 android:textStyle="bold|italic"/>
         </RelativeLayout>

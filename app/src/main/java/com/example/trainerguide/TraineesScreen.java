@@ -321,12 +321,12 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
                 traineeAdapter.notifyDataSetChanged();
 
                 /*UserMetaData user = new UserMetaData("Satha" + System.currentTimeMillis(), "Satha", 0.00, "image");
-                *//*trainerobj.setUser(user);
+                 *//*trainerobj.setUser(user);
                 databaseReference.setValue(trainerobj);*//*
                 HashMap hash= new HashMap();
                 hash.put(user.getUserId(),user);
                 databaseReference.child(user.getUserId()).setValue(user);*/
-                }
+            }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {

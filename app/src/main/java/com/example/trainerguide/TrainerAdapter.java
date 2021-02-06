@@ -1,6 +1,7 @@
 package com.example.trainerguide;
 
 import android.content.Context;
+import android.content.SyncAdapterType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,12 +27,12 @@ public class TrainerAdapter extends  RecyclerView.Adapter<TrainerAdapter.ViewHol
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         holder.name.setText(trainers.get(position).getName());
-
+        System.out.println("****   *****"+trainers.get(position).getName());
         if(trainers.get(position).getExperience() != null){
-            holder.experience.setText(trainers.get(position).getExperience().toString());}
+            holder.experience.setText(trainers.get(position).getExperience().toString() + " Year(s)");}
 
-        if(trainers.get(position).getFees() != null){
-            holder.fees.setText(trainers.get(position).getFees().toString());}
+        if(trainers.get(position).getSubscriptionFees() != null){
+            holder.fees.setText(trainers.get(position).getSubscriptionFees().toString());}
 
         Picasso.get().load(trainers.get(position).getImage())
                 .fit()

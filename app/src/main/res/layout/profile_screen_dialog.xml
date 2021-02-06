@@ -656,7 +656,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:id="@+id/profileSubscriptionDialogTitleLin"
+                android:id="@+id/profileSubscriptionTypeDialogTitleLin"
                 android:layout_marginTop="25dp"
                 android:visibility="gone"
                 android:layout_marginBottom="25dp">
@@ -664,7 +664,7 @@
                 <ImageView
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    android:id="@+id/profileSubscriptionDialogImg"
+                    android:id="@+id/profileSubscriptionTypeDialogImg"
                     android:src="@mipmap/food_type"
                     android:elevation="5dp"
                     android:layout_gravity="center"/>
@@ -672,7 +672,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/profileSubscriptionDialogTitle"
+                    android:id="@+id/profileSubscriptionTypeDialogTitle"
                     android:layout_marginHorizontal="20dp"
                     android:textAlignment="center"
                     android:layout_marginTop="15dp"
@@ -724,7 +724,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:id="@+id/profileSubscriptionDialogUpdate"
+                    android:id="@+id/profileSubscriptionTypeDialogUpdate"
                     android:layout_marginTop="10dp"
                     android:text="UPDATE"
                     android:backgroundTint="@color/yellow"/>

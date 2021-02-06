@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,7 +42,8 @@ import java.util.UUID;
 
 public class TrainerProfileView extends AppCompatActivity {
 
-    TextView name, email;
+    TextView name, experience, ratingUserCount, description;
+    RatingBar ratingBar;
     ImageView profileimg;
     Button requestbtn;
     private String traineruserId, path;
@@ -79,9 +81,12 @@ public class TrainerProfileView extends AppCompatActivity {
         path = "Trainer/" + traineruserId;
 
         name = findViewById(R.id.txtName);
-        email = findViewById(R.id.txtEmail);
+        experience = findViewById(R.id.txtExperience);
+        description = findViewById(R.id.txtDescription);
+        ratingUserCount = findViewById(R.id.txtUserCount);
         requestbtn = findViewById(R.id.btnRequest);
         profileimg = findViewById(R.id.trainerImg);
+        ratingBar = findViewById(R.id.ratingBar);
 
         final SharedPreferences sp;
         sp= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -216,10 +221,12 @@ public class TrainerProfileView extends AppCompatActivity {
                         .fit()
                         .centerCrop()
                         .into(profileimg);
-
                 name.setText(user.getName());
-                email.setText(user.getEmail());
-
+                experience.setText(String.valueOf(user.getExperience())+" Year(s)");
+                description.setText(user.getSubscriptionDescription() != null ? user.getSubscriptionDescription() : "Description not provided");
+                ratingBar.setNumStars(5);
+                ratingBar.setRating(4);
+                ratingUserCount.setText("(3)");
                 //Dismiss Progress Dialog
                 progressDialog.dismiss();
             }

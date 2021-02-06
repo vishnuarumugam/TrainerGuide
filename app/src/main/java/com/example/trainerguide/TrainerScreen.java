@@ -243,7 +243,8 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
                 //SetImage
                 trainer.setUserId(jsonObject.getString("userId"));
                 trainer.setImage(jsonObject.getString("image"));
-                trainer.setExperience(jsonObject.getString("email"));
+                trainer.setName(jsonObject.getString("name"));
+                trainer.setExperience(jsonObject.getDouble("experience"));
                 //Add Data
                 trainersList.add(trainer);
                 //}
@@ -266,8 +267,9 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
                     System.out.println("user"+jsonObject1.getString("userId"));
                     //SetImage
                     trainer.setImage(jsonObject1.getString("image"));
+                    trainer.setName(jsonObject1.getString("name"));
                     //trainer.setDescription(jsonObject.getString("email"));
-                    trainer.setExperience(jsonObject1.getString("email"));
+                    trainer.setExperience(jsonObject1.getDouble("experience"));
                     trainer.setUserId(jsonObject1.getString("userId"));
                     //trainer.setFees(jsonObject.getString(""));
 

@@ -128,10 +128,10 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
     //PopUp Dialog
     Dialog profileDialog;
     ImageView profileDialogClose;
-    TextView profileDobDialogTitle, profileWeightDialogTitle, profileHeightDialogTitle, profileExperienceDialogTitle, profileFoodTypeDialogTitle, profileFoodAllergyDialogTitle, profileHealthInfoDialogTitle, profileSubscriptionDialogTitle;
-    LinearLayout profileDobDialogTitleLin, profileWeightDialogTitleLin, profileHeightDialogTitleLin, profileExperienceDialogTitleLin, profileFoodTypeDialogTitleLin, profileFoodAllergyDialogTitleLin, profileHealthInfoDialogTitleLin, profileSubscriptionDialogTitleLin;
+    TextView profileDobDialogTitle, profileWeightDialogTitle, profileHeightDialogTitle, profileExperienceDialogTitle, profileFoodTypeDialogTitle, profileFoodAllergyDialogTitle, profileHealthInfoDialogTitle, profileSubscriptionTypeDialogTitle;
+    LinearLayout profileDobDialogTitleLin, profileWeightDialogTitleLin, profileHeightDialogTitleLin, profileExperienceDialogTitleLin, profileFoodTypeDialogTitleLin, profileFoodAllergyDialogTitleLin, profileHealthInfoDialogTitleLin, profileSubscriptionTypeDialogTitleLin;
     DatePicker profileDobDialogDatePicker;
-    Button profileDobDialogUpdate, profileWeightDialogUpdate, profileHeightDialogUpdate, profileExperienceDialogUpdate, profileHealthInfoDialogUpdate, profileFoodAllergyDialogUpdate, profileFoodTypeDialogUpdate, profileSubscriptionDialogUpdate;
+    Button profileDobDialogUpdate, profileWeightDialogUpdate, profileHeightDialogUpdate, profileExperienceDialogUpdate, profileHealthInfoDialogUpdate, profileFoodAllergyDialogUpdate, profileFoodTypeDialogUpdate, profileSubscriptionTypeDialogUpdate;
     EditText profileWeightDialogInput, profileHeightDialogInput, profileExperienceDialogInput;
     MaterialCheckBox diabetesHealthIssue, cholesterolHealthIssue, thyroidHealthIssue, bpHealthIssue, heartHealthIssue, physicalInjuriesHealthIssue;
     MaterialCheckBox diaryFoodAllergy, wheatFoodAllergy, nutsFoodAllergy, seaFoodAllergy, muttonFoodAllergy, chickenFoodAllergy;
@@ -219,8 +219,8 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         path = userType+ "/" + userId;
 
         if (userType.equals("Trainer")){
-            subscriptionInfoCardView.setVisibility(View.GONE);
-            //experienceRelativeLay.setVisibility(View.VISIBLE);
+            //subscriptionInfoCardView.setVisibility(View.GONE);
+            experienceRelativeLay.setVisibility(View.VISIBLE);
             //navigationView.findViewById(R.id.nav_trainees).setVisibility(View.GONE);
         }
         //Get User Details
@@ -250,7 +250,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         profileFoodTypeDialogTitleLin = profileDialog.findViewById(R.id.profileFoodTypeDialogTitleLin);
         profileFoodAllergyDialogTitleLin = profileDialog.findViewById(R.id.profileFoodAllergyDialogTitleLin);
         profileHealthInfoDialogTitleLin = profileDialog.findViewById(R.id.profileHealthInfoDialogTitleLin);
-        profileSubscriptionDialogTitleLin = profileDialog.findViewById(R.id.profileSubscriptionDialogTitleLin);
+        profileSubscriptionTypeDialogTitleLin = profileDialog.findViewById(R.id.profileSubscriptionTypeDialogTitleLin);
 
         profileDobDialogTitle = profileDialog.findViewById(R.id.profileDobDialogTitle);
         profileDobDialogUpdate = profileDialog.findViewById(R.id.profileDobDialogUpdate);
@@ -294,8 +294,8 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         physicalInjuriesHealthIssue = profileDialog.findViewById(R.id.physicalInjuriesHealthIssue);
         otherHealthIssue = profileDialog.findViewById(R.id.otherHealthIssue);
 
-        profileSubscriptionDialogTitle= profileDialog.findViewById(R.id.profileSubscriptionDialogTitle);
-        profileSubscriptionDialogUpdate = profileDialog.findViewById(R.id.profileSubscriptionDialogUpdate);
+        profileSubscriptionTypeDialogTitle= profileDialog.findViewById(R.id.profileSubscriptionTypeDialogTitle);
+        profileSubscriptionTypeDialogUpdate = profileDialog.findViewById(R.id.profileSubscriptionTypeDialogUpdate);
         weightLossSubscription = profileDialog.findViewById(R.id.weightLossSubscription);
         weightGainSubscription = profileDialog.findViewById(R.id.weightGainSubscription);
         weightMaintainSubscription = profileDialog.findViewById(R.id.weightMaintainSubscription);
@@ -314,7 +314,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         profileFoodTypeDialogUpdate.setOnClickListener(this);
         profileFoodAllergyDialogUpdate.setOnClickListener(this);
         profileHealthInfoDialogUpdate.setOnClickListener(this);
-        profileSubscriptionDialogUpdate.setOnClickListener(this);
+        profileSubscriptionTypeDialogUpdate.setOnClickListener(this);
 
         //Update profile picture
         profileImage.setOnClickListener(new View.OnClickListener() {
@@ -441,7 +441,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         profileFoodTypeDialogTitleLin.setVisibility(View.GONE);
         profileFoodAllergyDialogTitleLin.setVisibility(View.GONE);
         profileHealthInfoDialogTitleLin.setVisibility(View.GONE);
-        profileSubscriptionDialogTitleLin.setVisibility(View.GONE);
+        profileSubscriptionTypeDialogTitleLin.setVisibility(View.GONE);
         profileExperienceDialogTitleLin.setVisibility(View.GONE);
 
         if (profileType.equals("DateOfBirth")){
@@ -513,7 +513,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
 
         }
         else if(profileType.equals("SubscriptionType")){
-            profileSubscriptionDialogTitleLin.setVisibility(View.VISIBLE);
+            profileSubscriptionTypeDialogTitleLin.setVisibility(View.VISIBLE);
             profileDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             profileDialog.show();
         }
@@ -528,7 +528,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                 profileFoodTypeDialogTitleLin.setVisibility(View.GONE);
                 profileFoodAllergyDialogTitleLin.setVisibility(View.GONE);
                 profileHealthInfoDialogTitleLin.setVisibility(View.GONE);
-                profileSubscriptionDialogTitleLin.setVisibility(View.GONE);
+                profileSubscriptionTypeDialogTitleLin.setVisibility(View.GONE);
             }
         });
     }
@@ -557,8 +557,6 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                 profileHeight.setText(user.getHeight().toString());
                 profileEmailId.setText(user.getEmail());
                 profileDob.setText(simpleDateFormat.format(user.getDateOfBirth()));
-                profileFoodType.setText(user.getFoodType());
-                profileSubscriptionInfoLabel.setText(user.getSubscriptionType());
                 Picasso.get().load(user.getImage())
                         .placeholder(R.drawable.ic_share)
                         .fit()
@@ -642,48 +640,46 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                     }
                 }
 
-                if (user.getFoodType()!=null){
-                    switch (user.getFoodType()){
-                        case "Vegetarian":
-                            vegFoodType.setChecked(true);
-                            break;
-                        case "Eggetarian":
-                            vegEggFoodType.setChecked(true);
-                            break;
-                        case "Non-Vegetarian":
-                            nonVegFoodType.setChecked(true);
-                            break;
-                        default:
-                            break;
-                    }
-                }
-
-                if (user.getSubscriptionType()!=null){
-                    switch (user.getSubscriptionType()){
-                        case "Weight Loss":
-                            weightLossSubscription.setChecked(true);
-                            break;
-                        case "Weight Gain":
-                            weightGainSubscription.setChecked(true);
-                            break;
-                        case "Weight Maintain":
-                            weightMaintainSubscription.setChecked(true);
-                            break;
-                        default:
-                            break;
-                    }
-                }
-
-
-
-                if (userType.equals("Trainer")){
+             if (userType.equals("Trainer")){
                     Trainer trainer = snapshot.getValue(Trainer.class);
-                    System.out.println(trainer.getExperience().toString());
-                    //profileExperience.setText(trainer.getExperience().toString());
+                    profileExperience.setText(trainer.getExperience().toString());
 
                 }
                 else{
                     Trainee trainee = snapshot.getValue(Trainee.class);
+                    profileFoodType.setText(trainee.getFoodType());
+                    profileSubscriptionInfoLabel.setText(trainee.getSubscriptionType());
+
+                    if (trainee.getFoodType()!=null){
+                        switch (trainee.getFoodType()){
+                            case "Vegetarian":
+                                vegFoodType.setChecked(true);
+                                break;
+                            case "Eggetarian":
+                                vegEggFoodType.setChecked(true);
+                                break;
+                            case "Non-Vegetarian":
+                                nonVegFoodType.setChecked(true);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    if (trainee.getSubscriptionType()!=null){
+                        switch (trainee.getSubscriptionType()){
+                            case "Weight Loss":
+                                weightLossSubscription.setChecked(true);
+                                break;
+                            case "Weight Gain":
+                                weightGainSubscription.setChecked(true);
+                                break;
+                            case "Weight Maintain":
+                                weightMaintainSubscription.setChecked(true);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
                 }
 
                 //Dismiss Progress Dialog
@@ -768,7 +764,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
             case R.id.profileHealthInfoDialogUpdate:
                 updateProfile("healthIssues",null);
                 break;
-            case R.id.profileSubscriptionDialogUpdate:
+            case R.id.profileSubscriptionTypeDialogUpdate:
                 String subscriptionValue = "Not mentioned";
                 if (weightLossSubscription.isChecked()){
                     subscriptionValue="Weight Loss";
@@ -779,7 +775,6 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                 else if (weightMaintainSubscription.isChecked()){
                     subscriptionValue="Weight Maintain";
                 }
-
                 updateProfile("subscriptionType",subscriptionValue);
                 break;
             case R.id.subscriptionInfoCardView:
@@ -930,8 +925,8 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
 
         }
 
-        else if (userField.equals("foodType") || userField.equals("subscriptionType")){
-            hash.put(userField, value);
+        else if (userField.equals("foodType") || userField.equals("subscriptionType")  || (userField.equals("experience"))){
+            hash.put(userField, new Double(value));
         }
 
         else if (userField.equals("foodAllergy")){

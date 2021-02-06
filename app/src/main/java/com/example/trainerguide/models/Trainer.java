@@ -6,9 +6,9 @@ import java.util.List;
 
 public class Trainer extends User {
     private HashMap<String,UserMetaData> usersList;
-    private String fees;
-    private String description;
-    private String experience;
+    private String subscriptionFees;
+    private String subscriptionDescription;
+    private Double experience;
 
 
     public void setUser(UserMetaData user) {
@@ -22,7 +22,7 @@ public class Trainer extends User {
 
     public Trainer(String userId, String name, Double bmr, Double bmi, Date dateOfBirth, String gender, Double weight, Double height, Date accCreateDttm, boolean isTrainer, Date lastModDttm, String image, String email, List<BmrProgress> bmrReport, HashMap<String,UserMetaData> usersList,HashMap<String,String> healthIssues, HashMap<String,String> foodAllergy, String foodType, String subscriptionType, String description) {
         //super(userId, name, bmr,bmi, dateOfBirth, gender, weight, height, accCreateDttm, isTrainer, lastModDttm, image, email, bmrReport,new HashMap<String, String>(),new HashMap<String, String>(),new HashMap<String, Notification>(), foodType, subscriptionType, description);
-        super(userId, name, bmr,bmi, dateOfBirth, gender, weight, height, accCreateDttm, isTrainer, lastModDttm, image, email, bmrReport,healthIssues,foodAllergy,new HashMap<String, Notification>(), foodType, subscriptionType, description);
+        super(userId, name, bmr,bmi, dateOfBirth, gender, weight, height, accCreateDttm, isTrainer, lastModDttm, image, email, bmrReport,healthIssues,foodAllergy,new HashMap<String, Notification>());
         this.usersList = usersList;
     }
 
@@ -33,27 +33,29 @@ public class Trainer extends User {
 
     public Trainer() {
     }
-    public String getFees() {
-        return fees;
+    
+    public String getSubscriptionFees() {
+        return subscriptionFees;
     }
 
-    public void setFees(String fees) {
-        this.fees = fees;
+    public void setSubscriptionFees(String subscriptionFees) {
+        this.subscriptionFees = subscriptionFees;
     }
 
-    public String getDescription() {
-        return description;
+
+    public String getSubscriptionDescription() {
+        return subscriptionDescription;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setSubscriptionDescription(String subscriptionDescription) {
+        this.subscriptionDescription = subscriptionDescription;
     }
 
-    public String getExperience() {
+    public Double getExperience() {
         return experience;
     }
 
-    public void setExperience(String experience) {
+    public void setExperience(Double experience) {
         this.experience = experience;
     }
 

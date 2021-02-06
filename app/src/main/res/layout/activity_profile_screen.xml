@@ -227,7 +227,7 @@
                                 android:id="@+id/personalRelativeCollapse"
                                 android:layout_alignParentBottom="true"
                                 android:layout_marginTop="10dp"
-                                android:visibility="visible"
+                                android:visibility="gone"
                                 android:layout_below="@id/profilePersonalImage">
 
                                 <RelativeLayout
@@ -272,7 +272,6 @@
                                         android:layout_width="30dp"
                                         android:layout_height="30dp"
                                         android:src="@drawable/ic_weight"
-
                                         android:layout_margin="15dp"/>
                                     <TextView
                                         android:id="@+id/profileWeight"
@@ -324,7 +323,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:id="@+id/experienceRelativeLay"
-                                    android:visibility="visible"
+                                    android:visibility="gone"
                                     android:layout_below="@id/heightRelativeLay">
 
                                     <ImageView
@@ -651,7 +650,7 @@
                                 android:layout_toRightOf="@id/profileSubscriptionInfoImage"
                                 android:layout_marginStart="10dp"
                                 android:layout_alignTop="@id/profileSubscriptionInfoImage"
-                                android:text="Subscription Type"
+                                android:text="Subscription"
                                 style="@style/TextAppearance.AppCompat.Title"/>
 
                             <TextView
@@ -661,7 +660,152 @@
                                 android:layout_toRightOf="@id/profileSubscriptionInfoImage"
                                 android:layout_marginStart="10dp"
                                 android:layout_below="@id/profileSubscriptionInfo"
+                                android:text="Subscription Details"
                                 style="@style/TextAppearance.AppCompat.Body1"/>
+
+                            <TextView
+                                android:id="@+id/profileSubscriptionInfoDrop"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:layout_alignBottom="@id/profileSubscriptionInfoLabel"
+                                android:layout_marginEnd="10dp"
+                                android:background="@drawable/ic_dropdown_arrow_down"
+                                android:layout_alignParentEnd="true"/>
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/subscriptionInfoRelativeCollapse"
+                                android:layout_alignParentBottom="true"
+                                android:visibility="visible"
+                                android:orientation="vertical"
+                                android:layout_below="@id/profileSubscriptionInfoImage">
+
+
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/subscriptionTypeRelativeLay">
+
+                                    <ImageView
+                                        android:id="@+id/profileSubscriptionTypeImage"
+                                        android:layout_width="30dp"
+                                        android:layout_height="30dp"
+                                        android:src="@mipmap/food_type"
+                                        android:layout_margin="15dp" />
+                                    <TextView
+                                        android:id="@+id/profileSubscriptionType"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Weight Loss"
+                                        style="@style/TextAppearance.AppCompat.Medium"
+                                        android:layout_toRightOf="@id/profileSubscriptionTypeImage"
+                                        android:layout_alignTop="@id/profileSubscriptionTypeImage"/>
+
+                                    <TextView
+                                        android:id="@+id/profileSubscriptionTypeLabel"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Subscription Type"
+                                        style="@style/TextAppearance.AppCompat.Body1"
+                                        android:layout_toRightOf="@id/profileSubscriptionTypeImage"
+                                        android:layout_below="@id/profileSubscriptionType" />
+
+                                </RelativeLayout>
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/subscriptionTrainerRelativeLay"
+                                    android:layout_below="@id/subscriptionTypeRelativeLay">
+
+                                    <ImageView
+                                        android:id="@+id/profileSubscriptionTrainerImage"
+                                        android:layout_width="30dp"
+                                        android:layout_height="30dp"
+                                        android:src="@drawable/ic_weight"
+                                        android:layout_margin="15dp"/>
+                                    <TextView
+                                        android:id="@+id/profileSubscriptionTrainer"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        style="@style/TextAppearance.AppCompat.Medium"
+                                        android:text="Sathish"
+                                        android:layout_toRightOf="@id/profileSubscriptionTrainerImage"
+                                        android:layout_alignTop="@id/profileSubscriptionTrainerImage"/>
+                                    <TextView
+                                        android:id="@+id/profileSubscriptionTrainerLabel"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Trainer"
+                                        style="@style/TextAppearance.AppCompat.Body1"
+                                        android:layout_toRightOf="@id/profileSubscriptionTrainerImage"
+                                        android:layout_below="@id/profileSubscriptionTrainer" />
+                                </RelativeLayout>
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/subscriptionFeesRelativeLay"
+                                    android:layout_below="@id/subscriptionTrainerRelativeLay">
+
+                                    <ImageView
+                                        android:id="@+id/profileSubscriptionFeesImage"
+                                        android:layout_width="30dp"
+                                        android:layout_height="30dp"
+                                        android:src="@drawable/ic_weight"
+                                        android:layout_margin="15dp"/>
+                                    <TextView
+                                        android:id="@+id/profileSubscriptionFees"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        style="@style/TextAppearance.AppCompat.Medium"
+                                        android:text="2000"
+                                        android:layout_toRightOf="@id/profileSubscriptionFeesImage"
+                                        android:layout_alignTop="@id/profileSubscriptionFeesImage"/>
+                                    <TextView
+                                        android:id="@+id/profileSubscriptionFeesLabel"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Subscription Fees"
+                                        style="@style/TextAppearance.AppCompat.Body1"
+                                        android:layout_toRightOf="@id/profileSubscriptionFeesImage"
+                                        android:layout_below="@id/profileSubscriptionFees" />
+                                </RelativeLayout>
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/subscriptionDescriptionRelativeLay"
+                                    android:layout_below="@id/subscriptionFeesRelativeLay">
+
+                                    <ImageView
+                                        android:id="@+id/profileSubscriptionDescriptionImage"
+                                        android:layout_width="30dp"
+                                        android:layout_height="30dp"
+                                        android:src="@drawable/ic_weight"
+                                        android:layout_margin="15dp"/>
+                                    <TextView
+                                        android:id="@+id/profileSubscriptionDescription"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        style="@style/TextAppearance.AppCompat.Medium"
+                                        android:text="This is the place to give the entire description about your training"
+                                        android:layout_toRightOf="@id/profileSubscriptionDescriptionImage"
+                                        android:layout_alignTop="@id/profileSubscriptionDescriptionImage"/>
+                                    <TextView
+                                        android:id="@+id/profileSubscriptionDescriptionLabel"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Subscription Description"
+                                        style="@style/TextAppearance.AppCompat.Body1"
+                                        android:layout_toRightOf="@id/profileSubscriptionDescriptionImage"
+                                        android:layout_below="@id/profileSubscriptionDescription" />
+                                </RelativeLayout>
+
+
+                            </RelativeLayout>
 
                         </RelativeLayout>
                     </com.google.android.material.card.MaterialCardView>

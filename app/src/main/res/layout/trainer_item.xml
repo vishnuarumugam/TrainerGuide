@@ -45,12 +45,12 @@
 
             <TextView
                 android:id="@+id/trainerItemNameLabel"
-                android:layout_width="wrap_content"
+                android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/trainerProfileImageCard"
-                android:text="Trainer Name:"
+                android:text="Name:"
                 android:textColor="@color/black"
                 android:textStyle="italic"/>
             <TextView
@@ -66,12 +66,12 @@
 
             <TextView
                 android:id="@+id/trainerItemExpLabel"
-                android:layout_width="wrap_content"
+                android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/trainerItemNameLabel"
                 android:layout_margin="5dp"
                 android:layout_toRightOf="@id/trainerProfileImageCard"
-                android:text="Experiance"
+                android:text="Experience"
                 android:textColor="@color/black"
                 android:textStyle="italic"/>
 
@@ -88,12 +88,12 @@
 
             <TextView
                 android:id="@+id/trainerItemFeeLabel"
-                android:layout_width="wrap_content"
+                android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/trainerItemExpLabel"
                 android:layout_margin="5dp"
                 android:layout_toRightOf="@id/trainerProfileImageCard"
-                android:text="Subscription Fee"
+                android:text="Fee"
                 android:textColor="@color/black"
                 android:textStyle="italic"/>
 

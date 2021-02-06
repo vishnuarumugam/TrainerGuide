@@ -27,14 +27,13 @@ public class User {
     private HashMap<String,String> healthIssues;
     private HashMap<String,String> foodAllergy;
     private HashMap<String, Notification> notifications;
-    private String foodType;
-    private String subscriptionType;
-    private String description;
+
+
 
     public User(String userId, String name, Double bmr, Double bmi, Date dateOfBirth, String gender,
                 Double weight, Double height, Date accCreateDttm, boolean isTrainer, Date lastModDttm,
                 String image, String email, List<BmrProgress> bmrReport, HashMap<String,String> healthIssues,
-                HashMap<String,String> foodAllergy, HashMap<String,Notification> notifications, String foodType, String subscriptionType, String description) {
+                HashMap<String,String> foodAllergy, HashMap<String,Notification> notifications) {
         this.userId = userId;
         this.name = name;
         this.bmr = bmr;
@@ -52,9 +51,7 @@ public class User {
         this.healthIssues = healthIssues;
         this.foodAllergy = foodAllergy;
         this.notifications = notifications;
-        this.foodType = foodType;
-        this.subscriptionType = subscriptionType;
-        this.description = description;
+
     }
 
     public User(String userId, String name, String gender, Date accCreateDttm, boolean isTrainer, Date lastModDttm, String image, String email) {
@@ -75,39 +72,11 @@ public class User {
         this.healthIssues = new HashMap<>();
         this.foodAllergy = new HashMap<>();
         this.notifications = new HashMap<>();
-        this.foodType = "Not mentioned";
-        this.subscriptionType = "Not mentioned";
-        this.description = "Not mentioned";
-
     }
     public User() {
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "userId='" + userId + '\'' +
-                ", name='" + name + '\'' +
-                ", bmr=" + bmr +
-                ", dateOfBirth=" + dateOfBirth +
-                ", gender='" + gender + '\'' +
-                ", weight=" + weight +
-                ", height=" + height +
-                ", accCreateDttm=" + accCreateDttm +
-                ", isTrainer=" + isTrainer +
-                ", lastModDttm=" + lastModDttm +
-                ", bmi=" + bmi +
-                ", image='" + image + '\'' +
-                ", email='" + email + '\'' +
-                ", bmrReport=" + bmrReport +
-                ", healthIssues=" + healthIssues +
-                ", foodAllergy=" + foodAllergy +
-                ", notifications=" + notifications +
-                ", foodType='" + foodType + '\'' +
-                ", subscriptionType='" + subscriptionType + '\'' +
-                ", description='" + description + '\'' +
-                '}';
-    }
+
 
     
     public String getUserId() {
@@ -278,27 +247,5 @@ public class User {
         this.foodAllergy = foodAllergy;
     }
 
-    public String getFoodType() {
-        return foodType;
-    }
 
-    public void setFoodType(String foodType) {
-        this.foodType = foodType;
-    }
-
-    public String getSubscriptionType() {
-        return subscriptionType;
-    }
-
-    public void setSubscriptionType(String subscriptionType) {
-        this.subscriptionType = subscriptionType;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 }

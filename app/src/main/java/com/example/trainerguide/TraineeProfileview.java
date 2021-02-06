@@ -32,7 +32,7 @@ import com.squareup.picasso.Picasso;
 
 public class TraineeProfileview extends AppCompatActivity {
 
-    TextView name, email, subscription;
+    TextView name, goal, bmi;
     ImageView profileimg;
     Button requestbtn;
     private String traineeuserId, path;
@@ -67,10 +67,10 @@ public class TraineeProfileview extends AppCompatActivity {
 
         path = "User/" + traineeuserId;
 
-        name = findViewById(R.id.txtName);
-        email = findViewById(R.id.txtEmail);
-        subscription = findViewById(R.id.txtSubscription);
-        requestbtn = findViewById(R.id.btnRequest);
+        name = findViewById(R.id.txtTraineeName);
+        goal = findViewById(R.id.txtTraineeGoals);
+        bmi = findViewById(R.id.txtTraineeBmi);
+        //requestbtn = findViewById(R.id.btnRequest);
         profileimg = findViewById(R.id.traineeImage);
 
         //Toolbar customisation
@@ -149,8 +149,8 @@ public class TraineeProfileview extends AppCompatActivity {
                         .into(profileimg);
 
                 name.setText(user.getName());
-                email.setText(user.getEmail());
-                subscription.setText("Fitness");
+                goal.setText(user.getSubscriptionType());
+                bmi.setText(user.getBmi().toString());
 
                 //Dismiss Progress Dialog
                 progressDialog.dismiss();
