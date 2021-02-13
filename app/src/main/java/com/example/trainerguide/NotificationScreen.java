@@ -152,11 +152,13 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
         {
             intent = new Intent(NotificationScreen.this,TrainerProfileView.class);
             intent.putExtra("TrainerUserId",trainer.getUserId());
+            intent.putExtra("Screen","Notification");
         }
         else
         {
             intent = new Intent(NotificationScreen.this,TraineeProfileview.class);
             intent.putExtra("TraineeUserId",trainer.getUserId());
+            intent.putExtra("Screen","Notification");
         }
         startActivity(intent);
         finish();

@@ -7,6 +7,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
+import androidx.core.widget.NestedScrollView;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -77,6 +78,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import me.biubiubiu.justifytext.library.JustifyTextView;
+
 import static java.lang.Math.round;
 
 public class ProfileScreen extends AppCompatActivity implements View.OnClickListener {
@@ -111,8 +114,8 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
     //ProfileScreen Variables
     private ImageButton profileImage;
     MaterialCardView accCardView, personalInfoCardView, foodInfoCardView, healthInfoCardView, subscriptionInfoCardView;
-    TextView profileAccDrop, profilePersonalInfoDrop, profileFoodInfoDrop, profileWeight, profileEmailId, profileDob, profileHeight, profileFoodType, profileHealthInfoDrop, foodAllergyOther, healthIssuesOther, profileSubscriptionInfoLabel, profileExperience;
-    RelativeLayout accRelativeCollapse, personalRelativeCollapse, foodInfoRelativeCollapse, dobRelativeLay, healthInfoRelativeCollapse, weightRelativeLay, heightRelativeLay, foodTypeRelativeLay, foodAllergyRelativeLay, healthIssuesRelativeLay, experienceRelativeLay;
+    TextView profileAccDrop, profilePersonalInfoDrop, profileFoodInfoDrop, profileWeight, profileEmailId, profileDob, profileHeight, profileFoodType, profileHealthInfoDrop, foodAllergyOther, healthIssuesOther, profileExperience, profileSubscriptionInfoDrop, profileSubscriptionType, profileSubscriptionFees, profileSubscriptionDescription, profileSubscriptionTrainer;
+    RelativeLayout accRelativeCollapse, personalRelativeCollapse, foodInfoRelativeCollapse, dobRelativeLay, healthInfoRelativeCollapse, weightRelativeLay, heightRelativeLay, foodTypeRelativeLay, foodAllergyRelativeLay, healthIssuesRelativeLay, experienceRelativeLay, subscriptionInfoRelativeCollapse, subscriptionTypeRelativeLay, subscriptionTrainerRelativeLay, subscriptionFeesRelativeLay, subscriptionDescriptionRelativeLay;
 
     private String userId;
     private String path;
@@ -128,11 +131,11 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
     //PopUp Dialog
     Dialog profileDialog;
     ImageView profileDialogClose;
-    TextView profileDobDialogTitle, profileWeightDialogTitle, profileHeightDialogTitle, profileExperienceDialogTitle, profileFoodTypeDialogTitle, profileFoodAllergyDialogTitle, profileHealthInfoDialogTitle, profileSubscriptionTypeDialogTitle;
-    LinearLayout profileDobDialogTitleLin, profileWeightDialogTitleLin, profileHeightDialogTitleLin, profileExperienceDialogTitleLin, profileFoodTypeDialogTitleLin, profileFoodAllergyDialogTitleLin, profileHealthInfoDialogTitleLin, profileSubscriptionTypeDialogTitleLin;
+    TextView profileDobDialogTitle, profileWeightDialogTitle, profileHeightDialogTitle, profileExperienceDialogTitle, profileFoodTypeDialogTitle, profileFoodAllergyDialogTitle, profileHealthInfoDialogTitle, profileSubscriptionTypeDialogTitle, profileSubscriptionFeesDialogTitle, profileSubscriptionDescDialogTitle;
+    LinearLayout profileDobDialogTitleLin, profileWeightDialogTitleLin, profileHeightDialogTitleLin, profileExperienceDialogTitleLin, profileFoodTypeDialogTitleLin, profileFoodAllergyDialogTitleLin, profileHealthInfoDialogTitleLin, profileSubscriptionTypeDialogTitleLin, profileSubscriptionFeesDialogTitleLin, profileSubscriptionDescDialogTitleLin;
     DatePicker profileDobDialogDatePicker;
-    Button profileDobDialogUpdate, profileWeightDialogUpdate, profileHeightDialogUpdate, profileExperienceDialogUpdate, profileHealthInfoDialogUpdate, profileFoodAllergyDialogUpdate, profileFoodTypeDialogUpdate, profileSubscriptionTypeDialogUpdate;
-    EditText profileWeightDialogInput, profileHeightDialogInput, profileExperienceDialogInput;
+    Button profileDobDialogUpdate, profileWeightDialogUpdate, profileHeightDialogUpdate, profileExperienceDialogUpdate, profileHealthInfoDialogUpdate, profileFoodAllergyDialogUpdate, profileFoodTypeDialogUpdate, profileSubscriptionTypeDialogUpdate, profileSubscriptionFeesDialogUpdate, profileSubscriptionDescDialogUpdate;
+    EditText profileWeightDialogInput, profileHeightDialogInput, profileExperienceDialogInput, profileSubscriptionFeesDialogInput, profileSubscriptionDescDialogInput;
     MaterialCheckBox diabetesHealthIssue, cholesterolHealthIssue, thyroidHealthIssue, bpHealthIssue, heartHealthIssue, physicalInjuriesHealthIssue;
     MaterialCheckBox diaryFoodAllergy, wheatFoodAllergy, nutsFoodAllergy, seaFoodAllergy, muttonFoodAllergy, chickenFoodAllergy;
     RadioButton vegFoodType, vegEggFoodType, nonVegFoodType, weightLossSubscription, weightGainSubscription, weightMaintainSubscription;
@@ -178,6 +181,10 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         profileExperience = findViewById(R.id.profileExperience);
         profileEmailId = findViewById(R.id.profileEmailId);
         profileDob = findViewById(R.id.profileDob);
+        profileSubscriptionType = findViewById(R.id.profileSubscriptionType);
+        profileSubscriptionTrainer = findViewById(R.id.profileSubscriptionTrainer);
+        profileSubscriptionFees = findViewById(R.id.profileSubscriptionFees);
+        profileSubscriptionDescription = findViewById(R.id.profileSubscriptionDescription);
         dobRelativeLay = findViewById(R.id.dobRelativeLay);
         weightRelativeLay = findViewById(R.id.weightRelativeLay);
         heightRelativeLay = findViewById(R.id.heightRelativeLay);
@@ -203,7 +210,12 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
 
         //Subscription Info variables
         subscriptionInfoCardView = findViewById(R.id.subscriptionInfoCardView);
-        profileSubscriptionInfoLabel = findViewById(R.id.profileSubscriptionInfoLabel);
+        subscriptionInfoRelativeCollapse = findViewById(R.id.subscriptionInfoRelativeCollapse);
+        profileSubscriptionInfoDrop = findViewById(R.id.profileSubscriptionInfoDrop);
+        subscriptionTypeRelativeLay = findViewById(R.id.subscriptionTypeRelativeLay);
+        subscriptionTrainerRelativeLay = findViewById(R.id.subscriptionTrainerRelativeLay);
+        subscriptionFeesRelativeLay = findViewById(R.id.subscriptionFeesRelativeLay);
+        subscriptionDescriptionRelativeLay = findViewById(R.id.subscriptionDescriptionRelativeLay);
 
         //Menu Item variables
         profileMenu = findViewById(R.id.nav_profile);
@@ -219,9 +231,15 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         path = userType+ "/" + userId;
 
         if (userType.equals("Trainer")){
-            //subscriptionInfoCardView.setVisibility(View.GONE);
             experienceRelativeLay.setVisibility(View.VISIBLE);
+            subscriptionDescriptionRelativeLay.setVisibility(View.VISIBLE);
+            subscriptionFeesRelativeLay.setVisibility(View.VISIBLE);
             //navigationView.findViewById(R.id.nav_trainees).setVisibility(View.GONE);
+        }
+        else {
+            subscriptionTrainerRelativeLay.setVisibility(View.VISIBLE);
+            subscriptionTypeRelativeLay.setVisibility(View.VISIBLE);
+
         }
         //Get User Details
         PopulateUserDetails();
@@ -251,6 +269,8 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         profileFoodAllergyDialogTitleLin = profileDialog.findViewById(R.id.profileFoodAllergyDialogTitleLin);
         profileHealthInfoDialogTitleLin = profileDialog.findViewById(R.id.profileHealthInfoDialogTitleLin);
         profileSubscriptionTypeDialogTitleLin = profileDialog.findViewById(R.id.profileSubscriptionTypeDialogTitleLin);
+        profileSubscriptionFeesDialogTitleLin = profileDialog.findViewById(R.id.profileSubscriptionFeesDialogTitleLin);
+        profileSubscriptionDescDialogTitleLin = profileDialog.findViewById(R.id.profileSubscriptionDescDialogTitleLin);
 
         profileDobDialogTitle = profileDialog.findViewById(R.id.profileDobDialogTitle);
         profileDobDialogUpdate = profileDialog.findViewById(R.id.profileDobDialogUpdate);
@@ -299,7 +319,14 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         weightLossSubscription = profileDialog.findViewById(R.id.weightLossSubscription);
         weightGainSubscription = profileDialog.findViewById(R.id.weightGainSubscription);
         weightMaintainSubscription = profileDialog.findViewById(R.id.weightMaintainSubscription);
+        profileSubscriptionFeesDialogTitle = profileDialog.findViewById(R.id.profileSubscriptionFeesDialogTitle);
+        profileSubscriptionFeesDialogInput = profileDialog.findViewById(R.id.profileSubscriptionFeesDialogInput);
+        profileSubscriptionFeesDialogUpdate = profileDialog.findViewById(R.id.profileSubscriptionFeesDialogUpdate);
+        profileSubscriptionDescDialogTitle = profileDialog.findViewById(R.id.profileSubscriptionDescDialogTitle);
+        profileSubscriptionDescDialogInput = profileDialog.findViewById(R.id.profileSubscriptionDescDialogInput);
+        profileSubscriptionDescDialogUpdate = profileDialog.findViewById(R.id.profileSubscriptionDescDialogUpdate);
 
+        //Dialog Pop - up Listener
         dobRelativeLay.setOnClickListener(this);
         weightRelativeLay.setOnClickListener(this);
         heightRelativeLay.setOnClickListener(this);
@@ -307,6 +334,12 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         foodTypeRelativeLay.setOnClickListener(this);
         foodAllergyRelativeLay.setOnClickListener(this);
         healthIssuesRelativeLay.setOnClickListener(this);
+        subscriptionTypeRelativeLay.setOnClickListener(this);
+        subscriptionTrainerRelativeLay.setOnClickListener(this);
+        subscriptionFeesRelativeLay.setOnClickListener(this);
+        subscriptionDescriptionRelativeLay.setOnClickListener(this);
+
+        //Dialog update
         profileDobDialogUpdate.setOnClickListener(this);
         profileWeightDialogUpdate.setOnClickListener(this);
         profileHeightDialogUpdate.setOnClickListener(this);
@@ -315,6 +348,8 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         profileFoodAllergyDialogUpdate.setOnClickListener(this);
         profileHealthInfoDialogUpdate.setOnClickListener(this);
         profileSubscriptionTypeDialogUpdate.setOnClickListener(this);
+        profileSubscriptionFeesDialogUpdate.setOnClickListener(this);
+        profileSubscriptionDescDialogUpdate.setOnClickListener(this);
 
         //Update profile picture
         profileImage.setOnClickListener(new View.OnClickListener() {
@@ -393,7 +428,21 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
             }
         });
 
-        subscriptionInfoCardView.setOnClickListener(this);
+        subscriptionInfoCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (subscriptionInfoRelativeCollapse.getVisibility() == View.GONE){
+                    TransitionManager.beginDelayedTransition(subscriptionInfoCardView,new AutoTransition());
+                    subscriptionInfoRelativeCollapse.setVisibility(View.VISIBLE);
+                    profileSubscriptionInfoDrop.setBackgroundResource(R.drawable.ic_baseline_arrow_drop_up);
+
+                }else {
+                    TransitionManager.beginDelayedTransition(subscriptionInfoCardView,new AutoTransition());
+                    subscriptionInfoRelativeCollapse.setVisibility(View.GONE);
+                    profileSubscriptionInfoDrop.setBackgroundResource(R.drawable.ic_dropdown_arrow_down);
+                }
+            }
+        });
 
 
         //Method to re-direct the page from menu
@@ -438,11 +487,13 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         profileDobDialogTitleLin.setVisibility(View.GONE);
         profileWeightDialogTitleLin.setVisibility(View.GONE);
         profileHeightDialogTitleLin.setVisibility(View.GONE);
+        profileExperienceDialogTitleLin.setVisibility(View.GONE);
         profileFoodTypeDialogTitleLin.setVisibility(View.GONE);
         profileFoodAllergyDialogTitleLin.setVisibility(View.GONE);
         profileHealthInfoDialogTitleLin.setVisibility(View.GONE);
         profileSubscriptionTypeDialogTitleLin.setVisibility(View.GONE);
-        profileExperienceDialogTitleLin.setVisibility(View.GONE);
+        profileSubscriptionFeesDialogTitleLin.setVisibility(View.GONE);
+        profileSubscriptionDescDialogTitleLin.setVisibility(View.GONE);
 
         if (profileType.equals("DateOfBirth")){
             profileDobDialogTitleLin.setVisibility(View.VISIBLE);
@@ -514,6 +565,19 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         }
         else if(profileType.equals("SubscriptionType")){
             profileSubscriptionTypeDialogTitleLin.setVisibility(View.VISIBLE);
+            profileDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            profileDialog.show();
+        }
+        else if(profileType.equals("SubscriptionFees")){
+            profileSubscriptionFeesDialogTitleLin.setVisibility(View.VISIBLE);
+            profileSubscriptionFeesDialogInput.setText(profileSubscriptionFees.getText().toString());
+            profileDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            profileDialog.show();
+        }
+
+        else if(profileType.equals("SubscriptionDescription")){
+            profileSubscriptionDescDialogTitleLin.setVisibility(View.VISIBLE);
+            profileSubscriptionDescDialogInput.setText(profileSubscriptionDescription.getText().toString());
             profileDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             profileDialog.show();
         }
@@ -643,12 +707,16 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
              if (userType.equals("Trainer")){
                     Trainer trainer = snapshot.getValue(Trainer.class);
                     profileExperience.setText(trainer.getExperience().toString());
+                    profileSubscriptionFees.setText(trainer.getSubscriptionFees());
+                    profileSubscriptionDescription.setText(trainer.getSubscriptionDescription().toString());
 
                 }
                 else{
                     Trainee trainee = snapshot.getValue(Trainee.class);
                     profileFoodType.setText(trainee.getFoodType());
-                    profileSubscriptionInfoLabel.setText(trainee.getSubscriptionType());
+                    //String trainerName = GetTrainerName(trainee.getTrainerId());
+                    GetTrainerName(trainee.getTrainerId());
+                    profileSubscriptionType.setText(trainee.getSubscriptionType());
 
                     if (trainee.getFoodType()!=null){
                         switch (trainee.getFoodType()){
@@ -694,6 +762,26 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
             }
         });
     }
+
+    private void GetTrainerName(String trainerId) {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Trainer/" + trainerId);
+        //final String trainerName = "No trainer";
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Trainer trainer = snapshot.getValue(Trainer.class);
+                profileSubscriptionTrainer.setText(trainer.getName());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+
     @Override
     public void onBackPressed()
     {
@@ -732,6 +820,15 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                 break;
             case R.id.experienceRelativeLay:
                 ShowDialog("Experience");
+                break;
+            case R.id.subscriptionTypeRelativeLay:
+                ShowDialog("SubscriptionType");
+                break;
+            case R.id.subscriptionFeesRelativeLay:
+                ShowDialog("SubscriptionFees");
+                break;
+            case R.id.subscriptionDescriptionRelativeLay:
+                ShowDialog("SubscriptionDescription");
                 break;
             case R.id.profileDobDialogUpdate:
                 updateProfile("dateOfBirth", userProfileUpdateValue);
@@ -777,9 +874,12 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                 }
                 updateProfile("subscriptionType",subscriptionValue);
                 break;
-            case R.id.subscriptionInfoCardView:
-                ShowDialog("SubscriptionType");
-                break;
+
+            case R.id.profileSubscriptionFeesDialogUpdate:
+                updateProfile("subscriptionFees",profileSubscriptionFeesDialogInput.getText().toString());
+
+            case  R.id.profileSubscriptionDescDialogUpdate:
+                updateProfile("subscriptionDescription", profileSubscriptionDescDialogInput.getText().toString());
             default:
                 break;
 
@@ -925,8 +1025,12 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
 
         }
 
-        else if (userField.equals("foodType") || userField.equals("subscriptionType")  || (userField.equals("experience"))){
-            hash.put(userField, new Double(value));
+        else if (userField.equals("foodType") || userField.equals("subscriptionType")  || userField.equals("experience") || userField.equals("subscriptionFees") || userField.equals("subscriptionDescription")){
+
+            if (userField.equals("experience") || userField.equals("subscriptionFees")){
+                hash.put(userField, new Double(value));
+            }
+            hash.put(userField, value);
         }
 
         else if (userField.equals("foodAllergy")){

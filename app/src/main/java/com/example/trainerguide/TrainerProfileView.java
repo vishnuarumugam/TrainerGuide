@@ -46,7 +46,7 @@ public class TrainerProfileView extends AppCompatActivity {
     RatingBar ratingBar;
     ImageView profileimg;
     Button requestbtn;
-    private String traineruserId, path;
+    private String traineruserId, path,navScreen;
 
     private ProgressDialog progressDialog;
 
@@ -67,6 +67,8 @@ public class TrainerProfileView extends AppCompatActivity {
         setContentView(R.layout.activity_trainer_profile_view);
 
         traineruserId = getIntent().getStringExtra("TrainerUserId");
+        navScreen = getIntent().getStringExtra("Screen");
+
 
         //Navigation view variables
         drawerLayout = findViewById(R.id.trainer_view_drawer_layout);
@@ -249,8 +251,15 @@ public class TrainerProfileView extends AppCompatActivity {
         }
         else
         {
-            startActivity(new Intent(TrainerProfileView.this,TrainerScreen.class));
+            if(navScreen!=null && navScreen.equals("Notification")){
+
+                System.out.println(navScreen.toString());
+            startActivity(new Intent(TrainerProfileView.this,NotificationScreen.class));
+            finish();}
+            else {
+            startActivity(new Intent(TrainerProfileView.this, TrainerScreen.class));
             finish();
+        }
         }
     }
 

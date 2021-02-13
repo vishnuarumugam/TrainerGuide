@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.trainerguide.models.Notification;
 import com.example.trainerguide.models.Trainee;
 import com.example.trainerguide.models.Trainer;
 import com.google.android.material.navigation.NavigationView;
@@ -35,7 +36,7 @@ public class TraineeProfileview extends AppCompatActivity {
     TextView name, goal, bmi;
     ImageView profileimg;
     Button requestbtn;
-    private String traineeuserId, path;
+    private String traineeuserId, path, navScreen;
 
     private ProgressDialog progressDialog;
 
@@ -55,6 +56,7 @@ public class TraineeProfileview extends AppCompatActivity {
 
 
         traineeuserId = getIntent().getStringExtra("TraineeUserId");
+        navScreen = getIntent().getStringExtra("Screen");
 
         //Navigation view variables
         drawerLayout = findViewById(R.id.trainee_view_drawer_layout);
@@ -170,8 +172,14 @@ public class TraineeProfileview extends AppCompatActivity {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer((GravityCompat.START));
         } else {
-            startActivity(new Intent(TraineeProfileview.this, TraineesScreen.class));
-            finish();
+            if(navScreen!=null && navScreen.equals("Notification")){
+                startActivity(new Intent(TraineeProfileview.this, NotificationScreen.class));
+                finish();
+            }
+            else {
+                startActivity(new Intent(TraineeProfileview.this, TraineesScreen.class));
+                finish();
+            }
         }
     }
 

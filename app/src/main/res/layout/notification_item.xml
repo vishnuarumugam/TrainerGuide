@@ -42,14 +42,15 @@
             android:layout_below="@+id/notificationText"
             android:id="@+id/rejectbtn"
             android:text="Reject"/>
-        <Button
+        <ImageButton
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginLeft="5dp"
+            android:src="@drawable/ic_info"
             android:id="@+id/infobtn"
+            android:backgroundTint="@color/white"
             android:layout_alignParentEnd="true"
             android:gravity="center"
-            android:text=">"
         />
 
     </RelativeLayout>
