@@ -11,7 +11,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -106,12 +108,16 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.nav_profile:
-                        intent = new Intent(TraineesScreen.this,ProfileScreen.class);
-                        intent.putExtra("UserId",userId);
+                        intent=new Intent(TraineesScreen.this,ProfileScreen.class);
+                        //intent.putExtra("UserId",userId);
                         startActivity(intent);
                         finish();
                         break;
                     case R.id.nav_trainees:
+                        break;
+                    case R.id.nav_notification:
+                        startActivity(new Intent(TraineesScreen.this,NotificationScreen.class));
+                        finish();
                         break;
                     case R.id.nav_trainer:
                         startActivity(new Intent(TraineesScreen.this,TrainerScreen.class));
@@ -119,8 +125,17 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
                         break;
                     case R.id.nav_logout:
                         startActivity(new Intent(TraineesScreen.this,MainActivity.class));
+                        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                        SharedPreferences.Editor editor = settings.edit();
+                        editor.remove("userId");
+                        editor.remove("ProfileType");
+                        editor.remove("IsLoggedIn");
+                        //editor.putBoolean("IsLoggedIn",false);
+                        editor.commit();
+                        finish();
                         break;
                     default:
+                        Toast.makeText(TraineesScreen.this, "profile", Toast.LENGTH_SHORT).show();
                         break;
                 }
                 return false;
@@ -346,7 +361,9 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
         }
         else
         {
-            super.onBackPressed();
+            Intent intent = new Intent(TraineesScreen.this,HomeScreen.class);
+            startActivity(intent);
+            finish();
         }
     }
 

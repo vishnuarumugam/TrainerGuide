@@ -445,40 +445,46 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         });
 
 
+
         //Method to re-direct the page from menu
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
                 switch (item.getItemId()){
                     case R.id.nav_profile:
                         break;
-
                     case R.id.nav_trainees:
-                        if (userType.equals("Trainer")){
-                            intent=new Intent(ProfileScreen.this,TraineesScreen.class);
-                            System.out.println("***Pro***H**"+userId+"**S******");
-                            intent.putExtra("UserId",userId);
-                            startActivity(intent);
-                            finish();
-                        }
+                        intent=new Intent(ProfileScreen.this,TraineesScreen.class);
+                        //intent.putExtra("UserId",userId);
+                        startActivity(intent);
+                        finish();
                         break;
                     case R.id.nav_notification:
                         startActivity(new Intent(ProfileScreen.this,NotificationScreen.class));
                         finish();
                         break;
+                    case R.id.nav_trainer:
+                        startActivity(new Intent(ProfileScreen.this,TrainerScreen.class));
+                        finish();
+                        break;
                     case R.id.nav_logout:
-                        intent=new Intent(ProfileScreen.this,MainActivity.class);
-                        startActivity(intent);
+                        startActivity(new Intent(ProfileScreen.this,MainActivity.class));
+                        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                        SharedPreferences.Editor editor = settings.edit();
+                        editor.remove("userId");
+                        editor.remove("ProfileType");
+                        editor.remove("IsLoggedIn");
+                        //editor.putBoolean("IsLoggedIn",false);
+                        editor.commit();
                         finish();
                         break;
                     default:
+                        Toast.makeText(ProfileScreen.this, "profile", Toast.LENGTH_SHORT).show();
                         break;
                 }
                 return false;
             }
         });
-
 
     }
 
@@ -791,7 +797,9 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         }
         else
         {
-            super.onBackPressed();
+            Intent intent = new Intent(ProfileScreen.this,HomeScreen.class);
+            startActivity(intent);
+            finish();
         }
     }
 

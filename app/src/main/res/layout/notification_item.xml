@@ -3,56 +3,104 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/parent"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="wrap_content"
     android:layout_marginVertical="10dp"
     android:backgroundTint="@color/white"
     app:cardCornerRadius="10dp"
     android:layout_marginHorizontal="10dp"
     app:cardElevation="5dp">
-    <RelativeLayout
+<!--    <RelativeLayout
         android:id="@+id/notificationItem"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content">-->
 
     <RelativeLayout
-        android:id="@+id/notificationItem1"
+        android:id="@+id/notificationItem"
+        android:padding="5dp"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/notificationText"
-            android:text="Notification"/>
-
-        <Button
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/notificationText"
-            android:id="@+id/approvebtn"
-            android:visibility="gone"
-            android:text="Approve"/>
-        <Button
+            android:id="@+id/notificationTextRel"
+            android:layout_marginRight="110dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/notificationHeaderText"
+                style="@style/TextAppearance.AppCompat.Title"
+                android:text="Notification"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/notificationText"
+                android:layout_marginTop="5dp"
+                android:layout_below="@+id/notificationHeaderText"
+                android:text="Notification"/>
+
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:visibility="gone"
+            android:layout_below="@+id/notificationTextRel">
 
-            android:layout_toRightOf="@+id/approvebtn"
-            android:layout_below="@+id/notificationText"
-            android:id="@+id/rejectbtn"
-            android:text="Reject"/>
-        <ImageButton
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="5dp"
-            android:src="@drawable/ic_info"
-            android:id="@+id/infobtn"
-            android:backgroundTint="@color/white"
-            android:layout_alignParentEnd="true"
-            android:gravity="center"
-        />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/yellow"
+                android:id="@+id/approvebtn"
+                android:visibility="gone"
+                android:text="Approve"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:visibility="gone"
+                android:backgroundTint="@color/yellow"
+                android:layout_toRightOf="@+id/approvebtn"
+                android:id="@+id/rejectbtn"
+                android:text="Reject"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/notificationBtnRel"
+            android:layout_alignParentStart="true"
+            android:layout_alignTop="@+id/notificationTextRel"
+            android:layout_toRightOf="@+id/notificationTextRel">
+
+           <!-- <ImageButton
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="5dp"
+                android:src="@drawable/ic_info"
+                android:id="@+id/infobtn"
+                android:backgroundTint="@color/white"
+                android:layout_toLeftOf="@+id/deleteNotification"
+                android:gravity="center"/>-->
+
+            <ImageButton
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="5dp"
+                android:src="@drawable/ic_delete"
+                android:id="@+id/deleteNotification"
+                android:backgroundTint="@color/white"
+                android:layout_alignParentEnd="true"
+                android:gravity="center"
+                />
+
+        </RelativeLayout>
 
     </RelativeLayout>
-    </RelativeLayout>
+ <!--   </RelativeLayout>-->
 </com.google.android.material.card.MaterialCardView>

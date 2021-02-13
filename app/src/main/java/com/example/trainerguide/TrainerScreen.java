@@ -13,7 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -53,6 +55,8 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
     private NavigationView navigationView;
     private Toolbar toolbar;
     private MenuItem profileMenu, logoutMenu, shareMenu, ratingMenu, traineeMenu;
+
+    Intent intent;
 
     //Recycler view variables
     private RecyclerView trainerRecycler;
@@ -103,18 +107,37 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.nav_profile:
-                        startActivity(new Intent(TrainerScreen.this,ProfileScreen.class));
+                        intent=new Intent(TrainerScreen.this,ProfileScreen.class);
+                        //intent.putExtra("UserId",userId);
+                        startActivity(intent);
                         finish();
                         break;
                     case R.id.nav_trainees:
-                        startActivity(new Intent(TrainerScreen.this,TraineesScreen.class));
+                        intent=new Intent(TrainerScreen.this,TraineesScreen.class);
+                        //intent.putExtra("UserId",userId);
+                        startActivity(intent);
+                        finish();
+                        break;
+                    case R.id.nav_notification:
+                        startActivity(new Intent(TrainerScreen.this,NotificationScreen.class));
+                        finish();
                         break;
                     case R.id.nav_trainer:
+
                         break;
                     case R.id.nav_logout:
                         startActivity(new Intent(TrainerScreen.this,MainActivity.class));
+                        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                        SharedPreferences.Editor editor = settings.edit();
+                        editor.remove("userId");
+                        editor.remove("ProfileType");
+                        editor.remove("IsLoggedIn");
+                        //editor.putBoolean("IsLoggedIn",false);
+                        editor.commit();
+                        finish();
                         break;
                     default:
+                        Toast.makeText(TrainerScreen.this, "profile", Toast.LENGTH_SHORT).show();
                         break;
                 }
                 return false;
@@ -330,7 +353,9 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
         }
         else
         {
-            super.onBackPressed();
+            Intent intent = new Intent(TrainerScreen.this,HomeScreen.class);
+            startActivity(intent);
+            finish();
         }
     }
 

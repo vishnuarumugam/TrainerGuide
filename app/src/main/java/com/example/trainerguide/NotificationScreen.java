@@ -4,10 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -15,6 +17,7 @@ import android.preference.PreferenceManager;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.trainerguide.models.Notification;
 import com.example.trainerguide.models.Trainee;
@@ -46,6 +49,9 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
     //Recycler view variables
     private RecyclerView notificationRecycler;
     private List<Notification> notificationsList = new ArrayList<>();
+
+    private ProgressDialog progressDialog;
+
     private NotificationAdapter notificationAdapter;
 
     private String userId;
@@ -54,6 +60,8 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
     //Firebase variables
     private DatabaseReference databaseReference;
     private FirebaseAuth fAuth;
+
+    Intent intent;
 
 
     @Override
@@ -84,6 +92,7 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
         ActionBarDrawerToggle toggle = CommonNavigator.navigatorInitmethod(drawerLayout,navigationView,toolbar,this);
         toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.yellow));
 
+
         //Method to re-direct the page from menu
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -94,16 +103,30 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
                         finish();
                         break;
                     case R.id.nav_trainees:
-                        startActivity(new Intent(NotificationScreen.this,TraineesScreen.class));
+                        intent=new Intent(NotificationScreen.this,TraineesScreen.class);
+                        //intent.putExtra("UserId",userId);
+                        startActivity(intent);
+                        finish();
                         break;
                     case R.id.nav_notification:
                         break;
                     case R.id.nav_trainer:
+                        startActivity(new Intent(NotificationScreen.this,TrainerScreen.class));
+                        finish();
                         break;
                     case R.id.nav_logout:
                         startActivity(new Intent(NotificationScreen.this,MainActivity.class));
+                        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                        SharedPreferences.Editor editor = settings.edit();
+                        editor.remove("userId");
+                        editor.remove("ProfileType");
+                        editor.remove("IsLoggedIn");
+                        //editor.putBoolean("IsLoggedIn",false);
+                        editor.commit();
+                        finish();
                         break;
                     default:
+                        Toast.makeText(NotificationScreen.this, "profile", Toast.LENGTH_SHORT).show();
                         break;
                 }
                 return false;
@@ -123,7 +146,7 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
 
     public void PopulateNotifications(){
 
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot:snapshot.getChildren()) {
@@ -203,14 +226,10 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
                         databaseReference.child(notify.getNotificationId()).setValue(notify);
                         databaseReferenceAdd.updateChildren(trainerId);
                         databaseReferenceUserList.child( "/usersList/" + trainee.getUserId()).setValue(traineeMetadata);
+
+
                     }
                 }
-                else
-                {
-                    AlertDialogBox alertDialogBox = new AlertDialogBox();
-                    alertDialogBox.show(getSupportFragmentManager(),"Alert");
-                }
-
             }
 
             @Override
@@ -219,13 +238,32 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
             }
         });
 
+        deleteNotification(notification.getNotificationId(), position);
+
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(drawerLayout.isDrawerOpen(GravityCompat.START))
+        {
+            drawerLayout.closeDrawer((GravityCompat.START));
+        }
+        else
+        {
+            Intent intent = new Intent(NotificationScreen.this,HomeScreen.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
     @Override
     public void onRejectclick(int position) {
-        final Notification notification = notificationsList.get(position);
 
-        databaseReference.orderByKey().equalTo(notification.getNotificationId()).addListenerForSingleValueEvent(new ValueEventListener() {
+        final Notification notification = notificationsList.get(position);
+        deleteNotification(notification.getNotificationId(), position);
+
+        /*databaseReference.orderByKey().equalTo(notification.getNotificationId()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot postsnapshot :snapshot.getChildren()) {
@@ -237,6 +275,33 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        });
+        });*/
     }
+
+    public void deleteNotification (String notificationId, final int position){
+
+        databaseReference.orderByKey().equalTo(notificationId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot postsnapshot :snapshot.getChildren()) {
+                    postsnapshot.getRef().removeValue();
+                    notificationsList.remove(position);
+                    notificationAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        /*notificationsList = new ArrayList<>();
+        PopulateNotifications();
+        notificationAdapter = new NotificationAdapter(notificationsList, NotificationScreen.this);*/
+
+        /*startActivity(new Intent( NotificationScreen.this , NotificationScreen.class));
+        finish();*/
+    }
+
 }

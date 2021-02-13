@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -28,6 +29,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     private NotificationAdapter.OnAddClickListener addlistener;
     private NotificationAdapter.OnApproveClickListener approvelistener;
     private NotificationAdapter.OnRejectClickListener rejectlistener;
+    private NotificationAdapter.OnDeleteClickListener deletelistener;
 
     public NotificationAdapter(List<Notification> notification, Context context) {
         this.notification = notification;
@@ -44,8 +46,12 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     @Override
     public void onBindViewHolder(@NonNull NotificationAdapter.ViewHolder holder, final int position) {
         System.out.println("items notification");
+        holder.rejectBtn.setVisibility(View.GONE);
+        holder.approvebtn.setVisibility(View.GONE);
         holder.notification.setText(notification.get(position).getNotification());
-        if(notification.get(position).getNotificationType().equals("Request"))
+        if(notification.get(position).getNotificationType() != null &&
+                notification.get(position).getNotificationType() !="" &&
+                notification.get(position).getNotificationType().equals("Request"))
         {
             holder.rejectBtn.setVisibility(View.VISIBLE);
             holder.approvebtn.setVisibility(View.VISIBLE);
@@ -75,6 +81,14 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                 rejectlistener.onRejectclick(position);
             }
         });
+        holder.deleteClick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                notification.get(position);
+                System.out.println(position);
+                rejectlistener.onRejectclick(position);
+            }
+        });
     }
 
     @Override
@@ -85,16 +99,18 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView notification;
-        ImageButton notificationClick;
+        RelativeLayout notificationClick;
         Button approvebtn, rejectBtn;
+        ImageButton deleteClick;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             notification = itemView.findViewById(R.id.notificationText);
-            notificationClick = itemView.findViewById(R.id.infobtn);
+            notificationClick = itemView.findViewById(R.id.notificationItem);
             approvebtn = itemView.findViewById(R.id.approvebtn);
             rejectBtn = itemView.findViewById(R.id.rejectbtn);
+            deleteClick = itemView.findViewById(R.id.deleteNotification);
         }
     }
 
@@ -107,6 +123,9 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     public interface OnRejectClickListener{
         void onRejectclick(int position);
     }
+    public interface OnDeleteClickListener{
+        void onDeleteclick(int position);
+    }
 
     public void setOnAddClickListener(NotificationAdapter.OnAddClickListener listener){
         addlistener = listener;
@@ -116,5 +135,8 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     }
     public void setOnRejectClickListener(NotificationAdapter.OnRejectClickListener listener){
         rejectlistener = listener;
+    }
+    public void setOnDeleteClickListener(NotificationAdapter.OnDeleteClickListener listener){
+        deletelistener = listener;
     }
 }

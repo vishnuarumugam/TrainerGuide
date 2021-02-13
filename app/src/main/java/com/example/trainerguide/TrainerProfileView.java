@@ -124,7 +124,7 @@ public class TrainerProfileView extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         Trainee trainee = snapshot.getValue(Trainee.class);
 
-                        if(trainee.getTrainerId() == "" || trainee.getTrainerId() == null) {
+                        if(trainee.getTrainerId().equals("") || trainee.getTrainerId() == null) {
                             if (trainee.isTrainer() == false) {
                                 Notification notify = new Notification();
                                 notify.setNotificationId(UUID.randomUUID().toString());
