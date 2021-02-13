@@ -1,11 +1,13 @@
 package com.example.trainerguide;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -50,6 +52,8 @@ public class TraineeAdapter extends RecyclerView.Adapter<TraineeAdapter.ViewHold
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onBindViewHolder(@NonNull TraineeAdapter.ViewHolder holder, final int position) {
+        int[] colours = new int[]{Color.CYAN, Color.parseColor("#E4E3E3"), Color.parseColor("#FACC2E")};
+        holder.traineeItem.setBackgroundColor(colours[position%3]);
         System.out.println("items Trainee");
         holder.name.setText(trainee.get(position).getName());
         holder.bmi.setText(trainee.get(position).getBmi().toString());
@@ -79,6 +83,7 @@ public class TraineeAdapter extends RecyclerView.Adapter<TraineeAdapter.ViewHold
         TextView name,bmi;
         ImageView profilePic;
         MaterialCardView traineeProfileClick;
+        RelativeLayout traineeItem;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -87,6 +92,8 @@ public class TraineeAdapter extends RecyclerView.Adapter<TraineeAdapter.ViewHold
             bmi = itemView.findViewById(R.id.traineeItemBmi);
             profilePic = itemView.findViewById(R.id.traineeProfileImage);
             traineeProfileClick = itemView.findViewById(R.id.trainee_item_parent);
+            traineeItem = itemView.findViewById(R.id.traineeItem);
+
         }
 
 

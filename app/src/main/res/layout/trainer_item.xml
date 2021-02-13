@@ -12,8 +12,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginRight="20dp">
+        android:layout_height="match_parent">
 
 
         <RelativeLayout
@@ -140,6 +139,7 @@
         </RelativeLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+<!--
 
     <ImageView
         android:layout_width="30dp"
@@ -148,6 +148,7 @@
         android:layout_gravity="right"
         android:src="@drawable/ic_moreinfo"
         />
+-->
 
 
 </com.google.android.material.card.MaterialCardView>

@@ -82,7 +82,7 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
         toolbar.setBackgroundColor(getResources().getColor(R.color.black));
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
         ActionBarDrawerToggle toggle = CommonNavigator.navigatorInitmethod(drawerLayout,navigationView,toolbar,this);
-        toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.appleGreen));
+        toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.yellow));
 
         //Method to re-direct the page from menu
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {

@@ -2,11 +2,13 @@ package com.example.trainerguide;
 
 import android.content.Context;
 import android.content.SyncAdapterType;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -26,6 +28,10 @@ public class TrainerAdapter extends  RecyclerView.Adapter<TrainerAdapter.ViewHol
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
+
+        int[] colours = new int[]{Color.CYAN, Color.parseColor("#E4E3E3"), Color.parseColor("#FACC2E")};
+        holder.trainerItem.setBackgroundColor(colours[position%3]);
+
         holder.name.setText(trainers.get(position).getName());
         System.out.println("****   *****"+trainers.get(position).getName());
         if(trainers.get(position).getExperience() != null){
@@ -76,6 +82,7 @@ public class TrainerAdapter extends  RecyclerView.Adapter<TrainerAdapter.ViewHol
         TextView name, experience, fees;
         ImageView profileImage;
         MaterialCardView trainerProfileClick;
+        RelativeLayout trainerItem;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -84,6 +91,7 @@ public class TrainerAdapter extends  RecyclerView.Adapter<TrainerAdapter.ViewHol
             fees = itemView.findViewById(R.id.trainerItemFee);
             profileImage = itemView.findViewById(R.id.trainerProfileImage);
             trainerProfileClick = itemView.findViewById(R.id.parent);
+            trainerItem = itemView.findViewById(R.id.trainerItem);
         }
     }
 
