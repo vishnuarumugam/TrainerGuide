@@ -1,5 +1,11 @@
 package com.example.trainerguide;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,13 +15,6 @@ import androidx.core.widget.NestedScrollView;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.example.trainerguide.models.UserMetaData;
 import com.google.android.material.navigation.NavigationView;
@@ -30,7 +29,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -39,7 +37,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
-import retrofit2.http.Url;
 
 public class TraineesScreen extends AppCompatActivity {
 
@@ -130,6 +127,9 @@ public class TraineesScreen extends AppCompatActivity {
         //traineeAdapter = new TraineeAdapter(TraineesScreen.this,traineesList);
 
         userId = getIntent().getStringExtra("UserId");
+        path = "Trainer/" + userId + "/usersList";
+        //path = "Trainer/" + userId;
+        System.out.println("******"+userId+"******");
 
         //Pagination Get Data
         System.out.println("initial");
@@ -137,9 +137,7 @@ public class TraineesScreen extends AppCompatActivity {
         nestedScrollView.isSmoothScrollingEnabled();
 
 
-        path = "Trainer/" + userId + "/usersList";
-        //path = "Trainer/" + userId;
-        System.out.println("******"+userId+"******");
+
         //populateTraineesData();
 
         nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
@@ -173,7 +171,7 @@ public class TraineesScreen extends AppCompatActivity {
         //Initialize Retrofit
         System.out.println("us"+startAt);
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://trainerguide-14d03.firebaseio.com/Trainer/"+userId+"/")
+                .baseUrl("https://trainerguide-14d03.firebaseio.com/"+path+"/")
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .build();
         //Create interface
@@ -186,6 +184,7 @@ public class TraineesScreen extends AppCompatActivity {
             public void onResponse(Call<String> call, Response<String> response) {
                 //Check Condition
 
+                System.out.println(response);
                 if(response.isSuccessful() && response.body() != null){
                     // When response is successful and not empty
                     //Hide progress bar
@@ -245,7 +244,6 @@ public class TraineesScreen extends AppCompatActivity {
             if(jsonArray.length() > 0) {
                 JSONObject jsonObject1;
                 System.out.println("jsonArray.length()"+jsonArray.length());
-
                 if (jsonArray.length() < limit){
                     System.out.println("inside array");
                     jsonObject1 = jsonArray.getJSONObject(jsonArray.length()-1);

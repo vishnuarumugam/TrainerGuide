@@ -15,7 +15,7 @@ public interface PaginationInterface {
             @Query("limitToFirst") int limitToFirst
     );
 
-    @GET("/usersList.json")
+    @GET(".json")
     Call<String> STRING_CALL_Trainees(
             @Query("orderBy") String orderBy,
             @Query("startAt") String startAt,

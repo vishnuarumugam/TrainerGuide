@@ -1,9 +1,7 @@
 package com.example.trainerguide;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,17 +9,21 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.trainerguide.validation.UserInputValidation;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.auth.User;
-
-import java.util.PriorityQueue;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,11 +32,15 @@ public class MainActivity extends AppCompatActivity {
     private TextInputLayout txtLayPassword;
     private FirebaseAuth fAuth;
     private FirebaseFirestore fStore;
+    SharedPreferences sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        sp = getSharedPreferences("login",MODE_PRIVATE);
+
 
         userEmailIn = findViewById(R.id.userEmail_Input);
         userPasswordIn = findViewById(R.id.userPassword_Input);
@@ -45,10 +51,10 @@ public class MainActivity extends AppCompatActivity {
 
         Button loginButton = findViewById(R.id.btnLogin);
 
-        if(fAuth!=null)
+        /*if(fAuth!=null)
         {
             startActivity(new Intent(getApplicationContext(),HomeScreen.class));
-        }
+        }*/
 
 
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -64,8 +70,26 @@ public class MainActivity extends AppCompatActivity {
                                     Intent intent = new Intent(MainActivity.this,HomeScreen.class);
                                     intent.putExtra("UserId",fAuth.getCurrentUser().getUid());
 
+                                    String path = "Trainer";
+                                    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(path);
+                                    databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            if(snapshot.hasChild(fAuth.getCurrentUser().getUid()))
+                                            {
 
+                                            }
+                                            else
+                                            {
+                                                String path = "User";
+                                            }
+                                        }
 
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
                                     startActivity(intent);
                                 }
                             }).addOnFailureListener(new OnFailureListener() {

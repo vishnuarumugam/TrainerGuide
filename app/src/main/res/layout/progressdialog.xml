@@ -11,11 +11,13 @@
     android:padding="25dp"
     android:orientation="vertical"
     android:background="@drawable/round_shape">
-    <com.agrawalsuneet.dotsloader.loaders.LazyLoader
+
+    <!--<com.agrawalsuneet.dotsloader.loaders.LazyLoader
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/lazyloader"
         android:layout_margin="20dp"
+        android:visibility="visible"
         android:layout_marginTop="30dp"
         app:lazyloader_animDur="500"
         app:lazyloader_dotsDist="10dp"
@@ -25,8 +27,8 @@
         app:lazyloader_interpolator="@android:anim/decelerate_interpolator"
         app:lazyloader_secondDelayDur="300"
         app:lazyloader_secondDotColor="@color/appleGreen"
-        app:lazyloader_thirdDotColor="@color/black" />
-    <!--<ProgressBar
+        app:lazyloader_thirdDotColor="@color/black" />-->
+    <ProgressBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <TextView
@@ -35,7 +37,7 @@
         android:text="Loading..."
         android:textSize="25dp"
         android:textStyle="italic|bold"
-        android:layout_marginTop="10dp"/>-->
+        android:layout_marginTop="10dp"/>
 
 </LinearLayout>
 </RelativeLayout>

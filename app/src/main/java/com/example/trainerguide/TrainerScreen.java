@@ -1,5 +1,12 @@
 package com.example.trainerguide;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ProgressBar;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,25 +17,16 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.ProgressBar;
-
 import com.example.trainerguide.models.Trainer;
 import com.example.trainerguide.models.User;
+import com.example.trainerguide.models.UserMetaData;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.core.SyncEngine;
-import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,12 +42,42 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
-public class TrainerScreen extends AppCompatActivity {
+public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.OnAddClickListener {
+
+    @Override
+    public void onAddclick(int position) {
+    final Trainer trainer = trainersList.get(position);
+    System.out.println("***"+trainer.getUserId()+"*****"+position);
+
+    databaseReferenceAdd.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User user = snapshot.getValue(User.class);
+                if(user.isTrainer()==false)
+                {
+                    UserMetaData trainee = new UserMetaData();
+                    trainee.setUserId(user.getUserId());
+                    trainee.setBmi(user.getBmi());
+                    trainee.setName(user.getName());
+                    trainee.setImage(user.getImage());
+
+                    databaseReference.child(trainer.getUserId()+"/usersList/"+trainee.getUserId()).setValue(trainee);
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
 
     //Pagination
     NestedScrollView nestedScrollView;
     ProgressBar progressBar;
-    int page =1,limit = 3;
+    int page =1,limit = 5;
     private String startAt="\"\"";
     Boolean scroll = true;
 
@@ -68,6 +96,8 @@ public class TrainerScreen extends AppCompatActivity {
 
     //Firebase variables
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Trainer");
+    private DatabaseReference databaseReferenceAdd = FirebaseDatabase.getInstance().getReference("User/"+ FirebaseAuth.getInstance().getCurrentUser().getUid());
+
     private ValueEventListener valueEventListener;
 
     @Override
@@ -257,6 +287,7 @@ public class TrainerScreen extends AppCompatActivity {
                 //Initialize Trainer Data
                     Trainer trainer = new Trainer();
                     //SetImage
+                    trainer.setUserId(jsonObject.getString("userId"));
                     trainer.setImage(jsonObject.getString("image"));
                     //trainer.setDescription(jsonObject.getString("email"));
                     trainer.setExperience(jsonObject.getString("email"));
@@ -324,6 +355,7 @@ public class TrainerScreen extends AppCompatActivity {
         trainerAdapter = new TrainerAdapter(trainersList,TrainerScreen.this);
         //Set Adapter
         trainerRecycler.setAdapter(trainerAdapter);
+        trainerAdapter.setOnAddClickListener(TrainerScreen.this);
     }
 
     private void filter(String Searchtext) {
@@ -341,7 +373,7 @@ public class TrainerScreen extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        databaseReference.removeEventListener(valueEventListener);
+        //databaseReference.removeEventListener(valueEventListener);
     }
 
     @Override
@@ -355,4 +387,5 @@ public class TrainerScreen extends AppCompatActivity {
             super.onBackPressed();
         }
     }
+
 }

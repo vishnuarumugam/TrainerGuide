@@ -1,18 +1,5 @@
 package com.example.trainerguide;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
@@ -20,24 +7,29 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.LinearInterpolator;
 import android.webkit.MimeTypeMap;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.agrawalsuneet.dotsloader.loaders.LazyLoader;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.trainerguide.models.Trainer;
-import com.example.trainerguide.models.User;
-import com.example.trainerguide.models.UserMetaData;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -45,14 +37,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
@@ -60,7 +50,6 @@ import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -81,7 +70,7 @@ public class ProfileScreen extends AppCompatActivity {
     private NavigationView navigationView;
     private Toolbar toolbar;
     private MenuItem profileMenu, logoutMenu, shareMenu, ratingMenu, traineeMenu;
-    private LazyLoader progressDialog;
+    private ProgressDialog progressDialog;
 
     //Recycler view variables
     private RecyclerView profileRecyclerHealth, profileRecyclerFood;
@@ -96,7 +85,7 @@ public class ProfileScreen extends AppCompatActivity {
     //ProfileScreen Variables
     private ImageButton profileImage;
     MaterialCardView accCardView, personalInfoCardView, foodInfoCardView, healthInfoCardView;
-    TextView profileAccDrop, profilePersonalInfoDrop, profileFoodInfoDrop, profileWeight, profileHeight, profileHealthInfoDrop, foodAllergyOther;
+    TextView profileAccDrop, profilePersonalInfoDrop, profileFoodInfoDrop, profileEmailId, profileWeight, profileHeight, profileDob, profileHealthInfoDrop, foodAllergyOther;
     RelativeLayout accRelativeCollapse, personalRelativeCollapse, foodInfoRelativeCollapse, dobRelativeLay;
     LinearLayout healthInfoLinearCollapse;
 
@@ -116,17 +105,7 @@ public class ProfileScreen extends AppCompatActivity {
 
 
         //Initialize Progress Dialog
-        progressDialog = (LazyLoader) findViewById(R.id.lazyloader);
-        LazyLoader loader = new LazyLoader(this, 30, 20, ContextCompat.getColor(this, R.color.loader_selected),
-                ContextCompat.getColor(this, R.color.loader_selected),
-                ContextCompat.getColor(this, R.color.loader_selected));
-        loader.setAnimDuration(500);
-        loader.setFirstDelayDuration(100);
-        loader.setSecondDelayDuration(200);
-        loader.setInterpolator(new LinearInterpolator());
-
-        progressDialog.addView(loader);
-        //progressDialog = new ProgressDialog(this);
+        progressDialog = new ProgressDialog(this);
 
         //Navigation view variables
         drawerLayout = findViewById(R.id.profile_drawer_layout);
@@ -154,6 +133,8 @@ public class ProfileScreen extends AppCompatActivity {
             personalRelativeCollapse = findViewById(R.id.personalRelativeCollapse);
             profileWeight = findViewById(R.id.profileWeight);
             profileHeight = findViewById(R.id.profileHeight);
+            profileEmailId = findViewById(R.id.profileEmailId);
+            profileDob = findViewById(R.id.profileDob);
             dobRelativeLay = findViewById(R.id.dobRelativeLay);
 
             //Food Info variables
@@ -424,12 +405,11 @@ public class ProfileScreen extends AppCompatActivity {
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(path);
         //Show Progress Dialog
-        progressDialog.setVisibility(View.VISIBLE);
+        progressDialog.show();
         //Set Content
-        //progressDialog.setContentView(R.layout.progressdialog);
-        progressDialog.setBackgroundResource(R.color.transparent);
+        progressDialog.setContentView(R.layout.progressdialog);
         //Set Transparent Background
-        //progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 
         System.out.println(path);
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -442,14 +422,17 @@ public class ProfileScreen extends AppCompatActivity {
                 //profileName.setText(user.getName());
                 profileWeight.setText(user.getWeight().toString() + " in kgs");
                 profileHeight.setText(user.getHeight().toString() + " in cms");
+                profileEmailId.setText(user.getEmail().toString());
+                profileDob.setText(user.getDateOfBirth().toString());
                 Picasso.get().load(user.getImage())
                         .placeholder(R.drawable.ic_share)
                         .fit()
                         .centerCrop()
                         .into(profileImage);
 
+
                 //Dismiss Progress Dialog
-                progressDialog.setVisibility(View.GONE);
+                progressDialog.dismiss();
 
 
                 //Health Issue Recycler View Data

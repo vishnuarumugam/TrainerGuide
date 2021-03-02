@@ -1,10 +1,10 @@
 package com.example.trainerguide;
 
 import android.content.Context;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.trainerguide.models.Trainer;
-import com.example.trainerguide.models.User;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -21,9 +20,11 @@ import java.util.List;
 public class TrainerAdapter extends  RecyclerView.Adapter<TrainerAdapter.ViewHolder>{
     private List<Trainer> trainers = new ArrayList<>();
     private Context context;
+    private OnAddClickListener addlistener;
+
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         holder.name.setText(trainers.get(position).getName());
 
         if(trainers.get(position).getExperience() != null){
@@ -37,6 +38,14 @@ public class TrainerAdapter extends  RecyclerView.Adapter<TrainerAdapter.ViewHol
                 .placeholder(R.drawable.ic_share)
                 .centerCrop()
                 .into(holder.profileImage);
+        holder.addTrainee.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                trainers.get(position);
+                System.out.println(position);
+                addlistener.onAddclick(position);
+            }
+        });
     }
 
     @NonNull
@@ -65,6 +74,7 @@ public class TrainerAdapter extends  RecyclerView.Adapter<TrainerAdapter.ViewHol
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView name, experiance, fees;
         ImageView profileImage;
+        ImageButton addTrainee;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -72,6 +82,15 @@ public class TrainerAdapter extends  RecyclerView.Adapter<TrainerAdapter.ViewHol
             experiance = itemView.findViewById(R.id.trainerItemExp);
             fees = itemView.findViewById(R.id.trainerItemFee);
             profileImage = itemView.findViewById(R.id.trainerProfileImage);
+            addTrainee = itemView.findViewById(R.id.traineeAdd);
         }
+    }
+
+    public interface OnAddClickListener{
+        void onAddclick(int position);
+    }
+
+    public void setOnAddClickListener(OnAddClickListener listener){
+        addlistener = listener;
     }
 }
