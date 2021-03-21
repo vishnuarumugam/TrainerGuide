@@ -129,9 +129,7 @@ public class RegistrationForm extends AppCompatActivity{
                                         // Upload Profile Picture into FireBase Storage
                                         uploadFile(userId,trainee);
                                     }
-                                    Intent intent = new Intent(RegistrationForm.this, HomeScreen.class);
-                                    intent.putExtra("UserId",fAuth.getCurrentUser().getUid());
-                                    startActivity(intent);
+
                                     SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                                     SharedPreferences.Editor editor = settings.edit();
                                     editor.putString("userId", fAuth.getCurrentUser().getUid());
@@ -140,6 +138,12 @@ public class RegistrationForm extends AppCompatActivity{
                                     editor.putString("ProfileType", "Trainer");}
                                     else {
                                         editor.putString("ProfileType", "User");}
+
+                                    editor.commit();
+
+                                    Intent intent = new Intent(RegistrationForm.this, HomeScreen.class);
+                                    intent.putExtra("UserId",fAuth.getCurrentUser().getUid());
+                                    startActivity(intent);
 
                                     finish();
 

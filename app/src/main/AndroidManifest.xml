@@ -5,14 +5,18 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
 
-    <application
+
+
+    <application android:requestLegacyExternalStorage="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".NotificationScreen"></activity>
+        <activity android:name=".PdfCreation"></activity>
+        <activity android:name=".FoodSourceListScreen" />
+        <activity android:name=".NotificationScreen" />
         <activity android:name=".TraineeProfileview" />
         <activity android:name=".TrainerProfileView" />
         <activity
@@ -23,6 +27,7 @@
         <activity android:name=".TrainerScreen" />
         <activity android:name=".HomeScreen" />
         <activity android:name=".TrainerGuideScreen" />
+        <activity android:name=".PrepareFoodChart" />
         <activity android:name=".ForgotPasswordForm" />
         <activity android:name=".RegistrationForm" />
         <activity android:name=".MainActivity">

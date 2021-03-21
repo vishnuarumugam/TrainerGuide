@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/food_source_layout"
+    tools:context=".FoodSourceListScreen">
+
+
+
+        <include layout="@layout/common_navigator"/>
+
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/scroll_view">
+
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:id="@+id/foodSourceLinear">
+
+
+                    <include layout="@layout/common_toolbar"/>
+
+                    <com.google.android.material.button.MaterialButtonToggleGroup
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:orientation="horizontal"
+                        android:elevation="5dp"
+                        android:layout_marginTop="10dp"
+                        app:singleSelection="true">
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/foodToggleVeg"
+                            android:text="VEG"/>
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/foodToggleNonVeg"
+                            android:text="NON-VEG"/>
+
+                    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+                    <ProgressBar
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:id="@+id/progress_bar"/>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginHorizontal="20dp"
+                        android:nestedScrollingEnabled="false"
+                        android:id="@+id/foodListRecycler"
+                        tools:listitem="@layout/food_item"
+                        android:layout_marginTop="10dp" />
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/foodSourceAdd"
+                        android:backgroundTint="@color/yellow"
+                        app:layout_constraintEnd_toEndOf="@id/foodSourceLinear"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginVertical="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_gravity="right"
+                        android:src="@drawable/ic_add"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginBottom="20dp"
+                        tools:ignore="MissingConstraints" />
+
+
+                </LinearLayout>
+
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+
+
+</androidx.drawerlayout.widget.DrawerLayout>

@@ -712,16 +712,37 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
 
              if (userType.equals("Trainer")){
                     Trainer trainer = snapshot.getValue(Trainer.class);
-                    profileExperience.setText(trainer.getExperience().toString());
-                    profileSubscriptionFees.setText(trainer.getSubscriptionFees());
-                    profileSubscriptionDescription.setText(trainer.getSubscriptionDescription().toString());
+                    if (trainer.getExperience() != null){
+                        profileExperience.setText(trainer.getExperience().toString());
+                    }
+                    else{
+                        profileExperience.setText("Not mentioned");
+                    }
+                    if (trainer.getSubscriptionFees() != null){
+                        profileSubscriptionFees.setText(trainer.getSubscriptionFees());
+                    }
+                    else{
+                        profileSubscriptionFees.setText("Not mentioned");
+                    }
+                    if (trainer.getSubscriptionDescription() != null){
+                        profileSubscriptionDescription.setText(trainer.getSubscriptionDescription().toString());
+                    }
+                    else{
+                        profileSubscriptionDescription.setText("Not mentioned");
+                    }
 
                 }
                 else{
                     Trainee trainee = snapshot.getValue(Trainee.class);
                     profileFoodType.setText(trainee.getFoodType());
                     //String trainerName = GetTrainerName(trainee.getTrainerId());
-                    GetTrainerName(trainee.getTrainerId());
+                    if (trainee.getTrainerId()!=null){
+                        GetTrainerName(trainee.getTrainerId());
+                    }
+                    else{
+                        profileSubscriptionTrainer.setText("No Trainer assigned");
+                        profileSubscriptionTrainer.setTextColor(getResources().getColor(R.color.orange));
+                    }
                     profileSubscriptionType.setText(trainee.getSubscriptionType());
 
                     if (trainee.getFoodType()!=null){

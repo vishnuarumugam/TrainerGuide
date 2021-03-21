@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="1dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            >
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:text="ItemName"
+                android:id="@+id/selecteditemName"
+                android:gravity="center_vertical"
+                android:textSize="15sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Calories: "
+                android:textSize="12sp"
+                android:id="@+id/qtyLabel"
+                android:gravity="center"
+                android:layout_toRightOf="@+id/selecteditemName"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="150"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:id="@+id/selectedqty"
+                android:layout_toRightOf="@+id/qtyLabel"/>
+        </RelativeLayout>
+
+        <ImageButton
+            android:layout_width="25dp"
+            android:layout_height="match_parent"
+            android:id="@+id/addSelectedQty"
+            android:backgroundTint="@color/white"
+            android:layout_toLeftOf="@+id/qtyValue"
+            android:layout_centerVertical="true"
+            android:text="Add"
+            android:src="@drawable/ic_add"
+            />
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:id="@+id/qtyValue"
+            android:textSize="15sp"
+            android:text="5"
+            android:layout_toLeftOf="@+id/removeSelectedQty"/>
+
+        <ImageButton
+            android:layout_width="25dp"
+            android:layout_height="match_parent"
+            android:id="@+id/removeSelectedQty"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:backgroundTint="@color/white"
+            android:text="Add"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_remove"
+            />
+
+    </RelativeLayout>
+
+</com.google.android.material.card.MaterialCardView>

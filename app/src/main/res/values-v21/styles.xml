@@ -9,7 +9,9 @@
         <item name="android:windowContentTransitions">true</item>
     </style>
 
-
+    <style name="ToggleButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:background">@drawable/border_coloured_button</item>
+    </style>
 
 
 </resources>

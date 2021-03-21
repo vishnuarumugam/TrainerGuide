@@ -2,4 +2,33 @@
     <string name="app_name">Trainer Guide</string>
     <string name="Navigation_Drawer_Open">Open Navigation Drawer</string>
     <string name="Navigation_Drawer_Close">Close Navigation Drawer</string>
+
+    <string-array name="measurement_unit">
+        <item>grams</item>
+        <item>bowl</item>
+        <item>cup</item>
+        <item>tsp(s)</item>
+        <item>slice</item>
+        <item>nos</item>
+        <item>glass</item>
+    </string-array>
+
+    <string-array name="nutrition_rich">
+        <item>protein</item>
+        <item>vitamin</item>
+        <item>calcium</item>
+        <item>carb</item>
+        <item>fiber</item>
+        <item>potassium</item>
+        <item>magnesium</item>
+    </string-array>
+    <string name="title_activity_pdf_creation">Pdf_creation</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 </resources>

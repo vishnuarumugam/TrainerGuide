@@ -52,7 +52,7 @@ public class TraineeAdapter extends RecyclerView.Adapter<TraineeAdapter.ViewHold
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onBindViewHolder(@NonNull TraineeAdapter.ViewHolder holder, final int position) {
-        int[] colours = new int[]{Color.CYAN, Color.parseColor("#E4E3E3"), Color.parseColor("#FACC2E")};
+        int[] colours = new int[]{Color.parseColor("#F6CEE3"), Color.parseColor("#A9E2F3"), Color.parseColor("#D8F6CE"), Color.parseColor("#E4E3E3")};
         holder.traineeItem.setBackgroundColor(colours[position%3]);
         System.out.println("items Trainee");
         holder.name.setText(trainee.get(position).getName());

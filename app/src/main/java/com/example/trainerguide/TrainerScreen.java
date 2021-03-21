@@ -123,7 +123,10 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
                         finish();
                         break;
                     case R.id.nav_trainer:
-
+                        break;
+                    case R.id.nav_foodPrep:
+                        startActivity(new Intent(TrainerScreen.this,PrepareFoodChart.class));
+                        finish();
                         break;
                     case R.id.nav_logout:
                         startActivity(new Intent(TrainerScreen.this,MainActivity.class));
@@ -216,7 +219,7 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 //Check Condition
-
+                System.out.println(response);
                 if(response.isSuccessful() && response.body() != null){
                     // When response is successful and not empty
                     //Hide progress bar
@@ -257,6 +260,8 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
         //Use for loop
 
         for(int i=0; i<jsonArray.length()-1; i++){
+
+            System.out.println("i" + i);
             try {
                 //if(i <= trainersList.size()+limit && i >= trainersList.size() && trainersList.size() <= jsonArray.length()){
                 //Initialize JSON object
@@ -267,7 +272,14 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
                 trainer.setUserId(jsonObject.getString("userId"));
                 trainer.setImage(jsonObject.getString("image"));
                 trainer.setName(jsonObject.getString("name"));
-                trainer.setExperience(jsonObject.getDouble("experience"));
+
+                try{
+                    trainer.setExperience(jsonObject.getDouble("experience")) ;
+
+                }
+                catch (Exception e){
+                    trainer.setExperience(0.0) ;
+                }
                 //Add Data
                 trainersList.add(trainer);
                 //}
@@ -282,6 +294,11 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
             if(jsonArray.length() > 0) {
                 JSONObject jsonObject1;
                 System.out.println("jsonArray.length()"+jsonArray.length());
+                System.out.println("jsonArray" +jsonArray.getJSONObject(0));
+                System.out.println("jsonArray" +jsonArray.getJSONObject(1));
+                System.out.println("jsonArray" +jsonArray.getJSONObject(3));
+
+
 
                 if (jsonArray.length() < limit){
                     System.out.println("inside array");
@@ -299,8 +316,11 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
                     //Add Data
                     scroll=false;
                     trainersList.add(trainer);
+
+                    System.out.println(trainersList.size() + "trainerlist");
                 }
                 else{
+
                     scroll=true;
                     System.out.println("startAt1");
                     jsonObject1 = jsonArray.getJSONObject(jsonArray.length() - 1);

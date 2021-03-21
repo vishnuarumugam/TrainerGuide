@@ -11,27 +11,22 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.trainerguide.models.Trainer;
 import com.example.trainerguide.models.User;
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.series.DataPoint;
-import com.jjoe64.graphview.series.LineGraphSeries;
-import com.squareup.picasso.Picasso;
 
-public class HomeScreen extends AppCompatActivity {
+public class HomeScreen extends AppCompatActivity implements View.OnClickListener {
 
     //Homescreen variables
     private DrawerLayout drawerLayout;
@@ -39,6 +34,10 @@ public class HomeScreen extends AppCompatActivity {
     private Toolbar toolbar;
     private MenuItem profileMenu, logoutMenu, shareMenu, ratingMenu, traineeMenu;
     Intent intent;
+
+
+    //Dashboard variables
+    private MaterialCardView profileDashboard, reportDashboard, trainerDashboard, traineeDashboard, foodDashboard, pdf_dashboard;
 
     //User Detail variables
     private String userId, path, userType;
@@ -62,14 +61,30 @@ public class HomeScreen extends AppCompatActivity {
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
 
         ActionBarDrawerToggle toggle = CommonNavigator.navigatorInitmethod(drawerLayout,navigationView,toolbar,this);
-        toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.yellow));
+        toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.appleGreen));
 
         //Menu Items
         profileMenu = findViewById(R.id.nav_profile);
         traineeMenu = findViewById(R.id.nav_trainees);
 
+        //Dashboard variables
+
+        profileDashboard = findViewById(R.id.profile_dashboard);
+        reportDashboard = findViewById(R.id.report_dashboard);
+        trainerDashboard = findViewById(R.id.trainer_dashboard);
+        traineeDashboard = findViewById(R.id.trainee_dashboard);
+        foodDashboard = findViewById(R.id.food_dashboard);
+        pdf_dashboard = findViewById(R.id.pdf_dashboard);
+
+        profileDashboard.setOnClickListener(this);
+        reportDashboard.setOnClickListener(this);
+        trainerDashboard.setOnClickListener(this);
+        traineeDashboard.setOnClickListener(this);
+        foodDashboard.setOnClickListener(this);
+        pdf_dashboard.setOnClickListener(this);
+
         //Graph representation
-        progressGraphView = findViewById(R.id.userProgressGraph);
+        //progressGraphView = findViewById(R.id.userProgressGraph);
 
         /*userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         path = "Trainer/" + userId;
@@ -112,6 +127,10 @@ public class HomeScreen extends AppCompatActivity {
                         startActivity(new Intent(HomeScreen.this,TrainerScreen.class));
                         finish();
                         break;
+                    case R.id.nav_foodPrep:
+                        startActivity(new Intent(HomeScreen.this,PrepareFoodChart.class));
+                        finish();
+                        break;
                     case R.id.nav_logout:
                         startActivity(new Intent(HomeScreen.this,MainActivity.class));
                         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -132,6 +151,37 @@ public class HomeScreen extends AppCompatActivity {
         });
 
 
+    }
+
+    public void onClick(View option) {
+
+        switch (option.getId()) {
+
+            case R.id.profile_dashboard:
+                startActivity(new Intent(HomeScreen.this,ProfileScreen.class));
+                finish();
+                break;
+            case R.id.report_dashboard:
+                break;
+            case R.id.trainer_dashboard:
+                startActivity(new Intent(HomeScreen.this,TrainerScreen.class));
+                finish();
+                break;
+            case R.id.trainee_dashboard:
+                startActivity(new Intent(HomeScreen.this,TraineesScreen.class));
+                finish();
+                break;
+            case R.id.food_dashboard:
+                startActivity(new Intent(HomeScreen.this,FoodSourceListScreen.class));
+                finish();
+                break;
+            case R.id.pdf_dashboard:
+                startActivity(new Intent(HomeScreen.this, PdfCreation.class));
+                finish();
+                break;
+            default:
+                break;
+        }
     }
 
     public void PopulateUserDetails(){

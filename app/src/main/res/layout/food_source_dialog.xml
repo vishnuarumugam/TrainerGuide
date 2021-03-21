@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:gravity="center">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/foodSourceDialogClose"
+        android:src="@drawable/ic_close"
+        android:layout_marginTop="7dp"
+        android:layout_marginRight="7dp"
+        android:elevation="5dp"
+        android:layout_alignParentRight="true"/>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="15dp"
+        app:cardCornerRadius="25dp"
+        app:cardBackgroundColor="@color/white"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/foodSourceAddDialogTitleLin"
+                android:layout_marginTop="25dp"
+                android:visibility="visible"
+                android:layout_marginBottom="25dp">
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:id="@+id/foodSourceAddDialogImg"
+                    android:src="@drawable/ic_food"
+                    android:elevation="5dp"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/foodSourceAddDialogTitle"
+                    android:layout_marginHorizontal="20dp"
+                    android:textAlignment="center"
+                    android:layout_marginTop="15dp"
+                    android:elevation="10dp"
+                    android:text="Custom Food"
+                    android:textColor="@color/grey"
+                    android:textStyle="bold"
+                    style="@style/TextAppearance.AppCompat.Body1"
+                    android:textSize="25dp"/>
+
+                <!--<TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/foodSourceAddDialogUnit"
+                    android:layout_marginHorizontal="20dp"
+                    android:textAlignment="center"
+                    android:layout_marginTop="15dp"
+                    android:elevation="10dp"
+                    android:text="(in kgs)"
+                    android:textColor="@color/grey"
+                    android:textStyle="bold"
+                    style="@style/TextAppearance.AppCompat.Body1"/>
+-->
+                <!--<EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/foodSourceAddDialogInput"
+                    android:theme="@style/DialogEditText"
+                    android:textAlignment="center"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="15dp"/>-->
+
+                <com.google.android.material.button.MaterialButtonToggleGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="horizontal"
+                    android:elevation="5dp"
+                    android:layout_marginTop="10dp"
+                    app:singleSelection="true">
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/foodAddVegToggle"
+                        android:text="VEG"/>
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/foodAddNonVegToggle"
+                        android:text="NON-VEG"/>
+
+                </com.google.android.material.button.MaterialButtonToggleGroup>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:padding="5dp">
+
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:id="@+id/foodAddNameLin">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:id="@+id/foodSourceAddNameLabel"
+                            android:text="Name: "/>
+
+                        <EditText
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/foodSourceAddName"
+                            android:hint="ex: Soya chunks"
+                            android:maxLength="20"
+                            android:backgroundTint="@color/yellow"
+                            android:layout_marginLeft="5dp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/foodAddNutritionLin"
+                        android:orientation="horizontal"
+                        android:layout_below="@id/foodAddNameLin">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/foodSourceAddNutritionLabel"
+                            android:textStyle="bold"
+                            android:text="Rich in Nutrition: "/>
+
+                        <Spinner
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/foodSourceAddNutritionSpin" />
+
+                        <!--<EditText
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="ex: vitamin"
+                            android:id="@+id/foodSourceAddNutrition"
+                            android:maxLength="20"
+                            android:backgroundTint="@color/yellow"
+                            android:layout_marginLeft="5dp" />
+-->
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/foodAddCalorieLin"
+                        android:orientation="horizontal"
+                        android:layout_below="@id/foodAddNutritionLin">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:id="@+id/foodSourceAddCalorieLabel"
+                            android:text="Calorie: "/>
+
+                        <EditText
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="ex: 169.0"
+                            android:inputType="numberDecimal"
+                            android:maxLength="4"
+                            android:id="@+id/foodSourceAddCalorie"
+                            android:backgroundTint="@color/yellow"
+                            android:layout_marginLeft="5dp" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/foodAddQuantityLin"
+                        android:orientation="horizontal"
+                        android:layout_below="@id/foodAddCalorieLin">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:id="@+id/foodSourceAddQuantityLabel"
+                            android:text="Quantity: "/>
+
+                        <EditText
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="ex: 50.0"
+                            android:inputType="numberDecimal"
+                            android:id="@+id/foodSourceAddQuantity"
+                            android:maxLength="4"
+                            android:backgroundTint="@color/yellow"
+                            android:layout_marginLeft="5dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/foodAddUnitLin"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="10dp"
+                        android:layout_below="@id/foodAddQuantityLin">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:id="@+id/foodSourceAddUnitLabel"
+                            android:text="Measurement: "/>
+
+                        <Spinner
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/foodSourceAddUnitSpin" />
+
+                    </LinearLayout>
+
+         </RelativeLayout>
+
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:id="@+id/foodSourceAddDialogUpdate"
+                    android:layout_marginTop="10dp"
+                    android:text="UPDATE"
+                    android:backgroundTint="@color/yellow"/>
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+</RelativeLayout>
