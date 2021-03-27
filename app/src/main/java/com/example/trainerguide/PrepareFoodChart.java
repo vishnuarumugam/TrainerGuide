@@ -11,13 +11,27 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.opengl.GLSurfaceView;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.preference.PreferenceManager;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,14 +46,42 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.element.IBlockElement;
+import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.property.HorizontalAlignment;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.PdfDocument;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.codec.Base64;
+import com.itextpdf.text.pdf.draw.LineSeparator;
+import com.itextpdf.text.pdf.fonts.otf.TableHeader;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAdapter.OnAddClickListener,
-        SelectedFoodItemsAdapter.OnRemoveClickListener, SelectedFoodItemsAdapter.OnAddItemClickListener {
+        SelectedFoodItemsAdapter.OnRemoveClickListener, SelectedFoodItemsAdapter.OnAddItemClickListener, View.OnClickListener {
 
     //Navigation view variables
     private DrawerLayout drawerLayout;
@@ -48,14 +90,23 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
     private MenuItem profileMenu, logoutMenu, shareMenu, ratingMenu, traineeMenu;
     private TextView totalCaloriesLabel;
 
+
     //Recycler view variables
     private RecyclerView foodsourceRecycler;
     private List<Food> foodList = new ArrayList<>();
+    private List<Food> searchFoodList = new ArrayList<>();
     private FoodSourceAdapter foodSourceAdapter;
 
     private RecyclerView selectedFoodsourceRecycler;
     private List<Food> selectedFoodList = new ArrayList<Food>();
     private SelectedFoodItemsAdapter selectedFoodSourceAdapter;
+
+    private SearchView foodChartSearch;
+    private RadioGroup radioFoodChartGroup;
+    private RadioButton radioButtonVeg, radioButtonNV;
+
+    //Pdf Generation
+    private ImageButton generatePdfBtn;
 
     //User Detail variables
     private String userId;
@@ -68,9 +119,8 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
 
     //Common variables
     private Intent intent;
-
+    private String foodType = "Veg";
     public FoodList foodItemlist = new FoodList();
-
     List<Food> selectedFoodListHash = new ArrayList<>();
 
 
@@ -81,6 +131,9 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
 
         //Pagination
         nestedScrollView = findViewById(R.id.scroll_view);
+
+        //Pdf Generation
+        generatePdfBtn = findViewById(R.id.generatePdfBtn);
 
         //Navigation view variables
         drawerLayout = findViewById(R.id.prepare_food_drawer_layout);
@@ -100,6 +153,28 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
 
         tablayout = findViewById(R.id.foodTimingTabs);
         totalCaloriesLabel = findViewById(R.id.totalCalories);
+
+        //Pdf Generation
+        generatePdfBtn = findViewById(R.id.generatePdfBtn);
+        generatePdfBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(Build.VERSION.SDK_INT > Build.VERSION_CODES.M){
+                    if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
+
+                        String [] permission = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                        requestPermissions(permission,1000);
+                    }
+                    else{
+                        generatePdf();
+                    }
+                }
+                else {
+                    generatePdf();
+                }
+            }
+        });
+
 
         //Method to re-direct the page from menu
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -168,7 +243,31 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
         foodSourceAdapter = new FoodSourceAdapter(foodList, PrepareFoodChart.this);
         foodsourceRecycler.setAdapter(foodSourceAdapter);
         foodSourceAdapter.setOnAddClickListener(PrepareFoodChart.this);
+        radioFoodChartGroup = findViewById(R.id.radioFoodChartGroup);
 
+        foodChartSearch = findViewById(R.id.foodChartSearch);
+        radioButtonVeg = findViewById(R.id.radioButtonVeg);
+        radioButtonVeg.setChecked(true);
+        radioButtonNV = findViewById(R.id.radioButtonNV);
+
+        radioButtonVeg.setOnClickListener(this);
+        radioButtonNV.setOnClickListener(this);
+
+        foodChartSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                System.out.println("newText" + newText);
+                foodSourceAdapter.getFilter().filter(newText);
+
+
+                return false;
+            }
+        });
 
         //Recycler view variables
         selectedFoodsourceRecycler = findViewById(R.id.selectedFoodRecycler);
@@ -182,12 +281,12 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
         path = "Food/" + userId + "/";
         //path = userId + "/usersList";
         System.out.println("***userId***" + userId + "******");
-        foodItemlist = populateSourceData(userId);
+        foodItemlist = populateSourceData(userId, "Veg");
         RerenderSelectedList();
 
     }
 
-    private FoodList populateSourceData(String userid) {
+    private FoodList populateSourceData(String userid, String foodType) {
         final FoodList foodListItem = new FoodList();
         DatabaseReference databaseReferenceVeg = FirebaseDatabase.getInstance().getReference("Food/" + userid + "/Vegetarian/");
         DatabaseReference databaseReferenceNonVeg = FirebaseDatabase.getInstance().getReference("Food/" + userid + "/Nonveg/");
@@ -195,74 +294,93 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
         DatabaseReference databaseReferenceSourceNonVeg = FirebaseDatabase.getInstance().getReference("Food/Common/Nonveg/");
         foodList.clear();
 
-        databaseReferenceVeg.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot datasnapshot : snapshot.getChildren()) {
-                    foodListItem.setFoodItemsVeg(datasnapshot.getValue(Food.class));
+        if (foodType.equals("Veg")){
+            databaseReferenceVeg.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for (DataSnapshot datasnapshot : snapshot.getChildren()) {
+                        foodListItem.setFoodItemsVeg(datasnapshot.getValue(Food.class));
+                    }
                 }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
 
-            }
-        });
-
-        databaseReferenceNonVeg.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot datasnapshot : snapshot.getChildren()) {
-                    foodListItem.setFoodItemsNonVeg(datasnapshot.getValue(Food.class));
                 }
-            }
+            });
+            databaseReferenceSourceVeg.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for (DataSnapshot datasnapshot : snapshot.getChildren()) {
+                        foodListItem.setFoodItemsVeg(datasnapshot.getValue(Food.class));
+                    }
+                    foodList.addAll(foodListItem.getFoodItemsVeg());
+                    foodSourceAdapter.notifyDataSetChanged();
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-
-        databaseReferenceSourceVeg.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot datasnapshot : snapshot.getChildren()) {
-                    foodListItem.setFoodItemsVeg(datasnapshot.getValue(Food.class));
                 }
-                foodList.addAll(foodListItem.getFoodItemsVeg());
-                foodSourceAdapter.notifyDataSetChanged();
 
-            }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-        foodsourceRecycler.setAdapter(foodSourceAdapter);
-
-
-        databaseReferenceSourceNonVeg.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot datasnapshot : snapshot.getChildren()) {
-                    foodListItem.setFoodItemsNonVeg(datasnapshot.getValue(Food.class));
                 }
-                foodList.addAll(foodListItem.getFoodItemsNonVeg());
-                foodSourceAdapter.notifyDataSetChanged();
-            }
+            });
+            foodsourceRecycler.setAdapter(foodSourceAdapter);
+        }
+        else{
+            databaseReferenceNonVeg.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for (DataSnapshot datasnapshot : snapshot.getChildren()) {
+                        foodListItem.setFoodItemsNonVeg(datasnapshot.getValue(Food.class));
+                    }
+                }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
 
-            }
-        });
-        foodsourceRecycler.setAdapter(foodSourceAdapter);
+                }
+            });
+            databaseReferenceSourceNonVeg.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for (DataSnapshot datasnapshot : snapshot.getChildren()) {
+                        foodListItem.setFoodItemsNonVeg(datasnapshot.getValue(Food.class));
+                    }
+                    foodList.addAll(foodListItem.getFoodItemsNonVeg());
+                    foodSourceAdapter.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
+
+       foodsourceRecycler.setAdapter(foodSourceAdapter);
         return foodListItem;
     }
 
+    @Override
+    public void onClick(View option) {
 
+        switch (option.getId()){
+
+            case R.id.radioButtonVeg:
+                foodType = "Veg";
+                foodItemlist = populateSourceData(userId, "Veg");
+                RerenderSelectedList();
+                break;
+            case R.id.radioButtonNV:
+                foodType = "NonVeg";
+                foodItemlist = populateSourceData(userId, "NonVeg");
+                RerenderSelectedList();
+                break;
+            default:
+                break;
+        }
+
+    }
     @Override
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -276,7 +394,8 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onAddclick(int position) {
-        Food food = foodList.get(position);
+        Food food= foodList.get(position);
+
 
         Food foodItem = new Food();
         foodItem.setName(food.getName());
@@ -351,6 +470,218 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
         selectedFoodList.addAll(selectedFoodItems);
         totalCaloriesLabel.setText(String.valueOf(totalCalories));
         selectedFoodSourceAdapter.notifyDataSetChanged();
+    }
+
+    private void generatePdf() {
+
+        Document document = new Document();
+        String pdfFile = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(System.currentTimeMillis());
+        String filePath=  (CreateAppPath.getAppPath(PrepareFoodChart.this)+"test"+ pdfFile +".pdf");
+        BaseColor colourAccent = new BaseColor(0,153,204,255);
+        BaseColor colourYellow = new BaseColor(250,204,46,255);
+
+        try{
+            PdfWriter.getInstance(document,new FileOutputStream(filePath));
+
+            document.open();
+            document.setPageSize(PageSize.A4);
+            document.addCreationDate();
+
+            //Custom font
+            BaseFont fontName = BaseFont.createFont("assets/fonts/brandon_medium.otf", "UTF-8", BaseFont.EMBEDDED);
+            Font appTitleFont = new Font(fontName, 36.0f, Font.NORMAL, BaseColor.BLACK);
+            Font titleFont = new Font(fontName, 28.0f, Font.BOLD, colourYellow);
+            Font itemNameFont = new Font(fontName, 24, Font.BOLD);
+
+            //Create title of Doc
+            addNewItem(document, "Trainer Guide", Element.ALIGN_CENTER, appTitleFont);
+            addLineSpace(document);
+            addLineSeparator(document);
+            addLineSpace(document);
+            addNewItem(document, "DIET PLAN", Element.ALIGN_CENTER, titleFont);
+            addLineSpace(document);
+            addLineSeparator(document);
+
+            List<String> foodTime = new ArrayList<>();
+            foodTime.add("Break Fast");
+            foodTime.add("Snacks M");
+            foodTime.add("Lunch");
+            foodTime.add("Snacks E");
+            foodTime.add("Dinner");
+
+            List<Food>  pdfFoodList = new ArrayList<>();
+
+            for (String foodSlot : foodTime){
+                String foodSlotTitle = "";
+
+                for (Food foodItems: selectedFoodListHash){
+                    System.out.println(foodSlot + foodItems.getTab());
+
+                    switch (foodSlot){
+                        case "Break Fast":
+                            if (foodSlot.equals(foodItems.getTab())){
+                                foodSlotTitle = "Break Fast";
+                                pdfFoodList.add(foodItems);
+                            }
+                            break;
+                        case "Snacks M":
+                            if (foodSlot.equals(foodItems.getTab())){
+                                foodSlotTitle = "Snacks M";
+                                pdfFoodList.add(foodItems);
+                            }
+                            break;
+                        case "Lunch":
+                            if (foodSlot.equals(foodItems.getTab())){
+                                foodSlotTitle = "Lunch";
+                                pdfFoodList.add(foodItems);
+                            }
+                            break;
+                        case "Snacks E":
+                            if (foodSlot.equals(foodItems.getTab())){
+                                foodSlotTitle = "Snacks E";
+                                pdfFoodList.add(foodItems);
+                            }
+                            break;
+                        case "Dinner":
+                            if (foodSlot.equals(foodItems.getTab())){
+                                foodSlotTitle = "Dinner";
+                                pdfFoodList.add(foodItems);
+                            }
+                            break;
+                        default:
+                            System.out.println("Switch");
+                            break;
+                    }
+
+                }
+                if (pdfFoodList.size()>0){
+                    addEmptyLineSpace(document,2);
+                    addNewItem(document, foodSlotTitle, Element.ALIGN_CENTER, itemNameFont);
+                    addEmptyLineSpace(document,1);
+                    addTable(document, pdfFoodList);
+                    pdfFoodList.clear();
+                }
+
+            }
+
+            document.close();
+            Toast.makeText(this, "File created", Toast.LENGTH_SHORT).show();
+
+
+        }
+        catch (Exception e){
+            Toast.makeText(this, "This :" + e.getMessage(), Toast.LENGTH_SHORT).show();
+            Log.e("Error", e.getMessage());
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode){
+
+            case 1000:
+                if (grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    generatePdf();
+                }
+                else {
+                    Toast.makeText(this, "permission denied", Toast.LENGTH_SHORT).show();
+                }
+        }
+    }
+
+    private void addLineSeparator(Document document) throws DocumentException {
+
+        LineSeparator lineSeparator = new LineSeparator();
+        lineSeparator.setLineColor(new BaseColor(0,0,0,68));
+        lineSeparator.setLineWidth(3.0f);
+        addLineSpace(document);
+        document.add(new Chunk(lineSeparator));
+        addLineSpace(document);
+
+    }
+
+    private void addLineSpace(Document document) throws DocumentException {
+        document.add(new Paragraph(""));
+    }
+
+    private void addEmptyLineSpace(Document document, Integer emptyLineNo) throws DocumentException {
+        for (int i=0; i<emptyLineNo; i++){
+            document.add(new Paragraph("\n"));
+        }
+
+    }
+
+    private void addNewItem(Document document, String text, int align, Font font) throws DocumentException {
+
+        Chunk chunk = new Chunk(text, font);
+
+        Paragraph paragraph = new Paragraph(chunk);
+        paragraph.setAlignment(align);
+        document.add(paragraph);
+
+    }
+
+    private void addTable (Document document, List<Food>  pdfFoodList) throws DocumentException, IOException {
+        BaseFont fontName = BaseFont.createFont("assets/fonts/brandon_medium.otf", "UTF-8", BaseFont.EMBEDDED);
+        Font itemNameFont = new Font(fontName, 24, Font.NORMAL);
+        Font itemDetailFont = new Font(fontName, 18, Font.NORMAL);
+        BaseColor colourAccent = new BaseColor(228,227,227,255);
+        System.out.println("OutTable");
+
+        if (pdfFoodList.size()>0){
+            System.out.println("InTable");
+
+            PdfPTable table = new PdfPTable(3);
+
+            table.setHorizontalAlignment(Element.ALIGN_CENTER);
+
+            PdfPCell commonCell;
+            commonCell = new PdfPCell(new Phrase("Item Name", itemNameFont));
+            commonCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            commonCell.setBackgroundColor(colourAccent);
+            commonCell.setPadding(5);
+            table.addCell(commonCell);
+
+
+            commonCell = new PdfPCell(new Phrase("Quantity", itemNameFont));
+            commonCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            commonCell.setBackgroundColor(colourAccent);
+            commonCell.setPadding(5);
+            table.addCell(commonCell);
+
+            commonCell = new PdfPCell(new Phrase("Calorie", itemNameFont));
+            commonCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            commonCell.setBackgroundColor(colourAccent);
+            commonCell.setPadding(5);
+            table.addCell(commonCell);
+
+            for (Food foodItems : pdfFoodList){
+
+                commonCell = new PdfPCell(new Phrase(foodItems.getName().toUpperCase(), itemDetailFont));
+                commonCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                commonCell.setPadding(5);
+                table.addCell(commonCell);
+
+
+                commonCell = new PdfPCell(new Phrase((foodItems.getQuantity() * foodItems.getValue()) +" "+ foodItems.getMeasurementUnit().toUpperCase() , itemDetailFont));
+                commonCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                commonCell.setPadding(5);
+                table.addCell(commonCell);
+
+                commonCell = new PdfPCell(new Phrase(foodItems.getTotalCalorie().toString() +" kcal", itemDetailFont));
+                commonCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                commonCell.setPadding(5);
+                table.addCell(commonCell);
+            }
+            try {
+                document.add(table);
+            } catch (DocumentException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+
     }
 }
 

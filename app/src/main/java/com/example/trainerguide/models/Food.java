@@ -72,4 +72,28 @@ public class Food {
     public void setQuantity(Double quantity) {
         this.quantity = quantity;
     }
+
+    public int getValue() {
+        return value;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
+    }
+
+    public Double getTotalCalorie() {
+        return totalCalorie;
+    }
+
+    public void setTotalCalorie(Double totalCalorie) {
+        this.totalCalorie = totalCalorie;
+    }
+
+    public String getTab() {
+        return tab;
+    }
+
+    public void setTab(String tab) {
+        this.tab = tab;
+    }
 }
