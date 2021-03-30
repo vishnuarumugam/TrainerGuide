@@ -15,6 +15,8 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.opengl.GLSurfaceView;
 import android.os.Build;
 import android.os.Bundle;
@@ -101,7 +103,8 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
     private List<Food> selectedFoodList = new ArrayList<Food>();
     private SelectedFoodItemsAdapter selectedFoodSourceAdapter;
 
-    private SearchView foodChartSearch;
+    //private SearchView foodChartSearch;
+    private EditText foodChartSearch;
     private RadioGroup radioFoodChartGroup;
     private RadioButton radioButtonVeg, radioButtonNV;
 
@@ -166,11 +169,26 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
                         requestPermissions(permission,1000);
                     }
                     else{
-                        generatePdf();
+                        if (selectedFoodListHash.size()>0){
+                            generatePdf();
+                        }
+                        else{
+                            CustomDialogClass customDialogClass = new CustomDialogClass(PrepareFoodChart.this, "Pdf Generation !!!", "Please choose atleast one item in diet chart", "Normal");
+                            customDialogClass.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                            customDialogClass.show();
+                        }
                     }
                 }
                 else {
-                    generatePdf();
+                    if (selectedFoodListHash.size()>0){
+                        generatePdf();
+                    }
+                    else{
+                        CustomDialogClass customDialogClass = new CustomDialogClass(PrepareFoodChart.this, "Pdf Generation !!!", "Please choose atleast one item in diet chart", "Normal");
+                        customDialogClass.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        customDialogClass.show();
+                    }
+
                 }
             }
         });
@@ -253,7 +271,48 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
         radioButtonVeg.setOnClickListener(this);
         radioButtonNV.setOnClickListener(this);
 
-        foodChartSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        foodChartSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                searchFoodList.clear();
+                if(s.length()>0){
+                    for (Food searchFood : foodList){
+                        /*foodSourceAdapter = new FoodSourceAdapter(searchFoodList, PrepareFoodChart.this);
+                        foodsourceRecycler.setAdapter(foodSourceAdapter);
+                        foodSourceAdapter.setOnAddClickListener(PrepareFoodChart.this);*/
+                        //foodsourceRecycler.setAdapter(foodSourceAdapter);
+                        if (searchFood.getName().contains(s.toString())){
+                            searchFoodList.add(searchFood);
+                        }
+                    }
+                    foodList.clear();
+                    foodList.addAll(searchFoodList);
+                    foodSourceAdapter.notifyDataSetChanged();
+                    foodsourceRecycler.setAdapter(foodSourceAdapter);
+
+                }
+                else{
+                    //foodSourceAdapter = new FoodSourceAdapter(foodList, PrepareFoodChart.this);
+                    //foodsourceRecycler.setAdapter(foodSourceAdapter);
+                    foodItemlist = populateSourceData(userId, foodType);
+                    RerenderSelectedList();
+                }
+
+            }
+        });
+
+        /*foodChartSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 return false;
@@ -267,7 +326,7 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
 
                 return false;
             }
-        });
+        });*/
 
         //Recycler view variables
         selectedFoodsourceRecycler = findViewById(R.id.selectedFoodRecycler);
@@ -282,6 +341,7 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
         //path = userId + "/usersList";
         System.out.println("***userId***" + userId + "******");
         foodItemlist = populateSourceData(userId, "Veg");
+
         RerenderSelectedList();
 
     }
@@ -301,6 +361,7 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
                     for (DataSnapshot datasnapshot : snapshot.getChildren()) {
                         foodListItem.setFoodItemsVeg(datasnapshot.getValue(Food.class));
                     }
+                    Render(foodListItem,foodType);
                 }
 
                 @Override
@@ -314,9 +375,7 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
                     for (DataSnapshot datasnapshot : snapshot.getChildren()) {
                         foodListItem.setFoodItemsVeg(datasnapshot.getValue(Food.class));
                     }
-                    foodList.addAll(foodListItem.getFoodItemsVeg());
-                    foodSourceAdapter.notifyDataSetChanged();
-
+                    Render(foodListItem,foodType);
                 }
 
                 @Override
@@ -324,6 +383,8 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
 
                 }
             });
+            foodList.addAll(foodListItem.getFoodItemsVeg());
+            foodSourceAdapter.notifyDataSetChanged();
             foodsourceRecycler.setAdapter(foodSourceAdapter);
         }
         else{
@@ -333,6 +394,7 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
                     for (DataSnapshot datasnapshot : snapshot.getChildren()) {
                         foodListItem.setFoodItemsNonVeg(datasnapshot.getValue(Food.class));
                     }
+                    Render(foodListItem,foodType);
                 }
 
                 @Override
@@ -346,8 +408,7 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
                     for (DataSnapshot datasnapshot : snapshot.getChildren()) {
                         foodListItem.setFoodItemsNonVeg(datasnapshot.getValue(Food.class));
                     }
-                    foodList.addAll(foodListItem.getFoodItemsNonVeg());
-                    foodSourceAdapter.notifyDataSetChanged();
+                    Render(foodListItem,foodType);
                 }
 
                 @Override
@@ -356,9 +417,19 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
                 }
             });
         }
+         return foodListItem;
+    }
 
-       foodsourceRecycler.setAdapter(foodSourceAdapter);
-        return foodListItem;
+    public void Render(FoodList foodListItem, String foodType){
+        if(foodType.equals("Veg")){
+            foodList.clear();
+            foodList.addAll(foodListItem.getFoodItemsVeg());
+        }else{
+            foodList.clear();
+            foodList.addAll(foodListItem.getFoodItemsNonVeg());
+        }
+        foodSourceAdapter.notifyDataSetChanged();
+        foodsourceRecycler.setAdapter(foodSourceAdapter);
     }
 
     @Override
@@ -560,13 +631,14 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
                     addEmptyLineSpace(document,1);
                     addTable(document, pdfFoodList);
                     pdfFoodList.clear();
+
+
                 }
 
             }
 
-            document.close();
-            Toast.makeText(this, "File created", Toast.LENGTH_SHORT).show();
-
+                document.close();
+                Toast.makeText(this, "File created", Toast.LENGTH_SHORT).show();
 
         }
         catch (Exception e){

@@ -11,11 +11,12 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
 public class AlertDialogBox extends AppCompatDialogFragment {
+
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Multiple Trainer Alert !!!").setMessage("Mooditu irukura trainer solradha kelu !!! ")
+        builder.setTitle("Multiple Trainer Alert !!!").setMessage("msg")
                 .setNegativeButton("Seri :(", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         //  Action for 'NO' Button

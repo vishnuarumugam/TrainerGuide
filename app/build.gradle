@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.trainerguide"
-        minSdkVersion 19
+        minSdkVersion 26
         targetSdkVersion 30
         multiDexEnabled true
         versionCode 1

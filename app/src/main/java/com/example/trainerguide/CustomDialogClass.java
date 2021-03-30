@@ -11,17 +11,20 @@ import android.widget.TextView;
 public class CustomDialogClass extends Dialog implements
         android.view.View.OnClickListener{
 
-        public Activity c;
-        public Dialog d;
-        public TextView text;
-        public Button yes, no;
-        public String message;
+        public Activity activity;
+        public Dialog dialog;
+        public TextView alertDialogTitle, alertDialogMsg;
+        public Button alertDialogBtnLeft, alertDialogBtnRight;
+        public String alertTitle, alertMessage, alertType;
 
-        public CustomDialogClass(Activity a, String message) {
-            super(a);
+
+        public CustomDialogClass(Activity activity,String alertTitle, String alertMessage, String alertType) {
+            super(activity);
             // TODO Auto-generated constructor stub
-            this.c = a;
-            this.message = message;
+            this.activity = activity;
+            this.alertTitle = alertTitle;
+            this.alertMessage = alertMessage;
+            this.alertType = alertType;
         }
 
         @Override
@@ -29,23 +32,53 @@ public class CustomDialogClass extends Dialog implements
             super.onCreate(savedInstanceState);
             requestWindowFeature(Window.FEATURE_NO_TITLE);
             setContentView(R.layout.custom_dialog);
-            //yes = (Button) findViewById(R.id.btn_yes);
-            no = (Button) findViewById(R.id.btn_no);
-            text = findViewById(R.id.txt_dia);
-            text.setText(message);
-            yes.setOnClickListener(this);
-            no.setOnClickListener(this);
+            alertDialogBtnLeft = (Button) findViewById(R.id.alertDialogBtnLeft);
+            alertDialogBtnRight = (Button) findViewById(R.id.alertDialogBtnRight);
+            alertDialogTitle = findViewById(R.id.alertDialogTitle);
+            alertDialogMsg = findViewById(R.id.alertDialogMsg);
+            alertDialogBtnLeft.setOnClickListener(this);
+            alertDialogBtnRight.setOnClickListener(this);
+            alertDialogBtnLeft.setVisibility(View.GONE);
+            alertDialogBtnRight.setVisibility(View.GONE);
+
+            alertDialogTitle.setText(alertTitle);
+            alertDialogMsg.setText(alertMessage);
+
+            switch (alertType){
+                case "Normal":
+                    alertDialogBtnLeft.setVisibility(View.GONE);
+                    alertDialogBtnRight.setText("OK");
+                    alertDialogBtnRight.setVisibility(View.VISIBLE);
+                    break;
+                case "Cancel":
+                    alertDialogBtnLeft.setVisibility(View.GONE);
+                    alertDialogBtnRight.setText("Cancel");
+                    alertDialogBtnRight.setVisibility(View.VISIBLE);
+                    break;
+                case "Action":
+                    alertDialogBtnRight.setText("No");
+                    alertDialogBtnLeft.setText("Yes");
+                    alertDialogBtnLeft.setVisibility(View.VISIBLE);
+                    alertDialogBtnRight.setVisibility(View.VISIBLE);
+                    break;
+                default:
+                    break;
+            }
+
         }
 
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
-                case R.id.btn_no:
+                case R.id.alertDialogBtnRight:
+                    dismiss();
+                    break;
+                case R.id.alertDialogBtnLeft:
                     dismiss();
                     break;
                 default:
                     break;
             }
-            dismiss();
+            //dismiss();
         }
 }

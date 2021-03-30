@@ -12,11 +12,11 @@
     </style>
 
     <style name="FoodChartRadioButtonStyle" parent="Theme.MaterialComponents.Light">
-        <item name="colorAccent">@color/lightPink</item>
+        <item name="colorAccent">@color/yellow</item>
     </style>
 
     <style name="FoodChartTabStyle" parent="Theme.MaterialComponents.Light">
-        <item name="colorAccent">@color/lightPink</item>
+        <item name="colorAccent">@color/grey</item>
     </style>
 
 

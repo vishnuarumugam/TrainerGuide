@@ -74,14 +74,14 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         trainerDashboard = findViewById(R.id.trainer_dashboard);
         traineeDashboard = findViewById(R.id.trainee_dashboard);
         foodDashboard = findViewById(R.id.food_dashboard);
-        pdf_dashboard = findViewById(R.id.pdf_dashboard);
+        //pdf_dashboard = findViewById(R.id.pdf_dashboard);
 
         profileDashboard.setOnClickListener(this);
         reportDashboard.setOnClickListener(this);
         trainerDashboard.setOnClickListener(this);
         traineeDashboard.setOnClickListener(this);
         foodDashboard.setOnClickListener(this);
-        pdf_dashboard.setOnClickListener(this);
+        //pdf_dashboard.setOnClickListener(this);
 
         //Graph representation
         //progressGraphView = findViewById(R.id.userProgressGraph);
@@ -175,10 +175,10 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 startActivity(new Intent(HomeScreen.this,FoodSourceListScreen.class));
                 finish();
                 break;
-            case R.id.pdf_dashboard:
+            /*case R.id.pdf_dashboard:
                 startActivity(new Intent(HomeScreen.this, PdfCreation.class));
                 finish();
-                break;
+                break;*/
             default:
                 break;
         }

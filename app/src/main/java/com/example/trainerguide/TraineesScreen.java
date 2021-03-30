@@ -378,8 +378,10 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
         System.out.println("***"+trainee.getUserId()+"*****"+position);
         System.out.println("***"+traineesList.size()+"***** size");
 
-        Intent intent = new Intent(TraineesScreen.this,TraineeProfileview.class);
-        intent.putExtra("TraineeUserId",trainee.getUserId());
+        Intent intent = new Intent(TraineesScreen.this,ProfileScreen.class);
+        intent.putExtra("userId",trainee.getUserId());
+        intent.putExtra("IsTrainer", false);
+        intent.putExtra("ReadOnly", true);
         startActivity(intent);
         finish();
     }

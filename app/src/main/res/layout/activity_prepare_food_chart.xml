@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context=".ProfileScreen"
-    android:background="@color/lightGrey"
+    android:background="@color/white"
     tools:openDrawer="start">
 
 
@@ -60,25 +60,11 @@
                             android:textStyle="bold" />
 
                     </RadioGroup>
-                    <SearchView
+                    <!--<SearchView
                         android:id="@+id/foodChartSearch"
                         android:layout_width="match_parent"
                         android:layout_marginTop="32dp"
                         android:layout_height="30dp"
-                        android:gravity="center_vertical"
-                        android:background="@color/greyShade"
-                        android:elevation="20dp"
-                        android:hint="Search Food Items"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/radioFoodChartGroup" />
-
-                    <!--<EditText
-                        android:id="@+id/foodChartSearch"
-                        android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:layout_margin="10dp"
-                        android:layout_marginTop="32dp"
                         android:gravity="center_vertical"
                         android:background="@color/greyShade"
                         android:elevation="20dp"
@@ -87,12 +73,26 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/radioFoodChartGroup" />-->
 
+                    <EditText
+                        android:id="@+id/foodChartSearch"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:layout_margin="10dp"
+                        android:layout_marginTop="32dp"
+                        android:gravity="center_vertical"
+                        android:background="@color/white"
+                        android:elevation="20dp"
+                        android:hint="Search Food Items"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/radioFoodChartGroup" />
+
 
                         <androidx.core.widget.NestedScrollView
                             android:layout_width="match_parent"
                             android:layout_height="250dp"
                             android:layout_margin="10dp"
-                            android:background="@color/lightPink"
+                            android:background="@color/lightYellow"
                             android:id="@+id/nestedScrollViewSource"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -125,8 +125,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
                             app:tabMode="scrollable"
-                            app:tabTextColor="@color/grey"
-                            app:tabIndicatorColor="@color/grey"
+                            app:tabTextColor="@color/black"
+                            app:tabIndicatorColor="@color/black"
                             app:tabBackground="@drawable/food_chart_tab"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -135,7 +135,6 @@
                             <com.google.android.material.tabs.TabItem
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                tabTextColor="@colour."
                                 android:text="Break Fast"/>
 
                             <com.google.android.material.tabs.TabItem
@@ -200,7 +199,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="250dp"
                             android:layout_margin="10dp"
-                            android:background="#E3D3D3"
+                            android:background="@color/lightYellow"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             android:id="@+id/nestedScrollView"

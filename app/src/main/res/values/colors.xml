@@ -11,6 +11,7 @@
     <color name="transparent">#00000000</color>
     <color name="pink">#F5A9BC</color>
     <color name="yellow">#FACC2E</color>
+    <color name="lightYellow">#DDFAE05E</color>
     <color name="lightGrey">#E4E3E3</color>
     <color name="lightPink">#E3D3D3</color>
     <color name="greyShade">#DCD6D6</color>

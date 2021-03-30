@@ -1,49 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:background="#3E80B4"
-    android:orientation="vertical" >
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:gravity="center">
 
-    <TextView
-        android:id="@+id/txt_dia"
-        android:layout_width="wrap_content"
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="10dp"
-        android:text="Do you realy want to exit ?"
-        android:textColor="@android:color/white"
-        android:textSize="15dp"
-        android:textStyle="bold"/>
+        android:elevation="15dp"
+        app:cardCornerRadius="25dp"
+        app:cardBackgroundColor="@color/white"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
 
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="#3E80B4"
-        android:orientation="horizontal" >
-<!--
-        <Button
-            android:id="@+id/btn_yes"
-            android:layout_width="100dp"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@android:color/white"
-            android:clickable="true"
-            android:text="Yes"
-            android:textColor="#5DBCD2"
-            android:textStyle="bold" />-->
+            android:layout_gravity="center"
+            android:padding="10dp"
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/btn_no"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:background="@android:color/white"
-            android:clickable="true"
-            android:text="cancel"
-            android:textColor="#5DBCD2"
-            android:textStyle="bold" />
-    </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/alertDialogTitle"
+                android:text="Title"
+                android:textColor="@color/grey"
+                android:textStyle="bold"
+                style="@style/TextAppearance.AppCompat.Body1"
+                android:textSize="20dp"
+                android:layout_gravity="center" />
 
-</LinearLayout>
+
+            <TextView
+                android:id="@+id/alertDialogMsg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:text="Message"
+                android:textAlignment="center"
+                style="@style/TextAppearance.AppCompat"
+                android:textSize="14dp"
+                android:textColor="@android:color/black" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@color/white"
+                android:orientation="horizontal" >
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:id="@+id/alertDialogBtnLeft"
+                    android:layout_marginTop="10dp"
+                    android:text="Yes"
+                    android:backgroundTint="@color/yellow"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"
+                    android:id="@+id/alertDialogBtnRight"
+                    android:layout_marginTop="10dp"
+                    android:text="No"
+                    android:backgroundTint="@color/yellow"/>
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+</RelativeLayout>

@@ -23,6 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
+                android:layout_centerInParent="true"
                 android:layout_centerVertical="true"
                 android:id="@+id/profileItemTextRelativeLay">
                 <TextView
@@ -33,24 +34,6 @@
                     android:text="Thyroid"
                     android:textColor="@color/white"
                     style="@style/TextAppearance.AppCompat.Medium"/>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                android:layout_marginEnd="5dp">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/profileItemClose"
-                    android:background="@drawable/ic_close"
-                    android:layout_centerInParent="true"
-                    android:layout_alignParentEnd="true"/>
 
             </RelativeLayout>
 

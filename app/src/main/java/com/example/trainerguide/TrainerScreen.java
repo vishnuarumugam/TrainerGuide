@@ -72,7 +72,7 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
     //Pagination
     NestedScrollView nestedScrollView;
     ProgressBar progressBar;
-    int page =1,limit = 5;
+    int page =1,limit = 6;
     private String startAt="\"\"";
     Boolean scroll = true;
 
@@ -386,8 +386,19 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
         System.out.println("***"+trainer.getUserId()+"*****"+position);
         System.out.println("***"+trainersList.size()+"***** size");
 
-        Intent intent = new Intent(TrainerScreen.this,TrainerProfileView.class);
-        intent.putExtra("TrainerUserId",trainer.getUserId());
+        final SharedPreferences sp;
+        sp= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String userId = sp.getString("userId", null);
+
+        Intent intent = new Intent(TrainerScreen.this,ProfileScreen.class);
+        if(trainer.getUserId().equals(userId)){
+            intent.putExtra("IsTrainer", true);
+        }
+        else {
+            intent.putExtra("userId", trainer.getUserId());
+            intent.putExtra("IsTrainer", true);
+            intent.putExtra("ReadOnly", true);
+        }
         startActivity(intent);
         finish();
     }

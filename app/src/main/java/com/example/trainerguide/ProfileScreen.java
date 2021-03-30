@@ -44,6 +44,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.trainerguide.models.Notification;
 import com.example.trainerguide.models.Trainee;
 import com.example.trainerguide.models.Trainer;
 import com.example.trainerguide.models.User;
@@ -73,10 +74,12 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import me.biubiubiu.justifytext.library.JustifyTextView;
 
@@ -113,8 +116,8 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
 
     //ProfileScreen Variables
     private ImageButton profileImage;
-    MaterialCardView accCardView, personalInfoCardView, foodInfoCardView, healthInfoCardView, subscriptionInfoCardView;
-    TextView profileAccDrop, profilePersonalInfoDrop, profileFoodInfoDrop, profileWeight, profileEmailId, profileDob, profileHeight, profileFoodType, profileHealthInfoDrop, foodAllergyOther, healthIssuesOther, profileExperience, profileSubscriptionInfoDrop, profileSubscriptionType, profileSubscriptionFees, profileSubscriptionDescription, profileSubscriptionTrainer;
+    MaterialCardView accCardView, personalInfoCardView, foodInfoCardView, healthInfoCardView, subscriptionInfoCardView, profileActionView;
+    TextView profileAccDrop, profilePersonalInfoDrop, profileFoodInfoDrop, profileWeight, profileEmailId, profileDob, profileHeight, profileFoodType, profileHealthInfoDrop, foodAllergyOther, healthIssuesOther, profileExperience, profileSubscriptionInfoDrop, profileSubscriptionType, profileSubscriptionFees, profileSubscriptionDescription, profileSubscriptionTrainer, requestTrainerNavText, foodChartNavText;
     RelativeLayout accRelativeCollapse, personalRelativeCollapse, foodInfoRelativeCollapse, dobRelativeLay, healthInfoRelativeCollapse, weightRelativeLay, heightRelativeLay, foodTypeRelativeLay, foodAllergyRelativeLay, healthIssuesRelativeLay, experienceRelativeLay, subscriptionInfoRelativeCollapse, subscriptionTypeRelativeLay, subscriptionTrainerRelativeLay, subscriptionFeesRelativeLay, subscriptionDescriptionRelativeLay;
 
     private String userId;
@@ -122,6 +125,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
     private String userProfileUpdateValue;
     private User user;
     private String userType;
+    private Boolean readonly = false;
 
 
     //Common variables
@@ -167,6 +171,12 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
 
         //ProfileScreen variables
         profileImage = findViewById(R.id.profileImage);
+        requestTrainerNavText = findViewById(R.id.requestTrainerNavText);
+        foodChartNavText = findViewById(R.id.foodChartNavText);
+        profileActionView = findViewById(R.id.profileActionView);
+        profileActionView.setVisibility(View.GONE);
+        requestTrainerNavText.setVisibility(View.GONE);
+        foodChartNavText.setVisibility(View.GONE);
 
         //Account Info variables
         accCardView = findViewById(R.id.accCardView);
@@ -224,11 +234,42 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         //userId = getIntent().getStringExtra("UserId");
         final SharedPreferences sp;
         sp= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        Boolean IsTrainerProfile = false;
+        String passedUserId = "";
 
-        userType = sp.getString("ProfileType",null);
-        userId = sp.getString("userId",null);
+        if(getIntent().hasExtra("IsTrainer") &&
+                getIntent().hasExtra("userId") &&
+                getIntent().hasExtra("ReadOnly"))
+        {
+            IsTrainerProfile = getIntent().getExtras().getBoolean("IsTrainer");
+            passedUserId = getIntent().getExtras().getString("userId", "");
+            readonly = getIntent().getExtras().getBoolean("ReadOnly", false);
+        }
 
+        if(!passedUserId.equals("")){
+            userType = IsTrainerProfile ? "Trainer" : "User";
+            userId=passedUserId;
+        }
+        else {
+            userType = sp.getString("ProfileType", null);
+            userId = sp.getString("userId", null);
+        }
+
+        if(readonly){
+            if(IsTrainerProfile && !sp.getString("ProfileType", null).equals("Trainer")){
+                profileActionView.setVisibility(View.VISIBLE);
+                requestTrainerNavText.setVisibility(View.VISIBLE);
+                foodChartNavText.setVisibility(View.GONE);
+            }
+            else if(!IsTrainerProfile && sp.getString("ProfileType", null).equals("Trainer")){
+                profileActionView.setVisibility(View.VISIBLE);
+                requestTrainerNavText.setVisibility(View.GONE);
+                foodChartNavText.setVisibility(View.VISIBLE);
+            }
+        }
         path = userType+ "/" + userId;
+
+        System.out.println("path  ==  "+path);
 
         if (userType.equals("Trainer")){
             experienceRelativeLay.setVisibility(View.VISIBLE);
@@ -241,6 +282,63 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
             subscriptionTypeRelativeLay.setVisibility(View.VISIBLE);
 
         }
+
+        requestTrainerNavText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(path+"/Notification");
+                final DatabaseReference databaseReferenceAdd = FirebaseDatabase.getInstance().getReference("User/"+ FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+                databaseReferenceAdd.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        Trainee trainee = snapshot.getValue(Trainee.class);
+
+                        if(trainee.getTrainerId().equals("") || trainee.getTrainerId() == null) {
+                            if (trainee.isTrainer() == false) {
+                                Notification notify = new Notification();
+                                notify.setNotificationId(UUID.randomUUID().toString());
+                                notify.setNotification(trainee.getName()+" requested for joining as your trainee");
+                                notify.setAddedDate(Calendar.getInstance().getTime());
+                                notify.setNotificationType("Request");
+                                notify.setTrainer(false);
+                                notify.setUserId(trainee.getUserId());
+/*
+
+                                HashMap<String, Notification> notification = new HashMap<>();
+                                HashMap hash= new HashMap();
+
+                                notification.put(notify.getNotificationId(),notify);
+                                hash.put("Notification",notification);
+*/
+
+                                databaseReference.child(notify.getNotificationId()).setValue(notify);
+                            }
+                        }
+                        else
+                        {
+                            AlertDialogBox alertDialogBox = new AlertDialogBox();
+                            alertDialogBox.show(getSupportFragmentManager(),"Alert");
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            }
+        });
+
+        foodChartNavText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent (ProfileScreen.this,PrepareFoodChart.class));
+                finish();
+            }
+        });
+
         //Get User Details
         PopulateUserDetails();
 
@@ -355,7 +453,9 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         profileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FileChooser();
+                if(!readonly) {
+                    FileChooser();
+                }
             }
         });
 
@@ -511,10 +611,10 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                 profileDobDialogDatePicker.setOnDateChangedListener(new DatePicker.OnDateChangedListener() {
                     @Override
                     public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                       int  month = monthOfYear + 1;
-                       userProfileUpdateValue = dayOfMonth +"-" + month +"-"+ year;
-                       System.out.println(dayOfMonth +"-" + month +"-"+ year);
-                       profileDobDialogUpdate.setClickable(true);
+                        int  month = monthOfYear + 1;
+                        userProfileUpdateValue = dayOfMonth +"-" + month +"-"+ year;
+                        System.out.println(dayOfMonth +"-" + month +"-"+ year);
+                        profileDobDialogUpdate.setClickable(true);
 
                     }
                 });
@@ -710,7 +810,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                     }
                 }
 
-             if (userType.equals("Trainer")){
+                if (userType.equals("Trainer")){
                     Trainer trainer = snapshot.getValue(Trainer.class);
                     if (trainer.getExperience() != null){
                         profileExperience.setText(trainer.getExperience().toString());
@@ -826,92 +926,89 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View option) {
+        if (!readonly) {
+            switch (option.getId()) {
 
-        switch (option.getId()){
+                case R.id.dobRelativeLay:
+                    ShowDialog("DateOfBirth");
+                    break;
+                case R.id.weightRelativeLay:
+                    ShowDialog("Weight");
+                    break;
+                case R.id.heightRelativeLay:
+                    ShowDialog("Height");
+                    break;
+                case R.id.foodTypeRelativeLay:
+                    ShowDialog("FoodType");
+                    break;
+                case R.id.foodAllergyRelativeLay:
+                    ShowDialog("FoodAllergy");
+                    break;
+                case R.id.healthIssuesRelativeLay:
+                    ShowDialog("HealthIssues");
+                    break;
+                case R.id.experienceRelativeLay:
+                    ShowDialog("Experience");
+                    break;
+                case R.id.subscriptionTypeRelativeLay:
+                    ShowDialog("SubscriptionType");
+                    break;
+                case R.id.subscriptionFeesRelativeLay:
+                    ShowDialog("SubscriptionFees");
+                    break;
+                case R.id.subscriptionDescriptionRelativeLay:
+                    ShowDialog("SubscriptionDescription");
+                    break;
+                case R.id.profileDobDialogUpdate:
+                    updateProfile("dateOfBirth", userProfileUpdateValue);
+                    break;
+                case R.id.profileWeightDialogUpdate:
+                    updateProfile("weight", profileWeightDialogInput.getText().toString());
+                    break;
+                case R.id.profileHeightDialogUpdate:
+                    updateProfile("height", profileHeightDialogInput.getText().toString());
+                    break;
+                case R.id.profileExperienceDialogUpdate:
+                    updateProfile("experience", profileExperienceDialogInput.getText().toString());
+                    break;
+                case R.id.profileFoodTypeDialogUpdate:
+                    String foodTypeValue = "Not mentioned";
+                    if (vegFoodType.isChecked()) {
+                        foodTypeValue = "Vegetarian";
+                    } else if (vegEggFoodType.isChecked()) {
+                        foodTypeValue = "Eggetarian";
+                    } else if (nonVegFoodType.isChecked()) {
+                        foodTypeValue = "Non-Vegetarian";
+                    }
+                    updateProfile("foodType", foodTypeValue);
+                    break;
+                case R.id.profileFoodAllergyDialogUpdate:
+                    updateProfile("foodAllergy", null);
+                    break;
+                case R.id.profileHealthInfoDialogUpdate:
+                    updateProfile("healthIssues", null);
+                    break;
+                case R.id.profileSubscriptionTypeDialogUpdate:
+                    String subscriptionValue = "Not mentioned";
+                    if (weightLossSubscription.isChecked()) {
+                        subscriptionValue = "Weight Loss";
+                    } else if (weightGainSubscription.isChecked()) {
+                        subscriptionValue = "Weight Gain";
+                    } else if (weightMaintainSubscription.isChecked()) {
+                        subscriptionValue = "Weight Maintain";
+                    }
+                    updateProfile("subscriptionType", subscriptionValue);
+                    break;
 
-            case R.id.dobRelativeLay:
-                ShowDialog("DateOfBirth");
-                break;
-            case R.id.weightRelativeLay:
-                ShowDialog("Weight");
-                break;
-            case R.id.heightRelativeLay:
-                ShowDialog("Height");
-                break;
-            case R.id.foodTypeRelativeLay:
-                ShowDialog("FoodType");
-                break;
-            case R.id.foodAllergyRelativeLay:
-                ShowDialog("FoodAllergy");
-                break;
-            case R.id.healthIssuesRelativeLay:
-                ShowDialog("HealthIssues");
-                break;
-            case R.id.experienceRelativeLay:
-                ShowDialog("Experience");
-                break;
-            case R.id.subscriptionTypeRelativeLay:
-                ShowDialog("SubscriptionType");
-                break;
-            case R.id.subscriptionFeesRelativeLay:
-                ShowDialog("SubscriptionFees");
-                break;
-            case R.id.subscriptionDescriptionRelativeLay:
-                ShowDialog("SubscriptionDescription");
-                break;
-            case R.id.profileDobDialogUpdate:
-                updateProfile("dateOfBirth", userProfileUpdateValue);
-                break;
-            case R.id.profileWeightDialogUpdate:
-                updateProfile("weight", profileWeightDialogInput.getText().toString());
-                break;
-            case R.id.profileHeightDialogUpdate:
-                updateProfile("height",profileHeightDialogInput.getText().toString());
-                break;
-            case R.id.profileExperienceDialogUpdate:
-                updateProfile("experience",profileExperienceDialogInput.getText().toString());
-                break;
-            case R.id.profileFoodTypeDialogUpdate:
-                String foodTypeValue = "Not mentioned";
-                if (vegFoodType.isChecked()){
-                    foodTypeValue="Vegetarian";
-                }
-                else if (vegEggFoodType.isChecked()){
-                    foodTypeValue="Eggetarian";
-                }
-                else if (nonVegFoodType.isChecked()){
-                    foodTypeValue="Non-Vegetarian";
-                }
-                updateProfile("foodType",foodTypeValue);
-                break;
-            case R.id.profileFoodAllergyDialogUpdate:
-                updateProfile("foodAllergy",null);
-                break;
-            case R.id.profileHealthInfoDialogUpdate:
-                updateProfile("healthIssues",null);
-                break;
-            case R.id.profileSubscriptionTypeDialogUpdate:
-                String subscriptionValue = "Not mentioned";
-                if (weightLossSubscription.isChecked()){
-                    subscriptionValue="Weight Loss";
-                }
-                else if (weightGainSubscription.isChecked()){
-                    subscriptionValue="Weight Gain";
-                }
-                else if (weightMaintainSubscription.isChecked()){
-                    subscriptionValue="Weight Maintain";
-                }
-                updateProfile("subscriptionType",subscriptionValue);
-                break;
+                case R.id.profileSubscriptionFeesDialogUpdate:
+                    updateProfile("subscriptionFees", profileSubscriptionFeesDialogInput.getText().toString());
 
-            case R.id.profileSubscriptionFeesDialogUpdate:
-                updateProfile("subscriptionFees",profileSubscriptionFeesDialogInput.getText().toString());
+                case R.id.profileSubscriptionDescDialogUpdate:
+                    updateProfile("subscriptionDescription", profileSubscriptionDescDialogInput.getText().toString());
+                default:
+                    break;
 
-            case  R.id.profileSubscriptionDescDialogUpdate:
-                updateProfile("subscriptionDescription", profileSubscriptionDescDialogInput.getText().toString());
-            default:
-                break;
-
+            }
         }
     }
 
