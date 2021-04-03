@@ -214,6 +214,7 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
                         // convert date to calendar
                         Calendar c = Calendar.getInstance();
                         c.setTime(currentDate);
+
                         //trainerId.put("subscriptionEndDate", c.add(Calendar.DAY_OF_MONTH,30));
 
                         Notification notify = new Notification();

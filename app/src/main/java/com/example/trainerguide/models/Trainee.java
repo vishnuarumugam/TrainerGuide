@@ -8,13 +8,13 @@ public class Trainee extends User {
     private String TrainerId;
     private String foodType;
     private String subscriptionType;
-    private String subscriptionEndDate;
+    private Date subscriptionEndDate;
 
-    public String getSubscriptionEndDate() {
+    public Date getSubscriptionEndDate() {
         return subscriptionEndDate;
     }
 
-    public void setSubscriptionEndDate(String subscriptionEndDate) {
+    public void setSubscriptionEndDate(Date subscriptionEndDate) {
         this.subscriptionEndDate = subscriptionEndDate;
     }
 
