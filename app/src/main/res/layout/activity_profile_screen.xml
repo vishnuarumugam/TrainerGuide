@@ -94,8 +94,6 @@
                         </RelativeLayout>
                     </com.google.android.material.card.MaterialCardView>
 
-
-
                     <!-- Account Info Design-->
                     <com.google.android.material.card.MaterialCardView
                         android:layout_width="match_parent"
@@ -676,6 +674,7 @@
 
                         </RelativeLayout>
                     </com.google.android.material.card.MaterialCardView>
+
                     <!-- Subscription Info Design -->
                     <com.google.android.material.card.MaterialCardView
                         android:layout_width="match_parent"
@@ -866,7 +865,19 @@
 
                         </RelativeLayout>
                     </com.google.android.material.card.MaterialCardView>
-
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txtSubscriptionDate"
+                        android:visibility="gone"
+                        android:text="" />
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/yellow"
+                        android:id="@+id/extendbtn"
+                        android:visibility="gone"
+                        android:text="Extend"/>
                 </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>

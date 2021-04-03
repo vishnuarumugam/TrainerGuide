@@ -8,7 +8,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -21,6 +22,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:text="ItemName"
+                android:textColor="@color/black"
                 android:id="@+id/selecteditemName"
                 android:gravity="center_vertical"
                 android:textSize="15sp"/>
@@ -31,6 +33,7 @@
                 android:text="Calories: "
                 android:textSize="12sp"
                 android:id="@+id/qtyLabel"
+                android:textColor="@color/black"
                 android:gravity="center"
                 android:layout_toRightOf="@+id/selecteditemName"/>
             <TextView
@@ -39,6 +42,7 @@
                 android:text="150"
                 android:textSize="12sp"
                 android:gravity="center"
+                android:textColor="@color/black"
                 android:id="@+id/selectedqty"
                 android:layout_toRightOf="@+id/qtyLabel"/>
         </RelativeLayout>

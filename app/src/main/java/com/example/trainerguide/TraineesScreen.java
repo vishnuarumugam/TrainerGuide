@@ -123,10 +123,10 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
                         startActivity(new Intent(TraineesScreen.this,TrainerScreen.class));
                         finish();
                         break;
-                    case R.id.nav_foodPrep:
+                    /*case R.id.nav_foodPrep:
                         startActivity(new Intent(TraineesScreen.this,PrepareFoodChart.class));
                         finish();
-                        break;
+                        break;*/
                     case R.id.nav_logout:
                         startActivity(new Intent(TraineesScreen.this,MainActivity.class));
                         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());

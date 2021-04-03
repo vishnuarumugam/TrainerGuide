@@ -110,7 +110,7 @@ public class User {
         this.name = name;
     }
 
-    public void setBmr(Double weight, Double height,String gender, Integer age) {
+    public void setBmr(Double weight, Double height) {
         Double bmi = bmrCalculation(weight,height);
         this.bmi = bmi;
     }

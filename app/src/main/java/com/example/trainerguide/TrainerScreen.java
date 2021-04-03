@@ -124,10 +124,10 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
                         break;
                     case R.id.nav_trainer:
                         break;
-                    case R.id.nav_foodPrep:
+                    /*case R.id.nav_foodPrep:
                         startActivity(new Intent(TrainerScreen.this,PrepareFoodChart.class));
                         finish();
-                        break;
+                        break;*/
                     case R.id.nav_logout:
                         startActivity(new Intent(TrainerScreen.this,MainActivity.class));
                         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());

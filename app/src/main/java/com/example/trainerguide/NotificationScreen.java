@@ -203,38 +203,73 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
                 System.out.println("******()*****"+trainee.getTrainerId());
                 if(trainee.getTrainerId() == null || trainee.getTrainerId().equals("") ) {
                     if (trainee.isTrainer() == false) {
-                        UserMetaData traineeMetadata = new UserMetaData();
-                        traineeMetadata.setUserId(trainee.getUserId());
-                        traineeMetadata.setBmi(trainee.getBmi());
-                        traineeMetadata.setName(trainee.getName());
-                        traineeMetadata.setImage(trainee.getImage());
-                        trainee.setTrainerId(fAuth.getCurrentUser().getUid());
-                        HashMap<String, Object> trainerId = new HashMap<>();
-                        trainerId.put("trainerId", fAuth.getCurrentUser().getUid());
-                        Date currentDate = new Date();
-                        // convert date to calendar
-                        Calendar c = Calendar.getInstance();
-                        c.setTime(currentDate);
+                        if(notification.getNotificationType().equals("Request")) {
+                            UserMetaData traineeMetadata = new UserMetaData();
+                            traineeMetadata.setUserId(trainee.getUserId());
+                            traineeMetadata.setBmi(trainee.getBmi());
+                            traineeMetadata.setName(trainee.getName());
+                            traineeMetadata.setImage(trainee.getImage());
+                            trainee.setTrainerId(fAuth.getCurrentUser().getUid());
+                            HashMap<String, Object> trainerId = new HashMap<>();
+                            trainerId.put("trainerId", fAuth.getCurrentUser().getUid());
+                            Date currentDate = new Date();
+                            // convert date to calendar
+                            Calendar c = Calendar.getInstance();
+                            c.setTime(currentDate);
 
-                        c.add(Calendar.DATE,30);
-                        trainerId.put("subscriptionEndDate", c.getTime());
+                            c.add(Calendar.DATE, 30);
+                            trainerId.put("subscriptionEndDate", c.getTime());
 
-                        Notification notify = new Notification();
-                        notify.setNotificationId(UUID.randomUUID().toString());
-                        notify.setNotification(traineeMetadata.getName()+" Added as Trainee");
-                        notify.setAddedDate(Calendar.getInstance().getTime());
-                        notify.setNotificationType("");
-                        notify.setTrainer(false);
-                        notify.setUserId(traineeMetadata.getUserId());
+                            Notification notify = new Notification();
+                            notify.setNotificationId(UUID.randomUUID().toString());
+                            notify.setNotification(traineeMetadata.getName() + " Added as Trainee");
+                            notify.setAddedDate(Calendar.getInstance().getTime());
+                            notify.setNotificationType("");
+                            notify.setTrainer(false);
+                            notify.setUserId(traineeMetadata.getUserId());
 
                        /* HashMap<String, Notification> notification = new HashMap<>();
                         HashMap hash= new HashMap();
                         notification.put(notify.getNotificationId(),notify);*/
 
-                        //hash.put("Notification",notification);
-                        databaseReference.child(notify.getNotificationId()).setValue(notify);
-                        databaseReferenceAdd.updateChildren(trainerId);
-                        databaseReferenceUserList.child( "/usersList/" + trainee.getUserId()).setValue(traineeMetadata);
+                            //hash.put("Notification",notification);
+                            databaseReference.child(notify.getNotificationId()).setValue(notify);
+                            databaseReferenceAdd.updateChildren(trainerId);
+                            databaseReferenceUserList.child("/usersList/" + trainee.getUserId()).setValue(traineeMetadata);
+                        }
+                        if(notification.getNotificationType().equals("Extend")){
+                            DatabaseReference databaseReferenceUserNotification = FirebaseDatabase.getInstance().getReference("User/"+ notification.getUserId()+"/Notification");
+                            HashMap hash= new HashMap();
+                            Date currentDate = trainee.getSubscriptionEndDate();
+                            // convert date to calendar
+                            Calendar c = Calendar.getInstance();
+                            c.setTime(currentDate);
+
+                            c.add(Calendar.DATE,30);
+                            hash.put("subscriptionEndDate",c.getTime());
+
+
+                            Notification notify = new Notification();
+                            notify.setNotificationId(UUID.randomUUID().toString());
+                            notify.setNotification(trainee.getName() + " has been extended as your Trainee for 30 Days");
+                            notify.setAddedDate(Calendar.getInstance().getTime());
+                            notify.setNotificationType("");
+                            notify.setTrainer(false);
+                            notify.setUserId(trainee.getUserId());
+
+                            Notification notifyTrainee = new Notification();
+                            notify.setNotificationId(UUID.randomUUID().toString());
+                            notify.setNotification(" Your subscription has been extended for 30 Days");
+                            notify.setAddedDate(Calendar.getInstance().getTime());
+                            notify.setNotificationType("");
+                            notify.setTrainer(false);
+                            notify.setUserId(trainee.getUserId());
+
+
+                            databaseReference.child(notify.getNotificationId()).setValue(notify);
+                            databaseReferenceUserNotification.child(notify.getNotificationId()).setValue(notify);
+                            databaseReferenceAdd.updateChildren(hash);
+                        }
                     }
                 }
             }

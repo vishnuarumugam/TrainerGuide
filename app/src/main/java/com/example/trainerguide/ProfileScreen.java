@@ -108,6 +108,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
     private List<String> foodAllergy = new ArrayList<>();
     private ProfileAdapter profileAdapter, profileAdapterFood;
     private RelativeLayout profileOtherRelativeLayFood, profileOtherRelativeLayHealth;
+    private Button extend;
 
 
     //Trainer Data
@@ -135,7 +136,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
     //PopUp Dialog
     Dialog profileDialog;
     ImageView profileDialogClose;
-    TextView profileDobDialogTitle, profileWeightDialogTitle, profileHeightDialogTitle, profileExperienceDialogTitle, profileFoodTypeDialogTitle, profileFoodAllergyDialogTitle, profileHealthInfoDialogTitle, profileSubscriptionTypeDialogTitle, profileSubscriptionFeesDialogTitle, profileSubscriptionDescDialogTitle;
+    TextView profileDobDialogTitle, profileWeightDialogTitle, profileHeightDialogTitle, profileExperienceDialogTitle, profileFoodTypeDialogTitle, profileFoodAllergyDialogTitle, profileHealthInfoDialogTitle, profileSubscriptionTypeDialogTitle, profileSubscriptionFeesDialogTitle, profileSubscriptionDescDialogTitle, txtSubscriptionDate;
     LinearLayout profileDobDialogTitleLin, profileWeightDialogTitleLin, profileHeightDialogTitleLin, profileExperienceDialogTitleLin, profileFoodTypeDialogTitleLin, profileFoodAllergyDialogTitleLin, profileHealthInfoDialogTitleLin, profileSubscriptionTypeDialogTitleLin, profileSubscriptionFeesDialogTitleLin, profileSubscriptionDescDialogTitleLin;
     DatePicker profileDobDialogDatePicker;
     Button profileDobDialogUpdate, profileWeightDialogUpdate, profileHeightDialogUpdate, profileExperienceDialogUpdate, profileHealthInfoDialogUpdate, profileFoodAllergyDialogUpdate, profileFoodTypeDialogUpdate, profileSubscriptionTypeDialogUpdate, profileSubscriptionFeesDialogUpdate, profileSubscriptionDescDialogUpdate;
@@ -177,6 +178,8 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         profileActionView.setVisibility(View.GONE);
         requestTrainerNavText.setVisibility(View.GONE);
         foodChartNavText.setVisibility(View.GONE);
+        extend = findViewById(R.id.extendbtn);
+        txtSubscriptionDate = findViewById(R.id.txtSubscriptionDate);
 
         //Account Info variables
         accCardView = findViewById(R.id.accCardView);
@@ -253,6 +256,10 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         else {
             userType = sp.getString("ProfileType", null);
             userId = sp.getString("userId", null);
+            if(!(userType.equals("Trainer"))){
+                extend.setVisibility(View.VISIBLE);
+                txtSubscriptionDate.setVisibility(View.VISIBLE);
+            }
         }
 
         if(readonly){
@@ -282,6 +289,33 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
             subscriptionTypeRelativeLay.setVisibility(View.VISIBLE);
 
         }
+
+        extend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(path);
+                DatabaseReference trainerDatabaseReference = FirebaseDatabase.getInstance().getReference("Trainer/");
+                databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        Trainee trainee = snapshot.getValue(Trainee.class);
+                        Notification notify = new Notification();
+                        notify.setNotificationId(UUID.randomUUID().toString());
+                        notify.setNotification(trainee.getName() + " Requested for extending subscription for 30 Days");
+                        notify.setAddedDate(Calendar.getInstance().getTime());
+                        notify.setNotificationType("Extend");
+                        notify.setTrainer(false);
+                        notify.setUserId(trainee.getUserId());
+                        trainerDatabaseReference.child(trainee.getTrainerId()+"/Notification").child(notify.getNotificationId()).setValue(notify);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            }
+        });
 
         requestTrainerNavText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -334,7 +368,11 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         foodChartNavText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent (ProfileScreen.this,PrepareFoodChart.class));
+                Intent intent = new Intent(ProfileScreen.this,PrepareFoodChart.class);
+                intent.putExtra("userId",user.getUserId());
+                intent.putExtra("userName", user.getName());
+                intent.putExtra("totalCalories", user.getBmr().doubleValue());
+                startActivity(intent);
                 finish();
             }
         });
@@ -857,7 +895,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                 }
                 else{
                     Trainee trainee = snapshot.getValue(Trainee.class);
-
+                    txtSubscriptionDate.setText(trainee.getSubscriptionEndDate().toString());
                     //String trainerName = GetTrainerName(trainee.getTrainerId());
                     if (trainee.getTrainerId()!=null){
                         GetTrainerName(trainee.getTrainerId());
@@ -1282,5 +1320,8 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
     }
 
 
+    public void ExtendSubscription(Date subscriptionEndDate, int DaysToExtend){
+
+    }
 
 }

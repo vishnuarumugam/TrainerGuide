@@ -127,10 +127,10 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                         startActivity(new Intent(HomeScreen.this,TrainerScreen.class));
                         finish();
                         break;
-                    case R.id.nav_foodPrep:
+                    /*case R.id.nav_foodPrep:
                         startActivity(new Intent(HomeScreen.this,PrepareFoodChart.class));
                         finish();
-                        break;
+                        break;*/
                     case R.id.nav_logout:
                         startActivity(new Intent(HomeScreen.this,MainActivity.class));
                         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());

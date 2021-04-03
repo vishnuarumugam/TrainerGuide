@@ -90,7 +90,7 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
     private NavigationView navigationView;
     private Toolbar toolbar;
     private MenuItem profileMenu, logoutMenu, shareMenu, ratingMenu, traineeMenu;
-    private TextView totalCaloriesLabel;
+    private TextView totalCaloriesLabel, recommendedCalories;
 
 
     //Recycler view variables
@@ -150,12 +150,26 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
         ActionBarDrawerToggle toggle = CommonNavigator.navigatorInitmethod(drawerLayout, navigationView, toolbar, this);
         toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.yellow));
 
+
+
+
         //Menu Item variables
         profileMenu = findViewById(R.id.nav_profile);
         traineeMenu = findViewById(R.id.nav_trainees);
 
         tablayout = findViewById(R.id.foodTimingTabs);
         totalCaloriesLabel = findViewById(R.id.totalCalories);
+        recommendedCalories = findViewById(R.id.recommendedCalories);
+
+        //Intent variables
+        if(getIntent().hasExtra("userId") &&
+                getIntent().hasExtra("userName") &&
+                getIntent().hasExtra("totalCalories"))
+        {
+            System.out.println("totalCalories"+getIntent().getExtras().getString("userName") + getIntent().getExtras().getDouble("totalCalories"));
+            recommendedCalories.setText(String.valueOf(getIntent().getExtras().getDouble("totalCalories")));
+        }
+
 
         //Pdf Generation
         generatePdfBtn = findViewById(R.id.generatePdfBtn);
@@ -417,7 +431,7 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
                 }
             });
         }
-         return foodListItem;
+        return foodListItem;
     }
 
     public void Render(FoodList foodListItem, String foodType){
@@ -533,8 +547,8 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
         double totalCalories = 0.0;
         for(Food foodItem : selectedFoodListHash) {
             if (foodItem.tab.equals(selectedTab)) {
-                    totalCalories = totalCalories+(foodItem.value * foodItem.getCalorieValue());
-                    selectedFoodItems.add(foodItem);
+                totalCalories = totalCalories+(foodItem.value * foodItem.getCalorieValue());
+                selectedFoodItems.add(foodItem);
             }
         }
         selectedFoodList.clear();
@@ -547,7 +561,7 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
 
         Document document = new Document();
         String pdfFile = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(System.currentTimeMillis());
-        String filePath=  (CreateAppPath.getAppPath(PrepareFoodChart.this)+"test"+ pdfFile +".pdf");
+        String filePath=  (CreateAppPath.getAppPath(PrepareFoodChart.this)+getIntent().getExtras().getString("userName").toUpperCase()+ pdfFile +".pdf");
         BaseColor colourAccent = new BaseColor(0,153,204,255);
         BaseColor colourYellow = new BaseColor(250,204,46,255);
 
@@ -637,8 +651,8 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
 
             }
 
-                document.close();
-                Toast.makeText(this, "File created", Toast.LENGTH_SHORT).show();
+            document.close();
+            Toast.makeText(this, "File created", Toast.LENGTH_SHORT).show();
 
         }
         catch (Exception e){

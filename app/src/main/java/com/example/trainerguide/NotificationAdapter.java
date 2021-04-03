@@ -51,7 +51,8 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         holder.notification.setText(notification.get(position).getNotification());
         if(notification.get(position).getNotificationType() != null &&
                 notification.get(position).getNotificationType() !="" &&
-                notification.get(position).getNotificationType().equals("Request"))
+                (notification.get(position).getNotificationType().equals("Request") ||
+                        notification.get(position).getNotificationType().equals("Extend")))
         {
             holder.rejectBtn.setVisibility(View.VISIBLE);
             holder.approvebtn.setVisibility(View.VISIBLE);
