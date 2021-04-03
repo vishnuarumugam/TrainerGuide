@@ -73,7 +73,7 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
     NestedScrollView nestedScrollView;
     ProgressBar progressBar;
     int page =1,limit = 6;
-    private String startAt="\"\"";
+    private String startAt="\"*\"";
     Boolean scroll = true;
 
     @Override
@@ -259,48 +259,75 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
     private void parseResult(JSONArray jsonArray) {
         //Use for loop
 
-        for(int i=0; i<jsonArray.length()-1; i++){
-
-            System.out.println("i" + i);
-            try {
-                //if(i <= trainersList.size()+limit && i >= trainersList.size() && trainersList.size() <= jsonArray.length()){
-                //Initialize JSON object
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                //Initialize Trainer Data
-                Trainer trainer = new Trainer();
-                //SetImage
-                trainer.setUserId(jsonObject.getString("userId"));
-                trainer.setImage(jsonObject.getString("image"));
-                trainer.setName(jsonObject.getString("name"));
-
-                try{
-                    trainer.setExperience(jsonObject.getDouble("experience")) ;
-
-                }
-                catch (Exception e){
-                    trainer.setExperience(0.0) ;
-                }
-                //Add Data
-                trainersList.add(trainer);
-                //}
-
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-
         try {
             if(jsonArray.length() > 0) {
                 JSONObject jsonObject1;
-                System.out.println("jsonArray.length()"+jsonArray.length());
-                System.out.println("jsonArray" +jsonArray.getJSONObject(0));
-                System.out.println("jsonArray" +jsonArray.getJSONObject(1));
-                System.out.println("jsonArray" +jsonArray.getJSONObject(3));
 
+                if(jsonArray.length() == limit){
+                    for(int i=0; i<jsonArray.length()-1; i++){
+
+                        System.out.println("i" + i);
+                        try {
+                            //if(i <= trainersList.size()+limit && i >= trainersList.size() && trainersList.size() <= jsonArray.length()){
+                            //Initialize JSON object
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            //Initialize Trainer Data
+                            Trainer trainer = new Trainer();
+                            //SetImage
+                            trainer.setUserId(jsonObject.getString("userId"));
+                            trainer.setImage(jsonObject.getString("image"));
+                            trainer.setName(jsonObject.getString("name"));
+
+                            try{
+                                trainer.setExperience(jsonObject.getDouble("experience")) ;
+
+                            }
+                            catch (Exception e){
+                                trainer.setExperience(0.0) ;
+                            }
+                            //Add Data
+                            trainersList.add(trainer);
+                            //}
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
 
 
                 if (jsonArray.length() < limit){
+
+                    for(int i=0; i<jsonArray.length(); i++){
+                        try {
+                            //if(i <= trainersList.size()+limit && i >= trainersList.size() && trainersList.size() <= jsonArray.length()){
+                            //Initialize JSON object
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            //Initialize Trainer Data
+                            Trainer trainer = new Trainer();
+                            //SetImage
+                            trainer.setUserId(jsonObject.getString("userId"));
+                            trainer.setImage(jsonObject.getString("image"));
+                            trainer.setName(jsonObject.getString("name"));
+
+                            try{
+                                trainer.setExperience(jsonObject.getDouble("experience")) ;
+
+                            }
+                            catch (Exception e){
+                                trainer.setExperience(0.0) ;
+                            }
+                            //Add Data
+                            trainersList.add(trainer);
+                            //}
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+/*
                     System.out.println("inside array");
                     jsonObject1 = jsonArray.getJSONObject(jsonArray.length()-1);
                     Trainer trainer = new Trainer();
@@ -311,16 +338,13 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
                     //trainer.setDescription(jsonObject.getString("email"));
                     trainer.setExperience(jsonObject1.getDouble("experience"));
                     trainer.setUserId(jsonObject1.getString("userId"));
-                    //trainer.setFees(jsonObject.getString(""));
+                    //trainer.setFees(jsonObject.getString(""));*/
 
                     //Add Data
                     scroll=false;
-                    trainersList.add(trainer);
-
-                    System.out.println(trainersList.size() + "trainerlist");
+                    //trainersList.add(trainer);
                 }
                 else{
-
                     scroll=true;
                     System.out.println("startAt1");
                     jsonObject1 = jsonArray.getJSONObject(jsonArray.length() - 1);
@@ -336,7 +360,7 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
         }
 
 
-        try {
+        /*try {
             if(jsonArray.length()-1 <0) {
                 System.out.println("startAt2");
                 JSONObject jsonObject = jsonArray.getJSONObject(jsonArray.length() - 1);
@@ -345,10 +369,9 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
             }
         } catch (JSONException e) {
             e.printStackTrace();
-        }
+        }*/
 
         //Initialize Adapter
-        System.out.println("size"+trainersList.size());
         trainerAdapter = new TrainerAdapter(trainersList,TrainerScreen.this);
         //Set Adapter
         trainerRecycler.setAdapter(trainerAdapter);

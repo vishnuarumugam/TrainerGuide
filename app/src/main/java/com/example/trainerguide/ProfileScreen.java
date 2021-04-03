@@ -293,8 +293,8 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         Trainee trainee = snapshot.getValue(Trainee.class);
-
-                        if(trainee.getTrainerId().equals("") || trainee.getTrainerId() == null) {
+                        System.out.println(trainee.getTrainerId());
+                        if(trainee.getTrainerId() == null || trainee.getTrainerId().equals("")) {
                             if (trainee.isTrainer() == false) {
                                 Notification notify = new Notification();
                                 notify.setNotificationId(UUID.randomUUID().toString());

@@ -74,7 +74,7 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
     NestedScrollView nestedScrollView;
     ProgressBar progressBar;
     int page =1,limit = 3;
-    private String startAt="\"\"";
+    private String startAt="\"*\"";
     Boolean scroll = true;
 
     @Override
@@ -247,32 +247,61 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
     private void parseResult(JSONArray jsonArray) {
         //Use for loop
 
-        for(int i=0; i<jsonArray.length()-1; i++){
-            System.out.println("inside for");
 
-            try {
-                //Initialize JSON object
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                //Initialize USER Data
-                UserMetaData userMetaData = new UserMetaData();
-                //SetImage
-                userMetaData.setImage(jsonObject.getString("image"));
-                userMetaData.setName(jsonObject.getString("name"));
-                userMetaData.setBmi(jsonObject.getDouble("bmi"));
-                userMetaData.setUserId(jsonObject.getString("userId"));
-
-                //Add Data
-                traineesList.add(userMetaData);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
         try {
             if(jsonArray.length() > 0) {
                 JSONObject jsonObject1;
-                System.out.println("jsonArray.length()"+jsonArray.length());
+
+                if(jsonArray.length() == limit){
+                    for(int i=0; i<jsonArray.length()-1; i++){
+                        System.out.println("inside for");
+
+                        try {
+                            //Initialize JSON object
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            //Initialize USER Data
+                            UserMetaData userMetaData = new UserMetaData();
+                            //SetImage
+                            userMetaData.setImage(jsonObject.getString("image"));
+                            userMetaData.setName(jsonObject.getString("name"));
+                            userMetaData.setBmi(jsonObject.getDouble("bmi"));
+                            userMetaData.setUserId(jsonObject.getString("userId"));
+
+                            //Add Data
+                            traineesList.add(userMetaData);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
                 if (jsonArray.length() < limit){
-                    System.out.println("inside array");
+                    for(int i=0; i<jsonArray.length(); i++){
+                        System.out.println("inside for");
+
+                        try {
+                            //Initialize JSON object
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            //Initialize USER Data
+                            UserMetaData userMetaData = new UserMetaData();
+                            //SetImage
+                            userMetaData.setImage(jsonObject.getString("image"));
+                            userMetaData.setName(jsonObject.getString("name"));
+                            userMetaData.setBmi(jsonObject.getDouble("bmi"));
+                            userMetaData.setUserId(jsonObject.getString("userId"));
+
+                            //Add Data
+                            traineesList.add(userMetaData);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+
+
+
+
+                    /*System.out.println("inside array");
                     jsonObject1 = jsonArray.getJSONObject(jsonArray.length()-1);
                     UserMetaData userMetaData = new UserMetaData();
                     System.out.println("user"+jsonObject1.getString("userId"));
@@ -281,10 +310,10 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
                     userMetaData.setName(jsonObject1.getString("name"));
                     userMetaData.setBmi(jsonObject1.getDouble("bmi"));
                     userMetaData.setUserId(jsonObject1.getString("userId"));
-
+*/
                     //Add Data
                     scroll=false;
-                    traineesList.add(userMetaData);
+                    //traineesList.add(userMetaData);
                 }
                 else{
                     scroll=true;

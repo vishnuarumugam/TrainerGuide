@@ -31,6 +31,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -92,7 +94,6 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
         ActionBarDrawerToggle toggle = CommonNavigator.navigatorInitmethod(drawerLayout,navigationView,toolbar,this);
         toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.yellow));
-
 
         //Method to re-direct the page from menu
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -215,7 +216,8 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
                         Calendar c = Calendar.getInstance();
                         c.setTime(currentDate);
 
-                        //trainerId.put("subscriptionEndDate", c.add(Calendar.DAY_OF_MONTH,30));
+                        c.add(Calendar.DATE,30);
+                        trainerId.put("subscriptionEndDate", c.getTime());
 
                         Notification notify = new Notification();
                         notify.setNotificationId(UUID.randomUUID().toString());
@@ -233,8 +235,6 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
                         databaseReference.child(notify.getNotificationId()).setValue(notify);
                         databaseReferenceAdd.updateChildren(trainerId);
                         databaseReferenceUserList.child( "/usersList/" + trainee.getUserId()).setValue(traineeMetadata);
-
-
                     }
                 }
             }
