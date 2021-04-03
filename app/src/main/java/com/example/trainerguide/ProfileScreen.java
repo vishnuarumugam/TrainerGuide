@@ -1025,9 +1025,10 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
 
                 case R.id.profileSubscriptionFeesDialogUpdate:
                     updateProfile("subscriptionFees", profileSubscriptionFeesDialogInput.getText().toString());
-
+                    break;
                 case R.id.profileSubscriptionDescDialogUpdate:
                     updateProfile("subscriptionDescription", profileSubscriptionDescDialogInput.getText().toString());
+                    break;
                 default:
                     break;
 
@@ -1134,8 +1135,9 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         String pattern = "dd-MM-yyyy";
         final SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
         HashMap hash= new HashMap();
-        User userBmValue = new User();
+        User userBmValue = user;
         HashMap<String,String> healthIssues = new HashMap<>();
+        Boolean save = true;
 
 
         if (userField.equals("dateOfBirth")|| userField.equals("lastModDttm")){
@@ -1150,34 +1152,65 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         }
 
         else if (userField.equals("weight") || userField.equals("height")){
-            Double userProfileValue = new Double(value);
-            hash.put(userField,userProfileValue);
-            Double userBmi = null;
-            Double userBmr = null;
+            if(value.length()>0) {
+                Double userProfileValue = new Double(value);
+                hash.put(userField, userProfileValue);
+                Double userBmi = null;
+                Double userBmr = null;
 
-            switch (userField){
+                switch (userField) {
 
-                case "weight":
-                    userBmi = userBmValue.bmiCalculation(userProfileValue, user.getHeight());
-                    userBmr = userBmValue.bmrCalculation(userProfileValue, user.getHeight(),user.getGender(),25);
-                    break;
-                case "height":
-                    userBmi = userBmValue.bmiCalculation(user.getWeight(), userProfileValue);
-                    userBmr = userBmValue.bmrCalculation(user.getWeight(), userProfileValue,user.getGender(),25);
-                    break;
-                default:
-                    break;
+                    case "weight":
+                        userBmi = userBmValue.bmiCalculation(userProfileValue, user.getHeight());
+                        userBmr = userBmValue.bmrCalculation(userProfileValue, user.getHeight());
+                        break;
+                    case "height":
+                        userBmi = userBmValue.bmiCalculation(user.getWeight(), userProfileValue);
+                        userBmr = userBmValue.bmrCalculation(user.getWeight(), userProfileValue);
+                        break;
+                    default:
+                        break;
+                }
+
+                hash.put("bmi", round(userBmi));
+                hash.put("bmr", round(userBmr));
             }
+            else{
+                switch (userField) {
 
-            hash.put("bmi",round(userBmi));
-            hash.put("bmr",round(userBmr));
+                    case "weight":
+                        profileWeightDialogInput.setError("Please enter a valid Weight");
+                        break;
+                    case "height":
+                        profileHeightDialogInput.setError("Please enter a valid Height");
+                        break;
+                    default:
+                        break;
+                }
+                save=false;
+            }
 
         }
 
         else if (userField.equals("foodType") || userField.equals("subscriptionType")  || userField.equals("experience") || userField.equals("subscriptionFees") || userField.equals("subscriptionDescription")){
 
             if (userField.equals("experience") || userField.equals("subscriptionFees")){
-                hash.put(userField, new Double(value));
+                if(value.length()>0){
+                    hash.put(userField, new Double(value));
+                }else{
+                    switch (userField) {
+
+                        case "experience":
+                            profileExperienceDialogInput.setError("Please enter a valid Experiance");
+                            break;
+                        case "subscriptionFees":
+                            profileSubscriptionFeesDialogInput.setError("Please enter a valid Fees");
+                            break;
+                        default:
+                            break;
+                    }
+                    save=false;
+                }
             }
             else{
                 hash.put(userField, value);
@@ -1242,8 +1275,10 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
             hash.put(userField, healthIssue);
         }
 
-        databaseReference.updateChildren(hash);
-        profileDialog.dismiss();
+        if(save) {
+            databaseReference.updateChildren(hash);
+            profileDialog.dismiss();
+        }
     }
 
 

@@ -129,7 +129,7 @@
                     style="@style/TextAppearance.AppCompat.Body1"/>
 
                 <EditText
-                    android:layout_width="wrap_content"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/profileWeightDialogInput"
                     android:theme="@style/DialogEditText"
@@ -198,7 +198,7 @@
 
 
                 <EditText
-                    android:layout_width="wrap_content"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/profileHeightDialogInput"
                     android:hint="Height"
@@ -269,7 +269,7 @@
 
 
                 <EditText
-                    android:layout_width="wrap_content"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/profileExperienceDialogInput"
                     android:hint="Experience"
@@ -785,7 +785,7 @@
 
 
                 <EditText
-                    android:layout_width="wrap_content"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/profileSubscriptionFeesDialogInput"
                     android:hint="Amount"

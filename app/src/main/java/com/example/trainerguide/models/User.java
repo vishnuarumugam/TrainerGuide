@@ -93,7 +93,7 @@ public class User {
 
 
 
-    
+
     public String getUserId() {
         return userId;
     }
@@ -111,7 +111,7 @@ public class User {
     }
 
     public void setBmr(Double weight, Double height,String gender, Integer age) {
-        Double bmi = bmrCalculation(weight,height,gender,age);
+        Double bmi = bmrCalculation(weight,height);
         this.bmi = bmi;
     }
 
@@ -208,13 +208,19 @@ public class User {
         this.bmrReport = bmrReport;
     }
 
-    public Double bmrCalculation(double weight, double height, String gender, Integer age){
+    public Double bmrCalculation(double weight, double height){
         Double weightBmr = weight*10;
         Double heightBmr = height*6.25;
+
+        Date currentDate = new Date();
+        int age = (int) Math.abs(currentDate.getYear() - this.dateOfBirth.getYear());
+        System.out.println(weight);
+        System.out.println(height);
+        System.out.println(age);
         Integer ageBmr = age*5;
         Double bmr = weightBmr + heightBmr - ageBmr;
 
-        if (gender.equals("Male")){
+        if (this.gender.equals("Male")){
             bmr = bmr + 5;
         }
         else {
