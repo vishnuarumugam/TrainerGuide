@@ -327,18 +327,6 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
                             e.printStackTrace();
                         }
                     }
-/*
-                    System.out.println("inside array");
-                    jsonObject1 = jsonArray.getJSONObject(jsonArray.length()-1);
-                    Trainer trainer = new Trainer();
-                    System.out.println("user"+jsonObject1.getString("userId"));
-                    //SetImage
-                    trainer.setImage(jsonObject1.getString("image"));
-                    trainer.setName(jsonObject1.getString("name"));
-                    //trainer.setDescription(jsonObject.getString("email"));
-                    trainer.setExperience(jsonObject1.getDouble("experience"));
-                    trainer.setUserId(jsonObject1.getString("userId"));
-                    //trainer.setFees(jsonObject.getString(""));*/
 
                     //Add Data
                     scroll=false;
@@ -358,19 +346,7 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
         catch (JSONException e1) {
             e1.printStackTrace();
         }
-
-
-        /*try {
-            if(jsonArray.length()-1 <0) {
-                System.out.println("startAt2");
-                JSONObject jsonObject = jsonArray.getJSONObject(jsonArray.length() - 1);
-                startAt = "\""+jsonObject.getString("userId")+"\"";
-
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }*/
-
+        
         //Initialize Adapter
         trainerAdapter = new TrainerAdapter(trainersList,TrainerScreen.this);
         //Set Adapter

@@ -24,6 +24,7 @@ public class User {
     private String image;
     private String email;
     private Long phoneNumber;
+    private String foodType;
 
     public Long getPhoneNumber() {
         return phoneNumber;
@@ -43,7 +44,7 @@ public class User {
     public User(String userId, String name, Double bmr, Double bmi, Date dateOfBirth, String gender,
                 Double weight, Double height, Date accCreateDttm, boolean isTrainer, Date lastModDttm,
                 String image, String email,Long phoneNumber, List<BmrProgress> bmrReport, HashMap<String,String> healthIssues,
-                HashMap<String,String> foodAllergy, HashMap<String,Notification> notifications) {
+                HashMap<String,String> foodAllergy, HashMap<String,Notification> notifications, String foodType) {
         this.userId = userId;
         this.name = name;
         this.bmr = bmr;
@@ -62,6 +63,7 @@ public class User {
         this.healthIssues = healthIssues;
         this.foodAllergy = foodAllergy;
         this.notifications = notifications;
+        this.foodType=foodType;
 
     }
 
@@ -84,6 +86,7 @@ public class User {
         this.healthIssues = new HashMap<>();
         this.foodAllergy = new HashMap<>();
         this.notifications = new HashMap<>();
+        this.foodType = "Not mentioned";
     }
     public User() {
     }
@@ -259,5 +262,11 @@ public class User {
         this.foodAllergy = foodAllergy;
     }
 
+    public String getFoodType() {
+        return foodType;
+    }
 
+    public void setFoodType(String foodType) {
+        this.foodType = foodType;
+    }
 }

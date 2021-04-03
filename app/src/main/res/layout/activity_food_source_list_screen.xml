@@ -11,14 +11,6 @@
 
         <include layout="@layout/common_navigator"/>
 
-
-        <androidx.core.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/scroll_view">
-
-
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -61,7 +53,18 @@
                         android:layout_gravity="center"
                         android:id="@+id/progress_bar"/>
 
-                    <androidx.recyclerview.widget.RecyclerView
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <androidx.core.widget.NestedScrollView
+                            android:layout_width="match_parent"
+                            android:layout_height="500dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+                                <androidx.recyclerview.widget.RecyclerView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginHorizontal="20dp"
@@ -69,31 +72,30 @@
                         android:id="@+id/foodListRecycler"
                         tools:listitem="@layout/food_item"
                         android:layout_marginTop="10dp" />
+                            </LinearLayout>
+                        </androidx.core.widget.NestedScrollView>
 
-                    <com.google.android.material.floatingactionbutton.FloatingActionButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/foodSourceAdd"
-                        android:backgroundTint="@color/yellow"
-                        app:layout_constraintEnd_toEndOf="@id/foodSourceLinear"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginVertical="10dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_gravity="right"
-                        android:src="@drawable/ic_add"
-                        android:layout_marginEnd="20dp"
-                        android:layout_marginBottom="20dp"
-                        tools:ignore="MissingConstraints" />
 
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/foodSourceAdd"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_gravity="right"
+                            android:layout_marginEnd="20dp"
+                            android:layout_marginTop="435dp"
+                            android:backgroundTint="@color/yellow"
+                            android:src="@drawable/ic_add"
+                            tools:ignore="MissingConstraints" />
+
+
+                    </RelativeLayout>
 
                 </LinearLayout>
 
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.core.widget.NestedScrollView>
-
 
 
 </androidx.drawerlayout.widget.DrawerLayout>

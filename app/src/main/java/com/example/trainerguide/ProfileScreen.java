@@ -658,24 +658,6 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         else if (profileType.equals("FoodType")){
             profileFoodTypeDialogTitleLin.setVisibility(View.VISIBLE);
             profileFoodTypeDialogTitle.setText("Food Type");
-
-
-           /* if (profileFoodType.getText().toString()!=null){
-                switch (profileFoodType.getText().toString()){
-                    case "Vegetarian":
-                        vegFoodType.setChecked(true);
-                        break;
-                    case "Eggetarian":
-                        vegEggFoodType.setChecked(true);
-                        break;
-                    case "Non-Vegetarian":
-                        nonVegFoodType.setChecked(true);
-                        break;
-                    default:
-                        break;
-                }
-            }*/
-
             profileDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             profileDialog.show();
         }
@@ -757,7 +739,22 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                         .fit()
                         .centerCrop()
                         .into(profileImage);
-
+                profileFoodType.setText(user.getFoodType());
+                if (user.getFoodType()!=null){
+                        switch (user.getFoodType()){
+                            case "Vegetarian":
+                                vegFoodType.setChecked(true);
+                                break;
+                            case "Eggetarian":
+                                vegEggFoodType.setChecked(true);
+                                break;
+                            case "Non-Vegetarian":
+                                nonVegFoodType.setChecked(true);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
                 //Health Issue Recycler View Data
                 if(user.getHealthIssues()!=null) {
                     healthItems.clear();
@@ -860,7 +857,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                 }
                 else{
                     Trainee trainee = snapshot.getValue(Trainee.class);
-                    profileFoodType.setText(trainee.getFoodType());
+
                     //String trainerName = GetTrainerName(trainee.getTrainerId());
                     if (trainee.getTrainerId()!=null){
                         GetTrainerName(trainee.getTrainerId());
