@@ -20,14 +20,14 @@ public class Trainer extends User {
         }
     }
 
-    public Trainer(String userId, String name, Double bmr, Double bmi, Date dateOfBirth, String gender, Double weight, Double height, Date accCreateDttm, boolean isTrainer, Date lastModDttm, String image, String email, List<BmrProgress> bmrReport, HashMap<String,UserMetaData> usersList,HashMap<String,String> healthIssues, HashMap<String,String> foodAllergy, String foodType, String subscriptionType, String description) {
+    public Trainer(String userId, String name,Long phoneNumber, Double bmr, Double bmi, Date dateOfBirth, String gender, Double weight, Double height, Date accCreateDttm, boolean isTrainer, Date lastModDttm, String image, String email, List<BmrProgress> bmrReport, HashMap<String,UserMetaData> usersList,HashMap<String,String> healthIssues, HashMap<String,String> foodAllergy, String foodType, String subscriptionType, String description) {
         //super(userId, name, bmr,bmi, dateOfBirth, gender, weight, height, accCreateDttm, isTrainer, lastModDttm, image, email, bmrReport,new HashMap<String, String>(),new HashMap<String, String>(),new HashMap<String, Notification>(), foodType, subscriptionType, description);
-        super(userId, name, bmr,bmi, dateOfBirth, gender, weight, height, accCreateDttm, isTrainer, lastModDttm, image, email, bmrReport,healthIssues,foodAllergy,new HashMap<String, Notification>());
+        super(userId, name, bmr,bmi, dateOfBirth, gender, weight, height, accCreateDttm, isTrainer, lastModDttm, image, email,phoneNumber, bmrReport,healthIssues,foodAllergy,new HashMap<String, Notification>());
         this.usersList = usersList;
     }
 
-    public Trainer(String userId, String name, String gender, Date accCreateDttm, boolean isTrainer, Date lastModDttm, String image, String email) {
-        super(userId, name, gender, accCreateDttm, isTrainer, lastModDttm, image, email);
+    public Trainer(String userId, String name, String gender, Date accCreateDttm, boolean isTrainer, Date lastModDttm, String image, String email, Long phoneNumber) {
+        super(userId, name, gender, accCreateDttm, isTrainer, lastModDttm, image, email, phoneNumber);
         this.usersList = new HashMap<>();
     }
 

@@ -33,6 +33,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -209,6 +210,11 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
                         trainee.setTrainerId(fAuth.getCurrentUser().getUid());
                         HashMap<String, Object> trainerId = new HashMap<>();
                         trainerId.put("trainerId", fAuth.getCurrentUser().getUid());
+                        Date currentDate = new Date();
+                        // convert date to calendar
+                        Calendar c = Calendar.getInstance();
+                        c.setTime(currentDate);
+                        //trainerId.put("subscriptionEndDate", c.add(Calendar.DAY_OF_MONTH,30));
 
                         Notification notify = new Notification();
                         notify.setNotificationId(UUID.randomUUID().toString());

@@ -23,6 +23,16 @@ public class User {
     private Double bmi;
     private String image;
     private String email;
+    private Long phoneNumber;
+
+    public Long getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(Long phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
     private List<BmrProgress> bmrReport;
     private HashMap<String,String> healthIssues;
     private HashMap<String,String> foodAllergy;
@@ -32,7 +42,7 @@ public class User {
 
     public User(String userId, String name, Double bmr, Double bmi, Date dateOfBirth, String gender,
                 Double weight, Double height, Date accCreateDttm, boolean isTrainer, Date lastModDttm,
-                String image, String email, List<BmrProgress> bmrReport, HashMap<String,String> healthIssues,
+                String image, String email,Long phoneNumber, List<BmrProgress> bmrReport, HashMap<String,String> healthIssues,
                 HashMap<String,String> foodAllergy, HashMap<String,Notification> notifications) {
         this.userId = userId;
         this.name = name;
@@ -47,6 +57,7 @@ public class User {
         this.image = image;
         this.email = email;
         this.bmi = bmi;
+        this.phoneNumber=phoneNumber;
         this.bmrReport = bmrReport;
         this.healthIssues = healthIssues;
         this.foodAllergy = foodAllergy;
@@ -54,7 +65,7 @@ public class User {
 
     }
 
-    public User(String userId, String name, String gender, Date accCreateDttm, boolean isTrainer, Date lastModDttm, String image, String email) {
+    public User(String userId, String name, String gender, Date accCreateDttm, boolean isTrainer, Date lastModDttm, String image, String email, Long phoneNumber) {
         this.userId = userId;
         this.name = name;
         this.bmr = 0.0;
@@ -68,6 +79,7 @@ public class User {
         this.lastModDttm = lastModDttm;
         this.image = image;
         this.email = email;
+        this.phoneNumber=phoneNumber;
         this.bmrReport = new ArrayList<>();
         this.healthIssues = new HashMap<>();
         this.foodAllergy = new HashMap<>();

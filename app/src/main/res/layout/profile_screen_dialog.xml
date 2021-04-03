@@ -128,14 +128,15 @@
                     android:textStyle="bold"
                     style="@style/TextAppearance.AppCompat.Body1"/>
 
-                    <EditText
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/profileWeightDialogInput"
-                        android:theme="@style/DialogEditText"
-                        android:textAlignment="center"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="15dp"/>
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/profileWeightDialogInput"
+                    android:theme="@style/DialogEditText"
+                    android:textAlignment="center"
+                    android:inputType="numberDecimal"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="15dp"/>
 
                 <com.google.android.material.button.MaterialButton
                     android:layout_width="wrap_content"
@@ -201,6 +202,7 @@
                     android:id="@+id/profileHeightDialogInput"
                     android:hint="Height"
                     android:theme="@style/DialogEditText"
+                    android:inputType="numberDecimal"
                     android:textAlignment="center"
                     android:layout_gravity="center"
                     android:layout_marginTop="15dp"/>
@@ -269,6 +271,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/profileExperienceDialogInput"
                     android:hint="Experience"
+                    android:inputType="numberDecimal"
                     android:theme="@style/DialogEditText"
                     android:textAlignment="center"
                     android:layout_gravity="center"
@@ -475,26 +478,26 @@
 
                 </RelativeLayout>
 
-                    <com.google.android.material.textfield.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:counterEnabled="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginHorizontal="15dp"
+                    app:counterMaxLength="30">
+
+                    <EditText
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:counterEnabled="true"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginHorizontal="15dp"
-                        app:counterMaxLength="30">
+                        android:layout_height="match_parent"
+                        android:id="@+id/otherFoodAllergy"
+                        android:hint="Other"
+                        android:maxLength="30"
+                        android:background="@drawable/round_shape"
+                        android:textColorHint="@color/black">
 
-                        <EditText
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:id="@+id/otherFoodAllergy"
-                            android:hint="Other"
-                            android:maxLength="30"
-                            android:background="@drawable/round_shape"
-                            android:textColorHint="@color/black">
+                    </EditText>
 
-                        </EditText>
-
-                    </com.google.android.material.textfield.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
 
                 <com.google.android.material.button.MaterialButton
@@ -784,6 +787,7 @@
                     android:id="@+id/profileSubscriptionFeesDialogInput"
                     android:hint="Amount"
                     android:theme="@style/DialogEditText"
+                    android:inputType="numberDecimal"
                     android:textAlignment="center"
                     android:layout_gravity="center"
                     android:layout_marginTop="15dp"/>
@@ -801,14 +805,14 @@
 
             </LinearLayout>
 
-            <!-- Subscription Fees Dialog-->
+            <!-- Subscription Desc Dialog-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:id="@+id/profileSubscriptionDescDialogTitleLin"
                 android:layout_marginTop="25dp"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:layout_marginBottom="25dp">
 
                 <ImageView
@@ -869,7 +873,7 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-              <com.google.android.material.button.MaterialButton
+                <com.google.android.material.button.MaterialButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"

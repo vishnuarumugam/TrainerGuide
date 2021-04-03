@@ -39,7 +39,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:src="@mipmap/profile"/>
-                    <!--android:scaleType="fitCenter"/>-->
+                <!--android:scaleType="fitCenter"/>-->
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -535,22 +535,22 @@
                                         android:visibility="gone"
                                         android:layout_marginLeft="30dp"
                                         android:layout_below="@+id/profileRecyclerFoodIssues">
-                                            <TextView
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-                                                android:id="@+id/foodAllergyOtherLabel"
-                                                android:textStyle="bold"
-                                                android:textSize="16sp"
-                                                android:text="Other : " />
-                                            <TextView
-                                                android:layout_width="match_parent"
-                                                android:layout_height="wrap_content"
-                                                android:layout_toRightOf="@+id/foodAllergyOtherLabel"
-                                                android:id="@+id/foodAllergyOther"
-                                                android:textSize="16sp"/>
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:id="@+id/foodAllergyOtherLabel"
+                                            android:textStyle="bold"
+                                            android:textSize="16sp"
+                                            android:text="Other : " />
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_toRightOf="@+id/foodAllergyOtherLabel"
+                                            android:id="@+id/foodAllergyOther"
+                                            android:textSize="16sp"/>
                                     </RelativeLayout>
 
-                            </RelativeLayout>
+                                </RelativeLayout>
 
                             </RelativeLayout>
 
@@ -869,12 +869,12 @@
 
                 </LinearLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </LinearLayout>
+        </LinearLayout>
 
 
-</ScrollView>
+    </ScrollView>
 
 
 </androidx.drawerlayout.widget.DrawerLayout>

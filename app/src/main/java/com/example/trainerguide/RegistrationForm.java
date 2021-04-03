@@ -14,6 +14,8 @@ import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.trainerguide.models.Trainee;
@@ -41,6 +43,8 @@ public class RegistrationForm extends AppCompatActivity{
 
     private EditText name, email, mobileNumber, password, confirmPassword;
     private TextInputLayout txtLayPassword, txtLayConPassword;
+    private RadioGroup radioGroup;
+    private RadioButton radioButton;
     private Button registerButton;
     private static String userId;
     UserInputValidation userInputValidation;
@@ -70,6 +74,8 @@ public class RegistrationForm extends AppCompatActivity{
         txtLayPassword = findViewById(R.id.txtLayRgrPassword_Input);
         txtLayConPassword = findViewById(R.id.txtLayRgrConPassword_Input);
         storageReference = FirebaseStorage.getInstance().getReference("FitnessGuide");
+        radioGroup=(RadioGroup)findViewById(R.id.radioGroup);
+        radioGroup.check(R.id.radioBtnMale);
 
         fAuth = FirebaseAuth.getInstance();
 
@@ -99,7 +105,8 @@ public class RegistrationForm extends AppCompatActivity{
 
                 if (RegistrationValidation()) {
                     Toast.makeText(RegistrationForm.this, "In", Toast.LENGTH_SHORT).show();
-
+                    int selectedId=radioGroup.getCheckedRadioButtonId();
+                    radioButton=(RadioButton)findViewById(selectedId);
                     // Firebase Authentication User Creation
                     fAuth.createUserWithEmailAndPassword(email.getText().toString().trim(),password.getText().toString().trim())
                             .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
@@ -108,10 +115,10 @@ public class RegistrationForm extends AppCompatActivity{
                                     //Upload Details in Firebase FirstTime
                                     databaseReference = FirebaseDatabase.getInstance().getReference();
                                     userId = fAuth.getCurrentUser().getUid();
-
+                                    System.out.println(mobileNumber.getText().toString());
                                     // Upload Profile Picture into FireBase Database with Profile Picture metadata
                                     if (IsTrainerProfile) {
-                                        Trainer trainer = new Trainer(userId, name.getText().toString(), "Male", Calendar.getInstance().getTime(), IsTrainerProfile, Calendar.getInstance().getTime(), "image", email.getText().toString());
+                                        Trainer trainer = new Trainer(userId, name.getText().toString(), radioButton.getText().toString(), Calendar.getInstance().getTime(), IsTrainerProfile, Calendar.getInstance().getTime(), "image", email.getText().toString(),Long.parseLong(mobileNumber.getText().toString()));
                                         /*List<String> healthIssues = new ArrayList<>();
                                         healthIssues.add("BloodPressure");
                                         healthIssues.add("Cholestrol");
@@ -123,7 +130,7 @@ public class RegistrationForm extends AppCompatActivity{
 
                                     } else {
                                         System.out.println(IsTrainerProfile);
-                                        Trainee trainee = new Trainee(userId, name.getText().toString(), "Male", Calendar.getInstance().getTime(), IsTrainerProfile, Calendar.getInstance().getTime(), "image", email.getText().toString(),null);
+                                        Trainee trainee = new Trainee(userId, name.getText().toString(), radioButton.getText().toString(), Calendar.getInstance().getTime(), IsTrainerProfile, Calendar.getInstance().getTime(), "image", email.getText().toString(),null,Long.parseLong(mobileNumber.getText().toString()));
                                         databaseReference.child("User").child(userId).setValue(trainee);
 
                                         // Upload Profile Picture into FireBase Storage

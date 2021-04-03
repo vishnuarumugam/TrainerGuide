@@ -115,12 +115,14 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:theme="@style/RadioButtonStyle"
+            android:id="@+id/radioGroup"
             android:orientation="horizontal">
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
+                android:id="@+id/radioBtnMale"
                 android:text="Male"
                 android:textStyle="bold"
                 android:textColor="@color/white" />
@@ -128,6 +130,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
+                android:id="@+id/radioBtnFemale"
                 android:padding="10dp"
                 android:text="Female"
                 android:textStyle="bold"

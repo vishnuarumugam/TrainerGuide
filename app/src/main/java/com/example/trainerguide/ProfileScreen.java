@@ -605,7 +605,15 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
             profileDobDialogTitleLin.setVisibility(View.VISIBLE);
             profileDobDialogUpdate.setClickable(false);
             profileDobDialogTitle.setText("Date of birth");
+            profileDob.getText().toString();
+            String pattern = "dd-MM-yyyy";
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+            int day = Integer.parseInt(profileDob.getText().toString().substring(0,2));
+            int month = Integer.parseInt(profileDob.getText().toString().substring(3,5)) - 1;
+            int year = Integer.parseInt(profileDob.getText().toString().substring(6,10));
+
             profileDobDialogDatePicker.setMaxDate(currentDate.getTime());
+            profileDobDialogDatePicker.updateDate(year,month,day);
             profileDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 profileDobDialogDatePicker.setOnDateChangedListener(new DatePicker.OnDateChangedListener() {
@@ -613,7 +621,6 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                     public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         int  month = monthOfYear + 1;
                         userProfileUpdateValue = dayOfMonth +"-" + month +"-"+ year;
-                        System.out.println(dayOfMonth +"-" + month +"-"+ year);
                         profileDobDialogUpdate.setClickable(true);
 
                     }
@@ -651,6 +658,24 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         else if (profileType.equals("FoodType")){
             profileFoodTypeDialogTitleLin.setVisibility(View.VISIBLE);
             profileFoodTypeDialogTitle.setText("Food Type");
+
+
+           /* if (profileFoodType.getText().toString()!=null){
+                switch (profileFoodType.getText().toString()){
+                    case "Vegetarian":
+                        vegFoodType.setChecked(true);
+                        break;
+                    case "Eggetarian":
+                        vegEggFoodType.setChecked(true);
+                        break;
+                    case "Non-Vegetarian":
+                        nonVegFoodType.setChecked(true);
+                        break;
+                    default:
+                        break;
+                }
+            }*/
+
             profileDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             profileDialog.show();
         }
@@ -810,6 +835,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                     }
                 }
 
+
                 if (userType.equals("Trainer")){
                     Trainer trainer = snapshot.getValue(Trainer.class);
                     if (trainer.getExperience() != null){
@@ -845,7 +871,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                     }
                     profileSubscriptionType.setText(trainee.getSubscriptionType());
 
-                    if (trainee.getFoodType()!=null){
+                    /*if (trainee.getFoodType()!=null){
                         switch (trainee.getFoodType()){
                             case "Vegetarian":
                                 vegFoodType.setChecked(true);
@@ -859,7 +885,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                             default:
                                 break;
                         }
-                    }
+                    }*/
                     if (trainee.getSubscriptionType()!=null){
                         switch (trainee.getSubscriptionType()){
                             case "Weight Loss":
@@ -1156,7 +1182,10 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
             if (userField.equals("experience") || userField.equals("subscriptionFees")){
                 hash.put(userField, new Double(value));
             }
-            hash.put(userField, value);
+            else{
+                hash.put(userField, value);
+            }
+
         }
 
         else if (userField.equals("foodAllergy")){
