@@ -118,7 +118,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
     //ProfileScreen Variables
     private ImageButton profileImage;
     MaterialCardView accCardView, personalInfoCardView, foodInfoCardView, healthInfoCardView, subscriptionInfoCardView, profileActionView;
-    TextView profileAccDrop, profilePersonalInfoDrop, profileFoodInfoDrop, profileWeight, profileEmailId, profileDob, profileHeight, profileFoodType, profileHealthInfoDrop, foodAllergyOther, healthIssuesOther, profileExperience, profileSubscriptionInfoDrop, profileSubscriptionType, profileSubscriptionFees, profileSubscriptionDescription, profileSubscriptionTrainer, requestTrainerNavText, foodChartNavText;
+    TextView profileAccDrop, profilePersonalInfoDrop, profileFoodInfoDrop, profileWeight,profilePhoneNumber, profileEmailId, profileDob, profileHeight, profileFoodType, profileHealthInfoDrop, foodAllergyOther, healthIssuesOther, profileExperience, profileSubscriptionInfoDrop, profileSubscriptionType, profileSubscriptionFees, profileSubscriptionDescription, profileSubscriptionTrainer, requestTrainerNavText, foodChartNavText;
     RelativeLayout accRelativeCollapse, personalRelativeCollapse, foodInfoRelativeCollapse, dobRelativeLay, healthInfoRelativeCollapse, weightRelativeLay, heightRelativeLay, foodTypeRelativeLay, foodAllergyRelativeLay, healthIssuesRelativeLay, experienceRelativeLay, subscriptionInfoRelativeCollapse, subscriptionTypeRelativeLay, subscriptionTrainerRelativeLay, subscriptionFeesRelativeLay, subscriptionDescriptionRelativeLay;
 
     private String userId;
@@ -127,6 +127,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
     private User user;
     private String userType;
     private Boolean readonly = false;
+    private Boolean extendReadonly = false;
 
 
     //Common variables
@@ -193,6 +194,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         profileHeight = findViewById(R.id.profileHeight);
         profileExperience = findViewById(R.id.profileExperience);
         profileEmailId = findViewById(R.id.profileEmailId);
+        profilePhoneNumber= findViewById(R.id.profilePhoneNumber);
         profileDob = findViewById(R.id.profileDob);
         profileSubscriptionType = findViewById(R.id.profileSubscriptionType);
         profileSubscriptionTrainer = findViewById(R.id.profileSubscriptionTrainer);
@@ -257,8 +259,9 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
             userType = sp.getString("ProfileType", null);
             userId = sp.getString("userId", null);
             if(!(userType.equals("Trainer"))){
-                extend.setVisibility(View.VISIBLE);
-                txtSubscriptionDate.setVisibility(View.VISIBLE);
+                extendReadonly=true;
+                /*extend.setVisibility(View.VISIBLE);
+                txtSubscriptionDate.setVisibility(View.VISIBLE);*/
             }
         }
 
@@ -294,7 +297,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
             @Override
             public void onClick(View v) {
                 DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(path);
-                DatabaseReference trainerDatabaseReference = FirebaseDatabase.getInstance().getReference("Trainer/");
+
                 databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -306,7 +309,10 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                         notify.setNotificationType("Extend");
                         notify.setTrainer(false);
                         notify.setUserId(trainee.getUserId());
-                        trainerDatabaseReference.child(trainee.getTrainerId()+"/Notification").child(notify.getNotificationId()).setValue(notify);
+                        DatabaseReference trainerDatabaseReference = FirebaseDatabase.getInstance().getReference("Trainer/"+trainee.getTrainerId()+"/Notification/"+notify.getNotificationId());
+
+                        trainerDatabaseReference.setValue(notify);
+                        //startActivity(new Intent(ProfileScreen.this,ProfileScreen.class));
                     }
 
                     @Override
@@ -771,6 +777,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                 profileWeight.setText(user.getWeight().toString());
                 profileHeight.setText(user.getHeight().toString());
                 profileEmailId.setText(user.getEmail());
+                profilePhoneNumber.setText(user.getPhoneNumber().toString());
                 profileDob.setText(simpleDateFormat.format(user.getDateOfBirth()));
                 Picasso.get().load(user.getImage())
                         .placeholder(R.drawable.ic_share)
@@ -877,13 +884,13 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                         profileExperience.setText(trainer.getExperience().toString());
                     }
                     else{
-                        profileExperience.setText("Not mentioned");
+                        profileExperience.setText("0.0");
                     }
                     if (trainer.getSubscriptionFees() != null){
-                        profileSubscriptionFees.setText(trainer.getSubscriptionFees());
+                        profileSubscriptionFees.setText(trainer.getSubscriptionFees().toString());
                     }
                     else{
-                        profileSubscriptionFees.setText("Not mentioned");
+                        profileSubscriptionFees.setText("0.0");
                     }
                     if (trainer.getSubscriptionDescription() != null){
                         profileSubscriptionDescription.setText(trainer.getSubscriptionDescription().toString());
@@ -895,7 +902,11 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                 }
                 else{
                     Trainee trainee = snapshot.getValue(Trainee.class);
-                    txtSubscriptionDate.setText(trainee.getSubscriptionEndDate().toString());
+                    if(extendReadonly && trainee.getTrainerId()!= null && trainee.getTrainerId()!="") {
+                        extend.setVisibility(View.VISIBLE);
+                        txtSubscriptionDate.setVisibility(View.VISIBLE);
+                        txtSubscriptionDate.setText(trainee.getSubscriptionEndDate().toString());
+                    }
                     //String trainerName = GetTrainerName(trainee.getTrainerId());
                     if (trainee.getTrainerId()!=null){
                         GetTrainerName(trainee.getTrainerId());
@@ -1180,6 +1191,8 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
 
         if (userField.equals("dateOfBirth")|| userField.equals("lastModDttm")){
             Date dateUpdate = null;
+            Double userBmi = null;
+            Double userBmr = null;
 
             try {
                 dateUpdate = simpleDateFormat.parse(value);
@@ -1187,6 +1200,12 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                 e.printStackTrace();
             }
             hash.put(userField,dateUpdate);
+            databaseReference.updateChildren(hash);
+            userBmi = userBmValue.bmiCalculation(user.getWeight(), user.getHeight());
+            userBmr = userBmValue.bmrCalculation(user.getWeight(), user.getHeight());
+
+            hash.put("bmi", new Double(round(userBmi)));
+            hash.put("bmr", new Double(round(userBmr)));
         }
 
         else if (userField.equals("weight") || userField.equals("height")){
@@ -1210,8 +1229,8 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                         break;
                 }
 
-                hash.put("bmi", round(userBmi));
-                hash.put("bmr", round(userBmr));
+                hash.put("bmi", new Double(round(userBmi)));
+                hash.put("bmr", new Double(round(userBmr)));
             }
             else{
                 switch (userField) {
@@ -1239,7 +1258,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                     switch (userField) {
 
                         case "experience":
-                            profileExperienceDialogInput.setError("Please enter a valid Experiance");
+                            profileExperienceDialogInput.setError("Please enter a valid Experience");
                             break;
                         case "subscriptionFees":
                             profileSubscriptionFeesDialogInput.setError("Please enter a valid Fees");
@@ -1249,6 +1268,17 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                     }
                     save=false;
                 }
+            }
+            else if (userField.equals("subscriptionDescription")){
+
+                if(value.length()>0){
+                    hash.put(userField, value);
+                }
+                else {
+                    profileSubscriptionDescDialogInput.setError("Please enter a valid Description");
+                    save=false;
+                }
+
             }
             else{
                 hash.put(userField, value);
@@ -1320,8 +1350,5 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
     }
 
 
-    public void ExtendSubscription(Date subscriptionEndDate, int DaysToExtend){
-
-    }
 
 }

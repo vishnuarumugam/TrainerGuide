@@ -16,8 +16,8 @@ public class AlertDialogBox extends AppCompatDialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Multiple Trainer Alert !!!").setMessage("msg")
-                .setNegativeButton("Seri :(", new DialogInterface.OnClickListener() {
+        builder.setTitle("Multiple Trainer Alert !!!").setMessage("You cannot be under two trainers")
+                .setNegativeButton("OKAY", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         //  Action for 'NO' Button
                         dialog.cancel();

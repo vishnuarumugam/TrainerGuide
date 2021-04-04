@@ -17,6 +17,7 @@ import android.preference.PreferenceManager;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.trainerguide.models.Notification;
@@ -64,7 +65,9 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
     private DatabaseReference databaseReference;
     private FirebaseAuth fAuth;
 
+    //Common variables
     Intent intent;
+    TextView noNotificationText;
 
 
     @Override
@@ -87,6 +90,10 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
         drawerLayout = findViewById(R.id.notification_drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.tool_bar);
+
+        //Common variables
+        noNotificationText = findViewById(R.id.noNotificationText);
+        noNotificationText.setVisibility(View.GONE);
 
         //Toolbar customisation
         setSupportActionBar(toolbar);
@@ -152,6 +159,7 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot:snapshot.getChildren()) {
+                    noNotificationText.setVisibility(View.GONE);
                     Notification notification = dataSnapshot.getValue(Notification.class);
                     if(notification.getUserId()!=null){
                     notificationsList.add(notification);}
@@ -164,6 +172,10 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
 
             }
         });
+
+        if (notificationsList.isEmpty()){
+            noNotificationText.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -191,17 +203,17 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
 
     @Override
     public void onApproveclick(int position) {
-        final Notification notification = notificationsList.get(position);
-        final DatabaseReference databaseReferenceAdd = FirebaseDatabase.getInstance().getReference("User/"+ notification.getUserId());
-        final DatabaseReference databaseReferenceUserList = FirebaseDatabase.getInstance().getReference(userPath);
-        final DatabaseReference databaseReferenceNotification = FirebaseDatabase.getInstance().getReference("Trainer"+ "/" + fAuth.getCurrentUser().getUid() + "/");
+        Notification notification = notificationsList.get(position);
+        DatabaseReference databaseReferenceAdd = FirebaseDatabase.getInstance().getReference("User/"+ notification.getUserId());
+        DatabaseReference databaseReferenceUserList = FirebaseDatabase.getInstance().getReference(userPath);
+        DatabaseReference databaseReferenceNotification = FirebaseDatabase.getInstance().getReference("Trainer"+ "/" + fAuth.getCurrentUser().getUid() + "/");
 
         databaseReferenceAdd.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Trainee trainee = snapshot.getValue(Trainee.class);
                 System.out.println("******()*****"+trainee.getTrainerId());
-                if(trainee.getTrainerId() == null || trainee.getTrainerId().equals("") ) {
+                if((trainee.getTrainerId() == null || trainee.getTrainerId().equals("")) ) {
                     if (trainee.isTrainer() == false) {
                         if(notification.getNotificationType().equals("Request")) {
                             UserMetaData traineeMetadata = new UserMetaData();
@@ -237,46 +249,47 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
                             databaseReferenceAdd.updateChildren(trainerId);
                             databaseReferenceUserList.child("/usersList/" + trainee.getUserId()).setValue(traineeMetadata);
                         }
-                        if(notification.getNotificationType().equals("Extend")){
-                            DatabaseReference databaseReferenceUserNotification = FirebaseDatabase.getInstance().getReference("User/"+ notification.getUserId()+"/Notification");
-                            HashMap hash= new HashMap();
-                            Date currentDate = trainee.getSubscriptionEndDate();
-                            // convert date to calendar
-                            Calendar c = Calendar.getInstance();
-                            c.setTime(currentDate);
 
-                            c.add(Calendar.DATE,30);
-                            hash.put("subscriptionEndDate",c.getTime());
-
-
-                            Notification notify = new Notification();
-                            notify.setNotificationId(UUID.randomUUID().toString());
-                            notify.setNotification(trainee.getName() + " has been extended as your Trainee for 30 Days");
-                            notify.setAddedDate(Calendar.getInstance().getTime());
-                            notify.setNotificationType("");
-                            notify.setTrainer(false);
-                            notify.setUserId(trainee.getUserId());
-
-                            Notification notifyTrainee = new Notification();
-                            notify.setNotificationId(UUID.randomUUID().toString());
-                            notify.setNotification(" Your subscription has been extended for 30 Days");
-                            notify.setAddedDate(Calendar.getInstance().getTime());
-                            notify.setNotificationType("");
-                            notify.setTrainer(false);
-                            notify.setUserId(trainee.getUserId());
-
-
-                            databaseReference.child(notify.getNotificationId()).setValue(notify);
-                            databaseReferenceUserNotification.child(notify.getNotificationId()).setValue(notify);
-                            databaseReferenceAdd.updateChildren(hash);
-                        }
                     }
+                }
+                if(notification.getNotificationType().equals("Extend")){
+                    DatabaseReference databaseReferenceUserNotification = FirebaseDatabase.getInstance().getReference("User/"+ notification.getUserId()+"/Notification");
+                    HashMap hash= new HashMap();
+                    Date currentDate = trainee.getSubscriptionEndDate();
+                    // convert date to calendar
+                    Calendar c = Calendar.getInstance();
+                    c.setTime(currentDate);
+
+                    c.add(Calendar.DATE,30);
+                    hash.put("subscriptionEndDate",c.getTime());
+
+
+                    Notification notify = new Notification();
+                    notify.setNotificationId(UUID.randomUUID().toString());
+                    notify.setNotification(trainee.getName() + " has been extended as your Trainee for 30 Days");
+                    notify.setAddedDate(Calendar.getInstance().getTime());
+                    notify.setNotificationType("");
+                    notify.setTrainer(false);
+                    notify.setUserId(trainee.getUserId());
+
+                    Notification notifyTrainee = new Notification();
+                    notify.setNotificationId(UUID.randomUUID().toString());
+                    notify.setNotification(" Your subscription has been extended for 30 Days");
+                    notify.setAddedDate(Calendar.getInstance().getTime());
+                    notify.setNotificationType("");
+                    notify.setTrainer(false);
+                    notify.setUserId(trainee.getUserId());
+
+
+                    databaseReference.child(notify.getNotificationId()).setValue(notify);
+                    databaseReferenceUserNotification.child(notify.getNotificationId()).setValue(notify);
+                    databaseReferenceAdd.updateChildren(hash);
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                System.out.println("failed" + error.getDetails());
             }
         });
 
@@ -328,7 +341,7 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
                 for (DataSnapshot postsnapshot :snapshot.getChildren()) {
                     postsnapshot.getRef().removeValue();
                     notificationsList.remove(position);
-                    notificationAdapter.notifyDataSetChanged();
+                    //notificationAdapter.notifyDataSetChanged();
                 }
             }
 
@@ -337,6 +350,10 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
 
             }
         });
+        notificationAdapter.notifyDataSetChanged();
+        if (notificationsList.size()==1){
+            noNotificationText.setVisibility(View.VISIBLE);
+        }
 
         /*notificationsList = new ArrayList<>();
         PopulateNotifications();

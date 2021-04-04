@@ -17,6 +17,7 @@ import android.preference.PreferenceManager;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.trainerguide.models.Trainer;
@@ -69,6 +70,7 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
 
     //Common variables
     private Intent intent;
+    private TextView noTraineeText;
 
     //Pagination
     NestedScrollView nestedScrollView;
@@ -81,6 +83,10 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trainees_screen);
+
+        //Common variables
+        noTraineeText = findViewById(R.id.noTraineeText);
+        noTraineeText.setVisibility(View.GONE);
 
         //Pagination
         nestedScrollView = findViewById(R.id.scroll_view);
@@ -215,7 +221,7 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
                     // When response is successful and not empty
                     //Hide progress bar
                     progressBar.setVisibility(View.GONE);
-
+                    noTraineeText.setVisibility(View.GONE);
                     try {
                         JSONObject object = new JSONObject(response.body());
 
@@ -232,6 +238,7 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
                         parseResult(jsonArray);
                     } catch (JSONException e) {
                         e.printStackTrace();
+                        noTraineeText.setVisibility(View.VISIBLE);
                     }
                 }
             }
@@ -325,6 +332,7 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
 
             }
 
+
         }
         catch (JSONException e1) {
             e1.printStackTrace();
@@ -382,6 +390,7 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
 
             }
         });
+
         traineeRecycler.setAdapter(traineeAdapter);
     }
 

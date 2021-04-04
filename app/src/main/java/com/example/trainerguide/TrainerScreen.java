@@ -19,6 +19,7 @@ import android.preference.PreferenceManager;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.trainerguide.models.Trainee;
@@ -56,7 +57,9 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
     private Toolbar toolbar;
     private MenuItem profileMenu, logoutMenu, shareMenu, ratingMenu, traineeMenu;
 
+    //Common variables
     Intent intent;
+    TextView noTrainerText;
 
     //Recycler view variables
     private RecyclerView trainerRecycler;
@@ -85,6 +88,10 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
         drawerLayout = findViewById(R.id.trainer_drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.tool_bar);
+
+        //Common variables
+        noTrainerText = findViewById(R.id.noTrainerText);
+        noTrainerText.setVisibility(View.GONE);
 
         //Toolbar customisation
         setSupportActionBar(toolbar);
@@ -224,6 +231,7 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
                     // When response is successful and not empty
                     //Hide progress bar
                     progressBar.setVisibility(View.GONE);
+                    noTrainerText.setVisibility(View.GONE);
 
                     try {
                         JSONObject object = new JSONObject(response.body());
@@ -245,6 +253,7 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
                         parseResult(jsonArray);
                     } catch (JSONException e) {
                         e.printStackTrace();
+                        noTrainerText.setVisibility(View.VISIBLE);
                     }
                 }
             }

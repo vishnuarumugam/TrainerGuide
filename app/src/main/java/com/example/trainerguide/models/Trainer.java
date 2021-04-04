@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Trainer extends User {
     private HashMap<String,UserMetaData> usersList;
-    private String subscriptionFees;
+    private Double subscriptionFees;
     private String subscriptionDescription;
     private Double experience;
 
@@ -34,11 +34,11 @@ public class Trainer extends User {
     public Trainer() {
     }
     
-    public String getSubscriptionFees() {
+    public Double getSubscriptionFees() {
         return subscriptionFees;
     }
 
-    public void setSubscriptionFees(String subscriptionFees) {
+    public void setSubscriptionFees(Double subscriptionFees) {
         this.subscriptionFees = subscriptionFees;
     }
 

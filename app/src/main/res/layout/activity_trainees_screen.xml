@@ -31,6 +31,17 @@
 
                 <include layout="@layout/common_toolbar"/>
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/noTraineeText"
+                    android:text="No Trainees under you"
+                    android:visibility="gone"
+                    android:textStyle="bold"
+                    android:layout_marginTop="30dp"
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_gravity="center"/>
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
