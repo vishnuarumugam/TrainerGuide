@@ -106,7 +106,7 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
 
         //Menu Item variables
         profileMenu = findViewById(R.id.nav_profile);
-        traineeMenu = findViewById(R.id.nav_trainees);
+//        traineeMenu = findViewById(R.id.nav_trainees);
 
         //Method to re-direct the page from menu
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -119,16 +119,16 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
                         startActivity(intent);
                         finish();
                         break;
-                    case R.id.nav_trainees:
-                        break;
+                    /*case R.id.nav_trainees:
+                        break;*/
                     case R.id.nav_notification:
                         startActivity(new Intent(TraineesScreen.this,NotificationScreen.class));
                         finish();
                         break;
-                    case R.id.nav_trainer:
+                    /*case R.id.nav_trainer:
                         startActivity(new Intent(TraineesScreen.this,TrainerScreen.class));
                         finish();
-                        break;
+                        break;*/
                     /*case R.id.nav_foodPrep:
                         startActivity(new Intent(TraineesScreen.this,PrepareFoodChart.class));
                         finish();

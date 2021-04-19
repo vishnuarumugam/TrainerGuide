@@ -135,7 +135,7 @@
                                 android:layout_toRightOf="@id/profileAccImage"
                                 android:layout_marginStart="10dp"
                                 android:layout_below="@id/profileAccount"
-                                android:text="Change number, Email Address"
+                                android:text="Mobile number, Email Address"
                                 style="@style/TextAppearance.AppCompat.Body1"/>
 
                             <TextView
@@ -854,7 +854,7 @@
                                         android:id="@+id/profileSubscriptionDescriptionLabel"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Subscription Description"
+                                        android:text="Training Details"
                                         style="@style/TextAppearance.AppCompat.Body1"
                                         android:layout_toRightOf="@id/profileSubscriptionDescriptionImage"
                                         android:layout_below="@id/profileSubscriptionDescription" />

@@ -9,7 +9,7 @@
                     android:icon="@drawable/ic_person"
                     android:title="Profile" />
 
-                <item
+                <!--<item
                     android:id="@+id/nav_trainees"
                     android:icon="@drawable/ic_trainees"
                     android:title="Trainees" />
@@ -17,7 +17,7 @@
                 <item
                     android:id="@+id/nav_trainer"
                     android:icon="@drawable/ic_trainees"
-                    android:title="Trainer" />
+                    android:title="Trainer" />-->
 
                 <item
                     android:id="@+id/nav_notification"

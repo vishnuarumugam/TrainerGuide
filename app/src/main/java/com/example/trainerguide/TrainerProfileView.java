@@ -111,7 +111,7 @@ public class TrainerProfileView extends AppCompatActivity {
 
         //Menu Item variables
         profileMenu = findViewById(R.id.nav_profile);
-        traineeMenu = findViewById(R.id.nav_trainees);
+//        traineeMenu = findViewById(R.id.nav_trainees);
 
         requestbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -170,14 +170,14 @@ public class TrainerProfileView extends AppCompatActivity {
                         startActivity(new Intent(TrainerProfileView.this,ProfileScreen.class));
                         finish();
                         break;
-                    case R.id.nav_trainees:
+                    /*case R.id.nav_trainees:
                         startActivity(new Intent(TrainerProfileView.this,TraineesScreen.class));
                         finish();
                         break;
                     case R.id.nav_trainer:
                         startActivity(new Intent(TrainerProfileView.this,TrainerScreen.class));
                         finish();
-                        break;
+                        break;*/
                     case R.id.nav_logout:
                         startActivity(new Intent(TrainerProfileView.this,MainActivity.class));
                         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());

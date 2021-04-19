@@ -95,11 +95,16 @@ public class FoodSourceListScreen extends AppCompatActivity implements View.OnCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food_source_list_screen);
 
-        /*foodObject = new Food("chicken", "Protein", 100.0, "Nonveg", "grams", 250);
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        databaseReference.child("Food").child("Common").child("Nonveg").child("Chicken").setValue(foodObject);*/
+        List<Food> foodAdd = new ArrayList<>();
+
+         foodAdd.add(new Food("Capsicum - tiny chopped", "NA", 0.0, "Vegetarian", "cup", 0.5));
+
+        for (Food food : foodAdd){
+            databaseReference.child("Food").child("Common").child(food.getFoodType()).child(food.getName()).setValue(food);
+        }
 
 
         //Food- Recycler view variables
@@ -127,7 +132,7 @@ public class FoodSourceListScreen extends AppCompatActivity implements View.OnCl
         foodSourceAddUnit = foodSourceDialog.findViewById(R.id.foodSourceAddUnitSpin);
         //Pop-up spinner
         //nutrition
-        String[] nutritionRich = {"vitamin","protein","calcium","carbohydrate","fiber","potassium","magnesium"};
+        String[] nutritionRich = {"Carbohydrate","Fat", "Micro Nutrients","Protein", "NA" };
         ArrayAdapter<String> nutritionSpinAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, nutritionRich);
         nutritionSpinAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         foodSourceAddNutritionSpin.setAdapter(nutritionSpinAdapter);
@@ -192,19 +197,19 @@ public class FoodSourceListScreen extends AppCompatActivity implements View.OnCl
                 switch (item.getItemId()){
                     case R.id.nav_profile:
                         break;
-                    case R.id.nav_trainees:
+                    /*case R.id.nav_trainees:
 
                         startActivity(new Intent(FoodSourceListScreen.this,TraineesScreen.class));
                         finish();
-                        break;
+                        break;*/
                     case R.id.nav_notification:
                         startActivity(new Intent(FoodSourceListScreen.this,NotificationScreen.class));
                         finish();
                         break;
-                    case R.id.nav_trainer:
+                    /*case R.id.nav_trainer:
                         startActivity(new Intent(FoodSourceListScreen.this,TrainerScreen.class));
                         finish();
-                        break;
+                        break;*/
                     case R.id.nav_logout:
                         startActivity(new Intent(FoodSourceListScreen.this,MainActivity.class));
                         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());

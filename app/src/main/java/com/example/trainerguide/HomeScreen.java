@@ -13,6 +13,8 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.trainerguide.models.Trainer;
@@ -32,6 +34,8 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private Toolbar toolbar;
+    private Button toolBarNotification;
+    private TextView sideUserName;
     private MenuItem profileMenu, logoutMenu, shareMenu, ratingMenu, traineeMenu;
     Intent intent;
 
@@ -53,19 +57,22 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         setContentView(R.layout.activity_home_screen);
         navigationView = findViewById(R.id.nav_view);
         drawerLayout = findViewById(R.id.drawer_layout);
-
+        toolBarNotification = findViewById(R.id.toolBarNotification);
         toolbar = findViewById(R.id.tool_bar);
+        //sideUserName = navigationView.findViewById(R.id.sideUserName);
 
         setSupportActionBar(toolbar);
         toolbar.setBackgroundColor(getResources().getColor(R.color.black));
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
+        //toolBarNotification.setBackgroundColor(getResources().getColor(R.color.white));
 
         ActionBarDrawerToggle toggle = CommonNavigator.navigatorInitmethod(drawerLayout,navigationView,toolbar,this);
         toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.appleGreen));
 
+
         //Menu Items
         profileMenu = findViewById(R.id.nav_profile);
-        traineeMenu = findViewById(R.id.nav_trainees);
+        //traineeMenu = findViewById(R.id.nav_trainees);
 
         //Dashboard variables
 
@@ -74,14 +81,15 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         trainerDashboard = findViewById(R.id.trainer_dashboard);
         traineeDashboard = findViewById(R.id.trainee_dashboard);
         foodDashboard = findViewById(R.id.food_dashboard);
-        //pdf_dashboard = findViewById(R.id.pdf_dashboard);
+        pdf_dashboard = findViewById(R.id.pdf_dashboard);
 
         profileDashboard.setOnClickListener(this);
         reportDashboard.setOnClickListener(this);
         trainerDashboard.setOnClickListener(this);
         traineeDashboard.setOnClickListener(this);
         foodDashboard.setOnClickListener(this);
-        //pdf_dashboard.setOnClickListener(this);
+        pdf_dashboard.setOnClickListener(this);
+        toolBarNotification.setOnClickListener(this);
 
         //Graph representation
         //progressGraphView = findViewById(R.id.userProgressGraph);
@@ -96,6 +104,18 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         sp= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         userType = sp.getString("ProfileType",null);
+
+        if (userType.equals("Trainer")){
+            traineeDashboard.setVisibility(View.VISIBLE);
+            foodDashboard.setVisibility(View.VISIBLE);
+            pdf_dashboard.setVisibility(View.GONE);
+        }
+        else{
+            traineeDashboard.setVisibility(View.GONE);
+            foodDashboard.setVisibility(View.GONE);
+            pdf_dashboard.setVisibility(View.GONE);
+        }
+
         userId = sp.getString("userId",null);
         path = userType+ "/" + userId;
 
@@ -113,20 +133,20 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                         startActivity(intent);
                         finish();
                         break;
-                    case R.id.nav_trainees:
+                    /*case R.id.nav_trainees:
                         intent=new Intent(HomeScreen.this,TraineesScreen.class);
                         intent.putExtra("UserId",userId);
                         startActivity(intent);
                         finish();
-                        break;
+                        break;*/
                     case R.id.nav_notification:
                         startActivity(new Intent(HomeScreen.this,NotificationScreen.class));
                         finish();
                         break;
-                    case R.id.nav_trainer:
+                    /*case R.id.nav_trainer:
                         startActivity(new Intent(HomeScreen.this,TrainerScreen.class));
                         finish();
-                        break;
+                        break;*/
                     /*case R.id.nav_foodPrep:
                         startActivity(new Intent(HomeScreen.this,PrepareFoodChart.class));
                         finish();
@@ -162,6 +182,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 finish();
                 break;
             case R.id.report_dashboard:
+                Toast.makeText(HomeScreen.this, "Will be released soon",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.trainer_dashboard:
                 startActivity(new Intent(HomeScreen.this,TrainerScreen.class));
@@ -175,10 +196,14 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 startActivity(new Intent(HomeScreen.this,FoodSourceListScreen.class));
                 finish();
                 break;
-            /*case R.id.pdf_dashboard:
+            case R.id.pdf_dashboard:
                 startActivity(new Intent(HomeScreen.this, PdfCreation.class));
                 finish();
-                break;*/
+                break;
+            case R.id.toolBarNotification:
+                startActivity(new Intent(HomeScreen.this,NotificationScreen.class));
+                finish();
+                break;
             default:
                 break;
         }
@@ -196,11 +221,13 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                     System.out.println("Trainer"+snapshot.getValue(Trainer.class));
                     System.out.println("out");
                     Trainer user = snapshot.getValue(Trainer.class);
+                    //sideUserName.setText(user.getName().toString());
+
                 }
 
                 else{
-                    System.out.println(snapshot.getValue(User.class));
-                    //User user = snapshot.getValue(User.class);
+                    User user = snapshot.getValue(User.class);
+                    //sideUserName.setText(user.getName().toString());
 
                 }
 

@@ -29,11 +29,14 @@ import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SearchView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -82,15 +85,22 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import static java.lang.Math.round;
+
 public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAdapter.OnAddClickListener,
-        SelectedFoodItemsAdapter.OnRemoveClickListener, SelectedFoodItemsAdapter.OnAddItemClickListener, View.OnClickListener {
+        SelectedFoodItemsAdapter.OnRemoveClickListener, SelectedFoodItemsAdapter.OnAddItemClickListener, View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     //Navigation view variables
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private Toolbar toolbar;
     private MenuItem profileMenu, logoutMenu, shareMenu, ratingMenu, traineeMenu;
+
+    //Common variables
     private TextView totalCaloriesLabel, recommendedCalories;
+    private Spinner activityLevelSpin;
+    ArrayAdapter<CharSequence> activityLevelAdapter;
+    String selectedActivityLevel;
 
 
     //Recycler view variables
@@ -155,11 +165,18 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
 
         //Menu Item variables
         profileMenu = findViewById(R.id.nav_profile);
-        traineeMenu = findViewById(R.id.nav_trainees);
+//        traineeMenu = findViewById(R.id.nav_trainees);
 
+        //Common variables
         tablayout = findViewById(R.id.foodTimingTabs);
         totalCaloriesLabel = findViewById(R.id.totalCalories);
         recommendedCalories = findViewById(R.id.recommendedCalories);
+        activityLevelSpin = findViewById(R.id.activityLevelSpin);
+
+        activityLevelAdapter = ArrayAdapter.createFromResource(this, R.array.activity_level, android.R.layout.simple_spinner_item);
+        activityLevelAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        activityLevelSpin.setAdapter(activityLevelAdapter);
+        activityLevelSpin.setOnItemSelectedListener(this);
 
         //Intent variables
         if(getIntent().hasExtra("userId") &&
@@ -219,16 +236,16 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
                         startActivity(intent);
                         finish();
                         break;
-                    case R.id.nav_trainees:
-                        break;
+                    /*case R.id.nav_trainees:
+                        break;*/
                     case R.id.nav_notification:
                         startActivity(new Intent(PrepareFoodChart.this, NotificationScreen.class));
                         finish();
                         break;
-                    case R.id.nav_trainer:
+                    /*case R.id.nav_trainer:
                         startActivity(new Intent(PrepareFoodChart.this, TrainerScreen.class));
                         finish();
-                        break;
+                        break;*/
                     case R.id.nav_logout:
                         startActivity(new Intent(PrepareFoodChart.this, MainActivity.class));
                         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -471,7 +488,7 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer((GravityCompat.START));
         } else {
-            startActivity(new Intent(PrepareFoodChart.this, HomeScreen.class));
+            startActivity(new Intent(PrepareFoodChart.this, TraineesScreen.class));
             finish();
         }
     }
@@ -596,45 +613,64 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
 
             List<Food>  pdfFoodList = new ArrayList<>();
 
+            HashMap<String,Double> macroList= new HashMap<>();
+            macroList.put("Carbohydrate", 0.0);
+            macroList.put("Fat", 0.0);
+            macroList.put("Micro Nutrients", 0.0);
+            macroList.put("Protein", 0.0);
+
             for (String foodSlot : foodTime){
                 String foodSlotTitle = "";
 
-                for (Food foodItems: selectedFoodListHash){
-                    System.out.println(foodSlot + foodItems.getTab());
+             for (Food foodItems: selectedFoodListHash){
 
                     switch (foodSlot){
                         case "Break Fast":
                             if (foodSlot.equals(foodItems.getTab())){
                                 foodSlotTitle = "Break Fast";
+                                if ((!foodItems.getNutritionType().equals("NA"))) {
+                                    macroList.put(foodItems.getNutritionType(), macroList.get(foodItems.getNutritionType()) + foodItems.getTotalCalorie());
+                                }
                                 pdfFoodList.add(foodItems);
                             }
                             break;
                         case "Snacks M":
                             if (foodSlot.equals(foodItems.getTab())){
                                 foodSlotTitle = "Snacks M";
+                                if ((!foodItems.getNutritionType().equals("NA"))) {
+                                    macroList.put(foodItems.getNutritionType(), macroList.get(foodItems.getNutritionType()) + foodItems.getTotalCalorie());
+                                }
                                 pdfFoodList.add(foodItems);
                             }
                             break;
                         case "Lunch":
                             if (foodSlot.equals(foodItems.getTab())){
                                 foodSlotTitle = "Lunch";
+                                if ((!foodItems.getNutritionType().equals("NA"))) {
+                                    macroList.put(foodItems.getNutritionType(), macroList.get(foodItems.getNutritionType()) + foodItems.getTotalCalorie());
+                                }
                                 pdfFoodList.add(foodItems);
                             }
                             break;
                         case "Snacks E":
                             if (foodSlot.equals(foodItems.getTab())){
                                 foodSlotTitle = "Snacks E";
+                                if ((!foodItems.getNutritionType().equals("NA"))) {
+                                    macroList.put(foodItems.getNutritionType(), macroList.get(foodItems.getNutritionType()) + foodItems.getTotalCalorie());
+                                }
                                 pdfFoodList.add(foodItems);
                             }
                             break;
                         case "Dinner":
                             if (foodSlot.equals(foodItems.getTab())){
                                 foodSlotTitle = "Dinner";
+                                if ((!foodItems.getNutritionType().equals("NA"))) {
+                                    macroList.put(foodItems.getNutritionType(), macroList.get(foodItems.getNutritionType()) + foodItems.getTotalCalorie());
+                                }
                                 pdfFoodList.add(foodItems);
                             }
                             break;
                         default:
-                            System.out.println("Switch");
                             break;
                     }
 
@@ -643,13 +679,21 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
                     addEmptyLineSpace(document,2);
                     addNewItem(document, foodSlotTitle, Element.ALIGN_CENTER, itemNameFont);
                     addEmptyLineSpace(document,1);
-                    addTable(document, pdfFoodList);
+                    addFoodTable(document, pdfFoodList);
                     pdfFoodList.clear();
-
-
-                }
+               }
+            }
+            if (selectedFoodListHash.size()>0){
+                addEmptyLineSpace(document,2);
+                addNewItem(document, "Macro Nutrients Details", Element.ALIGN_CENTER, itemNameFont);
+                addEmptyLineSpace(document,1);
+                addMacroNutTable(document,macroList);
+                Double totalCalorie = macroList.get("Carbohydrate") + macroList.get("Fat") + macroList.get("Micro Nutrients") + macroList.get("Protein");
+                addEmptyLineSpace(document,1);
+                addNewItem(document, "Total Calories: " + totalCalorie, Element.ALIGN_RIGHT, itemNameFont);
 
             }
+
 
             document.close();
             Toast.makeText(this, "File created", Toast.LENGTH_SHORT).show();
@@ -661,16 +705,95 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
         }
     }
 
+    private void addMacroNutTable(Document document, HashMap<String, Double> macroList) throws DocumentException, IOException{
+        {
+            BaseFont fontName = BaseFont.createFont("assets/fonts/brandon_medium.otf", "UTF-8", BaseFont.EMBEDDED);
+            Font itemNameFont = new Font(fontName, 24, Font.NORMAL);
+            Font itemDetailFont = new Font(fontName, 18, Font.NORMAL);
+            BaseColor colourAccent = new BaseColor(228,227,227,255);
+            Double totalCalorie = macroList.get("Carbohydrate") + macroList.get("Fat") + macroList.get("Micro Nutrients") + macroList.get("Protein");
+            Double totalNutritionCal = macroList.get("Carbohydrate") + macroList.get("Fat") + macroList.get("Protein");
+
+
+                PdfPTable table = new PdfPTable(3);
+
+                table.setHorizontalAlignment(Element.ALIGN_CENTER);
+
+                PdfPCell commonCell;
+                commonCell = new PdfPCell(new Phrase("Nutrition Name", itemNameFont));
+                commonCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                commonCell.setBackgroundColor(colourAccent);
+                commonCell.setPadding(5);
+                table.addCell(commonCell);
+
+
+                commonCell = new PdfPCell(new Phrase("Calorie", itemNameFont));
+                commonCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                commonCell.setBackgroundColor(colourAccent);
+                commonCell.setPadding(5);
+                table.addCell(commonCell);
+
+                commonCell = new PdfPCell(new Phrase("Percentage", itemNameFont));
+                commonCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                commonCell.setBackgroundColor(colourAccent);
+                commonCell.setPadding(5);
+                table.addCell(commonCell);
+
+                for (HashMap.Entry<String, Double> macroNutrition : macroList.entrySet()){
+
+                    if (!(macroNutrition.getKey().equals("Micro Nutrients"))){
+                        commonCell = new PdfPCell(new Phrase(macroNutrition.getKey(), itemDetailFont));
+                        commonCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                        commonCell.setPadding(5);
+                        table.addCell(commonCell);
+
+
+                        commonCell = new PdfPCell(new Phrase(macroNutrition.getValue().toString() +" kcal", itemDetailFont));
+                        commonCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                        commonCell.setPadding(5);
+                        table.addCell(commonCell);
+
+                        commonCell = new PdfPCell(new Phrase(round((macroNutrition.getValue() * 100) / totalNutritionCal) + "%", itemDetailFont));
+                        commonCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                        commonCell.setPadding(5);
+                        table.addCell(commonCell);
+                    }
+
+
+                }
+
+                try {
+                    document.add(table);
+                } catch (DocumentException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+
+
+
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode){
 
             case 1000:
                 if (grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    generatePdf();
+
+                    if (selectedFoodListHash.size()>0){
+                        generatePdf();
+                    }
+                    else{
+                        CustomDialogClass customDialogClass = new CustomDialogClass(PrepareFoodChart.this, "Pdf Generation !!!", "Please choose atleast one item in diet chart", "Normal");
+                        customDialogClass.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        customDialogClass.show();
+                    }
+
                 }
                 else {
-                    Toast.makeText(this, "permission denied", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
                 }
         }
     }
@@ -707,15 +830,13 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
 
     }
 
-    private void addTable (Document document, List<Food>  pdfFoodList) throws DocumentException, IOException {
+    private void addFoodTable (Document document, List<Food>  pdfFoodList) throws DocumentException, IOException {
         BaseFont fontName = BaseFont.createFont("assets/fonts/brandon_medium.otf", "UTF-8", BaseFont.EMBEDDED);
         Font itemNameFont = new Font(fontName, 24, Font.NORMAL);
         Font itemDetailFont = new Font(fontName, 18, Font.NORMAL);
         BaseColor colourAccent = new BaseColor(228,227,227,255);
-        System.out.println("OutTable");
 
         if (pdfFoodList.size()>0){
-            System.out.println("InTable");
 
             PdfPTable table = new PdfPTable(3);
 
@@ -767,6 +888,36 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
 
         }
 
+
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+        switch (parent.getItemAtPosition(position).toString()){
+
+            case "Sedentary":
+                recommendedCalories.setText(String.valueOf(getIntent().getExtras().getDouble("totalCalories") * 1.2));
+                break;
+            case "Little Exercise":
+                recommendedCalories.setText(String.valueOf(getIntent().getExtras().getDouble("totalCalories") * 1.35));
+                break;
+            case "Regular Exercise":
+                recommendedCalories.setText(String.valueOf(getIntent().getExtras().getDouble("totalCalories") * 1.46));
+                break;
+            case "Daily Exercise":
+                recommendedCalories.setText(String.valueOf(getIntent().getExtras().getDouble("totalCalories") * 1.56));
+                break;
+            case "Daily Intensive":
+                recommendedCalories.setText(String.valueOf(getIntent().getExtras().getDouble("totalCalories") * 1.8));
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
 
     }
 }

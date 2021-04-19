@@ -15,4 +15,12 @@
     <color name="lightGrey">#E4E3E3</color>
     <color name="lightPink">#E3D3D3</color>
     <color name="greyShade">#DCD6D6</color>
+    <color name="pinkShade">#F6CEE3</color>
+    <color name="lightBlue">#A9E2F3</color>
+    <color name="greenShade">#D8F6CE</color>
+    <color name="greyShadeLight">#E4E3E3</color>
+
+
+
+
 </resources>

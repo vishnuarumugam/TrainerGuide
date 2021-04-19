@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/food_source_layout"
+    android:background="@color/white"
     tools:context=".FoodSourceListScreen">
 
 
@@ -65,13 +66,13 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent">
                                 <androidx.recyclerview.widget.RecyclerView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginHorizontal="20dp"
-                        android:nestedScrollingEnabled="false"
-                        android:id="@+id/foodListRecycler"
-                        tools:listitem="@layout/food_item"
-                        android:layout_marginTop="10dp" />
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginHorizontal="10dp"
+                                    android:nestedScrollingEnabled="false"
+                                    android:id="@+id/foodListRecycler"
+                                    tools:listitem="@layout/food_item"
+                                    android:layout_marginTop="10dp" />
                             </LinearLayout>
                         </androidx.core.widget.NestedScrollView>
 

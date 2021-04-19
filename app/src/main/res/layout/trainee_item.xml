@@ -11,12 +11,15 @@
     app:cardElevation="5dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/traineeConsItem"
+        android:padding="2dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
 
         <RelativeLayout
             android:id="@+id/traineeItem"
+            android:background="@color/lightGrey"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -84,7 +87,7 @@
                 android:textColor="@color/black"
                 android:textStyle="bold|italic"/>
 
-            <TextView
+            <!--<TextView
                 android:id="@+id/traineeItemSubscriptionLabel"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
@@ -106,7 +109,7 @@
                 android:layout_toRightOf="@id/traineeItemBmiLabel"
                 android:hint="WeightLoss"
                 android:textColor="@color/black"
-                android:textStyle="bold|italic"/>
+                android:textStyle="bold|italic"/>-->
         </RelativeLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

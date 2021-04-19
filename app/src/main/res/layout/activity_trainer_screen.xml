@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/trainer_drawer_layout"
+    android:background="@color/white"
     tools:context=".TrainerScreen">
 
     <include layout="@layout/common_navigator"/>
@@ -53,7 +54,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginHorizontal="10dp"
                     android:nestedScrollingEnabled="false"
                     android:id="@+id/trainerRecycler"
                     tools:listitem="@layout/trainer_item"

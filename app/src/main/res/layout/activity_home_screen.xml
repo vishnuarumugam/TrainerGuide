@@ -7,31 +7,39 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context=".HomeScreen"
+    android:background="@color/white"
     tools:openDrawer="start">
 
     <include layout="@layout/common_navigator"/>
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="10dp"
+        android:background="@color/transparent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/transparent"
             android:orientation="vertical">
+            
             <include layout="@layout/common_toolbar" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@color/transparent"
                 android:paddingVertical="10dp">
+
 
 
                 <LinearLayout
                     android:id="@+id/linearLayout2"
                     android:layout_width="match_parent"
-                    android:layout_height="175dp"
-                    android:layout_marginTop="150dp"
+                    android:layout_height="160dp"
+                    android:layout_marginTop="100dp"
                     android:orientation="horizontal"
+                    android:layout_marginHorizontal="5dp"
                     android:weightSum="2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -40,21 +48,23 @@
 
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="wrap_content">
 
                         <com.google.android.material.card.MaterialCardView
                             android:id="@+id/profile_dashboard"
                             android:elevation="10dp"
                             app:cardCornerRadius="5dp"
-                            android:layout_width="190dp"
-                            android:layout_marginHorizontal="10dp"
+                            android:layout_width="160dp"
+                            android:layout_marginHorizontal="7dp"
                             android:layout_alignParentLeft="true"
-                            android:backgroundTint="@color/lightGrey"
+                            android:backgroundTint="@color/pinkShade"
                             android:layout_height="match_parent">
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent">
+                                android:layout_height="match_parent"
+                                android:layout_margin="3dp"
+                                android:background="@color/lightGrey">
                                 <ImageView
                                     android:layout_width="100dp"
                                     android:layout_height="100dp"
@@ -75,17 +85,19 @@
                         <com.google.android.material.card.MaterialCardView
                             android:id="@+id/report_dashboard"
                             android:elevation="10dp"
-                            android:layout_marginHorizontal="10dp"
+                            android:layout_marginHorizontal="7dp"
                             android:layout_alignParentEnd="true"
                             app:cardCornerRadius="5dp"
-                            android:layout_width="190dp"
+                            android:layout_width="160dp"
                             android:layout_alignRight="@id/profile_dashboard"
-                            android:backgroundTint="@color/lightGrey"
+                            android:backgroundTint="@color/lightBlue"
                             android:layout_height="match_parent">
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent">
+                                android:layout_height="match_parent"
+                                android:layout_margin="3dp"
+                                android:background="@color/lightGrey">
                                 <ImageView
                                     android:layout_width="100dp"
                                     android:layout_height="100dp"
@@ -113,9 +125,10 @@
                 <LinearLayout
                     android:id="@+id/linearLayout3"
                     android:layout_width="match_parent"
-                    android:layout_height="175dp"
+                    android:layout_height="160dp"
                     android:layout_marginTop="10dp"
                     android:orientation="horizontal"
+                    android:layout_marginHorizontal="5dp"
                     android:weightSum="2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -128,17 +141,19 @@
 
                         <com.google.android.material.card.MaterialCardView
                             android:id="@+id/trainer_dashboard"
-                            android:layout_width="190dp"
+                            android:layout_width="160dp"
                             android:layout_height="match_parent"
                             app:cardCornerRadius="5dp"
                             android:elevation="10dp"
-                            android:layout_marginHorizontal="10dp"
-                            android:backgroundTint="@color/lightGrey"
+                            android:layout_marginHorizontal="7dp"
+                            android:backgroundTint="@color/lightYellow"
                             android:layout_alignParentLeft="true">
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent">
+                                android:layout_height="match_parent"
+                                android:layout_margin="3dp"
+                                android:background="@color/lightGrey">
                                 <ImageView
                                     android:layout_width="100dp"
                                     android:layout_height="100dp"
@@ -157,18 +172,20 @@
 
                         <com.google.android.material.card.MaterialCardView
                             android:id="@+id/trainee_dashboard"
-                            android:layout_width="190dp"
+                            android:layout_width="160dp"
                             android:layout_height="match_parent"
                             app:cardCornerRadius="5dp"
                             android:elevation="10dp"
-                            android:layout_marginHorizontal="10dp"
-                            android:backgroundTint="@color/lightGrey"
+                            android:layout_marginHorizontal="7dp"
+                            android:backgroundTint="@color/greenShade"
                             android:layout_alignParentRight="true"
                             android:layout_alignRight="@id/trainer_dashboard">
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent">
+                                android:layout_height="match_parent"
+                                android:layout_margin="3dp"
+                                android:background="@color/lightGrey">
                                 <ImageView
                                     android:layout_width="100dp"
                                     android:layout_height="100dp"
@@ -195,10 +212,12 @@
                 <LinearLayout
                     android:id="@+id/linearLayout4"
                     android:layout_width="match_parent"
-                    android:layout_height="175dp"
+                    android:layout_height="160dp"
                     android:layout_marginTop="10dp"
                     android:orientation="horizontal"
+                    android:layout_marginHorizontal="5dp"
                     android:weightSum="2"
+                    android:background="@color/transparent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
@@ -210,63 +229,67 @@
 
                         <com.google.android.material.card.MaterialCardView
                             android:id="@+id/food_dashboard"
-                            android:layout_width="190dp"
+                            android:layout_width="160dp"
                             android:layout_height="match_parent"
-                            app:cardCornerRadius="5dp"
-                            android:elevation="10dp"
-                            android:layout_marginHorizontal="10dp"
-                            android:backgroundTint="@color/lightGrey"
-                            android:layout_alignParentLeft="true">
+                            android:layout_alignParentLeft="true"
+                            android:layout_marginHorizontal="7dp"
+                            android:backgroundTint="@color/lightBlue">
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent">
+                                android:layout_height="match_parent"
+                                android:layout_margin="3dp"
+                                android:background="@color/lightGrey">
+
                                 <ImageView
+                                    android:id="@+id/img_food"
                                     android:layout_width="100dp"
                                     android:layout_height="100dp"
-                                    android:id="@+id/img_food"
                                     android:layout_centerInParent="true"
-                                    android:src="@mipmap/food_type"/>
+                                    android:src="@mipmap/food_type" />
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_below="@+id/img_food"
                                     android:layout_centerHorizontal="true"
                                     android:text="Food List"
-                                    android:textSize="20sp"/>
+                                    android:textSize="20sp" />
                             </RelativeLayout>
                         </com.google.android.material.card.MaterialCardView>
 
-                        <!--<com.google.android.material.card.MaterialCardView
+                        <com.google.android.material.card.MaterialCardView
                             android:id="@+id/pdf_dashboard"
-                            android:layout_width="190dp"
+                            android:layout_width="160dp"
                             android:layout_height="match_parent"
-                            app:cardCornerRadius="5dp"
-                            android:elevation="10dp"
-                            android:layout_marginHorizontal="10dp"
-                            android:backgroundTint="@color/lightGrey"
+                            android:layout_alignRight="@id/food_dashboard"
                             android:layout_alignParentRight="true"
-                            android:layout_alignRight="@id/food_dashboard">
+                            android:layout_marginHorizontal="7dp"
+                            android:backgroundTint="@color/lightGrey"
+                            android:elevation="10dp"
+                            app:cardCornerRadius="5dp">
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent">
+
                                 <ImageView
+                                    android:id="@+id/img_pdf"
                                     android:layout_width="100dp"
                                     android:layout_height="100dp"
-                                    android:id="@+id/img_pdf"
                                     android:layout_centerInParent="true"
-                                    android:src="@mipmap/fitness"/>
+                                    android:src="@mipmap/fitness" />
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_below="@+id/img_pdf"
                                     android:layout_centerHorizontal="true"
                                     android:text="Trainee"
-                                    android:textSize="20sp"/>
+                                    android:textSize="20sp" />
                             </RelativeLayout>
 
-                        </com.google.android.material.card.MaterialCardView>-->
+                        </com.google.android.material.card.MaterialCardView>
 
                     </RelativeLayout>
 

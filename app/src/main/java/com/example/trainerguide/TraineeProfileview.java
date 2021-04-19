@@ -87,7 +87,7 @@ public class TraineeProfileview extends AppCompatActivity {
 
         //Menu Item variables
         profileMenu = findViewById(R.id.nav_profile);
-        traineeMenu = findViewById(R.id.nav_trainees);
+        //traineeMenu = findViewById(R.id.nav_trainees);
 
 //Method to re-direct the page from menu
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -98,14 +98,14 @@ public class TraineeProfileview extends AppCompatActivity {
                         startActivity(new Intent(TraineeProfileview.this, ProfileScreen.class));
                         finish();
                         break;
-                    case R.id.nav_trainees:
+                    /*case R.id.nav_trainees:
                         startActivity(new Intent(TraineeProfileview.this, TraineesScreen.class));
                         finish();
                         break;
                     case R.id.nav_trainer:
                         startActivity(new Intent(TraineeProfileview.this, TrainerScreen.class));
                         finish();
-                        break;
+                        break;*/
                     case R.id.nav_logout:
                         startActivity(new Intent(TraineeProfileview.this, MainActivity.class));
                         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());

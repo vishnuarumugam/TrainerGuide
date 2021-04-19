@@ -90,7 +90,7 @@
 
                 <androidx.core.widget.NestedScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="250dp"
+                    android:layout_height="200dp"
                     android:layout_margin="10dp"
                     android:background="@color/grey"
                     android:id="@+id/nestedScrollViewSource"
@@ -168,11 +168,28 @@
                     app:layout_constraintTop_toBottomOf="@+id/foodTimingTabs">
 
                     <TextView
-                        android:id="@+id/recommendedCaloriesLabel"
+                        android:id="@+id/activityLevelLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="5dp"
-                        android:text="Recommended Calories: "/>
+                        android:layout_marginTop="3dp"
+                        android:text="Activity Level: "/>
+
+                    <Spinner
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/activityLevelSpin"
+                        android:textAlignment="center"
+                        android:layout_toRightOf="@+id/activityLevelLabel" />
+
+                    <TextView
+                        android:id="@+id/recommendedCaloriesLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_below="@id/activityLevelSpin"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:text="Maintenance Calories: "/>
 
                     <TextView
                         android:id="@+id/recommendedCalories"
@@ -204,6 +221,7 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:elevation="5dp"
+                        android:layout_centerVertical="true"
                         android:id="@+id/generatePdfBtn"
                         android:layout_marginRight="5dp"
                         android:src="@mipmap/pdf"

@@ -128,6 +128,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
     private String userType;
     private Boolean readonly = false;
     private Boolean extendReadonly = false;
+    private Boolean IsTrainerProfile;
 
 
     //Common variables
@@ -234,12 +235,13 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
 
         //Menu Item variables
         profileMenu = findViewById(R.id.nav_profile);
-        traineeMenu = navigationView.findViewById(R.id.nav_trainees);
+        //traineeMenu = navigationView.findViewById(R.id.nav_trainees);
+
         //User Info variables
         //userId = getIntent().getStringExtra("UserId");
         final SharedPreferences sp;
         sp= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        Boolean IsTrainerProfile = false;
+        IsTrainerProfile = false;
         String passedUserId = "";
 
         if(getIntent().hasExtra("IsTrainer") &&
@@ -597,20 +599,17 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                 switch (item.getItemId()){
                     case R.id.nav_profile:
                         break;
-                    case R.id.nav_trainees:
+                    /*case R.id.nav_trainees:
                         intent=new Intent(ProfileScreen.this,TraineesScreen.class);
                         //intent.putExtra("UserId",userId);
                         startActivity(intent);
                         finish();
-                        break;
+                        break;*/
                     case R.id.nav_notification:
                         startActivity(new Intent(ProfileScreen.this,NotificationScreen.class));
                         finish();
                         break;
-                    case R.id.nav_trainer:
-                        startActivity(new Intent(ProfileScreen.this,TrainerScreen.class));
-                        finish();
-                        break;
+
                     case R.id.nav_logout:
                         startActivity(new Intent(ProfileScreen.this,MainActivity.class));
                         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -993,6 +992,18 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
             Intent intent = new Intent(ProfileScreen.this,HomeScreen.class);
             startActivity(intent);
             finish();
+
+            /*if (IsTrainerProfile){
+                Intent intent = new Intent(ProfileScreen.this,TraineesScreen.class);
+                startActivity(intent);
+                finish();
+            }
+            else{
+                Intent intent = new Intent(ProfileScreen.this,HomeScreen.class);
+                startActivity(intent);
+                finish();
+            }*/
+
         }
     }
 

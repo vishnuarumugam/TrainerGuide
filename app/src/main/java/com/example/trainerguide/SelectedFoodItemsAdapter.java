@@ -36,7 +36,7 @@ public class SelectedFoodItemsAdapter extends RecyclerView.Adapter<SelectedFoodI
 
     @Override
     public void onBindViewHolder(@NonNull SelectedFoodItemsAdapter.ViewHolder holder, int position) {
-        holder.itemName.setText(foodItems.get(position).getName());
+        holder.itemName.setText(foodItems.get(position).getName().toUpperCase());
         holder.qty.setText(String.valueOf(foodItems.get(position).value));
         holder.calories.setText(String.valueOf(foodItems.get(position).totalCalorie));
         holder.addBtn.setOnClickListener(new View.OnClickListener() {

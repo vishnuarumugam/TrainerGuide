@@ -111,18 +111,18 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
                         startActivity(new Intent(NotificationScreen.this,ProfileScreen.class));
                         finish();
                         break;
-                    case R.id.nav_trainees:
+                    /*case R.id.nav_trainees:
                         intent=new Intent(NotificationScreen.this,TraineesScreen.class);
                         //intent.putExtra("UserId",userId);
                         startActivity(intent);
                         finish();
-                        break;
+                        break;*/
                     case R.id.nav_notification:
                         break;
-                    case R.id.nav_trainer:
+                    /*case R.id.nav_trainer:
                         startActivity(new Intent(NotificationScreen.this,TrainerScreen.class));
                         finish();
-                        break;
+                        break;*/
                     case R.id.nav_logout:
                         startActivity(new Intent(NotificationScreen.this,MainActivity.class));
                         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());

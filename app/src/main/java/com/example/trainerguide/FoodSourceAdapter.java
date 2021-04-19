@@ -86,8 +86,10 @@ public class FoodSourceAdapter extends RecyclerView.Adapter<FoodSourceAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
 
-        holder.itemName.setText(foodItems.get(position).getName());
+        holder.itemName.setText(foodItems.get(position).getName().toUpperCase());
+        holder.calorie.setText(String.valueOf(foodItems.get(position).getCalorieValue()));
         holder.qty.setText(String.valueOf(foodItems.get(position).getQuantity()));
+        holder.qtyLabel.setText(", " + foodItems.get(position).getMeasurementUnit());
 
         holder.addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,14 +110,16 @@ public class FoodSourceAdapter extends RecyclerView.Adapter<FoodSourceAdapter.Vi
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        TextView itemName, qty;
+        TextView itemName, calorie, qty, qtyLabel;
         ImageButton addBtn;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             itemName = itemView.findViewById(R.id.itemName);
+            calorie = itemView.findViewById(R.id.calorie);
             qty = itemView.findViewById(R.id.qty);
             addBtn = itemView.findViewById(R.id.addfoodItemBtn);
+            qtyLabel = itemView.findViewById(R.id.qtyLabel);
         }
     }
 

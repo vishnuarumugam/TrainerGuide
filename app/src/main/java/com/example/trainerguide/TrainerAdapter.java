@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.trainerguide.models.Trainer;
@@ -30,7 +31,7 @@ public class TrainerAdapter extends  RecyclerView.Adapter<TrainerAdapter.ViewHol
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
 
         int[] colours = new int[]{Color.parseColor("#F6CEE3"), Color.parseColor("#A9E2F3"), Color.parseColor("#D8F6CE"), Color.parseColor("#E4E3E3")};
-        holder.trainerItem.setBackgroundColor(colours[position%4]);
+        holder.trainerConsItem.setBackgroundColor(colours[position%4]);
 
         holder.name.setText(trainers.get(position).getName());
         System.out.println("****   *****"+trainers.get(position).getName());
@@ -83,6 +84,7 @@ public class TrainerAdapter extends  RecyclerView.Adapter<TrainerAdapter.ViewHol
         ImageView profileImage;
         MaterialCardView trainerProfileClick;
         RelativeLayout trainerItem;
+        ConstraintLayout trainerConsItem;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -92,6 +94,7 @@ public class TrainerAdapter extends  RecyclerView.Adapter<TrainerAdapter.ViewHol
             profileImage = itemView.findViewById(R.id.trainerProfileImage);
             trainerProfileClick = itemView.findViewById(R.id.parent);
             trainerItem = itemView.findViewById(R.id.trainerItem);
+            trainerConsItem = itemView.findViewById(R.id.trainerConsItem);
         }
     }
 

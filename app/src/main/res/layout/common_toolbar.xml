@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/tool_bar"
         android:layout_width="match_parent"
@@ -17,6 +18,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/ic_menu">
+
+        <Button
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/toolBarNotification"
+            android:layout_marginLeft="150dp"
+            android:background="@drawable/ic_notification"
+            android:gravity="right"/>
+
+
     </androidx.appcompat.widget.Toolbar>
 
 </merge>

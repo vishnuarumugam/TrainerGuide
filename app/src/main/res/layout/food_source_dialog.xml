@@ -130,21 +130,12 @@
                             android:layout_height="wrap_content"
                             android:id="@+id/foodSourceAddNutritionLabel"
                             android:textStyle="bold"
-                            android:text="Rich in Nutrition: "/>
+                            android:text="Macro Nutrition: "/>
 
                         <Spinner
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:id="@+id/foodSourceAddNutritionSpin" />
-
-                        <!--<EditText
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:hint="ex: vitamin"
-                            android:id="@+id/foodSourceAddNutrition"
-                            android:maxLength="20"
-                            android:backgroundTint="@color/yellow"
-                            android:layout_marginLeft="5dp" />
 -->
 
                     </LinearLayout>

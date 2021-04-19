@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_margin="1dp"
-    android:layout_height="30dp">
+    android:layout_height="50dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -17,7 +17,7 @@
 
             <TextView
                 android:layout_width="200dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:text="ItemName"
                 android:textColor="@color/black"
@@ -27,11 +27,33 @@
 
             <TextView
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:text="0.0, "
+                android:textColor="@color/grey"
+                android:textSize="12sp"
+                android:id="@+id/qty"
+                android:layout_below="@id/itemName"
+                android:gravity="center_vertical" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="grams"
+                android:textColor="@color/grey"
+                android:textSize="12sp"
+                android:gravity="center_vertical"
+                android:id="@+id/qtyLabel"
+                android:layout_alignTop="@id/qty"
+                android:layout_toRightOf="@+id/qty" />
+
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
-                android:text="QTY: "
+                android:text="CALORIE: "
                 android:textSize="12sp"
-                android:id="@+id/qtyLabel"
+                android:id="@+id/calorieLabel"
                 android:textColor="@color/black"
                 android:gravity="center_vertical"
                 android:layout_toRightOf="@+id/itemName"/>
@@ -42,8 +64,8 @@
                 android:textColor="@color/black"
                 android:textSize="12sp"
                 android:gravity="center_vertical"
-                android:id="@+id/qty"
-                android:layout_toRightOf="@+id/qtyLabel"/>
+                android:id="@+id/calorie"
+                android:layout_toRightOf="@+id/calorieLabel"/>
         </RelativeLayout>
 
         <ImageButton

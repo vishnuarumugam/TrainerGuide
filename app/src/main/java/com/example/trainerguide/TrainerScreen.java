@@ -102,7 +102,7 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
 
         //Menu Item variables
         profileMenu = findViewById(R.id.nav_profile);
-        traineeMenu = findViewById(R.id.nav_trainees);
+//        traineeMenu = findViewById(R.id.nav_trainees);
 
         //Pagination
         nestedScrollView = findViewById(R.id.scroll_view);
@@ -119,18 +119,18 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
                         startActivity(intent);
                         finish();
                         break;
-                    case R.id.nav_trainees:
+                    /*case R.id.nav_trainees:
                         intent=new Intent(TrainerScreen.this,TraineesScreen.class);
                         //intent.putExtra("UserId",userId);
                         startActivity(intent);
                         finish();
-                        break;
+                        break;*/
                     case R.id.nav_notification:
                         startActivity(new Intent(TrainerScreen.this,NotificationScreen.class));
                         finish();
                         break;
-                    case R.id.nav_trainer:
-                        break;
+                    /*case R.id.nav_trainer:
+                        break;*/
                     /*case R.id.nav_foodPrep:
                         startActivity(new Intent(TrainerScreen.this,PrepareFoodChart.class));
                         finish();
