@@ -85,6 +85,7 @@ public class FoodSourceListScreen extends AppCompatActivity implements View.OnCl
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private Toolbar toolbar;
+    private Button toolBarNotification;
     private MenuItem profileMenu, logoutMenu, shareMenu, ratingMenu, traineeMenu;
 
 
@@ -181,13 +182,15 @@ public class FoodSourceListScreen extends AppCompatActivity implements View.OnCl
         drawerLayout = findViewById(R.id.food_source_layout);
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.tool_bar);
+        toolBarNotification = findViewById(R.id.toolBarNotification);
+        toolBarNotification.setOnClickListener(this);
 
         //Toolbar customisation
         setSupportActionBar(toolbar);
-        toolbar.setBackgroundColor(getResources().getColor(R.color.black));
-        toolbar.setTitleTextColor(getResources().getColor(R.color.white));
+        toolbar.setBackgroundColor(getResources().getColor(R.color.themeColourOne));
+        toolbar.setTitleTextColor(getResources().getColor(R.color.themeColourThree));
         ActionBarDrawerToggle toggle = CommonNavigator.navigatorInitmethod(drawerLayout,navigationView,toolbar,this);
-        toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.yellow));
+        toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.themeColourTwo));
 
 
         //Method to re-direct the page from menu
@@ -293,6 +296,11 @@ public class FoodSourceListScreen extends AppCompatActivity implements View.OnCl
     public void onClick(View option) {
 
         switch (option.getId()){
+
+            case R.id.toolBarNotification:
+                startActivity(new Intent(FoodSourceListScreen.this,NotificationScreen.class));
+                finish();
+                break;
 
             case R.id.foodToggleVeg:
                 foodAddType = "Veg";

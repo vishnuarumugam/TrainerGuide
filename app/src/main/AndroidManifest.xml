@@ -5,17 +5,16 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-
-
     <application
-        android:requestLegacyExternalStorage="true"
         android:allowBackup="true"
         android:icon="@mipmap/fitness_app_icon"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/fitness_app_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PdfCreation"></activity>
+        <activity android:name=".UserReport"></activity>
+        <activity android:name=".PdfCreation" />
         <activity android:name=".FoodSourceListScreen" />
         <activity android:name=".NotificationScreen" />
         <activity android:name=".TraineeProfileview" />

@@ -31,6 +31,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
@@ -42,6 +43,7 @@ import android.widget.Toast;
 
 import com.example.trainerguide.models.Food;
 import com.example.trainerguide.models.FoodList;
+import com.example.trainerguide.models.MacroNutrient;
 import com.example.trainerguide.models.UserMetaData;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
@@ -94,6 +96,8 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private Toolbar toolbar;
+    private Button toolBarNotification;
+
     private MenuItem profileMenu, logoutMenu, shareMenu, ratingMenu, traineeMenu;
 
     //Common variables
@@ -152,13 +156,16 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
         drawerLayout = findViewById(R.id.prepare_food_drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.tool_bar);
+        toolBarNotification = findViewById(R.id.toolBarNotification);
+        toolBarNotification.setOnClickListener(this);
+
 
         //Toolbar customisation
         setSupportActionBar(toolbar);
-        toolbar.setBackgroundColor(getResources().getColor(R.color.black));
-        toolbar.setTitleTextColor(getResources().getColor(R.color.white));
+        toolbar.setBackgroundColor(getResources().getColor(R.color.themeColourOne));
+        toolbar.setTitleTextColor(getResources().getColor(R.color.themeColourThree));
         ActionBarDrawerToggle toggle = CommonNavigator.navigatorInitmethod(drawerLayout, navigationView, toolbar, this);
-        toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.yellow));
+        toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.themeColourTwo));
 
 
 
@@ -183,7 +190,6 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
                 getIntent().hasExtra("userName") &&
                 getIntent().hasExtra("totalCalories"))
         {
-            System.out.println("totalCalories"+getIntent().getExtras().getString("userName") + getIntent().getExtras().getDouble("totalCalories"));
             recommendedCalories.setText(String.valueOf(getIntent().getExtras().getDouble("totalCalories")));
         }
 
@@ -468,6 +474,11 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
 
         switch (option.getId()){
 
+            case R.id.toolBarNotification:
+                startActivity(new Intent(PrepareFoodChart.this,NotificationScreen.class));
+                finish();
+                break;
+
             case R.id.radioButtonVeg:
                 foodType = "Veg";
                 foodItemlist = populateSourceData(userId, "Veg");
@@ -714,6 +725,13 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
             Double totalCalorie = macroList.get("Carbohydrate") + macroList.get("Fat") + macroList.get("Micro Nutrients") + macroList.get("Protein");
             Double totalNutritionCal = macroList.get("Carbohydrate") + macroList.get("Fat") + macroList.get("Protein");
 
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("User/" + getIntent().getExtras().getString("userId"));
+            HashMap hash= new HashMap();
+            List<MacroNutrient> macroNutrients = new ArrayList<>();
+
+            hash.put("macroNutrientDetails",macroNutrients);
+            databaseReference.updateChildren(hash);
+
 
                 PdfPTable table = new PdfPTable(3);
 
@@ -757,12 +775,17 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
                         commonCell.setHorizontalAlignment(Element.ALIGN_CENTER);
                         commonCell.setPadding(5);
                         table.addCell(commonCell);
+
+                        macroNutrients.add(new MacroNutrient(macroNutrition.getKey(),macroNutrition.getValue(),new Double(round((macroNutrition.getValue() * 100) / totalNutritionCal))));
                     }
 
 
                 }
+                hash.put("macroNutrientDetails",macroNutrients);
+                databaseReference.updateChildren(hash);
 
-                try {
+
+            try {
                     document.add(table);
                 } catch (DocumentException e) {
                     e.printStackTrace();

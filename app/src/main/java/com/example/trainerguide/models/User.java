@@ -82,7 +82,7 @@ public class User {
         this.image = image;
         this.email = email;
         this.phoneNumber=phoneNumber;
-        this.bmrReport = new ArrayList<>();
+        this.bmrReport = new ArrayList<BmrProgress>();
         this.healthIssues = new HashMap<>();
         this.foodAllergy = new HashMap<>();
         this.notifications = new HashMap<>();

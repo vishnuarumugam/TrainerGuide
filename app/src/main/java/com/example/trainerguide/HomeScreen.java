@@ -62,12 +62,12 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         //sideUserName = navigationView.findViewById(R.id.sideUserName);
 
         setSupportActionBar(toolbar);
-        toolbar.setBackgroundColor(getResources().getColor(R.color.black));
-        toolbar.setTitleTextColor(getResources().getColor(R.color.white));
+        toolbar.setBackgroundColor(getResources().getColor(R.color.themeColourOne));
+        toolbar.setTitleTextColor(getResources().getColor(R.color.themeColourThree));
         //toolBarNotification.setBackgroundColor(getResources().getColor(R.color.white));
 
         ActionBarDrawerToggle toggle = CommonNavigator.navigatorInitmethod(drawerLayout,navigationView,toolbar,this);
-        toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.appleGreen));
+        toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.themeColourTwo));
 
 
         //Menu Items
@@ -182,7 +182,9 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 finish();
                 break;
             case R.id.report_dashboard:
-                Toast.makeText(HomeScreen.this, "Will be released soon",Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(HomeScreen.this,UserReport.class));
+                finish();
+                //Toast.makeText(HomeScreen.this, "Will be released soon",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.trainer_dashboard:
                 startActivity(new Intent(HomeScreen.this,TrainerScreen.class));

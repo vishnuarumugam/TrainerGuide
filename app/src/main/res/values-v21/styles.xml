@@ -3,9 +3,15 @@
 
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here.-->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <!--item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>-->
+        <item name="colorPrimary">@color/themeColourTwo</item>
+        <item name="colorPrimaryDark">@color/headerDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+
+        <!--<item name="colorPrimary">@color/themeLightPink</item>
+        <item name="colorPrimaryDark">@color/headerDark</item>-->
+
+
         <item name="android:windowContentTransitions">true</item>
     </style>
 

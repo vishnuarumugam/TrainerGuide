@@ -8,7 +8,7 @@
     </style>
 
     <style name="RadioButtonStyle" parent="Theme.MaterialComponents.Light">
-        <item name="colorAccent">@color/appleGreen</item>
+        <item name="colorAccent">@color/themeColourTwo</item>
     </style>
 
     <style name="FoodChartRadioButtonStyle" parent="Theme.MaterialComponents.Light">

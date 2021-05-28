@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,12 +48,13 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
-public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.OnAddClickListener{
+public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.OnAddClickListener, View.OnClickListener {
 
     //Navigation view variables
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private Toolbar toolbar;
+    private Button toolBarNotification;
     private MenuItem profileMenu, logoutMenu, shareMenu, ratingMenu, traineeMenu;
 
     //Recycler view variables
@@ -96,13 +98,16 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
         drawerLayout = findViewById(R.id.trainee_drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.tool_bar);
+        toolBarNotification = findViewById(R.id.toolBarNotification);
+        toolBarNotification.setOnClickListener(this);
+
 
         //Toolbar customisation
         setSupportActionBar(toolbar);
-        toolbar.setBackgroundColor(getResources().getColor(R.color.black));
-        toolbar.setTitleTextColor(getResources().getColor(R.color.white));
+        toolbar.setBackgroundColor(getResources().getColor(R.color.themeColourOne));
+        toolbar.setTitleTextColor(getResources().getColor(R.color.themeColourThree));
         ActionBarDrawerToggle toggle = CommonNavigator.navigatorInitmethod(drawerLayout,navigationView,toolbar,this);
-        toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.yellow));
+        toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.themeColourTwo));
 
         //Menu Item variables
         profileMenu = findViewById(R.id.nav_profile);
@@ -424,4 +429,16 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
         finish();
     }
 
+    @Override
+    public void onClick(View option) {
+        switch (option.getId()) {
+
+            case R.id.toolBarNotification:
+                startActivity(new Intent(TraineesScreen.this,NotificationScreen.class));
+                finish();
+                break;
+            default:
+                break;
+        }
+    }
 }

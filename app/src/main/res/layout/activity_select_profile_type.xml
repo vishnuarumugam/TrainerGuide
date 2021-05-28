@@ -2,17 +2,30 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/themeColourThree"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="56dp"
+        android:src="@mipmap/profile"
+        android:layout_centerHorizontal="true"
+        android:transitionName="logo_Img"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_marginTop="30dp"
         android:layout_centerInParent="true">
+
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/trainerCardView"
-            android:backgroundTint="@color/appleGreen"
+            android:backgroundTint="@color/themeColourOne"
             android:layout_margin="15dp"
             app:cardCornerRadius="5dp">
             <LinearLayout
@@ -24,12 +37,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Trainer Profile"
+                    android:textColor="@color/white"
                     android:textSize="30sp"
                     android:gravity="center"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/white"
                     android:text="Description\n1. ...\n2. ...\n3. ..."/>
 
             </LinearLayout>
@@ -42,7 +57,7 @@
             android:layout_margin="15dp"
             app:cardCornerRadius="5dp"
             android:id="@+id/traineeCardView"
-            android:backgroundTint="@color/appleGreen"
+            android:backgroundTint="@color/themeColourTwo"
 
             android:layout_below="@+id/trainerCardView">
             <LinearLayout
@@ -54,12 +69,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Trainee Profile"
+                    android:textColor="@color/white"
                     android:textSize="30sp"
                     android:gravity="center"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/white"
                     android:text="Description\n1. ...\n2. ...\n3. ..."/>
 
             </LinearLayout>

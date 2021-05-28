@@ -44,6 +44,8 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.trainerguide.models.BmrProgress;
+import com.example.trainerguide.models.Food;
 import com.example.trainerguide.models.Notification;
 import com.example.trainerguide.models.Trainee;
 import com.example.trainerguide.models.Trainer;
@@ -99,6 +101,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private Toolbar toolbar;
+    private Button toolBarNotification;
     private MenuItem profileMenu, logoutMenu, shareMenu, ratingMenu, traineeMenu;
     private ProgressDialog progressDialog;
 
@@ -164,13 +167,14 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         drawerLayout = findViewById(R.id.profile_drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.tool_bar);
+        toolBarNotification = findViewById(R.id.toolBarNotification);
 
         //Toolbar customisation
         setSupportActionBar(toolbar);
-        toolbar.setBackgroundColor(getResources().getColor(R.color.black));
-        toolbar.setTitleTextColor(getResources().getColor(R.color.white));
+        toolbar.setBackgroundColor(getResources().getColor(R.color.themeColourOne));
+        toolbar.setTitleTextColor(getResources().getColor(R.color.themeColourThree));
         ActionBarDrawerToggle toggle = CommonNavigator.navigatorInitmethod(drawerLayout,navigationView,toolbar,this);
-        toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.yellow));
+        toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.themeColourTwo));
 
         //ProfileScreen variables
         profileImage = findViewById(R.id.profileImage);
@@ -277,11 +281,11 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                 profileActionView.setVisibility(View.VISIBLE);
                 requestTrainerNavText.setVisibility(View.GONE);
                 foodChartNavText.setVisibility(View.VISIBLE);
+                toolBarNotification.setVisibility(View.INVISIBLE);
             }
         }
         path = userType+ "/" + userId;
 
-        System.out.println("path  ==  "+path);
 
         if (userType.equals("Trainer")){
             experienceRelativeLay.setVisibility(View.VISIBLE);
@@ -482,6 +486,9 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         subscriptionTrainerRelativeLay.setOnClickListener(this);
         subscriptionFeesRelativeLay.setOnClickListener(this);
         subscriptionDescriptionRelativeLay.setOnClickListener(this);
+
+        //ToolBar
+        toolBarNotification.setOnClickListener(this);
 
         //Dialog update
         profileDobDialogUpdate.setOnClickListener(this);
@@ -1011,7 +1018,10 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
     public void onClick(View option) {
         if (!readonly) {
             switch (option.getId()) {
-
+                case R.id.toolBarNotification:
+                    startActivity(new Intent(ProfileScreen.this,NotificationScreen.class));
+                    finish();
+                    break;
                 case R.id.dobRelativeLay:
                     ShowDialog("DateOfBirth");
                     break;
@@ -1198,6 +1208,15 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         User userBmValue = user;
         HashMap<String,String> healthIssues = new HashMap<>();
         Boolean save = true;
+        List<BmrProgress> bmrProgressList;
+        if (user.getBmrReport()!=null){
+            bmrProgressList = user.getBmrReport();
+        }
+        else {
+
+            bmrProgressList = new ArrayList<BmrProgress>();
+        }
+
 
 
         if (userField.equals("dateOfBirth")|| userField.equals("lastModDttm")){
@@ -1212,36 +1231,73 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
             }
             hash.put(userField,dateUpdate);
             databaseReference.updateChildren(hash);
-            userBmi = userBmValue.bmiCalculation(user.getWeight(), user.getHeight());
-            userBmr = userBmValue.bmrCalculation(user.getWeight(), user.getHeight());
 
-            hash.put("bmi", new Double(round(userBmi)));
-            hash.put("bmr", new Double(round(userBmr)));
+            if ((new Double(user.getWeight())>0) && (new Double(user.getHeight())>0)){
+                userBmi = userBmValue.bmiCalculation(user.getWeight(), user.getHeight());
+                userBmr = userBmValue.bmrCalculation(user.getWeight(), user.getHeight());
+
+                hash.put("bmi", new Double(round(userBmi)));
+                hash.put("bmr", new Double(round(userBmr)));
+                hash.put("lastModDttm",Calendar.getInstance().getTime());
+
+
+                if (user.getBmrReport()==null && (user.getLastModDttm().equals(user.getAccCreateDttm()))){
+                    bmrProgressList.add(new BmrProgress(user.getLastModDttm(),user.getWeight()));
+                    bmrProgressList.add(new BmrProgress(Calendar.getInstance().getTime(),user.getWeight()));
+                    hash.put("bmrReport",bmrProgressList);
+                }
+                else{
+                    bmrProgressList.add(new BmrProgress(Calendar.getInstance().getTime(),user.getWeight()));
+                    hash.put("bmrReport",bmrProgressList);
+                }
+            }
+
+
         }
 
         else if (userField.equals("weight") || userField.equals("height")){
-            if(value.length()>0) {
+            if(new Double(value)>0) {
                 Double userProfileValue = new Double(value);
                 hash.put(userField, userProfileValue);
                 Double userBmi = null;
                 Double userBmr = null;
 
-                switch (userField) {
+                if( (new Double(user.getWeight())>0) && (new Double(user.getHeight())>0) ){
+                    switch (userField) {
 
-                    case "weight":
-                        userBmi = userBmValue.bmiCalculation(userProfileValue, user.getHeight());
-                        userBmr = userBmValue.bmrCalculation(userProfileValue, user.getHeight());
-                        break;
-                    case "height":
-                        userBmi = userBmValue.bmiCalculation(user.getWeight(), userProfileValue);
-                        userBmr = userBmValue.bmrCalculation(user.getWeight(), userProfileValue);
-                        break;
-                    default:
-                        break;
+                        case "weight":
+
+                            userBmi = userBmValue.bmiCalculation(userProfileValue, user.getHeight());
+                            userBmr = userBmValue.bmrCalculation(userProfileValue, user.getHeight());
+
+                            if (user.getBmrReport()==null && (user.getLastModDttm().equals(user.getAccCreateDttm()))){
+                                bmrProgressList.add(new BmrProgress(user.getLastModDttm(),user.getWeight()));
+                                bmrProgressList.add(new BmrProgress(Calendar.getInstance().getTime(),userProfileValue));
+                                hash.put("bmrReport",bmrProgressList);
+                            }
+                            else{
+                                bmrProgressList.add(new BmrProgress(Calendar.getInstance().getTime(),userProfileValue));
+                                hash.put("bmrReport",bmrProgressList);
+                            }
+
+                            break;
+                        case "height":
+                            System.out.println("inSwitch");
+                            userBmi = userBmValue.bmiCalculation(user.getWeight(), userProfileValue);
+                            userBmr = userBmValue.bmrCalculation(user.getWeight(), userProfileValue);
+                            break;
+                        default:
+                            break;
+                    }
+
+                    hash.put("bmi", new Double(round(userBmi)));
+                    hash.put("bmr", new Double(round(userBmr)));
+
+
+
+                    hash.put("lastModDttm",Calendar.getInstance().getTime());
                 }
 
-                hash.put("bmi", new Double(round(userBmi)));
-                hash.put("bmr", new Double(round(userBmr)));
             }
             else{
                 switch (userField) {
@@ -1359,7 +1415,5 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
             profileDialog.dismiss();
         }
     }
-
-
 
 }

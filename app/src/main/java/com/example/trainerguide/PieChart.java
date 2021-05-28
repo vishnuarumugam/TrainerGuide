@@ -7,15 +7,17 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.view.View;
 
+import java.util.List;
+
 public class PieChart extends View {
     float start=0;
     int width;
-    int[] data;
+    List<Integer> data;
     int cx,cy;
     int numberOfparts;//it tells many data or item will be placed in chart
     private int[] color;
 
-    public PieChart(Context context, int numOfItems, int[] data, int[] color) {
+    public PieChart(Context context, int numOfItems, List<Integer> data, int[] color) {
         super(context);
         setFocusable(true);
         this.numberOfparts=numOfItems;
@@ -26,16 +28,19 @@ public class PieChart extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        canvas.drawColor(Color.WHITE);
+        //canvas.drawColor(getResources().getColor(R.color.lightGrey));
         Paint p = new Paint();
         p.setAntiAlias(true);
         p.setColor(Color.RED);
-        p.setStyle(Paint.Style.STROKE);
+        p.setStyle(Paint.Style.FILL);
         p.setStrokeWidth(0);
         p.setStyle(Paint.Style.FILL);
         float[] scaledValues = scale();
 
-        RectF rectF = new RectF(0,0,getWidth(),getWidth());
+        //RectF rectF = new RectF(180,65,getWidth()-180,650);
+        RectF rectF = new RectF(20,10,getWidth()-50,getWidth()-50);
+
+        //RectF rectF = new RectF(10,10,80,80);
 
         p.setColor(Color.BLACK);
         for(int i=0;i<numberOfparts;i++){
@@ -47,17 +52,23 @@ public class PieChart extends View {
         }
 
         Paint cenPaint=new Paint();
-        int radius=getWidth()/2-100;
+        //int radius=getWidth()/2-100;
+        int radius=70;
+        int wid = getWidth()/2-100;
         cenPaint.setStyle(Paint.Style.FILL);
-        cenPaint.setColor(Color.WHITE);
-        cx=cy=getWidth()/2;
+        //cenPaint.setColor(getResources().getColor(R.color.lightGrey));
+        //cx=cy=400;
+        //cx=cy=getWidth()/2;
         //canvas.drawCircle(cx,cy,radius,cenPaint);
+        //canvas.drawCircle(500,356,radius,cenPaint);
+
+
     }
     private float[] scale() {
-        float[] scaledValues = new float[this.data.length];
+        float[] scaledValues = new float[this.data.size()];
         float total = getTotal(); //Total all values supplied to the chart
-        for (int i = 0; i < this.data.length; i++) {
-            scaledValues[i] = (this.data[i] / total) * 360; //Scale each value
+        for (int i = 0; i < this.data.size(); i++) {
+            scaledValues[i] = (this.data.get(i) / total) * 360; //Scale each value
         }
         return scaledValues;
     }

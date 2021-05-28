@@ -51,9 +51,9 @@ public class PdfCreation extends AppCompatActivity {
     PieChart pieChart;
     LinearLayout linearLayout;
 
-    int[] data={6,5,8,4,7,6};
+    int[] data={6,5,8};
     int[] color={Color.RED,Color.BLUE,Color.CYAN,Color.GREEN,Color.MAGENTA, Color.GREEN};
-    int numberOfparts = 6;
+    int numberOfparts = 3;
     float start=0;
 
     @Override
@@ -63,10 +63,10 @@ public class PdfCreation extends AppCompatActivity {
 
         myEditText = findViewById(R.id.editText);
 
-        int[] data={6,5,8,4,7,6};
+        int[] data={6,0,12};
         int[] color={Color.RED,Color.BLUE,Color.CYAN,Color.GREEN,Color.MAGENTA, Color.GREEN};
-        linearLayout=(LinearLayout)findViewById(R.id.linearLayout);
-        linearLayout.addView(new PieChart(this,6,data,color));
+        linearLayout=findViewById(R.id.linearLayout);
+        //linearLayout.addView(new PieChart(this,3,data,color));
 
         //ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, PackageManager.PERMISSION_GRANTED);
 
@@ -97,7 +97,7 @@ public class PdfCreation extends AppCompatActivity {
 
 
 
-    public void createMyPDF(View view){
+    /*public void createMyPDF(View view){
 
         if(Build.VERSION.SDK_INT > Build.VERSION_CODES.M){
             if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
@@ -106,16 +106,16 @@ public class PdfCreation extends AppCompatActivity {
                 requestPermissions(permission,1000);
             }
             else{
-                savePdf();
+                //savePdf();
             }
         }
         else {
-            savePdf();
+            //savePdf();
         }
 
-    }
+    }*/
 
-    private void savePdf() {
+    /*private void savePdf() {
         Document doc = new Document();
         String mFile = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(System.currentTimeMillis());
         String myFilePath = Environment.getExternalStorageDirectory() + "/" + mFile + ".pdf";
@@ -135,7 +135,7 @@ public class PdfCreation extends AppCompatActivity {
         p.setColor(Color.RED);
         p.setStyle(Paint.Style.STROKE);
         p.setStrokeWidth(0);
-        p.setStyle(Paint.Style.FILL);
+        p.setStyle(Paint.Style.STROKE);
         float[] scaledValues = scale();
 
 
@@ -168,7 +168,7 @@ public class PdfCreation extends AppCompatActivity {
 
 
 
-        /*try{
+        *//*try{
             PdfWriter pdfWriter = PdfWriter.getInstance(doc,new FileOutputStream(filePath));
 
             doc.open();
@@ -184,8 +184,8 @@ public class PdfCreation extends AppCompatActivity {
         catch (Exception e){
             Toast.makeText(this, "This :" + e.getMessage(), Toast.LENGTH_SHORT).show();
             Log.e("Error", e.getMessage());
-        }*/
-    }
+        }*//*
+    }*/
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -194,7 +194,7 @@ public class PdfCreation extends AppCompatActivity {
 
             case 1000:
                 if (grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    pdf();
+                    //pdf();
                 }
                 else {
                     Toast.makeText(this, "permission denied", Toast.LENGTH_SHORT).show();
@@ -203,7 +203,7 @@ public class PdfCreation extends AppCompatActivity {
 
     }
 
-    public void pdf(){
+    /*public void pdf(){
         PdfDocument myPdfDocument = new PdfDocument();
         PdfDocument.PageInfo myPageInfo = new PdfDocument.PageInfo.Builder(300,600,1).create();
         PdfDocument.Page myPage = myPdfDocument.startPage(myPageInfo);
@@ -231,22 +231,22 @@ public class PdfCreation extends AppCompatActivity {
 
         myPdfDocument.close();
 
-    }
+    }*/
 
-    private float[] scale() {
+    /*private float[] scale() {
         float[] scaledValues = new float[this.data.length];
         float total = getTotal(); //Total all values supplied to the chart
         for (int i = 0; i < this.data.length; i++) {
             scaledValues[i] = (this.data[i] / total) * 360; //Scale each value
         }
         return scaledValues;
-    }
+    }*/
 
-    private float getTotal() {
+    /*private float getTotal() {
         float total = 0;
         for (float val : this.data)
             total += val;
         return total;
-    }
+    }*/
 
 }

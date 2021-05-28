@@ -9,6 +9,7 @@ public class Trainee extends User {
     //private String foodType;
     private String subscriptionType;
     private Date subscriptionEndDate;
+    private List<MacroNutrient> macroNutrientDetails;
 
     public Date getSubscriptionEndDate() {
         return subscriptionEndDate;
@@ -53,5 +54,13 @@ public class Trainee extends User {
 
     public void setSubscriptionType(String subscriptionType) {
         this.subscriptionType = subscriptionType;
+    }
+
+    public List<MacroNutrient> getMacroNutrientDetails() {
+        return macroNutrientDetails;
+    }
+
+    public void setMacroNutrientDetails(List<MacroNutrient> macroNutrientDetails) {
+        this.macroNutrientDetails = macroNutrientDetails;
     }
 }

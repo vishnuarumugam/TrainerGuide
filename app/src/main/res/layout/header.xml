@@ -2,7 +2,7 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:background="#A4A4A4"
+        android:background="@color/themeColourOne"
         android:gravity="bottom"
         android:orientation="vertical"
         android:padding="15dp">
@@ -10,20 +10,21 @@
         <ImageView
             android:layout_width="90dp"
             android:layout_height="90dp"
-            android:background="@color/grey"
+            android:background="@color/themeColourOne"
             android:src="@mipmap/profile" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/sideUserName"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:text="Trainer Guide"
             android:textSize="24sp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:text="Fitness Goals"
+            android:textColor="@color/white"
+            android:layout_marginTop="10dp"
+            android:text="Welcome !!!"
             android:textSize="14sp"/>
 
     </LinearLayout>

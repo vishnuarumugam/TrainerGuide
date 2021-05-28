@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorPrimaryDark">#372957</color>
     <color name="colorAccent">#03DAC5</color>
+    <color name="cyan">#00FFFF</color>
     <color name="orange">#FE9A2E</color>
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
@@ -19,6 +20,28 @@
     <color name="lightBlue">#A9E2F3</color>
     <color name="greenShade">#D8F6CE</color>
     <color name="greyShadeLight">#E4E3E3</color>
+
+
+
+    <color name="themeDark">#2B7A78</color>
+    <color name="themeDark1">#3AAFA9</color>
+    <color name="themeLight">#DEF2F1</color>
+
+    <!-- Theme Colour Design one -->
+
+   <!-- <color name="headerDark">#174140</color>
+    <color name="themeColourOne">#1D3C45</color>
+    <color name="themeColourTwo">#D2601A</color>
+    <color name="themeColourThree">#DCD6D6</color>-->
+
+
+    <!-- Theme Colour Design two -->
+    <color name="headerDark">#372957</color>
+    <color name="themeColourOne">#625772</color>
+    <color name="themeColourTwo">#EF5455</color>
+    <color name="themeColourThree">#DEF2F1</color>
+
+
 
 
 

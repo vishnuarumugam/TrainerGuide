@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class BmrProgress {
     private Date addedDate;
-    private Double bmrValue;
+    private Double bmiValue;
 
 
 
@@ -17,16 +17,16 @@ public class BmrProgress {
     }
 
     public Double getBmrValue() {
-        return bmrValue;
+        return bmiValue;
     }
 
     public void setBmrValue(Double bmrValue) {
-        this.bmrValue = bmrValue;
+        this.bmiValue = bmrValue;
     }
 
     public BmrProgress(Date addedDate, Double bmrValue) {
         this.addedDate = addedDate;
-        this.bmrValue = bmrValue;
+        this.bmiValue = bmrValue;
     }
 
     public BmrProgress() {

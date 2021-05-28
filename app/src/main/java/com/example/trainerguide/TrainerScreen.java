@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,12 +50,13 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
-public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.OnAddClickListener {
+public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.OnAddClickListener, View.OnClickListener {
 
     //Navigation view variables
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private Toolbar toolbar;
+    private Button toolBarNotification;
     private MenuItem profileMenu, logoutMenu, shareMenu, ratingMenu, traineeMenu;
 
     //Common variables
@@ -88,6 +90,8 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
         drawerLayout = findViewById(R.id.trainer_drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.tool_bar);
+        toolBarNotification = findViewById(R.id.toolBarNotification);
+        toolBarNotification.setOnClickListener(this);
 
         //Common variables
         noTrainerText = findViewById(R.id.noTrainerText);
@@ -95,10 +99,10 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
 
         //Toolbar customisation
         setSupportActionBar(toolbar);
-        toolbar.setBackgroundColor(getResources().getColor(R.color.black));
-        toolbar.setTitleTextColor(getResources().getColor(R.color.white));
+        toolbar.setBackgroundColor(getResources().getColor(R.color.themeColourOne));
+        toolbar.setTitleTextColor(getResources().getColor(R.color.themeColourThree));
         ActionBarDrawerToggle toggle = CommonNavigator.navigatorInitmethod(drawerLayout,navigationView,toolbar,this);
-        toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.yellow));
+        toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.themeColourTwo));
 
         //Menu Item variables
         profileMenu = findViewById(R.id.nav_profile);
@@ -409,6 +413,19 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
         }
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public void onClick(View option) {
+        switch (option.getId()) {
+
+            case R.id.toolBarNotification:
+                startActivity(new Intent(TrainerScreen.this,NotificationScreen.class));
+                finish();
+                break;
+            default:
+                break;
+        }
     }
 
 }
