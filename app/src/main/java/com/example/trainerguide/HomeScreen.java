@@ -14,6 +14,8 @@ import android.preference.PreferenceManager;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +29,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.jjoe64.graphview.GraphView;
+import com.squareup.picasso.Picasso;
 
 public class HomeScreen extends AppCompatActivity implements View.OnClickListener {
 
@@ -41,7 +44,9 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
 
     //Dashboard variables
-    private MaterialCardView profileDashboard, reportDashboard, trainerDashboard, traineeDashboard, foodDashboard, pdf_dashboard;
+    private RelativeLayout profileDashboard, reportDashboard, trainerDashboard, traineeDashboard, foodDashboard, pdf_dashboard;
+    private TextView dashboard_user_name;
+    private ImageView dashboard_profile_pic;
 
     //User Detail variables
     private String userId, path, userType;
@@ -64,10 +69,15 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         setSupportActionBar(toolbar);
         toolbar.setBackgroundColor(getResources().getColor(R.color.themeColourOne));
         toolbar.setTitleTextColor(getResources().getColor(R.color.themeColourThree));
+        /*toolbar.setBackgroundColor(getResources().getColor(R.color.themeColourTwo));
+        toolbar.setTitleTextColor(getResources().getColor(R.color.themeColourOne));*/
+
         //toolBarNotification.setBackgroundColor(getResources().getColor(R.color.white));
 
         ActionBarDrawerToggle toggle = CommonNavigator.navigatorInitmethod(drawerLayout,navigationView,toolbar,this);
+
         toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.themeColourTwo));
+        //toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.themeColourThree));
 
 
         //Menu Items
@@ -81,14 +91,18 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         trainerDashboard = findViewById(R.id.trainer_dashboard);
         traineeDashboard = findViewById(R.id.trainee_dashboard);
         foodDashboard = findViewById(R.id.food_dashboard);
-        pdf_dashboard = findViewById(R.id.pdf_dashboard);
+
+        dashboard_user_name = findViewById(R.id.dashboard_user_name);
+        dashboard_profile_pic = findViewById(R.id.dashboard_profile_pic);
+
+        //pdf_dashboard = findViewById(R.id.pdf_dashboard);
 
         profileDashboard.setOnClickListener(this);
         reportDashboard.setOnClickListener(this);
         trainerDashboard.setOnClickListener(this);
         traineeDashboard.setOnClickListener(this);
         foodDashboard.setOnClickListener(this);
-        pdf_dashboard.setOnClickListener(this);
+        //pdf_dashboard.setOnClickListener(this);
         toolBarNotification.setOnClickListener(this);
 
         //Graph representation
@@ -108,12 +122,12 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         if (userType.equals("Trainer")){
             traineeDashboard.setVisibility(View.VISIBLE);
             foodDashboard.setVisibility(View.VISIBLE);
-            pdf_dashboard.setVisibility(View.GONE);
+            //pdf_dashboard.setVisibility(View.GONE);
         }
         else{
             traineeDashboard.setVisibility(View.GONE);
             foodDashboard.setVisibility(View.GONE);
-            pdf_dashboard.setVisibility(View.GONE);
+            //pdf_dashboard.setVisibility(View.GONE);
         }
 
         userId = sp.getString("userId",null);
@@ -198,10 +212,10 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 startActivity(new Intent(HomeScreen.this,FoodSourceListScreen.class));
                 finish();
                 break;
-            case R.id.pdf_dashboard:
+            /*case R.id.pdf_dashboard:
                 startActivity(new Intent(HomeScreen.this, PdfCreation.class));
                 finish();
-                break;
+                break;*/
             case R.id.toolBarNotification:
                 startActivity(new Intent(HomeScreen.this,NotificationScreen.class));
                 finish();
@@ -223,12 +237,24 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                     System.out.println("Trainer"+snapshot.getValue(Trainer.class));
                     System.out.println("out");
                     Trainer user = snapshot.getValue(Trainer.class);
+                    dashboard_user_name.setText(user.getName().toString() + " !");
+                    Picasso.get().load(user.getImage())
+                            .placeholder(R.mipmap.profile)
+                            .fit()
+                            .centerCrop()
+                            .into(dashboard_profile_pic);
                     //sideUserName.setText(user.getName().toString());
 
                 }
 
                 else{
                     User user = snapshot.getValue(User.class);
+                    dashboard_user_name.setText(user.getName().toString() + " !");
+                    Picasso.get().load(user.getImage())
+                            .placeholder(R.mipmap.profile)
+                            .fit()
+                            .centerCrop()
+                            .into(dashboard_profile_pic);
                     //sideUserName.setText(user.getName().toString());
 
                 }

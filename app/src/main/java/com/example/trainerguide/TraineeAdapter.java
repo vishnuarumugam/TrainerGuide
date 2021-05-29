@@ -59,7 +59,7 @@ public class TraineeAdapter extends RecyclerView.Adapter<TraineeAdapter.ViewHold
         holder.name.setText(trainee.get(position).getName());
         holder.bmi.setText(trainee.get(position).getBmi().toString());
         Picasso.get().load(trainee.get(position).getImage())
-                .placeholder(R.drawable.ic_share)
+                .placeholder(R.mipmap.profile)
                 .fit()
                 .centerCrop()
                 .into(holder.profilePic);

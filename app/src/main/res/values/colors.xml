@@ -29,18 +29,25 @@
 
     <!-- Theme Colour Design one -->
 
-   <!-- <color name="headerDark">#174140</color>
+    <!--<color name="headerDark">#174140</color>
     <color name="themeColourOne">#1D3C45</color>
     <color name="themeColourTwo">#D2601A</color>
-    <color name="themeColourThree">#DCD6D6</color>-->
-
+    <color name="themeColourThree">#DCD6D6</color>
+     <color name="themeColourFour">#A4A4A4</color>-->
 
     <!-- Theme Colour Design two -->
-    <color name="headerDark">#372957</color>
+    <!--<color name="headerDark">#372957</color>
     <color name="themeColourOne">#625772</color>
     <color name="themeColourTwo">#EF5455</color>
     <color name="themeColourThree">#DEF2F1</color>
+     <color name="themeColourFour">#A4A4A4</color>-->
 
+    <!-- Theme Colour Design three -->
+    <color name="headerDark">#372957</color>
+    <color name="themeColourOne">#625772</color>
+    <color name="themeColourTwo">#F38181</color>
+    <color name="themeColourThree">#DEF2F1</color>
+    <color name="themeColourFour">#A4A4A4</color>
 
 
 

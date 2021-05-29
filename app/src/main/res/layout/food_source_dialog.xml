@@ -104,6 +104,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textStyle="bold"
+                            android:textColor="@color/themeColourOne"
                             android:id="@+id/foodSourceAddNameLabel"
                             android:text="Name: "/>
 
@@ -113,7 +114,7 @@
                             android:id="@+id/foodSourceAddName"
                             android:hint="ex: Soya chunks"
                             android:maxLength="20"
-                            android:backgroundTint="@color/yellow"
+                            android:backgroundTint="@color/themeColourOne"
                             android:layout_marginLeft="5dp"/>
 
                     </LinearLayout>
@@ -130,13 +131,13 @@
                             android:layout_height="wrap_content"
                             android:id="@+id/foodSourceAddNutritionLabel"
                             android:textStyle="bold"
+                            android:textColor="@color/themeColourOne"
                             android:text="Macro Nutrition: "/>
 
                         <Spinner
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:id="@+id/foodSourceAddNutritionSpin" />
--->
 
                     </LinearLayout>
 
@@ -151,6 +152,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textStyle="bold"
+                            android:textColor="@color/themeColourOne"
                             android:id="@+id/foodSourceAddCalorieLabel"
                             android:text="Calorie: "/>
 
@@ -161,9 +163,17 @@
                             android:inputType="numberDecimal"
                             android:maxLength="4"
                             android:id="@+id/foodSourceAddCalorie"
-                            android:backgroundTint="@color/yellow"
+                            android:backgroundTint="@color/themeColourOne"
                             android:layout_marginLeft="5dp" />
 
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Check"
+                            android:textStyle="bold"
+                            android:id="@+id/searchCalories"
+                            android:textColor="@color/themeColourTwo"
+                            android:layout_marginLeft="10dp"/>
 
                     </LinearLayout>
 
@@ -178,6 +188,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textStyle="bold"
+                            android:textColor="@color/themeColourOne"
                             android:id="@+id/foodSourceAddQuantityLabel"
                             android:text="Quantity: "/>
 
@@ -188,7 +199,7 @@
                             android:inputType="numberDecimal"
                             android:id="@+id/foodSourceAddQuantity"
                             android:maxLength="4"
-                            android:backgroundTint="@color/yellow"
+                            android:backgroundTint="@color/themeColourOne"
                             android:layout_marginLeft="5dp" />
 
                     </LinearLayout>
@@ -205,6 +216,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textStyle="bold"
+                            android:textColor="@color/themeColourOne"
                             android:id="@+id/foodSourceAddUnitLabel"
                             android:text="Measurement: "/>
 
@@ -226,7 +238,7 @@
                     android:id="@+id/foodSourceAddDialogUpdate"
                     android:layout_marginTop="10dp"
                     android:text="UPDATE"
-                    android:backgroundTint="@color/yellow"/>
+                    android:backgroundTint="@color/themeColourOne"/>
 
 
             </LinearLayout>

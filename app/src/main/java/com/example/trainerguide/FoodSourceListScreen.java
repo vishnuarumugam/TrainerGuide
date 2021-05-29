@@ -17,6 +17,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.MenuItem;
@@ -56,7 +57,7 @@ public class FoodSourceListScreen extends AppCompatActivity implements View.OnCl
     private FoodValidation foodValidation = new FoodValidation();
 
     //Food- Recycler view variables
-    private TextView foodName, foodNutritionType, foodCalorie;
+    private TextView foodName, foodNutritionType, foodCalorie, searchCalories;
     private EditText foodSourceAddName, foodSourceAddCalorie, foodSourceAddQuantity;
     private Button foodToggleVeg, foodToggleNonVeg;
     private RecyclerView foodListRecycler;
@@ -117,6 +118,7 @@ public class FoodSourceListScreen extends AppCompatActivity implements View.OnCl
         progress_bar = findViewById(R.id.progress_bar);
         foodSourceAdd = findViewById(R.id.foodSourceAdd);
 
+
         //PopUp Dialog
         foodSourceDialog = new Dialog(this);
         foodSourceDialog.setContentView(R.layout.food_source_dialog);
@@ -126,6 +128,7 @@ public class FoodSourceListScreen extends AppCompatActivity implements View.OnCl
         foodSourceAddName = foodSourceDialog.findViewById(R.id.foodSourceAddName);
         foodSourceAddCalorie = foodSourceDialog.findViewById(R.id.foodSourceAddCalorie);
         foodSourceAddQuantity = foodSourceDialog.findViewById(R.id.foodSourceAddQuantity);
+        searchCalories = foodSourceDialog.findViewById(R.id.searchCalories);
         foodAddVegToggle = foodSourceDialog.findViewById(R.id.foodAddVegToggle);
         foodAddNonVegToggle = foodSourceDialog.findViewById(R.id.foodAddNonVegToggle);
         foodSourceAddDialogUpdate = foodSourceDialog.findViewById(R.id.foodSourceAddDialogUpdate);
@@ -148,17 +151,19 @@ public class FoodSourceListScreen extends AppCompatActivity implements View.OnCl
         foodSourceDialogClose.setOnClickListener(this);
         foodSourceAdd.setOnClickListener(this);
         foodSourceAddDialogUpdate.setOnClickListener(this);
+        searchCalories.setOnClickListener(this);
         foodAddVegToggle.setOnClickListener(this);
         foodAddNonVegToggle.setOnClickListener(this);
-        foodAddVegToggle.setBackgroundColor(getResources().getColor(R.color.yellow));
+        foodAddVegToggle.setBackgroundColor(getResources().getColor(R.color.themeColourOne));
         foodAddNonVegToggle.setBackgroundColor(getResources().getColor(R.color.white));
-        foodAddNonVegToggle.setTextColor(getResources().getColor(R.color.yellow));
+        foodAddNonVegToggle.setTextColor(getResources().getColor(R.color.themeColourOne));
 
         foodToggleVeg.setOnClickListener(this);
         foodToggleNonVeg.setOnClickListener(this);
         foodAddType = "Veg";
         vegToggle();
         vegAddToggle();
+
 
         //Recycler view variables
         foodListRecycler = findViewById(R.id.foodListRecycler);
@@ -297,6 +302,15 @@ public class FoodSourceListScreen extends AppCompatActivity implements View.OnCl
 
         switch (option.getId()){
 
+            case R.id.searchCalories:
+                if (! (foodSourceAddName.getText().toString().isEmpty())){
+                    gotoUrl(foodSourceAddName.getText().toString());
+                }
+                else{
+                    foodSourceAddName.setError("Please enter a valid food name");
+                }
+                break;
+
             case R.id.toolBarNotification:
                 startActivity(new Intent(FoodSourceListScreen.this,NotificationScreen.class));
                 finish();
@@ -306,10 +320,10 @@ public class FoodSourceListScreen extends AppCompatActivity implements View.OnCl
                 foodAddType = "Veg";
                 progress_bar.setVisibility(View.VISIBLE);
 /*
-                foodToggleVeg.setBackgroundColor(getResources().getColor(R.color.yellow));
+                foodToggleVeg.setBackgroundColor(getResources().getColor(R.color.themeColourOne));
                 foodToggleVeg.setTextColor(getResources().getColor(R.color.white));
                 foodToggleNonVeg.setBackgroundColor(getResources().getColor(R.color.white));
-                foodToggleNonVeg.setTextColor(getResources().getColor(R.color.yellow));
+                foodToggleNonVeg.setTextColor(getResources().getColor(R.color.themeColourOne));
 */
                 vegToggle();
                 PopulateFoodList("Veg");
@@ -318,10 +332,10 @@ public class FoodSourceListScreen extends AppCompatActivity implements View.OnCl
             case R.id.foodToggleNonVeg:
                 foodAddType = "Non-Veg";
                 progress_bar.setVisibility(View.VISIBLE);
- /*               foodToggleNonVeg.setBackgroundColor(getResources().getColor(R.color.yellow));
+ /*               foodToggleNonVeg.setBackgroundColor(getResources().getColor(R.color.themeColourOne));
                 foodToggleNonVeg.setTextColor(getResources().getColor(R.color.white));
                 foodToggleVeg.setBackgroundColor(getResources().getColor(R.color.white));
-                foodToggleVeg.setTextColor(getResources().getColor(R.color.yellow));*/
+                foodToggleVeg.setTextColor(getResources().getColor(R.color.themeColourOne));*/
                 nonVegToggle();
                 PopulateFoodList("Nonveg");
                 break;
@@ -351,19 +365,19 @@ public class FoodSourceListScreen extends AppCompatActivity implements View.OnCl
             case R.id.foodAddVegToggle:
                 foodAddType = "Veg";
                 vegAddToggle();
- /*               foodAddVegToggle.setBackgroundColor(getResources().getColor(R.color.yellow));
+ /*               foodAddVegToggle.setBackgroundColor(getResources().getColor(R.color.themeColourOne));
                 foodAddVegToggle.setTextColor(getResources().getColor(R.color.white));
                 foodAddNonVegToggle.setBackgroundColor(getResources().getColor(R.color.white));
-                foodAddNonVegToggle.setTextColor(getResources().getColor(R.color.yellow));
+                foodAddNonVegToggle.setTextColor(getResources().getColor(R.color.themeColourOne));
 */                break;
 
             case R.id.foodAddNonVegToggle:
                 foodAddType = "Non-Veg";
                 nonVegAddToggle();
- /*               foodAddNonVegToggle.setBackgroundColor(getResources().getColor(R.color.yellow));
+ /*               foodAddNonVegToggle.setBackgroundColor(getResources().getColor(R.color.themeColourOne));
                 foodAddNonVegToggle.setTextColor(getResources().getColor(R.color.white));
                 foodAddVegToggle.setBackgroundColor(getResources().getColor(R.color.white));
-                foodAddVegToggle.setTextColor(getResources().getColor(R.color.yellow));
+                foodAddVegToggle.setTextColor(getResources().getColor(R.color.themeColourOne));
 */                break;
 
             case R.id.foodSourceDialogClose:
@@ -372,6 +386,12 @@ public class FoodSourceListScreen extends AppCompatActivity implements View.OnCl
                 break;
         }
 
+    }
+
+    private void gotoUrl(String name) {
+        String urlLink = getString(R.string.urlLink) + name;
+        Uri uri = Uri.parse(urlLink);
+        startActivity(new Intent(Intent.ACTION_VIEW,uri));
     }
 
     private boolean ValidFood(String foodName, Double foodCalorie, Double foodQuantity) {
@@ -400,9 +420,9 @@ public class FoodSourceListScreen extends AppCompatActivity implements View.OnCl
     private void ShowDialog() {
         foodSourceAddDialogTitleLin.setVisibility(View.VISIBLE);
         foodDialogClear();
-        /*foodAddVegToggle.setBackgroundColor(getResources().getColor(R.color.yellow));
+        /*foodAddVegToggle.setBackgroundColor(getResources().getColor(R.color.themeColourOne));
         foodAddNonVegToggle.setBackgroundColor(getResources().getColor(R.color.white));
-        foodAddNonVegToggle.setTextColor(getResources().getColor(R.color.yellow));*/
+        foodAddNonVegToggle.setTextColor(getResources().getColor(R.color.themeColourOne));*/
         foodSourceDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         foodSourceDialog.show();
     }
@@ -476,10 +496,10 @@ public class FoodSourceListScreen extends AppCompatActivity implements View.OnCl
 
     private void foodDialogClear(){
         foodAddType = "Veg";
-        foodAddVegToggle.setBackgroundColor(getResources().getColor(R.color.yellow));
+        foodAddVegToggle.setBackgroundColor(getResources().getColor(R.color.themeColourOne));
         foodAddVegToggle.setTextColor(getResources().getColor(R.color.white));
         foodAddNonVegToggle.setBackgroundColor(getResources().getColor(R.color.white));
-        foodAddNonVegToggle.setTextColor(getResources().getColor(R.color.yellow));
+        foodAddNonVegToggle.setTextColor(getResources().getColor(R.color.themeColourOne));
         foodSourceAddName.getText().clear();
         foodSourceAddCalorie.getText().clear();
         foodSourceAddQuantity.getText().clear();
@@ -487,34 +507,34 @@ public class FoodSourceListScreen extends AppCompatActivity implements View.OnCl
 
     }
     private void vegToggle(){
-        foodToggleVeg.setBackgroundColor(getResources().getColor(R.color.yellow));
+        foodToggleVeg.setBackgroundColor(getResources().getColor(R.color.themeColourOne));
         foodToggleVeg.setTextColor(getResources().getColor(R.color.white));
         foodToggleNonVeg.setBackgroundColor(getResources().getColor(R.color.white));
-        foodToggleNonVeg.setTextColor(getResources().getColor(R.color.yellow));
+        foodToggleNonVeg.setTextColor(getResources().getColor(R.color.themeColourOne));
 
         //PopulateFoodList("Veg");
 
     }
     private void nonVegToggle(){
-        foodToggleNonVeg.setBackgroundColor(getResources().getColor(R.color.yellow));
+        foodToggleNonVeg.setBackgroundColor(getResources().getColor(R.color.themeColourOne));
         foodToggleNonVeg.setTextColor(getResources().getColor(R.color.white));
         foodToggleVeg.setBackgroundColor(getResources().getColor(R.color.white));
-        foodToggleVeg.setTextColor(getResources().getColor(R.color.yellow));
+        foodToggleVeg.setTextColor(getResources().getColor(R.color.themeColourOne));
         //PopulateFoodList("Non-Veg");
 
     }
     private void vegAddToggle(){
-        foodAddVegToggle.setBackgroundColor(getResources().getColor(R.color.yellow));
+        foodAddVegToggle.setBackgroundColor(getResources().getColor(R.color.themeColourOne));
         foodAddVegToggle.setTextColor(getResources().getColor(R.color.white));
         foodAddNonVegToggle.setBackgroundColor(getResources().getColor(R.color.white));
-        foodAddNonVegToggle.setTextColor(getResources().getColor(R.color.yellow));
+        foodAddNonVegToggle.setTextColor(getResources().getColor(R.color.themeColourOne));
 
     }
     private void nonVegAddToggle(){
-        foodAddNonVegToggle.setBackgroundColor(getResources().getColor(R.color.yellow));
+        foodAddNonVegToggle.setBackgroundColor(getResources().getColor(R.color.themeColourOne));
         foodAddNonVegToggle.setTextColor(getResources().getColor(R.color.white));
         foodAddVegToggle.setBackgroundColor(getResources().getColor(R.color.white));
-        foodAddVegToggle.setTextColor(getResources().getColor(R.color.yellow));
+        foodAddVegToggle.setTextColor(getResources().getColor(R.color.themeColourOne));
 
     }
     @Override

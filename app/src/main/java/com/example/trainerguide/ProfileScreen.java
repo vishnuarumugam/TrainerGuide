@@ -272,6 +272,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         }
 
         if(readonly){
+            toolBarNotification.setVisibility(View.GONE);
             if(IsTrainerProfile && !sp.getString("ProfileType", null).equals("Trainer")){
                 profileActionView.setVisibility(View.VISIBLE);
                 requestTrainerNavText.setVisibility(View.VISIBLE);
@@ -281,7 +282,6 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                 profileActionView.setVisibility(View.VISIBLE);
                 requestTrainerNavText.setVisibility(View.GONE);
                 foodChartNavText.setVisibility(View.VISIBLE);
-                toolBarNotification.setVisibility(View.INVISIBLE);
             }
         }
         path = userType+ "/" + userId;
@@ -1017,8 +1017,10 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View option) {
         if (!readonly) {
+
             switch (option.getId()) {
                 case R.id.toolBarNotification:
+                    System.out.println("toolbar");
                     startActivity(new Intent(ProfileScreen.this,NotificationScreen.class));
                     finish();
                     break;
