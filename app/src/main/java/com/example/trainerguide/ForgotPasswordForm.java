@@ -41,23 +41,54 @@ public class ForgotPasswordForm extends AppCompatActivity {
         btnFgp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Forgot Password Link sending to Email
-                fAuth.sendPasswordResetEmail(txtEmail.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(ForgotPasswordForm.this, "Password Link sent to your Email", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(),MainActivity.class));
-                        } else {
-                            Toast.makeText(ForgotPasswordForm.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+
+                if (emailValidation()){
+                    btnFgp.setEnabled(false);
+                    btnFgp.setBackgroundColor(getResources().getColor(R.color.themeColourFour));
+                    // Forgot Password Link sending to Email
+                    fAuth.sendPasswordResetEmail(txtEmail.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(ForgotPasswordForm.this, "Password Link sent to your Email. Please reset your password and login again", Toast.LENGTH_SHORT).show();
+
+                                startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                            } else {
+                                //Toast.makeText(ForgotPasswordForm.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ForgotPasswordForm.this, "Some error occurred. Please try after sometime", Toast.LENGTH_SHORT).show();
+                                btnFgp.setEnabled(true);
+                                btnFgp.setBackgroundColor(getResources().getColor(R.color.themeColourTwo));
+                            }
 
                         }
+                    });
+                }
 
-                    }
-                });
+                else{
+                    btnFgp.setEnabled(true);
+                    btnFgp.setBackgroundColor(getResources().getColor(R.color.themeColourTwo));
+                }
+
             }
         });
     }
 
+    private boolean emailValidation() {
+
+        UserInputValidation userInputValidation =  new UserInputValidation();
+
+        String emailValid = userInputValidation.emailValidation(txtEmail.getText().toString());
+
+        if ( emailValid.equals("Valid")  ){
+            return true;
+        }
+        else{
+
+            if ( !emailValid.equals("Valid")){
+                txtEmail.setError(emailValid);
+            }
+        }
+        return false;
+    }
 
 }

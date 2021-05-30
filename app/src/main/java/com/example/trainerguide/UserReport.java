@@ -171,7 +171,7 @@ public class UserReport extends AppCompatActivity implements View.OnClickListene
                         finish();
                         break;
                     default:
-                        Toast.makeText(UserReport.this, "profile", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(UserReport.this, "Coming Soon", Toast.LENGTH_SHORT).show();
                         break;
                 }
                 return false;

@@ -151,7 +151,7 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
                         finish();
                         break;
                     default:
-                        Toast.makeText(TrainerScreen.this, "profile", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(TrainerScreen.this, "Coming Soon", Toast.LENGTH_SHORT).show();
                         break;
                 }
                 return false;
@@ -247,6 +247,7 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
                         while (x.hasNext()){
                             String key = (String) x.next();
                             jsonArray.put(object.get(key));
+
                         }
 
                         //jsonArray.getJSONObject(1)
@@ -255,9 +256,12 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
                         //JSONArray jsonArray = new JSONArray(response.body());
                         //Parse JSON Array
                         parseResult(jsonArray);
+                        noTrainerText.setVisibility(View.VISIBLE);
+                        noTrainerText.setText("Trainers List");
                     } catch (JSONException e) {
                         e.printStackTrace();
                         noTrainerText.setVisibility(View.VISIBLE);
+                        noTrainerText.setText("No trainers available");
                     }
                 }
             }

@@ -31,10 +31,10 @@ public class TrainerAdapter extends  RecyclerView.Adapter<TrainerAdapter.ViewHol
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
 
         int[] colours = new int[]{Color.parseColor("#F6CEE3"), Color.parseColor("#A9E2F3"), Color.parseColor("#D8F6CE"), Color.parseColor("#E4E3E3")};
-        holder.trainerConsItem.setBackgroundColor(colours[position%4]);
+        //holder.trainerConsItem.setBackgroundColor(colours[position%4]);
 
         holder.name.setText(trainers.get(position).getName());
-        System.out.println("****   *****"+trainers.get(position).getName());
+        //System.out.println("****   *****"+trainers.get(position).getName());
         if(trainers.get(position).getExperience() != null){
             holder.experience.setText(trainers.get(position).getExperience().toString() + " Year(s)");}
 

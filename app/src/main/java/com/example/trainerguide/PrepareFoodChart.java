@@ -264,7 +264,7 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
                         finish();
                         break;
                     default:
-                        Toast.makeText(PrepareFoodChart.this, "profile", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PrepareFoodChart.this, "Coming Soon", Toast.LENGTH_SHORT).show();
                         break;
                 }
                 return false;

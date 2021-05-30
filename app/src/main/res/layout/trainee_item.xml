@@ -4,11 +4,9 @@
     android:id="@+id/trainee_item_parent"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="10dp"
-    android:backgroundTint="@color/white"
-    app:cardCornerRadius="10dp"
-    android:layout_marginHorizontal="10dp"
-    app:cardElevation="5dp">
+    android:layout_marginTop="1dp"
+    android:padding="5dp"
+    android:backgroundTint="@color/white">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/traineeConsItem"
@@ -19,8 +17,9 @@
 
         <RelativeLayout
             android:id="@+id/traineeItem"
-            android:background="@color/lightGrey"
+            android:background="@color/white"
             android:layout_width="match_parent"
+            android:padding="10dp"
             android:layout_height="match_parent">
 
             <androidx.cardview.widget.CardView
@@ -28,7 +27,6 @@
                 android:layout_height="100dp"
                 android:id="@+id/traineeProfileImageCard"
                 app:cardCornerRadius="50dp"
-                android:layout_margin="10dp"
                 android:layout_centerVertical="true"
                 android:elevation="5dp">
 
@@ -37,10 +35,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@mipmap/profile"
-                    android:scaleType="centerCrop"
-                    />
+                    android:scaleType="centerCrop"/>
 
             </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="2dp"
+                android:layout_height="100dp"
+                app:cardCornerRadius="10dp"
+                android:id="@+id/traineeItemThemeLine"
+                app:cardBackgroundColor="@color/themeColourOne"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@+id/traineeProfileImageCard"/>
 
             <TextView
                 android:id="@+id/traineeItemNameLabel"
@@ -48,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="20dp"
-                android:layout_toRightOf="@id/traineeProfileImageCard"
+                android:layout_toRightOf="@id/traineeItemThemeLine"
                 android:text="Name"
                 android:textColor="@color/black"
                 android:textStyle="italic"/>
@@ -70,7 +77,7 @@
                 android:layout_below="@+id/traineeItemNameLabel"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_toRightOf="@id/traineeProfileImageCard"
+                android:layout_toRightOf="@id/traineeItemThemeLine"
                 android:text="BMI:"
                 android:textColor="@color/black"
                 android:textStyle="italic"/>

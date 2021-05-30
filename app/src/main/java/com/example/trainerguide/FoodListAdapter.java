@@ -46,7 +46,7 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull FoodListAdapter.ViewHolder holder, int position) {
         int[] colours = new int[]{Color.parseColor("#F6CEE3"), Color.parseColor("#A9E2F3"), Color.parseColor("#D8F6CE"), Color.parseColor("#E4E3E3")};
-        holder.foodConsItem.setBackgroundColor(colours[position%3]);
+        //holder.foodConsItem.setBackgroundColor(colours[position%3]);
         holder.foodName.setText(foodList.get(position).getName().toUpperCase());
         holder.foodNutritionType.setText(foodList.get(position).getNutritionType());
         holder.foodCalorie.setText(foodList.get(position).getCalorieValue().toString());

@@ -122,7 +122,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
     private ImageButton profileImage;
     MaterialCardView accCardView, personalInfoCardView, foodInfoCardView, healthInfoCardView, subscriptionInfoCardView, profileActionView;
     TextView profileAccDrop, profilePersonalInfoDrop, profileFoodInfoDrop, profileWeight,profilePhoneNumber, profileEmailId, profileDob, profileHeight, profileFoodType, profileHealthInfoDrop, foodAllergyOther, healthIssuesOther, profileExperience, profileSubscriptionInfoDrop, profileSubscriptionType, profileSubscriptionFees, profileSubscriptionDescription, profileSubscriptionTrainer, requestTrainerNavText, foodChartNavText;
-    RelativeLayout accRelativeCollapse, personalRelativeCollapse, foodInfoRelativeCollapse, dobRelativeLay, healthInfoRelativeCollapse, weightRelativeLay, heightRelativeLay, foodTypeRelativeLay, foodAllergyRelativeLay, healthIssuesRelativeLay, experienceRelativeLay, subscriptionInfoRelativeCollapse, subscriptionTypeRelativeLay, subscriptionTrainerRelativeLay, subscriptionFeesRelativeLay, subscriptionDescriptionRelativeLay;
+    RelativeLayout accRelativeCollapse, personalRelativeCollapse, foodInfoRelativeCollapse, dobRelativeLay, healthInfoRelativeCollapse, weightRelativeLay, heightRelativeLay, foodTypeRelativeLay, foodAllergyRelativeLay, healthIssuesRelativeLay, experienceRelativeLay, subscriptionInfoRelativeCollapse, subscriptionTypeRelativeLay, subscriptionTrainerRelativeLay, subscriptionFeesRelativeLay, subscriptionDescriptionRelativeLay, subscriptionExtendRelativeLay;
 
     private String userId;
     private String path;
@@ -236,6 +236,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         subscriptionTrainerRelativeLay = findViewById(R.id.subscriptionTrainerRelativeLay);
         subscriptionFeesRelativeLay = findViewById(R.id.subscriptionFeesRelativeLay);
         subscriptionDescriptionRelativeLay = findViewById(R.id.subscriptionDescriptionRelativeLay);
+        subscriptionExtendRelativeLay = findViewById(R.id.subscriptionExtendRelativeLay);
 
         //Menu Item variables
         profileMenu = findViewById(R.id.nav_profile);
@@ -629,7 +630,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                         finish();
                         break;
                     default:
-                        Toast.makeText(ProfileScreen.this, "profile", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ProfileScreen.this, "Coming Soon", Toast.LENGTH_SHORT).show();
                         break;
                 }
                 return false;
@@ -909,8 +910,9 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                 else{
                     Trainee trainee = snapshot.getValue(Trainee.class);
                     if(extendReadonly && trainee.getTrainerId()!= null && trainee.getTrainerId()!="") {
-                        extend.setVisibility(View.VISIBLE);
-                        txtSubscriptionDate.setVisibility(View.VISIBLE);
+                        subscriptionExtendRelativeLay.setVisibility(View.VISIBLE);
+                        /*extend.setVisibility(View.VISIBLE);
+                        txtSubscriptionDate.setVisibility(View.VISIBLE);*/
                         txtSubscriptionDate.setText(trainee.getSubscriptionEndDate().toString());
                     }
                     //String trainerName = GetTrainerName(trainee.getTrainerId());

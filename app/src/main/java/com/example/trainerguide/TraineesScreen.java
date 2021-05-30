@@ -150,7 +150,7 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
                         finish();
                         break;
                     default:
-                        Toast.makeText(TraineesScreen.this, "profile", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(TraineesScreen.this, "Coming Soon", Toast.LENGTH_SHORT).show();
                         break;
                 }
                 return false;
@@ -241,9 +241,12 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
 
                         //Parse JSON Array
                         parseResult(jsonArray);
+                        noTraineeText.setVisibility(View.VISIBLE);
+                        noTraineeText.setText("Trainees List");
                     } catch (JSONException e) {
                         e.printStackTrace();
                         noTraineeText.setVisibility(View.VISIBLE);
+                        noTraineeText.setText("No Trainees under you");
                     }
                 }
             }

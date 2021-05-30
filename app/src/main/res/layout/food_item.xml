@@ -4,33 +4,42 @@
     android:id="@+id/parent"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginVertical="10dp"
-    app:cardCornerRadius="10dp"
-    android:layout_marginHorizontal="10dp"
-    app:cardElevation="5dp">
+    android:layout_marginTop="1dp"
+    android:padding="10dp"
+    android:backgroundTint="@color/white">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/foodConsItem"
-        android:padding="2dp"
-        >
+        android:padding="2dp">
 
 
         <RelativeLayout
             android:id="@+id/foodItem"
-            android:background="@color/lightGrey"
+            android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="2dp"
+                android:layout_height="70dp"
+                app:cardCornerRadius="10dp"
+                android:layout_marginTop="10dp"
+                android:id="@+id/foodItemThemeLine"
+                app:cardBackgroundColor="@color/themeColourOne"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="10dp" />
 
             <TextView
                 android:id="@+id/foodItemNameLabel"
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:layout_marginTop="10dp"
                 android:text="Name:"
-                android:textStyle="bold"
+                android:layout_alignTop="@id/foodItemThemeLine"
+                android:layout_toRightOf="@id/foodItemThemeLine"
+                android:textStyle="normal"
                 style="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="@color/black"/>
             <TextView
@@ -41,9 +50,9 @@
                 android:layout_alignTop="@id/foodItemNameLabel"
                 android:layout_toRightOf="@id/foodItemNameLabel"
                 android:text=""
-                android:textColor="@color/black"
+                android:textColor="@color/themeColourOne"
                 style="@style/TextAppearance.AppCompat.Body1"
-                android:textStyle="normal"/>
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/foodItemNtLabel"
@@ -51,11 +60,11 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/foodItemNameLabel"
                 android:layout_margin="5dp"
-                android:textStyle="bold"
+                android:textStyle="normal"
                 style="@style/TextAppearance.AppCompat.Body1"
                 android:text="Nutrition:"
-                android:textColor="@color/black"
-                />
+                android:layout_toRightOf="@id/foodItemThemeLine"
+                android:textColor="@color/black"/>
 
             <TextView
                 android:id="@+id/foodItemNt"
@@ -74,8 +83,9 @@
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/foodItemNt"
+                android:layout_toRightOf="@id/foodItemThemeLine"
                 android:layout_margin="5dp"
-                android:textStyle="bold"
+                android:textStyle="normal"
                 android:text="Calorie:"
                 style="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="@color/black" />

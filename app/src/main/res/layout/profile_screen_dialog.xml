@@ -40,7 +40,7 @@
                 android:id="@+id/profileDobDialogTitleLin"
                 android:orientation="vertical"
                 android:layout_marginTop="25dp"
-                android:layout_marginBottom="25dp"
+                android:layout_marginBottom="20dp"
                 android:visibility="gone">
 
                 <ImageView
@@ -79,7 +79,7 @@
                     android:id="@+id/profileDobDialogUpdate"
                     android:layout_gravity="center"
                     android:text="UPDATE"
-                    android:backgroundTint="@color/yellow"/>
+                    android:backgroundTint="@color/themeColourOne"/>
 
             </LinearLayout>
 
@@ -124,7 +124,7 @@
                     android:layout_marginTop="15dp"
                     android:elevation="10dp"
                     android:text="(in kgs)"
-                    android:textColor="@color/grey"
+                    android:textColor="@color/themeColourOne"
                     android:textStyle="bold"
                     style="@style/TextAppearance.AppCompat.Body1"/>
 
@@ -146,7 +146,7 @@
                     android:id="@+id/profileWeightDialogUpdate"
                     android:layout_marginTop="10dp"
                     android:text="UPDATE"
-                    android:backgroundTint="@color/yellow"/>
+                    android:backgroundTint="@color/themeColourOne"/>
 
 
             </LinearLayout>
@@ -192,7 +192,7 @@
                     android:layout_marginTop="15dp"
                     android:elevation="10dp"
                     android:text="(in cms)"
-                    android:textColor="@color/grey"
+                    android:textColor="@color/themeColourOne"
                     android:textStyle="bold"
                     style="@style/TextAppearance.AppCompat.Body1" />
 
@@ -217,7 +217,7 @@
                     android:id="@+id/profileHeightDialogUpdate"
                     android:layout_marginTop="10dp"
                     android:text="UPDATE"
-                    android:backgroundTint="@color/yellow"/>
+                    android:backgroundTint="@color/themeColourOne"/>
 
 
             </LinearLayout>
@@ -263,7 +263,7 @@
                     android:layout_marginTop="15dp"
                     android:elevation="10dp"
                     android:text="(in years)"
-                    android:textColor="@color/grey"
+                    android:textColor="@color/themeColourOne"
                     android:textStyle="bold"
                     style="@style/TextAppearance.AppCompat.Body1" />
 
@@ -288,7 +288,7 @@
                     android:id="@+id/profileExperienceDialogUpdate"
                     android:layout_marginTop="10dp"
                     android:text="UPDATE"
-                    android:backgroundTint="@color/yellow"/>
+                    android:backgroundTint="@color/themeColourOne"/>
 
 
             </LinearLayout>
@@ -368,7 +368,7 @@
                     android:id="@+id/profileFoodTypeDialogUpdate"
                     android:layout_marginTop="10dp"
                     android:text="UPDATE"
-                    android:backgroundTint="@color/yellow"/>
+                    android:backgroundTint="@color/themeColourOne"/>
 
 
             </LinearLayout>
@@ -510,7 +510,7 @@
                     android:id="@+id/profileFoodAllergyDialogUpdate"
                     android:layout_marginTop="10dp"
                     android:text="UPDATE"
-                    android:backgroundTint="@color/yellow"/>
+                    android:backgroundTint="@color/themeColourOne"/>
 
 
             </LinearLayout>
@@ -652,7 +652,7 @@
                     android:id="@+id/profileHealthInfoDialogUpdate"
                     android:layout_marginTop="10dp"
                     android:text="UPDATE"
-                    android:backgroundTint="@color/yellow"/>
+                    android:backgroundTint="@color/themeColourOne"/>
 
 
             </LinearLayout>
@@ -733,7 +733,7 @@
                     android:id="@+id/profileSubscriptionTypeDialogUpdate"
                     android:layout_marginTop="10dp"
                     android:text="UPDATE"
-                    android:backgroundTint="@color/yellow"/>
+                    android:backgroundTint="@color/themeColourOne"/>
 
 
             </LinearLayout>
@@ -779,7 +779,7 @@
                     android:layout_marginTop="15dp"
                     android:elevation="10dp"
                     android:text="(in Rupees / month)"
-                    android:textColor="@color/grey"
+                    android:textColor="@color/themeColourOne"
                     android:textStyle="bold"
                     style="@style/TextAppearance.AppCompat.Body1" />
 
@@ -804,7 +804,7 @@
                     android:id="@+id/profileSubscriptionFeesDialogUpdate"
                     android:layout_marginTop="10dp"
                     android:text="UPDATE"
-                    android:backgroundTint="@color/yellow"/>
+                    android:backgroundTint="@color/themeColourOne"/>
 
 
             </LinearLayout>
@@ -850,7 +850,7 @@
                     android:layout_marginTop="15dp"
                     android:elevation="10dp"
                     android:text="(Your training details)"
-                    android:textColor="@color/grey"
+                    android:textColor="@color/themeColourOne"
                     android:textStyle="bold"
                     style="@style/TextAppearance.AppCompat.Body1" />
 
@@ -871,7 +871,6 @@
                         android:textAlignment="center"
                         android:layout_margin="15dp"
                         android:maxLength="300"
-                        android:text="Test"
                         android:backgroundTint="@color/lightGrey"
                         android:background="@drawable/round_shape"/>
 
@@ -884,7 +883,7 @@
                     android:id="@+id/profileSubscriptionDescDialogUpdate"
                     android:layout_marginTop="10dp"
                     android:text="UPDATE"
-                    android:backgroundTint="@color/yellow"/>
+                    android:backgroundTint="@color/themeColourOne"/>
 
 
             </LinearLayout>

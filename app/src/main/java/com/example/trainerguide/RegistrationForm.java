@@ -102,7 +102,8 @@ public class RegistrationForm extends AppCompatActivity{
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                registerButton.setEnabled(false);
+                registerButton.setBackgroundColor(getResources().getColor(R.color.themeColourFour));
                 if (RegistrationValidation()) {
                     Toast.makeText(RegistrationForm.this, "In", Toast.LENGTH_SHORT).show();
                     int selectedId=radioGroup.getCheckedRadioButtonId();
@@ -159,10 +160,13 @@ public class RegistrationForm extends AppCompatActivity{
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             Toast.makeText(RegistrationForm.this, "Profile Creation Failed", Toast.LENGTH_SHORT).show();
+                            registerButton.setEnabled(true);
+                            registerButton.setBackgroundColor(getResources().getColor(R.color.themeColourTwo));
                         }
                     });
                 } else {
-                    Toast.makeText(RegistrationForm.this, "Out", Toast.LENGTH_SHORT).show();
+                    registerButton.setEnabled(true);
+                    registerButton.setBackgroundColor(getResources().getColor(R.color.themeColourTwo));
                 }
 
             }

@@ -11,14 +11,18 @@
     android:background="@drawable/round_shape">
     <ProgressBar
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        style="@style/ProgressBarStyle"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Loading..."
-        android:textSize="25dp"
-        android:textStyle="italic|bold"
-        android:layout_marginTop="10dp"/>
+        android:text="Loading ..."
+        android:textSize="18dp"
+        android:padding="3dp"
+        style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+        android:layout_marginTop="15dp"/>
 
 </LinearLayout>
 </RelativeLayout>

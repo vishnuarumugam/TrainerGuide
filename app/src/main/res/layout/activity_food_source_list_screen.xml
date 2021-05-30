@@ -64,11 +64,13 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent">
+
                                 <androidx.recyclerview.widget.RecyclerView
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:layout_marginHorizontal="10dp"
                                     android:nestedScrollingEnabled="false"
+                                    android:background="@color/themeColourTwo"
+                                    android:paddingBottom="1dp"
                                     android:id="@+id/foodListRecycler"
                                     tools:listitem="@layout/food_item"
                                     android:layout_marginTop="10dp" />
@@ -83,7 +85,7 @@
                             android:layout_alignParentEnd="true"
                             android:layout_gravity="right"
                             android:layout_marginEnd="20dp"
-                            android:layout_marginTop="435dp"
+                            android:layout_marginTop="470dp"
                             android:backgroundTint="@color/themeColourTwo"
                             android:src="@drawable/ic_add"
                             tools:ignore="MissingConstraints" />

@@ -230,7 +230,7 @@ public class FoodSourceListScreen extends AppCompatActivity implements View.OnCl
                         finish();
                         break;
                     default:
-                        Toast.makeText(FoodSourceListScreen.this, "profile", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(FoodSourceListScreen.this, "Coming Soon", Toast.LENGTH_SHORT).show();
                         break;
                 }
                 return false;

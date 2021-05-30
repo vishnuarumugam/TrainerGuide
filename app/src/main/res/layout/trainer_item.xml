@@ -4,11 +4,9 @@
     android:id="@+id/parent"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginVertical="10dp"
     android:backgroundTint="@color/white"
-    app:cardCornerRadius="10dp"
-    android:layout_marginHorizontal="10dp"
-    app:cardElevation="5dp">
+    android:layout_marginTop="1dp"
+    android:padding="5dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/trainerConsItem"
@@ -19,7 +17,8 @@
 
         <RelativeLayout
             android:id="@+id/trainerItem"
-            android:background="@color/lightGrey"
+            android:background="@color/white"
+            android:padding="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -28,7 +27,6 @@
                 android:layout_height="100dp"
                 android:id="@+id/trainerProfileImageCard"
                 app:cardCornerRadius="50dp"
-                android:layout_margin="10dp"
                 android:layout_centerVertical="true"
                 android:elevation="5dp">
 
@@ -42,16 +40,26 @@
 
             </androidx.cardview.widget.CardView>
 
-
+            <androidx.cardview.widget.CardView
+                android:layout_width="2dp"
+                android:layout_height="95dp"
+                app:cardCornerRadius="10dp"
+                android:id="@+id/trainerItemThemeLine"
+                app:cardBackgroundColor="@color/themeColourOne"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_alignTop="@+id/trainerProfileImageCard"
+                android:layout_toRightOf="@+id/trainerProfileImageCard"/>
 
 
             <TextView
                 android:id="@+id/trainerItemNameLabel"
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_toRightOf="@id/trainerProfileImageCard"
+                android:layout_toRightOf="@id/trainerItemThemeLine"
                 android:text="Name:"
                 android:textColor="@color/black"
                 android:textStyle="italic"/>
@@ -59,7 +67,7 @@
                 android:id="@+id/trainerItemName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="5dp"
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/trainerItemNameLabel"
                 android:text="Vishnu"
@@ -71,8 +79,9 @@
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/trainerItemNameLabel"
-                android:layout_margin="5dp"
-                android:layout_toRightOf="@id/trainerProfileImageCard"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/trainerItemThemeLine"
                 android:text="Experience"
                 android:textColor="@color/black"
                 android:textStyle="italic"/>
@@ -82,7 +91,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/trainerItemName"
-                android:layout_margin="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/trainerItemExpLabel"
                 android:text="5 yrs"
                 android:textColor="@color/black"
@@ -93,8 +103,9 @@
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/trainerItemExpLabel"
-                android:layout_margin="5dp"
-                android:layout_toRightOf="@id/trainerProfileImageCard"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/trainerItemThemeLine"
                 android:text="Fee"
                 android:textColor="@color/black"
                 android:textStyle="italic"/>
@@ -104,7 +115,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/trainerItemExp"
-                android:layout_margin="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/trainerItemFeeLabel"
                 android:text="2000/- per month"
                 android:textColor="@color/black"
@@ -116,8 +128,9 @@
                 style="@style/RatingBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_toRightOf="@+id/trainerProfileImageCard"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@+id/trainerItemThemeLine"
                 android:layout_below="@+id/trainerItemFee"
                 android:numStars="5"
                 android:rating="2.5" />

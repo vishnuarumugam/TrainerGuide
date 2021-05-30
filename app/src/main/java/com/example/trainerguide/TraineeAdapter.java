@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -53,9 +54,10 @@ public class TraineeAdapter extends RecyclerView.Adapter<TraineeAdapter.ViewHold
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onBindViewHolder(@NonNull TraineeAdapter.ViewHolder holder, final int position) {
-        int[] colours = new int[]{Color.parseColor("#F6CEE3"), Color.parseColor("#A9E2F3"), Color.parseColor("#D8F6CE"), Color.parseColor("#E4E3E3")};
-        holder.traineeConsItem.setBackgroundColor(colours[position%3]);
-        System.out.println("items Trainee");
+        //int[] colours = new int[]{Color.parseColor(String.valueOf(R.color.themeColourOne)), Color.parseColor("#A9E2F3"), Color.parseColor("#D8F6CE"), Color.parseColor("#E4E3E3")};
+
+        int[] colours = new int[]{R.color.themeColourOne, R.color.themeColourTwo, R.color.themeColourFour};
+        //holder.traineeItemThemeLine.setBackgroundColor(colours[position%3]);
         holder.name.setText(trainee.get(position).getName());
         holder.bmi.setText(trainee.get(position).getBmi().toString());
         Picasso.get().load(trainee.get(position).getImage())
@@ -67,7 +69,6 @@ public class TraineeAdapter extends RecyclerView.Adapter<TraineeAdapter.ViewHold
             @Override
             public void onClick(View v) {
                 trainee.get(position);
-                System.out.println(position);
                 addlistener.onAddclick(position);
             }
         });
@@ -85,7 +86,7 @@ public class TraineeAdapter extends RecyclerView.Adapter<TraineeAdapter.ViewHold
         ImageView profilePic;
         MaterialCardView traineeProfileClick;
         RelativeLayout traineeItem;
-        ConstraintLayout traineeConsItem;
+        CardView traineeItemThemeLine;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -95,7 +96,7 @@ public class TraineeAdapter extends RecyclerView.Adapter<TraineeAdapter.ViewHold
             profilePic = itemView.findViewById(R.id.traineeProfileImage);
             traineeProfileClick = itemView.findViewById(R.id.trainee_item_parent);
             traineeItem = itemView.findViewById(R.id.traineeItem);
-            traineeConsItem = itemView.findViewById(R.id.traineeConsItem);
+            traineeItemThemeLine = itemView.findViewById(R.id.traineeItemThemeLine);
 
         }
 

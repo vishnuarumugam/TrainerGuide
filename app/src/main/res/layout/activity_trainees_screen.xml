@@ -17,7 +17,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/scroll_view"
-        android:layout_marginBottom="10dp">
+        android:background="@color/white"
+        android:layout_marginBottom="1dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -32,24 +33,27 @@
                 <include layout="@layout/common_toolbar"/>
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
                     android:id="@+id/noTraineeText"
-                    android:text="No Trainees under you"
                     android:visibility="gone"
                     android:textStyle="bold"
-                    android:layout_marginTop="30dp"
+                    android:padding="10dp"
+                    android:background="@color/themeColourFour"
+                    android:textColor="@color/white"
+                    android:gravity="center"
                     style="@style/TextAppearance.AppCompat.Medium"
                     android:layout_gravity="center"/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginHorizontal="10dp"
                     android:nestedScrollingEnabled="false"
                     android:id="@+id/traineeRecycler"
                     tools:listitem="@layout/trainee_item"
-                    android:layout_marginTop="30dp"/>
+                    android:layout_marginTop="30dp"
+                    android:background="@color/themeColourTwo"
+                    android:paddingBottom="1dp"/>
 
                 <ProgressBar
                     android:layout_width="wrap_content"

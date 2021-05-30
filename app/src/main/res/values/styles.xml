@@ -12,7 +12,7 @@
     </style>
 
     <style name="FoodChartRadioButtonStyle" parent="Theme.MaterialComponents.Light">
-        <item name="colorAccent">@color/yellow</item>
+        <item name="colorAccent">@color/themeColourTwo</item>
     </style>
 
     <style name="FoodChartTabStyle" parent="Theme.MaterialComponents.Light">
@@ -21,19 +21,23 @@
 
 
     <style name="DialogRadioButton" parent="Theme.MaterialComponents.Light">
-        <item name="colorAccent">@color/yellow</item>
+        <item name="colorAccent">@color/themeColourTwo</item>
+    </style>
+
+    <style name="ProgressBarStyle" parent="Theme.MaterialComponents.Light">
+        <item name="colorAccent">@color/themeColourTwo</item>
     </style>
 
     <style name="DialogCheckBox" parent="Theme.MaterialComponents.Light">
-        <item name="colorAccent">@color/yellow</item>
+        <item name="colorAccent">@color/themeColourTwo</item>
     </style>
 
     <style name="DialogEditText" parent="Theme.MaterialComponents.Light">
-        <item name="colorAccent">@color/yellow</item>
+        <item name="colorAccent">@color/themeColourTwo</item>
     </style>
 
     <style name="DialogDatePicker" parent="Theme.AppCompat.Light.Dialog">
-        <item name="colorAccent">@color/yellow</item>
+        <item name="colorAccent">@color/themeColourOne</item>
     </style>
 
     <style name="RatingBar" parent="android:style/Widget.Material.RatingBar.Small">

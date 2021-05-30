@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context=".ProfileScreen"
-    android:background="@color/lightGrey"
+    android:background="@color/white"
     tools:openDrawer="start">
 
     <include layout="@layout/common_navigator"/>
@@ -23,14 +23,13 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="2dp"
-                android:background="@color/white">
+                    android:background="@color/white">
 
                 <ImageButton
                     android:id="@+id/profileImage"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_margin="4dp"
+                    android:layout_margin="0dp"
                     android:backgroundTint="@color/white"
                     app:layout_constraintCircleRadius="1dp"
                     app:layout_constraintDimensionRatio="H,16:9"
@@ -44,7 +43,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_margin="4dp"
+                    android:layout_margin="0dp"
+                    android:paddingTop="1dp"
+                    android:background="@color/themeColourTwo"
                     app:layout_constraintTop_toBottomOf="@id/profileImage">
 
                     <!-- Food Chart-->
@@ -56,7 +57,7 @@
                         android:visibility="gone"
                         app:cardCornerRadius="5dp"
                         android:layout_gravity="center"
-                        android:layout_margin="1.5dp"
+                        android:layout_marginBottom="1dp"
                         android:elevation="10dp">
 
                         <RelativeLayout
@@ -64,7 +65,7 @@
                             android:id="@+id/foodChartNavRelativeLabel"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:background="@color/yellow"
+                            android:background="@color/themeColourTwo"
                             android:padding="10dp">
                             <TextView
                                 android:layout_width="match_parent"
@@ -73,7 +74,7 @@
                                 android:text="Create Food Chart"
                                 android:layout_centerInParent="true"
                                 android:gravity="center"
-                                android:background="@color/yellow"
+                                android:background="@color/themeColourTwo"
                                 android:textColor="@color/white"
                                 android:textStyle="bold"
                                 android:visibility="gone"
@@ -85,7 +86,7 @@
                                 android:text="Send Request"
                                 android:layout_centerInParent="true"
                                 android:gravity="center"
-                                android:background="@color/yellow"
+                                android:background="@color/themeColourTwo"
                                 android:textColor="@color/white"
                                 android:textStyle="bold"
                                 android:visibility="gone"
@@ -100,7 +101,7 @@
                         android:backgroundTint="@color/white"
                         android:id="@+id/accCardView"
                         app:cardCornerRadius="0dp"
-                        android:layout_margin="1.5dp"
+                        android:layout_marginBottom="1dp"
                         android:elevation="10dp">
 
                         <RelativeLayout
@@ -125,6 +126,7 @@
                                 android:layout_marginStart="10dp"
                                 android:layout_alignTop="@id/profileAccImage"
                                 android:text="Account"
+                                android:textSize="18sp"
                                 style="@style/TextAppearance.AppCompat.Title"/>
 
                             <TextView
@@ -135,7 +137,7 @@
                                 android:layout_marginStart="10dp"
                                 android:layout_below="@id/profileAccount"
                                 android:text="Mobile number, Email Address"
-                                style="@style/TextAppearance.AppCompat.Body1"/>
+                                style="@style/TextAppearance.AppCompat.Caption"/>
 
                             <TextView
                                 android:id="@+id/profileAccDrop"
@@ -224,7 +226,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/personalInfoCardView"
-                        android:layout_margin="1.5dp"
+                        android:layout_marginBottom="1dp"
                         app:cardCornerRadius="0dp"
                         android:elevation="10dp">
 
@@ -248,6 +250,7 @@
                                 android:id="@+id/profilePersonalInfo"
                                 android:layout_toRightOf="@id/profilePersonalImage"
                                 android:layout_marginStart="10dp"
+                                android:textSize="18sp"
                                 android:layout_alignTop="@id/profilePersonalImage"
                                 android:text="Personal Info"
                                 style="@style/TextAppearance.AppCompat.Title"/>
@@ -260,7 +263,7 @@
                                 android:layout_marginStart="10dp"
                                 android:layout_below="@id/profilePersonalInfo"
                                 android:text="DOB, Weight, Height"
-                                style="@style/TextAppearance.AppCompat.Body1"/>
+                                style="@style/TextAppearance.AppCompat.Caption"/>
 
                             <TextView
                                 android:id="@+id/profilePersonalInfoDrop"
@@ -409,7 +412,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/foodInfoCardView"
                         app:cardCornerRadius="0dp"
-                        android:layout_margin="1dp"
+                        android:layout_marginBottom="1dp"
                         android:elevation="10dp">
 
                         <RelativeLayout
@@ -432,6 +435,7 @@
                                 android:id="@+id/profileFoodInfo"
                                 android:layout_toRightOf="@id/profileFoodInfoImage"
                                 android:layout_marginStart="10dp"
+                                android:textSize="18sp"
                                 android:layout_alignTop="@id/profileFoodInfoImage"
                                 android:text="Food Preferences"
                                 style="@style/TextAppearance.AppCompat.Title"/>
@@ -444,7 +448,7 @@
                                 android:layout_marginStart="10dp"
                                 android:layout_below="@id/profileFoodInfo"
                                 android:text="Food type, Allergy"
-                                style="@style/TextAppearance.AppCompat.Body1"/>
+                                style="@style/TextAppearance.AppCompat.Caption"/>
 
                             <TextView
                                 android:id="@+id/profileFoodInfoDrop"
@@ -560,7 +564,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/healthInfoCardView"
-                        android:layout_margin="1dp"
+                        android:layout_marginBottom="1dp"
                         app:cardCornerRadius="0dp"
                         android:elevation="10dp">
 
@@ -584,6 +588,7 @@
                                 android:id="@+id/profileHealthInfo"
                                 android:layout_toRightOf="@id/profileHealthInfoImage"
                                 android:layout_marginStart="10dp"
+                                android:textSize="18sp"
                                 android:layout_alignTop="@id/profileHealthInfoImage"
                                 android:text="Health Info"
                                 style="@style/TextAppearance.AppCompat.Title"/>
@@ -596,7 +601,7 @@
                                 android:layout_marginStart="10dp"
                                 android:layout_below="@id/profileHealthInfo"
                                 android:text="Problems in Health"
-                                style="@style/TextAppearance.AppCompat.Body1"/>
+                                style="@style/TextAppearance.AppCompat.Caption"/>
 
                             <TextView
                                 android:id="@+id/profileHealthInfoDrop"
@@ -678,9 +683,9 @@
                     <com.google.android.material.card.MaterialCardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="1dp"
                         android:id="@+id/subscriptionInfoCardView"
                         app:cardCornerRadius="0dp"
+                        android:layout_marginBottom="1dp"
                         android:elevation="10dp">
 
                         <RelativeLayout
@@ -703,6 +708,7 @@
                                 android:id="@+id/profileSubscriptionInfo"
                                 android:layout_toRightOf="@id/profileSubscriptionInfoImage"
                                 android:layout_marginStart="10dp"
+                                android:textSize="18sp"
                                 android:layout_alignTop="@id/profileSubscriptionInfoImage"
                                 android:text="Subscription"
                                 style="@style/TextAppearance.AppCompat.Title"/>
@@ -715,7 +721,7 @@
                                 android:layout_marginStart="10dp"
                                 android:layout_below="@id/profileSubscriptionInfo"
                                 android:text="Subscription Details"
-                                style="@style/TextAppearance.AppCompat.Body1"/>
+                                style="@style/TextAppearance.AppCompat.Caption"/>
 
                             <TextView
                                 android:id="@+id/profileSubscriptionInfoDrop"
@@ -859,12 +865,54 @@
                                         android:layout_below="@id/profileSubscriptionDescription" />
                                 </RelativeLayout>
 
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/subscriptionExtendRelativeLay"
+                                    android:visibility="gone"
+                                    android:layout_below="@id/subscriptionDescriptionRelativeLay">
+
+                                    <ImageView
+                                        android:id="@+id/profileSubscriptionExtendImage"
+                                        android:layout_width="30dp"
+                                        android:layout_height="30dp"
+                                        android:src="@drawable/ic_weight"
+                                        android:layout_margin="15dp"/>
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:id="@+id/txtSubscriptionDate"
+                                        android:text=""
+                                        android:layout_toRightOf="@id/profileSubscriptionExtendImage"
+                                        android:layout_alignTop="@id/profileSubscriptionExtendImage" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:id="@+id/txtSubscriptionDateLabel"
+                                        android:text="Subscription End date"
+                                        android:textColor="@color/black"
+                                        android:layout_toRightOf="@id/profileSubscriptionExtendImage"
+                                        android:layout_below="@id/txtSubscriptionDate"/>
+
+
+                                    <Button
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:backgroundTint="@color/themeColourTwo"
+                                        android:id="@+id/extendbtn"
+                                        android:text="Extend"
+                                        android:layout_toRightOf="@id/profileSubscriptionExtendImage"
+                                        android:layout_below="@id/txtSubscriptionDateLabel"/>
+                                </RelativeLayout>
+
 
                             </RelativeLayout>
 
                         </RelativeLayout>
                     </com.google.android.material.card.MaterialCardView>
-                    <TextView
+                    <!--<TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/txtSubscriptionDate"
@@ -876,7 +924,7 @@
                         android:backgroundTint="@color/yellow"
                         android:id="@+id/extendbtn"
                         android:visibility="gone"
-                        android:text="Extend"/>
+                        android:text="Extend"/>-->
                 </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>

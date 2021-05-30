@@ -83,6 +83,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                loginButton.setEnabled(false);
+                loginButton.setBackgroundColor(getResources().getColor(R.color.themeColourFour));
+
                 if ( loginValidation() ){
                     fAuth.signInWithEmailAndPassword(userEmailIn.getText().toString().trim(),userPasswordIn.getText().toString().trim())
                             .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
@@ -197,9 +200,15 @@ public class MainActivity extends AppCompatActivity {
                             }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(MainActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
+                            loginButton.setEnabled(true);
+                            loginButton.setBackgroundColor(getResources().getColor(R.color.themeColourTwo));
+                            Toast.makeText(MainActivity.this, "Please provide valid User Name and Password", Toast.LENGTH_SHORT).show();
                         }
                     });                }
+
+                else{
+
+                }
 
             }
         });

@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -51,6 +52,8 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
     //User Detail variables
     private String userId, path, userType;
 
+    //Progress Bar
+    private ProgressDialog progressDialog;
 
     //Progress Graph view
     private GraphView progressGraphView;
@@ -79,6 +82,9 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.themeColourTwo));
         //toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.themeColourThree));
 
+
+        //Initialize Progress Dialog
+        progressDialog = new ProgressDialog(this);
 
         //Menu Items
         profileMenu = findViewById(R.id.nav_profile);
@@ -177,7 +183,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                         finish();
                         break;
                     default:
-                        Toast.makeText(HomeScreen.this, "profile", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(HomeScreen.this, "Coming Soon", Toast.LENGTH_SHORT).show();
                         break;
                 }
                 return false;
@@ -229,6 +235,14 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(path);
 
+        //Show Progress Dialog
+        progressDialog.show();
+        //Set Content
+        progressDialog.setContentView(R.layout.progressdialog);
+        //Set Transparent Background
+        progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+
+
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -258,6 +272,9 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                     //sideUserName.setText(user.getName().toString());
 
                 }
+
+                //Dismiss Progress Dialog
+                progressDialog.dismiss();
 
                 /*LineGraphSeries<DataPoint> progressDatapoint = new LineGraphSeries<>(new DataPoint[]{
                         new DataPoint(0,user.getBmi()),
