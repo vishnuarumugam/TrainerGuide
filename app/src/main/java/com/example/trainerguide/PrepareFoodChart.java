@@ -29,6 +29,8 @@ import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -139,12 +141,18 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
     private String foodType = "Veg";
     public FoodList foodItemlist = new FoodList();
     List<Food> selectedFoodListHash = new ArrayList<>();
+    Animation buttonBounce;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_prepare_food_chart);
+
+        // loading Animation from
+        buttonBounce= AnimationUtils.loadAnimation(this, R.anim.button_bounce);
+
 
         //Pagination
         nestedScrollView = findViewById(R.id.scroll_view);
@@ -197,8 +205,10 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
         //Pdf Generation
         generatePdfBtn = findViewById(R.id.generatePdfBtn);
         generatePdfBtn.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
+                generatePdfBtn.startAnimation(buttonBounce);
                 if(Build.VERSION.SDK_INT > Build.VERSION_CODES.M){
                     if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
 
@@ -475,6 +485,7 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
         switch (option.getId()){
 
             case R.id.toolBarNotification:
+                option.startAnimation(buttonBounce);
                 startActivity(new Intent(PrepareFoodChart.this,NotificationScreen.class));
                 finish();
                 break;

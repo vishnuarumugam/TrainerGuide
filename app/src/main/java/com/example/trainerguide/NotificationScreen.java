@@ -8,6 +8,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -71,6 +72,7 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
     Intent intent;
     TextView noNotificationText;
     ProgressBar progressBar;
+    SwipeRefreshLayout notificationRefresh;
 
 
     @Override
@@ -98,6 +100,15 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
         noNotificationText = findViewById(R.id.noNotificationText);
         progressBar = findViewById(R.id.progress_bar);
         noNotificationText.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
+        notificationRefresh = findViewById(R.id.notificationRefresh);
+
+        notificationRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                PopulateNotifications();
+            }
+        });
 
         //Toolbar customisation
         setSupportActionBar(toolbar);
@@ -158,8 +169,9 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
         notificationAdapter.setOnDeleteClickListener(this);
     }
 
-    public void PopulateNotifications(){
 
+
+    public void PopulateNotifications(){
         if (! notificationsList.isEmpty()){
             notificationsList.clear();
             notificationAdapter.notifyDataSetChanged();
@@ -174,6 +186,7 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
                 }
                 notificationAdapter.notifyDataSetChanged();
                 progressBar.setVisibility(View.GONE);
+                notificationRefresh.setRefreshing(false);
                 EnableNoNotification();
             }
 

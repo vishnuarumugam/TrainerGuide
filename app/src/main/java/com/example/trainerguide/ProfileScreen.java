@@ -30,6 +30,8 @@ import android.transition.AutoTransition;
 import android.transition.TransitionManager;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -133,6 +135,8 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
     private Boolean readonly = false;
     private Boolean extendReadonly = false;
     private Boolean IsTrainerProfile;
+    Animation buttonBounce;
+
 
 
     //Common variables
@@ -156,6 +160,9 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_screen);
+
+        // loading Animation from
+        buttonBounce= AnimationUtils.loadAnimation(this, R.anim.button_bounce);
 
         //File Storage variables
         storageReference = FirebaseStorage.getInstance().getReference();
@@ -310,6 +317,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         extend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                extend.startAnimation(buttonBounce);
                 DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(path);
 
                 databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -340,6 +348,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         requestTrainerNavText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                requestTrainerNavText.startAnimation(buttonBounce);
                 final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(path+"/Notification");
                 final DatabaseReference databaseReferenceAdd = FirebaseDatabase.getInstance().getReference("User/"+ FirebaseAuth.getInstance().getCurrentUser().getUid());
 
@@ -393,6 +402,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         foodChartNavText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                foodChartNavText.startAnimation(buttonBounce);
                 Intent intent = new Intent(ProfileScreen.this,PrepareFoodChart.class);
                 intent.putExtra("userId",user.getUserId());
                 intent.putExtra("userName", user.getName());
@@ -519,6 +529,8 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         profileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                profileImage.startAnimation(buttonBounce);
+
                 if(!readonly) {
                     FileChooser();
                 }
@@ -1044,6 +1056,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
 
             switch (option.getId()) {
                 case R.id.toolBarNotification:
+                    option.startAnimation(buttonBounce);
                     System.out.println("toolbar");
                     startActivity(new Intent(ProfileScreen.this,NotificationScreen.class));
                     finish();
@@ -1079,18 +1092,23 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                     ShowDialog("SubscriptionDescription");
                     break;
                 case R.id.profileDobDialogUpdate:
+                    option.startAnimation(buttonBounce);
                     updateProfile("dateOfBirth", userProfileUpdateValue);
                     break;
                 case R.id.profileWeightDialogUpdate:
+                    option.startAnimation(buttonBounce);
                     updateProfile("weight", profileWeightDialogInput.getText().toString());
                     break;
                 case R.id.profileHeightDialogUpdate:
+                    option.startAnimation(buttonBounce);
                     updateProfile("height", profileHeightDialogInput.getText().toString());
                     break;
                 case R.id.profileExperienceDialogUpdate:
+                    option.startAnimation(buttonBounce);
                     updateProfile("experience", profileExperienceDialogInput.getText().toString());
                     break;
                 case R.id.profileFoodTypeDialogUpdate:
+                    option.startAnimation(buttonBounce);
                     String foodTypeValue = "Not mentioned";
                     if (vegFoodType.isChecked()) {
                         foodTypeValue = "Vegetarian";
@@ -1102,12 +1120,15 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                     updateProfile("foodType", foodTypeValue);
                     break;
                 case R.id.profileFoodAllergyDialogUpdate:
+                    option.startAnimation(buttonBounce);
                     updateProfile("foodAllergy", null);
                     break;
                 case R.id.profileHealthInfoDialogUpdate:
+                    option.startAnimation(buttonBounce);
                     updateProfile("healthIssues", null);
                     break;
                 case R.id.profileSubscriptionTypeDialogUpdate:
+                    option.startAnimation(buttonBounce);
                     String subscriptionValue = "Not mentioned";
                     if (weightLossSubscription.isChecked()) {
                         subscriptionValue = "Weight Loss";
@@ -1120,9 +1141,11 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                     break;
 
                 case R.id.profileSubscriptionFeesDialogUpdate:
+                    option.startAnimation(buttonBounce);
                     updateProfile("subscriptionFees", profileSubscriptionFeesDialogInput.getText().toString());
                     break;
                 case R.id.profileSubscriptionDescDialogUpdate:
+                    option.startAnimation(buttonBounce);
                     updateProfile("subscriptionDescription", profileSubscriptionDescDialogInput.getText().toString());
                     break;
                 default:

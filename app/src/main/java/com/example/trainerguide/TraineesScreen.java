@@ -17,6 +17,8 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -75,6 +77,8 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
     //Common variables
     private Intent intent;
     private TextView noTraineeText;
+    Animation buttonBounce;
+
 
     //Pagination
     NestedScrollView nestedScrollView;
@@ -87,6 +91,9 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trainees_screen);
+
+        // loading Animation from
+        buttonBounce= AnimationUtils.loadAnimation(this, R.anim.button_bounce);
 
         //Common variables
         noTraineeText = findViewById(R.id.noTraineeText);
@@ -367,7 +374,7 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
 
         //Initialize Adapter
         System.out.println("size"+traineesList.size());
-        traineeAdapter = new TraineeAdapter(TraineesScreen.this, traineesList);
+        traineeAdapter = new TraineeAdapter(TraineesScreen.this, traineesList, buttonBounce);
         //Set Adapter
         traineeRecycler.setAdapter(traineeAdapter);
         traineeAdapter.setOnAddClickListener(TraineesScreen.this);
@@ -456,6 +463,7 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
         switch (option.getId()) {
 
             case R.id.toolBarNotification:
+                option.startAnimation(buttonBounce);
                 startActivity(new Intent(TraineesScreen.this,NotificationScreen.class));
                 finish();
                 break;

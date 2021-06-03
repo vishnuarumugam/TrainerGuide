@@ -14,6 +14,8 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
@@ -78,11 +80,16 @@ public class UserReport extends AppCompatActivity implements View.OnClickListene
     private TextView sideUserName;
     private MenuItem profileMenu, logoutMenu, shareMenu, ratingMenu, traineeMenu;
     Intent intent;
+    Animation buttonBounce;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_report);
+
+        // loading Animation from
+        buttonBounce= AnimationUtils.loadAnimation(this, R.anim.button_bounce);
+
 
         navigationView = findViewById(R.id.nav_view);
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -388,6 +395,7 @@ public class UserReport extends AppCompatActivity implements View.OnClickListene
         switch (option.getId()) {
 
             case R.id.toolBarNotification:
+                option.startAnimation(buttonBounce);
                 startActivity(new Intent(UserReport.this,NotificationScreen.class));
                 finish();
                 break;

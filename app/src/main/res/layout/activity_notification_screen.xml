@@ -8,11 +8,6 @@
 
     <include layout="@layout/common_navigator"/>
 
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/scroll_view">
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -37,27 +32,39 @@
                     style="@style/TextAppearance.AppCompat.Medium"
                     android:layout_gravity="center"/>
 
-                <androidx.recyclerview.widget.RecyclerView
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:nestedScrollingEnabled="false"
-                    android:id="@+id/notificationRecycler"
-                    tools:listitem="@layout/notification_item"
-                    android:layout_marginTop="30dp"
+                    android:layout_height="1dp"
                     android:background="@color/themeColourTwo"
-                    android:paddingBottom="1dp"/>
+                    android:layout_marginTop="30dp"/>
 
                 <ProgressBar
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:visibility="gone"
                     android:id="@+id/progress_bar"/>
+
+                <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/notificationRefresh">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:nestedScrollingEnabled="false"
+                        android:id="@+id/notificationRecycler"
+                        tools:listitem="@layout/notification_item"
+                        android:paddingBottom="1dp"/>
+
+
+                </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.core.widget.NestedScrollView>
 
 </androidx.drawerlayout.widget.DrawerLayout>

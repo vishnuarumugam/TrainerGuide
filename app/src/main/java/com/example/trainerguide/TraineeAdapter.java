@@ -6,6 +6,7 @@ import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -28,6 +29,7 @@ public class TraineeAdapter extends RecyclerView.Adapter<TraineeAdapter.ViewHold
 
     private List<UserMetaData> trainee = new ArrayList<>();
     private Context context;
+    private Animation buttonBounce;
     private OnAddClickListener addlistener;
     private OnViewReportListener viewReportListener;
 
@@ -40,9 +42,10 @@ public class TraineeAdapter extends RecyclerView.Adapter<TraineeAdapter.ViewHold
         notifyDataSetChanged();
     }*/
 
-    public TraineeAdapter(Context context,List<UserMetaData> trainee){
+    public TraineeAdapter(Context context, List<UserMetaData> trainee, Animation animation){
         this.context=context;
         this.trainee=trainee;
+        this.buttonBounce=animation;
     }
 
     @NonNull
@@ -77,6 +80,7 @@ public class TraineeAdapter extends RecyclerView.Adapter<TraineeAdapter.ViewHold
         holder.traineeReportView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                v.findViewById(R.id.traineeReportView).startAnimation(buttonBounce);
                 trainee.get(position);
                 viewReportListener.onViewReport(position);
 
@@ -110,8 +114,6 @@ public class TraineeAdapter extends RecyclerView.Adapter<TraineeAdapter.ViewHold
             traineeReportView = itemView.findViewById(R.id.traineeReportView);
 
         }
-
-
 
     }
 

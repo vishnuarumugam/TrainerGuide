@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -29,6 +31,8 @@ public class ForgotPasswordForm extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot_password_form);
+        // loading Animation from
+        final Animation buttonBounce= AnimationUtils.loadAnimation(this, R.anim.button_bounce);
 
         txtEmail = findViewById(R.id.userFgpEmail_Input);
         final Button btnFgp = findViewById(R.id.btnFgp);
@@ -41,7 +45,7 @@ public class ForgotPasswordForm extends AppCompatActivity {
         btnFgp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                btnFgp.startAnimation(buttonBounce);
                 if (emailValidation()){
                     btnFgp.setEnabled(false);
                     btnFgp.setBackgroundColor(getResources().getColor(R.color.themeColourFour));

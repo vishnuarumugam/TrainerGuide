@@ -22,6 +22,8 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -67,6 +69,7 @@ public class FoodSourceListScreen extends AppCompatActivity implements View.OnCl
     private String userId;
     private String userPath;
     private String userType;
+    Animation buttonBounce;
 
     private FloatingActionButton foodSourceAdd;
     private ProgressBar progress_bar;
@@ -97,6 +100,9 @@ public class FoodSourceListScreen extends AppCompatActivity implements View.OnCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food_source_list_screen);
 
+
+        // loading Animation from
+        buttonBounce= AnimationUtils.loadAnimation(this, R.anim.button_bounce);
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
@@ -312,6 +318,7 @@ public class FoodSourceListScreen extends AppCompatActivity implements View.OnCl
                 break;
 
             case R.id.toolBarNotification:
+                option.startAnimation(buttonBounce);
                 startActivity(new Intent(FoodSourceListScreen.this,NotificationScreen.class));
                 finish();
                 break;
@@ -341,11 +348,12 @@ public class FoodSourceListScreen extends AppCompatActivity implements View.OnCl
                 break;
 
             case R.id.foodSourceAdd:
+                option.startAnimation(buttonBounce);
                 ShowDialog();
                 break;
 
             case R.id.foodSourceAddDialogUpdate:
-
+                option.startAnimation(buttonBounce);
                 if (ValidFood(foodSourceAddName.getText().toString(), foodSourceAddCalorie.getText().toString().isEmpty()?0.0:new Double(foodSourceAddCalorie.getText().toString()), foodSourceAddQuantity.getText().toString().isEmpty()?0.0:new Double(foodSourceAddQuantity.getText().toString()))){
                     if (foodAddType.equals("Veg")){
                         foodObject = new Food(foodSourceAddName.getText().toString(), selectedNutritionType, new Double(foodSourceAddCalorie.getText().toString()), "Vegetarian",selectedMeasurementUnit , new Double(foodSourceAddQuantity.getText().toString()));

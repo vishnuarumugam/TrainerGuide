@@ -9,6 +9,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -45,12 +47,13 @@ public class MainActivity extends AppCompatActivity {
     DatabaseReference databaseReferenceTrainer, databaseReference;
     private String profileType;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // loading Animation from
+        final Animation buttonBounce= AnimationUtils.loadAnimation(this, R.anim.button_bounce);
         userEmailIn = findViewById(R.id.userEmail_Input);
         userPasswordIn = findViewById(R.id.userPassword_Input);
         createAccount = findViewById(R.id.txtCreateAccount);
@@ -82,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                loginButton.startAnimation(buttonBounce);
                 loginButton.setEnabled(false);
                 loginButton.setBackgroundColor(getResources().getColor(R.color.themeColourFour));
 
@@ -207,7 +210,8 @@ public class MainActivity extends AppCompatActivity {
                     });                }
 
                 else{
-
+                    loginButton.setEnabled(true);
+                    loginButton.setBackgroundColor(getResources().getColor(R.color.themeColourTwo));
                 }
 
             }

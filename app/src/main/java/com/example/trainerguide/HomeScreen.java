@@ -14,6 +14,8 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -35,6 +37,7 @@ import com.squareup.picasso.Picasso;
 public class HomeScreen extends AppCompatActivity implements View.OnClickListener {
 
     //Homescreen variables
+
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private Toolbar toolbar;
@@ -42,7 +45,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
     private TextView sideUserName;
     private MenuItem profileMenu, logoutMenu, shareMenu, ratingMenu, traineeMenu;
     Intent intent;
-
+    Animation buttonBounce;
 
     //Dashboard variables
     private RelativeLayout profileDashboard, reportDashboard, trainerDashboard, traineeDashboard, foodDashboard, pdf_dashboard;
@@ -63,6 +66,11 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
+
+        // loading Animation from
+        buttonBounce= AnimationUtils.loadAnimation(this, R.anim.button_bounce);
+
+
         navigationView = findViewById(R.id.nav_view);
         drawerLayout = findViewById(R.id.drawer_layout);
         toolBarNotification = findViewById(R.id.toolBarNotification);
@@ -223,6 +231,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 finish();
                 break;*/
             case R.id.toolBarNotification:
+                option.startAnimation(buttonBounce);
                 startActivity(new Intent(HomeScreen.this,NotificationScreen.class));
                 finish();
                 break;

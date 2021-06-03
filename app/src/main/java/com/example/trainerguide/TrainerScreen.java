@@ -18,6 +18,8 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -62,6 +64,8 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
     //Common variables
     Intent intent;
     TextView noTrainerText;
+    Animation buttonBounce;
+
 
     //Recycler view variables
     private RecyclerView trainerRecycler;
@@ -85,6 +89,9 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trainer_screen);
+        // loading Animation from
+        buttonBounce= AnimationUtils.loadAnimation(this, R.anim.button_bounce);
+
 
         //Navigation view variables
         drawerLayout = findViewById(R.id.trainer_drawer_layout);
@@ -426,6 +433,7 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
         switch (option.getId()) {
 
             case R.id.toolBarNotification:
+                option.startAnimation(buttonBounce);
                 startActivity(new Intent(TrainerScreen.this,NotificationScreen.class));
                 finish();
                 break;

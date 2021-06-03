@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
@@ -64,6 +66,10 @@ public class RegistrationForm extends AppCompatActivity{
         // Get the passed Intent value from Profile Select Activity
         IsTrainerProfile = getIntent().getExtras().getBoolean("IsTrainer");
 
+        // loading Animation from
+        final Animation buttonBounce= AnimationUtils.loadAnimation(this, R.anim.button_bounce);
+
+
         // Initializing the Components
         name = findViewById(R.id.userRgrName_Input);
         email = findViewById(R.id.userRgrEmail_Input);
@@ -102,6 +108,7 @@ public class RegistrationForm extends AppCompatActivity{
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                registerButton.startAnimation(buttonBounce);
                 registerButton.setEnabled(false);
                 registerButton.setBackgroundColor(getResources().getColor(R.color.themeColourFour));
                 if (RegistrationValidation()) {
