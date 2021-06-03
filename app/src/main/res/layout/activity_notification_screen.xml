@@ -25,24 +25,34 @@
                 <include layout="@layout/common_toolbar"/>
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
                     android:id="@+id/noNotificationText"
-                    android:text="No pending notifications"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     android:textStyle="bold"
-                    android:layout_marginTop="30dp"
+                    android:padding="10dp"
+                    android:background="@color/themeColourFour"
+                    android:textColor="@color/white"
+                    android:gravity="center"
                     style="@style/TextAppearance.AppCompat.Medium"
                     android:layout_gravity="center"/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginHorizontal="20dp"
                     android:nestedScrollingEnabled="false"
                     android:id="@+id/notificationRecycler"
                     tools:listitem="@layout/notification_item"
-                    android:layout_marginTop="30dp"/>
+                    android:layout_marginTop="30dp"
+                    android:background="@color/themeColourTwo"
+                    android:paddingBottom="1dp"/>
+
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:id="@+id/progress_bar"/>
+
 
             </LinearLayout>
 

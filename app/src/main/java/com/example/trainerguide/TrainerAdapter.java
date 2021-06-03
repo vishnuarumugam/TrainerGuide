@@ -86,6 +86,7 @@ public class TrainerAdapter extends  RecyclerView.Adapter<TrainerAdapter.ViewHol
         RelativeLayout trainerItem;
         ConstraintLayout trainerConsItem;
 
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.trainerItemName);

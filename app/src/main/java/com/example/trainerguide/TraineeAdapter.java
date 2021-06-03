@@ -29,6 +29,7 @@ public class TraineeAdapter extends RecyclerView.Adapter<TraineeAdapter.ViewHold
     private List<UserMetaData> trainee = new ArrayList<>();
     private Context context;
     private OnAddClickListener addlistener;
+    private OnViewReportListener viewReportListener;
 
     /*public ArrayList<User> getTrainee() {
         return trainee;
@@ -73,6 +74,15 @@ public class TraineeAdapter extends RecyclerView.Adapter<TraineeAdapter.ViewHold
             }
         });
 
+        holder.traineeReportView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                trainee.get(position);
+                viewReportListener.onViewReport(position);
+
+            }
+        });
+
     }
 
     @Override
@@ -82,7 +92,7 @@ public class TraineeAdapter extends RecyclerView.Adapter<TraineeAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView name,bmi;
+        TextView name,bmi,traineeReportView;
         ImageView profilePic;
         MaterialCardView traineeProfileClick;
         RelativeLayout traineeItem;
@@ -97,6 +107,7 @@ public class TraineeAdapter extends RecyclerView.Adapter<TraineeAdapter.ViewHold
             traineeProfileClick = itemView.findViewById(R.id.trainee_item_parent);
             traineeItem = itemView.findViewById(R.id.traineeItem);
             traineeItemThemeLine = itemView.findViewById(R.id.traineeItemThemeLine);
+            traineeReportView = itemView.findViewById(R.id.traineeReportView);
 
         }
 
@@ -111,4 +122,15 @@ public class TraineeAdapter extends RecyclerView.Adapter<TraineeAdapter.ViewHold
     public void setOnAddClickListener(TraineeAdapter.OnAddClickListener listener){
         addlistener = listener;
     }
+
+    public interface OnViewReportListener{
+        void onViewReport(int position);
+    }
+
+    public void setOnViewReportListener(TraineeAdapter.OnViewReportListener listener){
+        viewReportListener = listener;
+    }
+
+
+
 }

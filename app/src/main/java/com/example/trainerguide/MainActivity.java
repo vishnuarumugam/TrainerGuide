@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
                                     //String path = "Trainer/";
                                     databaseReferenceTrainer = FirebaseDatabase.getInstance().getReference("Trainer");
 
-                                    databaseReferenceTrainer.addValueEventListener(new ValueEventListener() {
+                                    databaseReferenceTrainer.addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                                             System.out.println("********OnDataChange*******");

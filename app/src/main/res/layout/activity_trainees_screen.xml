@@ -45,14 +45,16 @@
                     style="@style/TextAppearance.AppCompat.Medium"
                     android:layout_gravity="center"/>
 
+
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:nestedScrollingEnabled="false"
                     android:id="@+id/traineeRecycler"
                     tools:listitem="@layout/trainee_item"
-                    android:layout_marginTop="30dp"
                     android:background="@color/themeColourTwo"
+                    android:layout_marginTop="30dp"
                     android:paddingBottom="1dp"/>
 
                 <ProgressBar
@@ -60,6 +62,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:id="@+id/progress_bar"/>
+
+
 
             </LinearLayout>
 

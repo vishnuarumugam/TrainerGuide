@@ -122,12 +122,13 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
     private ImageButton profileImage;
     MaterialCardView accCardView, personalInfoCardView, foodInfoCardView, healthInfoCardView, subscriptionInfoCardView, profileActionView;
     TextView profileAccDrop, profilePersonalInfoDrop, profileFoodInfoDrop, profileWeight,profilePhoneNumber, profileEmailId, profileDob, profileHeight, profileFoodType, profileHealthInfoDrop, foodAllergyOther, healthIssuesOther, profileExperience, profileSubscriptionInfoDrop, profileSubscriptionType, profileSubscriptionFees, profileSubscriptionDescription, profileSubscriptionTrainer, requestTrainerNavText, foodChartNavText;
-    RelativeLayout accRelativeCollapse, personalRelativeCollapse, foodInfoRelativeCollapse, dobRelativeLay, healthInfoRelativeCollapse, weightRelativeLay, heightRelativeLay, foodTypeRelativeLay, foodAllergyRelativeLay, healthIssuesRelativeLay, experienceRelativeLay, subscriptionInfoRelativeCollapse, subscriptionTypeRelativeLay, subscriptionTrainerRelativeLay, subscriptionFeesRelativeLay, subscriptionDescriptionRelativeLay, subscriptionExtendRelativeLay;
+    RelativeLayout accRelativeCollapse, personalRelativeCollapse, foodInfoRelativeCollapse, dobRelativeLay, healthInfoRelativeCollapse, weightRelativeLay, heightRelativeLay, foodTypeRelativeLay, foodAllergyRelativeLay, healthIssuesRelativeLay, experienceRelativeLay, subscriptionInfoRelativeCollapse, subscriptionTypeRelativeLay, subscriptionTrainerRelativeLay, subscriptionFeesRelativeLay, subscriptionDescriptionRelativeLay, subscriptionExtendRelativeLay, foodChartNavRelativeLabel;
 
     private String userId;
     private String path;
     private String userProfileUpdateValue;
     private User user;
+    private String navigationScreen ="";
     private String userType;
     private Boolean readonly = false;
     private Boolean extendReadonly = false;
@@ -180,6 +181,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         profileImage = findViewById(R.id.profileImage);
         requestTrainerNavText = findViewById(R.id.requestTrainerNavText);
         foodChartNavText = findViewById(R.id.foodChartNavText);
+        foodChartNavRelativeLabel = findViewById(R.id.foodChartNavRelativeLabel);
         profileActionView = findViewById(R.id.profileActionView);
         profileActionView.setVisibility(View.GONE);
         requestTrainerNavText.setVisibility(View.GONE);
@@ -249,6 +251,10 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         IsTrainerProfile = false;
         String passedUserId = "";
 
+        if (getIntent().hasExtra("Screen")){
+            navigationScreen = getIntent().getExtras().getString("Screen", "");
+        }
+
         if(getIntent().hasExtra("IsTrainer") &&
                 getIntent().hasExtra("userId") &&
                 getIntent().hasExtra("ReadOnly"))
@@ -267,8 +273,8 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
             userId = sp.getString("userId", null);
             if(!(userType.equals("Trainer"))){
                 extendReadonly=true;
-                /*extend.setVisibility(View.VISIBLE);
-                txtSubscriptionDate.setVisibility(View.VISIBLE);*/
+                extend.setVisibility(View.VISIBLE);
+                //txtSubscriptionDate.setVisibility(View.VISIBLE);
             }
         }
 
@@ -297,6 +303,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         else {
             subscriptionTrainerRelativeLay.setVisibility(View.VISIBLE);
             subscriptionTypeRelativeLay.setVisibility(View.VISIBLE);
+            subscriptionExtendRelativeLay.setVisibility(View.VISIBLE);
 
         }
 
@@ -360,6 +367,11 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
 */
 
                                 databaseReference.child(notify.getNotificationId()).setValue(notify);
+
+                                Toast.makeText(ProfileScreen.this, "Request sent to Trainer", Toast.LENGTH_SHORT).show();
+                                requestTrainerNavText.setEnabled(false);
+                                requestTrainerNavText.setBackgroundColor(getResources().getColor(R.color.themeColourFour));
+                                //foodChartNavRelativeLabel.setBackgroundColor(getResources().getColor(R.color.themeColourFour));
                             }
                         }
                         else
@@ -911,8 +923,8 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                     Trainee trainee = snapshot.getValue(Trainee.class);
                     if(extendReadonly && trainee.getTrainerId()!= null && trainee.getTrainerId()!="") {
                         subscriptionExtendRelativeLay.setVisibility(View.VISIBLE);
-                        /*extend.setVisibility(View.VISIBLE);
-                        txtSubscriptionDate.setVisibility(View.VISIBLE);*/
+                        extend.setVisibility(View.VISIBLE);
+                        //txtSubscriptionDate.setVisibility(View.VISIBLE);*/
                         txtSubscriptionDate.setText(trainee.getSubscriptionEndDate().toString());
                     }
                     //String trainerName = GetTrainerName(trainee.getTrainerId());
@@ -998,20 +1010,30 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         }
         else
         {
-            Intent intent = new Intent(ProfileScreen.this,HomeScreen.class);
-            startActivity(intent);
-            finish();
+            Intent intent;
+            switch(navigationScreen){
 
-            /*if (IsTrainerProfile){
-                Intent intent = new Intent(ProfileScreen.this,TraineesScreen.class);
-                startActivity(intent);
-                finish();
+                case "TraineesScreen":
+                    intent = new Intent(ProfileScreen.this,TraineesScreen.class);
+                    startActivity(intent);
+                    finish();
+                    break;
+                case "TrainerScreen":
+                    intent = new Intent(ProfileScreen.this,TrainerScreen.class);
+                    startActivity(intent);
+                    finish();
+                    break;
+                case  "NotificationScreen":
+                    intent = new Intent(ProfileScreen.this,NotificationScreen.class);
+                    startActivity(intent);
+                    finish();
+                    break;
+                default:
+                    intent = new Intent(ProfileScreen.this,HomeScreen.class);
+                    startActivity(intent);
+                    finish();
+                    break;
             }
-            else{
-                Intent intent = new Intent(ProfileScreen.this,HomeScreen.class);
-                startActivity(intent);
-                finish();
-            }*/
 
         }
     }

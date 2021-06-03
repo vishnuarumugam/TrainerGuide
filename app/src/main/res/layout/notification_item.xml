@@ -4,20 +4,13 @@
     android:id="@+id/parent"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginVertical="10dp"
-    android:backgroundTint="@color/white"
-    app:cardCornerRadius="10dp"
-    android:layout_marginHorizontal="10dp"
-    app:cardElevation="5dp">
-<!--    <RelativeLayout
-        android:id="@+id/notificationItem"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">-->
+    android:layout_marginTop="1dp"
+    android:backgroundTint="@color/white">
 
     <RelativeLayout
         android:id="@+id/notificationItem"
-        android:padding="5dp"
-
+        android:paddingVertical="10dp"
+        android:paddingHorizontal="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -55,7 +48,7 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/yellow"
+                android:backgroundTint="@color/themeColourTwo"
                 android:id="@+id/approvebtn"
                 android:visibility="gone"
                 android:text="Approve"/>
@@ -64,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:visibility="gone"
-                android:backgroundTint="@color/yellow"
+                android:backgroundTint="@color/themeColourFour"
                 android:layout_toRightOf="@+id/approvebtn"
                 android:id="@+id/rejectbtn"
                 android:text="Reject"/>

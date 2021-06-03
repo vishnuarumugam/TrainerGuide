@@ -19,6 +19,7 @@ import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,6 +51,8 @@ public class UserReport extends AppCompatActivity implements View.OnClickListene
 
     //User Detail variables
     private String userId, path, userType;
+    private Boolean IsTrainerProfile;
+    private String navigationScreen="";
     private TextView reportWeight, reportBmi, noDataGraphLinear, dataGraphLinear, dataPieChart;
 
     //Progress Graph view
@@ -107,6 +110,31 @@ public class UserReport extends AppCompatActivity implements View.OnClickListene
         reportWeight = findViewById(R.id.reportWeight);
 
 
+        IsTrainerProfile = false;
+        String passedUserId = "";
+
+        if(getIntent().hasExtra("IsTrainer") &&
+                getIntent().hasExtra("userId") &&
+                getIntent().hasExtra("Screen"))
+        {
+            IsTrainerProfile = getIntent().getExtras().getBoolean("IsTrainer");
+            passedUserId = getIntent().getExtras().getString("userId", "");
+            navigationScreen = getIntent().getExtras().getString("Screen", "");
+
+        }
+
+        if(!passedUserId.equals("")){
+            userType = IsTrainerProfile ? "Trainer" : "User";
+            userId=passedUserId;
+        }
+        else {
+            userType = sp.getString("ProfileType", null);
+            userId = sp.getString("userId", null);
+
+        }
+
+
+
         if (userType.equals("Trainer")){
 
         }
@@ -114,7 +142,7 @@ public class UserReport extends AppCompatActivity implements View.OnClickListene
 
         }
 
-        userId = sp.getString("userId",null);
+        //userId = sp.getString("userId",null);
         path = userType+ "/" + userId;
 
         //Graph representation
@@ -336,9 +364,22 @@ public class UserReport extends AppCompatActivity implements View.OnClickListene
         }
         else
         {
-            Intent intent = new Intent(UserReport.this,HomeScreen.class);
-            startActivity(intent);
-            finish();
+            Intent intent;
+            switch(navigationScreen){
+
+                case "TraineesScreen":
+                    intent = new Intent(UserReport.this,TraineesScreen.class);
+                    startActivity(intent);
+                    finish();
+                    break;
+                default:
+                    intent = new Intent(UserReport.this,HomeScreen.class);
+                    startActivity(intent);
+                    finish();
+                    break;
+            }
+
+
         }
     }
 

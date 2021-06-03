@@ -9,6 +9,7 @@ import androidx.core.widget.NestedScrollView;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -48,7 +49,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
-public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.OnAddClickListener, View.OnClickListener {
+public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.OnAddClickListener, View.OnClickListener, TraineeAdapter.OnViewReportListener {
 
     //Navigation view variables
     private DrawerLayout drawerLayout;
@@ -58,6 +59,7 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
     private MenuItem profileMenu, logoutMenu, shareMenu, ratingMenu, traineeMenu;
 
     //Recycler view variables
+    private SwipeRefreshLayout traineeRefresh;
     private RecyclerView traineeRecycler;
     private List<UserMetaData> traineesList = new ArrayList<>();
     private TraineeAdapter traineeAdapter;
@@ -77,7 +79,7 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
     //Pagination
     NestedScrollView nestedScrollView;
     ProgressBar progressBar;
-    int page =1,limit = 3;
+    int page =1,limit = 10;
     private String startAt="\"*\"";
     Boolean scroll = true;
 
@@ -159,6 +161,7 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
 
         //Recycler view variables
         traineeRecycler = findViewById(R.id.traineeRecycler);
+        //traineeRefresh = findViewById(R.id.traineeRefresh);
         traineeRecycler.setLayoutManager(new LinearLayoutManager(this));
         //traineeAdapter = new TraineeAdapter(TraineesScreen.this,traineesList);
         traineeRecycler.setAdapter(traineeAdapter);
@@ -175,6 +178,7 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
         System.out.println("initial");
         getData(userId,"\"$key\"",startAt,limit);
         nestedScrollView.isSmoothScrollingEnabled();
+
 
         nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
@@ -266,6 +270,9 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
         try {
             if(jsonArray.length() > 0) {
                 JSONObject jsonObject1;
+
+                System.out.println("jsonArray.length()"+jsonArray.length());
+                System.out.println("limit.length()"+limit);
 
                 if(jsonArray.length() == limit){
                     for(int i=0; i<jsonArray.length()-1; i++){
@@ -364,6 +371,8 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
         //Set Adapter
         traineeRecycler.setAdapter(traineeAdapter);
         traineeAdapter.setOnAddClickListener(TraineesScreen.this);
+        traineeAdapter.setOnViewReportListener(TraineesScreen.this);
+
     }
 
     //Method to populate Trainee data
@@ -383,6 +392,7 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
                 }
                 //traineesList.addAll(users);
                 traineeAdapter.notifyDataSetChanged();
+                traineeRefresh.setRefreshing(false);
 
                 /*UserMetaData user = new UserMetaData("Satha" + System.currentTimeMillis(), "Satha", 0.00, "image");
                  *//*trainerobj.setUser(user);
@@ -421,13 +431,22 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
     public void onAddclick(int position) {
         final UserMetaData trainee = traineesList.get(position);
 
-        System.out.println("***"+trainee.getUserId()+"*****"+position);
-        System.out.println("***"+traineesList.size()+"***** size");
-
         Intent intent = new Intent(TraineesScreen.this,ProfileScreen.class);
         intent.putExtra("userId",trainee.getUserId());
         intent.putExtra("IsTrainer", false);
         intent.putExtra("ReadOnly", true);
+        intent.putExtra("Screen", "TraineesScreen");
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void onViewReport(int position){
+        final UserMetaData trainee = traineesList.get(position);
+        Intent intent = new Intent(TraineesScreen.this,UserReport.class);
+        intent.putExtra("userId",trainee.getUserId());
+        intent.putExtra("IsTrainer", false);
+        intent.putExtra("Screen", "TraineesScreen");
         startActivity(intent);
         finish();
     }

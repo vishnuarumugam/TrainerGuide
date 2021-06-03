@@ -87,7 +87,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             public void onClick(View v) {
                 notification.get(position);
                 System.out.println(position);
-                rejectlistener.onRejectclick(position);
+                deletelistener.onDeleteclick(position);
             }
         });
     }

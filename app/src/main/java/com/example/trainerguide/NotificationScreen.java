@@ -17,6 +17,7 @@ import android.preference.PreferenceManager;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,7 +43,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class NotificationScreen extends AppCompatActivity implements NotificationAdapter.OnAddClickListener,
-        NotificationAdapter.OnApproveClickListener, NotificationAdapter.OnRejectClickListener {
+        NotificationAdapter.OnApproveClickListener, NotificationAdapter.OnRejectClickListener, NotificationAdapter.OnDeleteClickListener {
 
     //Navigation view variables
     private DrawerLayout drawerLayout;
@@ -53,6 +54,7 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
     //Recycler view variables
     private RecyclerView notificationRecycler;
     private List<Notification> notificationsList = new ArrayList<>();
+
 
     private ProgressDialog progressDialog;
 
@@ -68,6 +70,7 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
     //Common variables
     Intent intent;
     TextView noNotificationText;
+    ProgressBar progressBar;
 
 
     @Override
@@ -93,6 +96,7 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
 
         //Common variables
         noNotificationText = findViewById(R.id.noNotificationText);
+        progressBar = findViewById(R.id.progress_bar);
         noNotificationText.setVisibility(View.GONE);
 
         //Toolbar customisation
@@ -135,7 +139,7 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
                         finish();
                         break;
                     default:
-                        Toast.makeText(NotificationScreen.this, "profile", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(NotificationScreen.this, "Coming Soon", Toast.LENGTH_SHORT).show();
                         break;
                 }
                 return false;
@@ -151,20 +155,26 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
         notificationAdapter.setOnAddClickListener(NotificationScreen.this);
         notificationAdapter.setOnApproveClickListener(NotificationScreen.this);
         notificationAdapter.setOnRejectClickListener(NotificationScreen.this);
+        notificationAdapter.setOnDeleteClickListener(this);
     }
 
     public void PopulateNotifications(){
 
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        if (! notificationsList.isEmpty()){
+            notificationsList.clear();
+            notificationAdapter.notifyDataSetChanged();
+        }
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot:snapshot.getChildren()) {
-                    noNotificationText.setVisibility(View.GONE);
                     Notification notification = dataSnapshot.getValue(Notification.class);
                     if(notification.getUserId()!=null){
                     notificationsList.add(notification);}
                 }
                 notificationAdapter.notifyDataSetChanged();
+                progressBar.setVisibility(View.GONE);
+                EnableNoNotification();
             }
 
             @Override
@@ -173,7 +183,16 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
             }
         });
 
+        //EnableNoNotification();
+    }
+    public void EnableNoNotification(){
+
         if (notificationsList.isEmpty()){
+            noNotificationText.setText("No New Request notifications");
+            noNotificationText.setVisibility(View.VISIBLE);
+        }
+        else {
+            noNotificationText.setText("New Request notifications");
             noNotificationText.setVisibility(View.VISIBLE);
         }
     }
@@ -182,20 +201,29 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
     public void onAddclick(int position) {
         final Notification trainer = notificationsList.get(position);
         Intent intent;
-        final SharedPreferences sp;
-        sp= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        String userType = sp.getString("ProfileType",null);
         if(trainer.isTrainer())
         {
-            intent = new Intent(NotificationScreen.this,TrainerProfileView.class);
+            intent = new Intent(NotificationScreen.this,ProfileScreen.class);
+            intent.putExtra("userId",trainer.getUserId());
+            intent.putExtra("IsTrainer", true);
+            intent.putExtra("ReadOnly", true);
+            intent.putExtra("Screen", "NotificationScreen");
+
+            /*intent = new Intent(NotificationScreen.this,TrainerProfileView.class);
             intent.putExtra("TrainerUserId",trainer.getUserId());
-            intent.putExtra("Screen","Notification");
+            intent.putExtra("Screen","Notification");*/
         }
         else
         {
-            intent = new Intent(NotificationScreen.this,TraineeProfileview.class);
+            intent = new Intent(NotificationScreen.this,ProfileScreen.class);
+            intent.putExtra("userId",trainer.getUserId());
+            intent.putExtra("IsTrainer", false);
+            intent.putExtra("ReadOnly", true);
+            intent.putExtra("Screen", "NotificationScreen");
+
+            /*intent = new Intent(NotificationScreen.this,TraineeProfileview.class);
             intent.putExtra("TraineeUserId",trainer.getUserId());
-            intent.putExtra("Screen","Notification");
+            intent.putExtra("Screen","Notification");*/
         }
         startActivity(intent);
         finish();
@@ -204,11 +232,113 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
     @Override
     public void onApproveclick(int position) {
         Notification notification = notificationsList.get(position);
+
+        if (notification.isTrainer()){
+            DatabaseReference databaseReferenceTrainer = FirebaseDatabase.getInstance().getReference("Trainer"+ "/" +notification.getUserId());
+            DatabaseReference databaseReferenceUser = FirebaseDatabase.getInstance().getReference("User/"+ fAuth.getCurrentUser().getUid());
+
+
+        }
+        else{
+            DatabaseReference databaseReferenceUser = FirebaseDatabase.getInstance().getReference("User"+ "/" +notification.getUserId());
+            DatabaseReference databaseReferenceTrainer = FirebaseDatabase.getInstance().getReference("Trainer/"+ fAuth.getCurrentUser().getUid());
+
+            databaseReferenceUser.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    Trainee trainee = snapshot.getValue(Trainee.class);
+                    if((trainee.getTrainerId() == null || trainee.getTrainerId().equals("")) ) {
+                        if(notification.getNotificationType().equals("Request")) {
+                            UserMetaData traineeMetadata = new UserMetaData();
+                            traineeMetadata.setUserId(trainee.getUserId());
+                            traineeMetadata.setBmi(trainee.getBmi());
+                            traineeMetadata.setName(trainee.getName());
+                            traineeMetadata.setImage(trainee.getImage());
+                            trainee.setTrainerId(fAuth.getCurrentUser().getUid());
+                            HashMap<String, Object> trainerId = new HashMap<>();
+                            trainerId.put("trainerId", fAuth.getCurrentUser().getUid());
+                            Date currentDate = new Date();
+                            // convert date to calendar
+                            Calendar c = Calendar.getInstance();
+                            c.setTime(currentDate);
+
+                            c.add(Calendar.DATE, 30);
+                            trainerId.put("subscriptionEndDate", c.getTime());
+
+                            Notification notify = new Notification();
+                            notify.setNotificationId(UUID.randomUUID().toString());
+                            notify.setNotification(traineeMetadata.getName() + " Added as Trainee");
+                            notify.setAddedDate(Calendar.getInstance().getTime());
+                            notify.setNotificationType("");
+                            notify.setTrainer(false);
+                            notify.setUserId(traineeMetadata.getUserId());
+
+                            Notification notifyTrainee = new Notification();
+                            notifyTrainee.setNotificationId(UUID.randomUUID().toString());
+                            notifyTrainee.setNotification("Your request has been accepted. Please check your Profile." );
+                            notifyTrainee.setAddedDate(Calendar.getInstance().getTime());
+                            notifyTrainee.setNotificationType("");
+                            notifyTrainee.setTrainer(false);
+                            notifyTrainee.setUserId(trainee.getUserId());
+
+                            databaseReferenceTrainer.child("/Notification/" +notify.getNotificationId()).setValue(notify);
+                            databaseReferenceTrainer.child("/usersList/" + trainee.getUserId()).setValue(traineeMetadata);
+                            databaseReferenceUser.updateChildren(trainerId);
+                            databaseReferenceUser.child("/Notification/" +notifyTrainee.getNotificationId()).setValue(notifyTrainee);
+                        }
+                    }
+                    else if (notification.getNotificationType().equals("Extend")){
+
+                        HashMap hash= new HashMap();
+                        Date currentDate = trainee.getSubscriptionEndDate();
+                        // convert date to calendar
+                        Calendar c = Calendar.getInstance();
+                        c.setTime(currentDate);
+
+                        c.add(Calendar.DATE,30);
+                        hash.put("subscriptionEndDate",c.getTime());
+
+
+                        Notification notify = new Notification();
+                        notify.setNotificationId(UUID.randomUUID().toString());
+                        notify.setNotification(trainee.getName() + " has been extended as your Trainee for 30 Days");
+                        notify.setAddedDate(Calendar.getInstance().getTime());
+                        notify.setNotificationType("");
+                        notify.setTrainer(false);
+                        notify.setUserId(trainee.getUserId());
+
+                        Notification notifyTrainee = new Notification();
+                        notifyTrainee.setNotificationId(UUID.randomUUID().toString());
+                        notifyTrainee.setNotification(" Your subscription has been extended for 30 Days");
+                        notifyTrainee.setAddedDate(Calendar.getInstance().getTime());
+                        notifyTrainee.setNotificationType("");
+                        notifyTrainee.setTrainer(false);
+                        notifyTrainee.setUserId(trainee.getUserId());
+
+                        databaseReferenceTrainer.child("/Notification/" +notify.getNotificationId()).setValue(notify);
+                        databaseReferenceUser.child("/Notification/" +notifyTrainee.getNotificationId()).setValue(notifyTrainee);
+                        databaseReferenceUser.updateChildren(hash);
+
+                    }
+                    else {
+
+                    }
+
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+        }
         DatabaseReference databaseReferenceAdd = FirebaseDatabase.getInstance().getReference("User/"+ notification.getUserId());
         DatabaseReference databaseReferenceUserList = FirebaseDatabase.getInstance().getReference(userPath);
         DatabaseReference databaseReferenceNotification = FirebaseDatabase.getInstance().getReference("Trainer"+ "/" + fAuth.getCurrentUser().getUid() + "/");
 
-        databaseReferenceAdd.addListenerForSingleValueEvent(new ValueEventListener() {
+       /* databaseReferenceAdd.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Trainee trainee = snapshot.getValue(Trainee.class);
@@ -240,9 +370,17 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
                             notify.setTrainer(false);
                             notify.setUserId(traineeMetadata.getUserId());
 
-                       /* HashMap<String, Notification> notification = new HashMap<>();
+                            Notification notifyTrainee = new Notification();
+                            notify.setNotificationId(UUID.randomUUID().toString());
+                            notify.setNotification("Your request has been accepted. Please check your Profile." );
+                            notify.setAddedDate(Calendar.getInstance().getTime());
+                            notify.setNotificationType("");
+                            notify.setTrainer(false);
+                            notify.setUserId(trainee.getUserId());
+
+                       *//* HashMap<String, Notification> notification = new HashMap<>();
                         HashMap hash= new HashMap();
-                        notification.put(notify.getNotificationId(),notify);*/
+                        notification.put(notify.getNotificationId(),notify);*//*
 
                             //hash.put("Notification",notification);
                             databaseReference.child(notify.getNotificationId()).setValue(notify);
@@ -273,16 +411,16 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
                     notify.setUserId(trainee.getUserId());
 
                     Notification notifyTrainee = new Notification();
-                    notify.setNotificationId(UUID.randomUUID().toString());
-                    notify.setNotification(" Your subscription has been extended for 30 Days");
-                    notify.setAddedDate(Calendar.getInstance().getTime());
-                    notify.setNotificationType("");
-                    notify.setTrainer(false);
-                    notify.setUserId(trainee.getUserId());
+                    notifyTrainee.setNotificationId(UUID.randomUUID().toString());
+                    notifyTrainee.setNotification(" Your subscription has been extended for 30 Days");
+                    notifyTrainee.setAddedDate(Calendar.getInstance().getTime());
+                    notifyTrainee.setNotificationType("");
+                    notifyTrainee.setTrainer(false);
+                    notifyTrainee.setUserId(trainee.getUserId());
 
 
                     databaseReference.child(notify.getNotificationId()).setValue(notify);
-                    databaseReferenceUserNotification.child(notify.getNotificationId()).setValue(notify);
+                    databaseReferenceUserNotification.child(notify.getNotificationId()).setValue(notifyTrainee);
                     databaseReferenceAdd.updateChildren(hash);
                 }
             }
@@ -291,12 +429,19 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
             public void onCancelled(@NonNull DatabaseError error) {
                 System.out.println("failed" + error.getDetails());
             }
-        });
+        });*/
 
         deleteNotification(notification.getNotificationId(), position);
+        try {
+            Thread.sleep(1000);
 
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        PopulateNotifications();
 
     }
+
 
     @Override
     public void onBackPressed() {
@@ -333,16 +478,27 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
         });*/
     }
 
-    public void deleteNotification (String notificationId, final int position){
+    @Override
+    public void onDeleteclick(int position) {
+        final Notification notification = notificationsList.get(position);
+        System.out.println("notificationsList1- "+ notification.getNotificationId() +" - " +notificationsList.size());
+        deleteNotification(notification.getNotificationId(), position);
+    }
 
-        databaseReference.orderByKey().equalTo(notificationId).addValueEventListener(new ValueEventListener() {
+    public void deleteNotification (String notificationId, final int position){
+        System.out.println("notificationsList2- "+ notificationId +" - " +notificationsList.size());
+        notificationsList.remove(position);
+        notificationAdapter.notifyDataSetChanged();
+        databaseReference.orderByKey().equalTo(notificationId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot postsnapshot :snapshot.getChildren()) {
+                    System.out.println("notificationsList- "+ notificationId +" - " +notificationsList.size());
                     postsnapshot.getRef().removeValue();
-                    notificationsList.remove(position);
-                    //notificationAdapter.notifyDataSetChanged();
+
+                    notificationAdapter.notifyDataSetChanged();
                 }
+                PopulateNotifications();
             }
 
             @Override
@@ -350,17 +506,15 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
 
             }
         });
-        notificationAdapter.notifyDataSetChanged();
-        if (notificationsList.size()==1){
-            noNotificationText.setVisibility(View.VISIBLE);
-        }
 
-        /*notificationsList = new ArrayList<>();
-        PopulateNotifications();
-        notificationAdapter = new NotificationAdapter(notificationsList, NotificationScreen.this);*/
+
+
+
+        /*notificationAdapter = new NotificationAdapter(notificationsList, NotificationScreen.this);*/
 
         /*startActivity(new Intent( NotificationScreen.this , NotificationScreen.class));
         finish();*/
     }
+
 
 }

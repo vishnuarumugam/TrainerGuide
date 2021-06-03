@@ -77,7 +77,7 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
     //Pagination
     NestedScrollView nestedScrollView;
     ProgressBar progressBar;
-    int page =1,limit = 6;
+    int page =1,limit = 10;
     private String startAt="\"*\"";
     Boolean scroll = true;
 
@@ -407,6 +407,8 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
         String userId = sp.getString("userId", null);
 
         Intent intent = new Intent(TrainerScreen.this,ProfileScreen.class);
+        intent.putExtra("Screen", "TrainerScreen");
+
         if(trainer.getUserId().equals(userId)){
             intent.putExtra("IsTrainer", true);
         }

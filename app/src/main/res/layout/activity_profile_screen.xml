@@ -65,11 +65,10 @@
                             android:id="@+id/foodChartNavRelativeLabel"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:background="@color/themeColourTwo"
-                            android:padding="10dp">
+                            android:background="@color/themeColourTwo">
                             <TextView
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="40dp"
                                 android:id="@+id/foodChartNavText"
                                 android:text="Create Food Chart"
                                 android:layout_centerInParent="true"
@@ -81,7 +80,7 @@
                                 style="@style/TextAppearance.AppCompat.Medium"/>
                             <TextView
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="40dp"
                                 android:id="@+id/requestTrainerNavText"
                                 android:text="Send Request"
                                 android:layout_centerInParent="true"
@@ -903,6 +902,7 @@
                                         android:backgroundTint="@color/themeColourTwo"
                                         android:id="@+id/extendbtn"
                                         android:text="Extend"
+                                        android:visibility="gone"
                                         android:layout_toRightOf="@id/profileSubscriptionExtendImage"
                                         android:layout_below="@id/txtSubscriptionDateLabel"/>
                                 </RelativeLayout>
