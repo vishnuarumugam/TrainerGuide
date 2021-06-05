@@ -275,6 +275,9 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         if(!passedUserId.equals("")){
             userType = IsTrainerProfile ? "Trainer" : "User";
             userId=passedUserId;
+            if(!(userType.equals("Trainer"))){
+                extendReadonly=true;
+            }
         }
         else {
             userType = sp.getString("ProfileType", null);
@@ -296,6 +299,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
             else if(!IsTrainerProfile && sp.getString("ProfileType", null).equals("Trainer")){
                 profileActionView.setVisibility(View.VISIBLE);
                 requestTrainerNavText.setVisibility(View.GONE);
+                subscriptionRemoveBtn.setVisibility(View.GONE);
                 foodChartNavText.setVisibility(View.VISIBLE);
             }
         }
@@ -328,6 +332,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                         Notification notify = new Notification();
                         notify.setNotificationId(UUID.randomUUID().toString());
                         notify.setNotification(trainee.getName() + " requested for extending subscription for 30 Days");
+                        notify.setNotificationHeader("Extend subscription request notification");
                         notify.setAddedDate(Calendar.getInstance().getTime());
                         notify.setNotificationType("Extend");
                         notify.setTrainer(false);
@@ -364,6 +369,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                         Notification notify = new Notification();
                         notify.setNotificationId(UUID.randomUUID().toString());
                         notify.setNotification(trainee.getName() + " requested for ending the subscription");
+                        notify.setNotificationHeader("Remove subscription request notification");
                         notify.setAddedDate(Calendar.getInstance().getTime());
                         notify.setNotificationType("Remove");
                         notify.setTrainer(false);
@@ -402,6 +408,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                                 Notification notify = new Notification();
                                 notify.setNotificationId(UUID.randomUUID().toString());
                                 notify.setNotification(trainee.getName()+" requested for joining as your trainee");
+                                notify.setNotificationHeader("New subscription request notification");
                                 notify.setAddedDate(Calendar.getInstance().getTime());
                                 notify.setNotificationType("Request");
                                 notify.setTrainer(false);
@@ -975,10 +982,13 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                     Trainee trainee = snapshot.getValue(Trainee.class);
                     if(extendReadonly && trainee.getTrainerId()!= null && trainee.getTrainerId()!="") {
                         subscriptionExtendRelativeLay.setVisibility(View.VISIBLE);
-                        extend.setVisibility(View.VISIBLE);
 
-                        if (trainee.getSubscriptionEndDate()!=null)
+                        System.out.println(trainee.getSubscriptionEndDate().toString() + "trainee.getSubscriptionEndDate().toString()");
+                        if (trainee.getSubscriptionEndDate()!=null){
+
                             txtSubscriptionDate.setText(trainee.getSubscriptionEndDate().toString());
+                        }
+
                         else{
                             subscriptionExtendRelativeLay.setVisibility(View.GONE);
                             extend.setVisibility(View.GONE);

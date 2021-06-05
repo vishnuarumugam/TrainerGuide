@@ -49,6 +49,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         holder.rejectBtn.setVisibility(View.GONE);
         holder.approvebtn.setVisibility(View.GONE);
         holder.notification.setText(notification.get(position).getNotification());
+        holder.notificationHeaderText.setText(notification.get(position).getNotificationHeader());
         if(notification.get(position).getNotificationType() != null &&
                 notification.get(position).getNotificationType() !="" &&
                 (notification.get(position).getNotificationType().equals("Request") ||
@@ -58,20 +59,6 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             holder.rejectBtn.setVisibility(View.VISIBLE);
             holder.approvebtn.setVisibility(View.VISIBLE);
 
-            switch (notification.get(position).getNotificationType()){
-
-                case "Request":
-                    holder.notificationHeaderText.setText("New subscription request notification");
-                    break;
-                case "Extend":
-                    holder.notificationHeaderText.setText("Extend subscription request notification");
-                    break;
-                case "Remove":
-                    holder.notificationHeaderText.setText("Remove subscription request notification");
-                    break;
-                default:
-                    break;
-            }
         }
         holder.notificationClick.setOnClickListener(new View.OnClickListener() {
             @Override

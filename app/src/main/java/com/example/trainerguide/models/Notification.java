@@ -6,6 +6,7 @@ public class Notification {
     private Date addedDate;
     private String notification;
     private String notificationType;
+    private String notificationHeader;
     private boolean trainer;
     private String notificationId;
 
@@ -69,4 +70,12 @@ public class Notification {
     }
 
     private String userId;
+
+    public String getNotificationHeader() {
+        return notificationHeader;
+    }
+
+    public void setNotificationHeader(String notificationHeader) {
+        this.notificationHeader = notificationHeader;
+    }
 }
