@@ -220,7 +220,7 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
                             generatePdf();
                         }
                         else{
-                            CustomDialogClass customDialogClass = new CustomDialogClass(PrepareFoodChart.this, "Pdf Generation !!!", "Please choose atleast one item in diet chart", "Normal");
+                            CustomDialogClass customDialogClass = new CustomDialogClass(PrepareFoodChart.this, "Diet Plan", "Please choose atleast one item in diet chart", "Normal");
                             customDialogClass.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                             customDialogClass.show();
                         }
@@ -231,7 +231,7 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
                         generatePdf();
                     }
                     else{
-                        CustomDialogClass customDialogClass = new CustomDialogClass(PrepareFoodChart.this, "Pdf Generation !!!", "Please choose atleast one item in diet chart", "Normal");
+                        CustomDialogClass customDialogClass = new CustomDialogClass(PrepareFoodChart.this, "Diet Plan", "Please choose atleast one item in diet chart", "Normal");
                         customDialogClass.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                         customDialogClass.show();
                     }
@@ -820,7 +820,7 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
                         generatePdf();
                     }
                     else{
-                        CustomDialogClass customDialogClass = new CustomDialogClass(PrepareFoodChart.this, "Pdf Generation !!!", "Please choose atleast one item in diet chart", "Normal");
+                        CustomDialogClass customDialogClass = new CustomDialogClass(PrepareFoodChart.this, "Diet Plan", "Please choose atleast one item in diet chart", "Normal");
                         customDialogClass.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                         customDialogClass.show();
                     }

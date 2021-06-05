@@ -52,10 +52,26 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         if(notification.get(position).getNotificationType() != null &&
                 notification.get(position).getNotificationType() !="" &&
                 (notification.get(position).getNotificationType().equals("Request") ||
-                        notification.get(position).getNotificationType().equals("Extend")))
+                        notification.get(position).getNotificationType().equals("Extend") ||
+                        notification.get(position).getNotificationType().equals("Remove") ))
         {
             holder.rejectBtn.setVisibility(View.VISIBLE);
             holder.approvebtn.setVisibility(View.VISIBLE);
+
+            switch (notification.get(position).getNotificationType()){
+
+                case "Request":
+                    holder.notificationHeaderText.setText("New subscription request notification");
+                    break;
+                case "Extend":
+                    holder.notificationHeaderText.setText("Extend subscription request notification");
+                    break;
+                case "Remove":
+                    holder.notificationHeaderText.setText("Remove subscription request notification");
+                    break;
+                default:
+                    break;
+            }
         }
         holder.notificationClick.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,7 +115,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView notification;
+        TextView notification, notificationHeaderText;
         RelativeLayout notificationClick;
         Button approvebtn, rejectBtn;
         ImageButton deleteClick;
@@ -108,6 +124,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             super(itemView);
 
             notification = itemView.findViewById(R.id.notificationText);
+            notificationHeaderText = itemView.findViewById(R.id.notificationHeaderText);
             notificationClick = itemView.findViewById(R.id.notificationItem);
             approvebtn = itemView.findViewById(R.id.approvebtn);
             rejectBtn = itemView.findViewById(R.id.rejectbtn);

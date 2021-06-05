@@ -113,7 +113,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
     private List<String> foodAllergy = new ArrayList<>();
     private ProfileAdapter profileAdapter, profileAdapterFood;
     private RelativeLayout profileOtherRelativeLayFood, profileOtherRelativeLayHealth;
-    private Button extend;
+    private Button extend, subscriptionRemoveBtn;
 
 
     //Trainer Data
@@ -194,6 +194,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         requestTrainerNavText.setVisibility(View.GONE);
         foodChartNavText.setVisibility(View.GONE);
         extend = findViewById(R.id.extendbtn);
+        subscriptionRemoveBtn = findViewById(R.id.subscriptionRemoveBtn);
         txtSubscriptionDate = findViewById(R.id.txtSubscriptionDate);
 
         //Account Info variables
@@ -326,7 +327,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                         Trainee trainee = snapshot.getValue(Trainee.class);
                         Notification notify = new Notification();
                         notify.setNotificationId(UUID.randomUUID().toString());
-                        notify.setNotification(trainee.getName() + " Requested for extending subscription for 30 Days");
+                        notify.setNotification(trainee.getName() + " requested for extending subscription for 30 Days");
                         notify.setAddedDate(Calendar.getInstance().getTime());
                         notify.setNotificationType("Extend");
                         notify.setTrainer(false);
@@ -334,7 +335,46 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                         DatabaseReference trainerDatabaseReference = FirebaseDatabase.getInstance().getReference("Trainer/"+trainee.getTrainerId()+"/Notification/"+notify.getNotificationId());
 
                         trainerDatabaseReference.setValue(notify);
+
+                        Toast.makeText(ProfileScreen.this, "Extend Request sent to Trainer", Toast.LENGTH_SHORT).show();
+                        extend.setEnabled(false);
+                        extend.setBackgroundColor(getResources().getColor(R.color.themeColourFour));
                         //startActivity(new Intent(ProfileScreen.this,ProfileScreen.class));
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            }
+        });
+
+        subscriptionRemoveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                subscriptionRemoveBtn.startAnimation(buttonBounce);
+
+                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(path);
+
+                databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        Trainee trainee = snapshot.getValue(Trainee.class);
+                        Notification notify = new Notification();
+                        notify.setNotificationId(UUID.randomUUID().toString());
+                        notify.setNotification(trainee.getName() + " requested for ending the subscription");
+                        notify.setAddedDate(Calendar.getInstance().getTime());
+                        notify.setNotificationType("Remove");
+                        notify.setTrainer(false);
+                        notify.setUserId(trainee.getUserId());
+                        DatabaseReference trainerDatabaseReference = FirebaseDatabase.getInstance().getReference("Trainer/"+trainee.getTrainerId()+"/Notification/"+notify.getNotificationId());
+
+                        trainerDatabaseReference.setValue(notify);
+
+                        Toast.makeText(ProfileScreen.this, "Remove request sent to Trainer", Toast.LENGTH_SHORT).show();
+                        subscriptionRemoveBtn.setEnabled(false);
+                        subscriptionRemoveBtn.setBackgroundColor(getResources().getColor(R.color.themeColourFour));
                     }
 
                     @Override
@@ -796,7 +836,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         //Set Transparent Background
         progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 System.out.println("********OnDataChange*******");
@@ -936,16 +976,27 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                     if(extendReadonly && trainee.getTrainerId()!= null && trainee.getTrainerId()!="") {
                         subscriptionExtendRelativeLay.setVisibility(View.VISIBLE);
                         extend.setVisibility(View.VISIBLE);
-                        //txtSubscriptionDate.setVisibility(View.VISIBLE);*/
-                        txtSubscriptionDate.setText(trainee.getSubscriptionEndDate().toString());
+
+                        if (trainee.getSubscriptionEndDate()!=null)
+                            txtSubscriptionDate.setText(trainee.getSubscriptionEndDate().toString());
+                        else{
+                            subscriptionExtendRelativeLay.setVisibility(View.GONE);
+                            extend.setVisibility(View.GONE);
+                            subscriptionRemoveBtn.setVisibility(View.GONE);
+                            txtSubscriptionDate.setText("- - -");
+                        }
+
                     }
                     //String trainerName = GetTrainerName(trainee.getTrainerId());
-                    if (trainee.getTrainerId()!=null){
+                    if (trainee.getTrainerId()!=null && !(trainee.getTrainerId().equals("")) ){
                         GetTrainerName(trainee.getTrainerId());
                     }
                     else{
                         profileSubscriptionTrainer.setText("No Trainer assigned");
                         profileSubscriptionTrainer.setTextColor(getResources().getColor(R.color.orange));
+                        subscriptionExtendRelativeLay.setVisibility(View.GONE);
+                        extend.setVisibility(View.GONE);
+                        subscriptionRemoveBtn.setVisibility(View.GONE);
                     }
                     profileSubscriptionType.setText(trainee.getSubscriptionType());
 
@@ -1460,8 +1511,20 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         }
 
         if(save) {
+            System.out.println("Profile data updated successfully");
             databaseReference.updateChildren(hash);
+
+            try {
+                Thread.sleep(1000);
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            Toast.makeText(this, "Updated successfully", Toast.LENGTH_SHORT).show();
+
             profileDialog.dismiss();
+            PopulateUserDetails();
+
         }
     }
 

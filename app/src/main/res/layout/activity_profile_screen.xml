@@ -48,7 +48,7 @@
                     android:background="@color/themeColourTwo"
                     app:layout_constraintTop_toBottomOf="@id/profileImage">
 
-                    <!-- Food Chart-->
+                    <!-- Food Chart / Send Request Info Design-->
                     <com.google.android.material.card.MaterialCardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -905,6 +905,24 @@
                                         android:visibility="gone"
                                         android:layout_toRightOf="@id/profileSubscriptionExtendImage"
                                         android:layout_below="@id/txtSubscriptionDateLabel"/>
+                                </RelativeLayout>
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/subscriptionRemoveRelativeLay"
+                                    android:visibility="visible"
+                                    android:layout_below="@id/subscriptionExtendRelativeLay"
+                                    android:layout_alignStart="@id/subscriptionExtendRelativeLay">
+
+                                    <Button
+                                        android:layout_width="match_parent"
+                                        android:layout_height="50dp"
+                                        android:backgroundTint="@color/themeColourFour"
+                                        android:id="@+id/subscriptionRemoveBtn"
+                                        android:text="Remove Subscription"
+                                        android:visibility="visible"/>
+
                                 </RelativeLayout>
 
 

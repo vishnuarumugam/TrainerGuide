@@ -63,7 +63,7 @@
                     android:id="@+id/alertDialogBtnLeft"
                     android:layout_marginTop="10dp"
                     android:text="Yes"
-                    android:backgroundTint="@color/yellow"/>
+                    android:backgroundTint="@color/themeColourTwo"/>
 
                 <com.google.android.material.button.MaterialButton
                     android:layout_width="wrap_content"
@@ -73,7 +73,7 @@
                     android:id="@+id/alertDialogBtnRight"
                     android:layout_marginTop="10dp"
                     android:text="No"
-                    android:backgroundTint="@color/yellow"/>
+                    android:backgroundTint="@color/themeColourTwo"/>
 
 
             </LinearLayout>
