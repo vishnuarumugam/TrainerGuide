@@ -16,7 +16,7 @@ public class CustomDialogClass extends Dialog implements
         public TextView alertDialogTitle, alertDialogMsg;
         public Button alertDialogBtnLeft, alertDialogBtnRight;
         public String alertTitle, alertMessage, alertType;
-
+        public Boolean alertResponse;
 
         public CustomDialogClass(Activity activity,String alertTitle, String alertMessage, String alertType) {
             super(activity);
@@ -71,9 +71,11 @@ public class CustomDialogClass extends Dialog implements
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.alertDialogBtnRight:
+                    alertResponse = false;
                     dismiss();
                     break;
                 case R.id.alertDialogBtnLeft:
+                    alertResponse = true;
                     dismiss();
                     break;
                 default:

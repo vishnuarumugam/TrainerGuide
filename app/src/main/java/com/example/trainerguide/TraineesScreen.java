@@ -11,8 +11,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.MenuItem;
@@ -24,6 +28,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.trainerguide.models.Notification;
 import com.example.trainerguide.models.Trainer;
 import com.example.trainerguide.models.User;
 import com.example.trainerguide.models.UserMetaData;
@@ -35,15 +40,21 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -51,7 +62,9 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
-public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.OnAddClickListener, View.OnClickListener, TraineeAdapter.OnViewReportListener {
+
+
+public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.OnAddClickListener, View.OnClickListener, TraineeAdapter.OnViewReportListener,NotificationAdapter.OnDeleteClickListener{
 
     //Navigation view variables
     private DrawerLayout drawerLayout;
@@ -295,6 +308,19 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
                             userMetaData.setName(jsonObject.getString("name"));
                             userMetaData.setBmi(jsonObject.getDouble("bmi"));
                             userMetaData.setUserId(jsonObject.getString("userId"));
+                            try{
+                                JSONObject json = jsonObject.getJSONObject("subscriptionEndDate");
+                                Long timestamp = json.getLong("time");
+                                Date subscriptionEndDate = new Date(timestamp);
+                                userMetaData.setSubscriptionDate(subscriptionEndDate);
+
+                            }
+                            catch (Exception e){
+                                System.out.println(e.getMessage());
+                                System.out.println("out subscriptionEnddate");
+                            }
+
+
 
                             //Add Data
                             traineesList.add(userMetaData);
@@ -318,6 +344,18 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
                             userMetaData.setName(jsonObject.getString("name"));
                             userMetaData.setBmi(jsonObject.getDouble("bmi"));
                             userMetaData.setUserId(jsonObject.getString("userId"));
+
+                            try{
+                                JSONObject json = jsonObject.getJSONObject("subscriptionEndDate");
+                                Long timestamp = json.getLong("time");
+                                Date subscriptionEndDate = new Date(timestamp);
+                                userMetaData.setSubscriptionDate(subscriptionEndDate);
+
+                            }
+                            catch (Exception e){
+                                System.out.println(e.getMessage());
+                                System.out.println("out subscriptionEnddate");
+                            }
 
                             //Add Data
                             traineesList.add(userMetaData);
@@ -379,6 +417,7 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
         traineeRecycler.setAdapter(traineeAdapter);
         traineeAdapter.setOnAddClickListener(TraineesScreen.this);
         traineeAdapter.setOnViewReportListener(TraineesScreen.this);
+        traineeAdapter.setOnDeleteClickListener(TraineesScreen.this);
 
     }
 
@@ -470,5 +509,55 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onDeleteclick(int position) {
+
+        UserMetaData userMetaData = traineesList.get(position);
+
+        AlertDialog dialog = new AlertDialog.Builder(TraineesScreen.this).create();
+        dialog.setMessage(getResources().getString(R.string.deleteTrainee));
+        dialog.setCancelable(true);
+
+        dialog.setButton(DialogInterface.BUTTON_POSITIVE, "Yes", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int buttonId) {
+                DatabaseReference trainerDatabaseReference = FirebaseDatabase.getInstance().getReference("Trainer/"+userId);
+
+                trainerDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        Trainer trainer = snapshot.getValue(Trainer.class);
+
+                        Notification notify = new Notification();
+                        notify.setNotificationId(UUID.randomUUID().toString());
+                        notify.setNotification(trainer.getName() + " requested for ending the subscription");
+                        notify.setNotificationHeader("Remove subscription request notification");
+                        notify.setAddedDate(Calendar.getInstance().getTime());
+                        notify.setNotificationType("Remove");
+                        notify.setTrainer(true);
+                        notify.setUserId(trainer.getUserId());
+
+                        DatabaseReference traineeDatabaseReference = FirebaseDatabase.getInstance().getReference("User/"+userMetaData.getUserId()+"/Notification/"+notify.getNotificationId());
+                        traineeDatabaseReference.setValue(notify);
+
+                        Toast.makeText(TraineesScreen.this,"Remove request sent to Trainee", Toast.LENGTH_SHORT).show();
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            }
+        });
+        dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "No", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int buttonId) {
+
+            }
+        });
+        dialog.show();
+
     }
 }

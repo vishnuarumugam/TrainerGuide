@@ -4,19 +4,14 @@
     android:id="@+id/parent"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="1dp"
-    android:padding="10dp"
-    android:backgroundTint="@color/white">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/foodConsItem"
-        android:padding="2dp">
+    android:backgroundTint="@color/themeColourTwo">
 
 
-        <RelativeLayout
+    <RelativeLayout
             android:id="@+id/foodItem"
+            android:layout_marginBottom="1dp"
+            android:paddingVertical="10dp"
+            android:paddingHorizontal="5dp"
             android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -107,6 +102,5 @@
 
         </RelativeLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.google.android.material.card.MaterialCardView>

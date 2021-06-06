@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -23,7 +24,11 @@ import com.google.android.material.card.MaterialCardView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.time.temporal.ChronoUnit;
+
 
 public class TraineeAdapter extends RecyclerView.Adapter<TraineeAdapter.ViewHolder> {
 
@@ -32,6 +37,7 @@ public class TraineeAdapter extends RecyclerView.Adapter<TraineeAdapter.ViewHold
     private Animation buttonBounce;
     private OnAddClickListener addlistener;
     private OnViewReportListener viewReportListener;
+    private NotificationAdapter.OnDeleteClickListener deletelistener;
 
     /*public ArrayList<User> getTrainee() {
         return trainee;
@@ -86,7 +92,42 @@ public class TraineeAdapter extends RecyclerView.Adapter<TraineeAdapter.ViewHold
 
             }
         });
+        holder.deleteTrainee.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.findViewById(R.id.deleteTrainee).startAnimation(buttonBounce);
+                trainee.get(position);
+                deletelistener.onDeleteclick(position);
+            }
+        });
+        System.out.println("trainee.get(position).getSubscriptionEndDate()"+ trainee.get(position).getSubscriptionEndDate());
+        String subscriptionStatus = findSubscriptionStatus(trainee.get(position).getSubscriptionEndDate());
 
+        //int[] subscriptionStatusColours = new int[]{Color.parseColor(String.valueOf(R.color.subscriptionGreen)),Color.parseColor(String.valueOf(R.color.subscriptionRed)), Color.parseColor(String.valueOf(R.color.subscriptionOrange))};
+        int[] subscriptionStatusColours = new int[]{Color.parseColor("#F44336"), Color.parseColor("#FFBF00"), Color.parseColor("#4CAF50")};
+        holder.traineeSubscriptionStatus.setText(subscriptionStatus);
+        if (subscriptionStatus.equals("Active")){
+            System.out.println("Active");
+            holder.traineeSubscriptionStatus.setTextColor(subscriptionStatusColours[2]);
+
+            //holder.traineeSubscriptionStatus.setTextColor(R.color.themeColourFour);
+        }
+
+        else if(subscriptionStatus.equals("Inactive")){
+            System.out.println("Inactive");
+            holder.traineeSubscriptionStatus.setTextColor(subscriptionStatusColours[0]);
+        }
+
+        else{
+            System.out.println("Expire");
+            holder.traineeSubscriptionStatus.setTextColor(subscriptionStatusColours[1]);
+        }
+
+
+
+        /*holder.traineeSubscriptionStatus.setBackgroundColor();
+        holder.traineeSubscriptionStatus.setText();
+*/
     }
 
     @Override
@@ -96,11 +137,12 @@ public class TraineeAdapter extends RecyclerView.Adapter<TraineeAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView name,bmi,traineeReportView;
+        TextView name,bmi,traineeReportView, traineeSubscriptionStatus;
         ImageView profilePic;
         MaterialCardView traineeProfileClick;
         RelativeLayout traineeItem;
         CardView traineeItemThemeLine;
+        ImageButton deleteTrainee;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -112,6 +154,8 @@ public class TraineeAdapter extends RecyclerView.Adapter<TraineeAdapter.ViewHold
             traineeItem = itemView.findViewById(R.id.traineeItem);
             traineeItemThemeLine = itemView.findViewById(R.id.traineeItemThemeLine);
             traineeReportView = itemView.findViewById(R.id.traineeReportView);
+            deleteTrainee = itemView.findViewById(R.id.deleteTrainee);
+            traineeSubscriptionStatus = itemView.findViewById(R.id.traineeSubscriptionStatus);
 
         }
 
@@ -133,6 +177,30 @@ public class TraineeAdapter extends RecyclerView.Adapter<TraineeAdapter.ViewHold
         viewReportListener = listener;
     }
 
+    public interface OnDeleteClickListener{
+        void onDeleteclick(int position);
+    }
 
+    public void setOnDeleteClickListener(NotificationAdapter.OnDeleteClickListener listener){
+        deletelistener = listener;
+    }
+    public String findSubscriptionStatus(Date subscriptionEndDate){
+        System.out.println(subscriptionEndDate);
+        if (subscriptionEndDate !=null){
+            System.out.println(subscriptionEndDate);
+            Long noOfDays = ChronoUnit.DAYS.between(Calendar.getInstance().toInstant(), subscriptionEndDate.toInstant());
+
+            if (noOfDays<=7){
+                return "Expires in "+ noOfDays;
+            }
+            else if(noOfDays>7){
+                return "Active";
+            }
+            else
+                return "Inactive";
+        }
+        return "NA";
+
+    }
 
 }

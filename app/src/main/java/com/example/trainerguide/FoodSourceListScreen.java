@@ -243,6 +243,18 @@ public class FoodSourceListScreen extends AppCompatActivity implements View.OnCl
             }
         });
 
+        foodListRecycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                if (dy>0)
+                    foodSourceAdd.hide();
+                else
+                    foodSourceAdd.show();
+            }
+        });
+
 
 
     }

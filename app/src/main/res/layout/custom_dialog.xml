@@ -10,7 +10,7 @@
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         android:elevation="15dp"
         app:cardCornerRadius="25dp"
         app:cardBackgroundColor="@color/white"
@@ -19,8 +19,8 @@
         android:layout_alignParentTop="true">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
             android:padding="10dp"
             android:orientation="vertical">
@@ -42,7 +42,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_margin="10dp"
+                android:layout_margin="20dp"
                 android:text="Message"
                 android:textAlignment="center"
                 style="@style/TextAppearance.AppCompat"
@@ -53,6 +53,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginTop="30dp"
                 android:background="@color/white"
                 android:orientation="horizontal" >
 
@@ -61,9 +62,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:id="@+id/alertDialogBtnLeft"
-                    android:layout_marginTop="10dp"
                     android:text="Yes"
-                    android:backgroundTint="@color/themeColourTwo"/>
+                    android:backgroundTint="@color/themeColourFour"/>
 
                 <com.google.android.material.button.MaterialButton
                     android:layout_width="wrap_content"
@@ -71,7 +71,6 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="5dp"
                     android:id="@+id/alertDialogBtnRight"
-                    android:layout_marginTop="10dp"
                     android:text="No"
                     android:backgroundTint="@color/themeColourTwo"/>
 

@@ -1,16 +1,22 @@
 package com.example.trainerguide.models;
 
+import java.util.Date;
+
 public class UserMetaData {
     private String userId;
     private String name;
     private Double bmi;
     private String image;
+    private Date subscriptionEndDate;
 
-    public UserMetaData(String userId, String name, Double bmi, String image) {
+
+
+    public UserMetaData(String userId, String name, Double bmi, String image, Date subscriptionEndDate) {
         this.userId = userId;
         this.name = name;
         this.bmi = bmi;
         this.image = image;
+        this.subscriptionEndDate = subscriptionEndDate;
     }
 
     public UserMetaData() {
@@ -46,5 +52,13 @@ public class UserMetaData {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public Date getSubscriptionEndDate() {
+        return subscriptionEndDate;
+    }
+
+    public void setSubscriptionDate(Date subscriptionEndDate) {
+        this.subscriptionEndDate = subscriptionEndDate;
     }
 }

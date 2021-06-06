@@ -27,6 +27,9 @@
     <color name="themeDark1">#3AAFA9</color>
     <color name="themeLight">#DEF2F1</color>
 
+    <color name="subscriptionRed">#F44336</color>
+    <color name="subscriptionOrange">#FFBF00</color>
+    <color name="subscriptionGreen">#4CAF50</color>
     <!-- Theme Colour Design one -->
 
     <color name="headerDark">#174140</color>

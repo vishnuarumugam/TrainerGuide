@@ -108,33 +108,35 @@
                 android:layout_below="@id/traineeItemBmiLabel"
                 android:layout_toRightOf="@id/traineeItemThemeLine"/>
 
-
-
-
-            <!--<TextView
-                android:id="@+id/traineeItemSubscriptionLabel"
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/traineeItemBmiLabel"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_toRightOf="@id/traineeProfileImageCard"
-                android:text="Goal :"
-                android:textColor="@color/black"
-                android:textStyle="italic"/>
-
             <TextView
-                android:id="@+id/traineeItemSubscription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/traineeItemBmi"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="10dp"
-                android:layout_toRightOf="@id/traineeItemBmiLabel"
-                android:hint="WeightLoss"
-                android:textColor="@color/black"
-                android:textStyle="bold|italic"/>-->
+                android:id="@+id/traineeSubscriptionStatus"
+                android:text="Status"
+                android:paddingHorizontal="4dp"
+                android:textStyle="bold"
+                android:layout_marginRight="10dp"
+                android:textColor="@color/themeColourOne"
+                android:layout_alignParentEnd="true"
+                android:layout_alignTop="@id/traineeReportView"
+                />
+
+
+
+            <ImageButton
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:src="@drawable/ic_delete"
+                android:id="@+id/deleteTrainee"
+                android:backgroundTint="@color/white"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                />
+
         </RelativeLayout>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 <!--

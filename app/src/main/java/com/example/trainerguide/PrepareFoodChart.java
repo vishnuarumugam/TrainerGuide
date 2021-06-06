@@ -339,7 +339,7 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
                         foodsourceRecycler.setAdapter(foodSourceAdapter);
                         foodSourceAdapter.setOnAddClickListener(PrepareFoodChart.this);*/
                         //foodsourceRecycler.setAdapter(foodSourceAdapter);
-                        if (searchFood.getName().contains(s.toString())){
+                        if (searchFood.getName().toUpperCase().contains(s.toString().toUpperCase())){
                             searchFoodList.add(searchFood);
                         }
                     }

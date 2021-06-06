@@ -63,7 +63,7 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
 
         TextView foodName, foodNutritionType, foodCalorie;
         RelativeLayout foodItem;
-        ConstraintLayout foodConsItem;
+        //ConstraintLayout foodConsItem;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -73,7 +73,7 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
             foodNutritionType = itemView.findViewById(R.id.foodItemNt);
             foodCalorie = itemView.findViewById(R.id.foodItemCalorie);
             foodItem = itemView.findViewById(R.id.foodItem);
-            foodConsItem = itemView.findViewById(R.id.foodConsItem);
+            //foodConsItem = itemView.findViewById(R.id.foodConsItem);
 
         }
     }

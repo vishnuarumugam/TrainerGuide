@@ -40,6 +40,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -64,7 +67,7 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
     private NotificationAdapter notificationAdapter;
 
     private String userId;
-    private String path, userPath;
+    private String path, userPath, userType;
 
     //Firebase variables
     private DatabaseReference databaseReference;
@@ -88,7 +91,7 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
         sp= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         fAuth = FirebaseAuth.getInstance();
 
-        final String userType = sp.getString("ProfileType",null);
+        userType = sp.getString("ProfileType",null);
         path = userType+ "/" + fAuth.getCurrentUser().getUid() + "/Notification";
         userPath = userType+ "/" + fAuth.getCurrentUser().getUid();
         databaseReference = FirebaseDatabase.getInstance().getReference(path);
@@ -171,6 +174,16 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
         notificationAdapter.setOnDeleteClickListener(this);
     }
 
+    public void sortNotification(){
+
+        Collections.sort(notificationsList, Comparator.comparing(Notification::getAddedDate).reversed());
+        /*notificationsList.sort(new Comparator<Notification>() {
+            @Override
+            public int compare(Notification o1, Notification o2) {
+                return o1.getAddedDate().compareTo(o2.getAddedDate());
+            }
+        });*/
+    }
 
 
     public void PopulateNotifications(){
@@ -187,6 +200,7 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
                     notificationsList.add(notification);}
                     System.out.println(notification);
                 }
+                sortNotification();
                 notificationAdapter.notifyDataSetChanged();
                 progressBar.setVisibility(View.GONE);
                 notificationRefresh.setRefreshing(false);
@@ -250,6 +264,83 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
         if (notification.isTrainer()){
             DatabaseReference databaseReferenceTrainer = FirebaseDatabase.getInstance().getReference("Trainer"+ "/" +notification.getUserId());
             DatabaseReference databaseReferenceUser = FirebaseDatabase.getInstance().getReference("User/"+ fAuth.getCurrentUser().getUid());
+            final Trainee[] trainee = new Trainee[1];
+            final Trainer[] trainer = new Trainer[1];
+            if (notification.getNotificationType().equals("Remove")){
+
+                databaseReferenceTrainer.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        trainer[0] = snapshot.getValue(Trainer.class);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+                databaseReferenceUser.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        trainee[0] = snapshot.getValue(Trainee.class);
+                        if((trainee[0].getTrainerId() != null && !trainee[0].getTrainerId().equals("")) ){
+                            Notification notifyTrainee = new Notification();
+                            notifyTrainee.setNotificationId(UUID.randomUUID().toString());
+                            notifyTrainee.setNotification("You are removed as a trainee from " + trainer[0].getName() + ".");
+                            notifyTrainee.setAddedDate(Calendar.getInstance().getTime());
+                            notifyTrainee.setNotificationHeader("Notification");
+                            notifyTrainee.setNotificationType("");
+                            notifyTrainee.setTrainer(false);
+                            notifyTrainee.setUserId("");
+
+                            Notification notifyTrainer = new Notification();
+                            notifyTrainer.setNotificationId(UUID.randomUUID().toString());
+                            notifyTrainer.setNotification(trainee[0].getName()  + " removed as Trainee.");
+                            notifyTrainer.setAddedDate(Calendar.getInstance().getTime());
+                            notifyTrainer.setNotificationHeader("Notification");
+                            notifyTrainer.setNotificationType("");
+                            notifyTrainer.setTrainer(false);
+                            notifyTrainer.setUserId("");
+
+
+                            databaseReferenceTrainer.child("/Notification/" +notifyTrainer.getNotificationId()).setValue(notifyTrainer);
+                            databaseReferenceTrainer.child("/usersList/").orderByKey().equalTo(trainee[0].getUserId()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    for (DataSnapshot postsnapshot :snapshot.getChildren()) {
+                                        postsnapshot.getRef().removeValue();
+
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+                            //deleteNotification(notification.getNotificationId(), position);
+                            databaseReferenceUser.child("trainerId").removeValue();
+                            databaseReferenceUser.child("subscriptionEndDate").removeValue();
+                            databaseReferenceUser.child("/Notification/" +notifyTrainee.getNotificationId()).setValue(notifyTrainee);
+                        }
+
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            }
+            else {
+                CustomDialogClass customDialogClass = new CustomDialogClass(NotificationScreen.this, "Attention", "Requested user has been already removed from your subscription", "Normal");
+                customDialogClass.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                customDialogClass.show();
+            }
+
 
 
         }
@@ -265,20 +356,23 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
                         if(notification.getNotificationType().equals("Request")) {
                             //deleteNotification(notification.getNotificationId(), position);
 
-                            UserMetaData traineeMetadata = new UserMetaData();
-                            traineeMetadata.setUserId(trainee.getUserId());
-                            traineeMetadata.setBmi(trainee.getBmi());
-                            traineeMetadata.setName(trainee.getName());
-                            traineeMetadata.setImage(trainee.getImage());
-                            trainee.setTrainerId(fAuth.getCurrentUser().getUid());
-                            HashMap<String, Object> trainerId = new HashMap<>();
-                            trainerId.put("trainerId", fAuth.getCurrentUser().getUid());
                             Date currentDate = new Date();
                             // convert date to calendar
                             Calendar c = Calendar.getInstance();
                             c.setTime(currentDate);
 
                             c.add(Calendar.DATE, 30);
+                            UserMetaData traineeMetadata = new UserMetaData();
+                            traineeMetadata.setUserId(trainee.getUserId());
+                            traineeMetadata.setBmi(trainee.getBmi());
+                            traineeMetadata.setName(trainee.getName());
+                            traineeMetadata.setImage(trainee.getImage());
+                            traineeMetadata.setSubscriptionDate(trainee.getSubscriptionEndDate());
+                            trainee.setTrainerId(fAuth.getCurrentUser().getUid());
+
+
+                            HashMap<String, Object> trainerId = new HashMap<>();
+                            trainerId.put("trainerId", fAuth.getCurrentUser().getUid());
                             trainerId.put("subscriptionEndDate", c.getTime());
 
                             Notification notify = new Notification();
@@ -295,7 +389,7 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
                             notifyTrainee.setNotification("Your request has been accepted. Please check your Profile." );
                             notifyTrainee.setAddedDate(Calendar.getInstance().getTime());
                             notifyTrainee.setNotificationType("");
-                            notify.setNotificationHeader("Notification");
+                            notifyTrainee.setNotificationHeader("Notification");
                             notifyTrainee.setTrainer(false);
                             notifyTrainee.setUserId(trainee.getUserId());
 
@@ -332,12 +426,13 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
                             notifyTrainee.setNotificationId(UUID.randomUUID().toString());
                             notifyTrainee.setNotification(" Your subscription has been extended for 30 Days");
                             notifyTrainee.setAddedDate(Calendar.getInstance().getTime());
-                            notify.setNotificationHeader("Notification");
+                            notifyTrainee.setNotificationHeader("Notification");
                             notifyTrainee.setNotificationType("");
                             notifyTrainee.setTrainer(false);
                             notifyTrainee.setUserId(trainee.getUserId());
 
                             databaseReferenceTrainer.child("/Notification/" +notify.getNotificationId()).setValue(notify);
+                            databaseReferenceTrainer.child("/usersList/" + trainee.getUserId()).updateChildren(hash);
                             databaseReferenceUser.child("/Notification/" +notifyTrainee.getNotificationId()).setValue(notifyTrainee);
                             databaseReferenceUser.updateChildren(hash);
 
@@ -353,14 +448,14 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
 
                     else if (notification.getNotificationType().equals("Remove")){
                         if((trainee.getTrainerId() != null && !trainee.getTrainerId().equals("")) ){
-                            HashMap<String, Object> trainerId = new HashMap<>();
+                            /*HashMap<String, Object> trainerId = new HashMap<>();
                             //trainerId.put("trainerId", null);
                             Date currentDate = new Date();
                             // convert date to calendar
                             Calendar c = Calendar.getInstance();
                             c.setTime(currentDate);
 
-                            c.add(Calendar.DATE, 30);
+                            c.add(Calendar.DATE, 30);*/
                             //trainerId.put("subscriptionEndDate", c.getTime());
 
                             Notification notify = new Notification();
@@ -377,7 +472,7 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
                             notifyTrainee.setNotification("Your remove request has been accepted by Trainer." );
                             notifyTrainee.setAddedDate(Calendar.getInstance().getTime());
                             notifyTrainee.setNotificationType("");
-                            notify.setNotificationHeader("Notification");
+                            notifyTrainee.setNotificationHeader("Notification");
                             notifyTrainee.setTrainer(false);
                             notifyTrainee.setUserId(trainee.getUserId());
 
@@ -544,26 +639,88 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
 
     private void deleteAllNotification(String loggedInId, String toBeDeletedId) {
 
+        if (userType.equals("Trainer")){
+            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for (DataSnapshot postSnapshot :snapshot.getChildren()) {
+                        Notification notification = postSnapshot.getValue(Notification.class);
 
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot postSnapshot :snapshot.getChildren()) {
-                    Notification notification = postSnapshot.getValue(Notification.class);
-                    System.out.println("notification.getUserId()" + notification.getNotificationId());
-                    System.out.println("notification.getUserId()" + notification.getUserId());
-                    if (notification.getUserId().equals(toBeDeletedId)){
-                        postSnapshot.getRef().removeValue();
+                        if (notification.getUserId().equals(toBeDeletedId)){
+                            postSnapshot.getRef().removeValue();
+                        }
+                    }
+                    PopulateNotifications();
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+            DatabaseReference traineeDatabaseReference = FirebaseDatabase.getInstance().getReference("User" + "/" + toBeDeletedId + "/Notification");
+
+            traineeDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for (DataSnapshot postSnapshot :snapshot.getChildren()) {
+                        Notification notification = postSnapshot.getValue(Notification.class);
+
+                        if (notification.getUserId().equals(loggedInId)){
+                            postSnapshot.getRef().removeValue();
+                        }
                     }
                 }
-                PopulateNotifications();
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
 
-            }
-        });
+                }
+            });
+        }
+
+        else{
+            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for (DataSnapshot postSnapshot :snapshot.getChildren()) {
+                        Notification notification = postSnapshot.getValue(Notification.class);
+
+                        if (notification.getUserId().equals(toBeDeletedId)){
+                            postSnapshot.getRef().removeValue();
+                        }
+                    }
+                    PopulateNotifications();
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+            DatabaseReference trainerDatabaseReference = FirebaseDatabase.getInstance().getReference("Trainer" + "/" + toBeDeletedId + "/Notification");
+
+            trainerDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for (DataSnapshot postSnapshot :snapshot.getChildren()) {
+                        Notification notification = postSnapshot.getValue(Notification.class);
+
+                        if (notification.getUserId().equals(loggedInId)){
+                            postSnapshot.getRef().removeValue();
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
+
+
+
     }
 
 
@@ -587,37 +744,21 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
         final Notification notification = notificationsList.get(position);
         deleteNotification(notification.getNotificationId(), position);
 
-        /*databaseReference.orderByKey().equalTo(notification.getNotificationId()).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot postsnapshot :snapshot.getChildren()) {
-                    postsnapshot.getRef().removeValue();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });*/
     }
 
     @Override
     public void onDeleteclick(int position) {
         final Notification notification = notificationsList.get(position);
-        System.out.println("notificationsList1- "+ notification.getNotificationId() +" - " +notificationsList.size());
         deleteNotification(notification.getNotificationId(), position);
     }
 
     public void deleteNotification (String notificationId, final int position){
-        System.out.println("notificationsList2- "+ notificationId +" - " +notificationsList.size());
         notificationsList.remove(position);
         notificationAdapter.notifyDataSetChanged();
         databaseReference.orderByKey().equalTo(notificationId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot postsnapshot :snapshot.getChildren()) {
-                    System.out.println("notificationsList- "+ notificationId +" - " +notificationsList.size());
                     postsnapshot.getRef().removeValue();
 
                     notificationAdapter.notifyDataSetChanged();
@@ -632,12 +773,6 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
         });
 
 
-
-
-        /*notificationAdapter = new NotificationAdapter(notificationsList, NotificationScreen.this);*/
-
-        /*startActivity(new Intent( NotificationScreen.this , NotificationScreen.class));
-        finish();*/
     }
 
 

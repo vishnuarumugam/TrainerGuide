@@ -10,8 +10,12 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
@@ -43,6 +47,8 @@ import com.jjoe64.graphview.Viewport;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -67,9 +73,9 @@ public class UserReport extends AppCompatActivity implements View.OnClickListene
 
     //Pie chart
     private LinearLayout macroNutrientPieChart;
-    private TextView macroNutrient1Label, macroNutrient2Label, macroNutrient3Label, totalCaloriesReport;
+    private TextView macroNutrient1Label, macroNutrient2Label, macroNutrient3Label, totalCaloriesReport, bmiCategoryReport, weightDifferenceReport, idealWeightReportLabel, idealWeightReport;
     private GridLayout macroNutrientGrid, userDetailGrid;
-    private RelativeLayout totalCaloriesRel;
+    private RelativeLayout detailsReportRel;
 
 
     //Homescreen variables
@@ -165,9 +171,14 @@ public class UserReport extends AppCompatActivity implements View.OnClickListene
         macroNutrient2Label = findViewById(R.id.macroNutrient2Label);
         macroNutrient3Label  = findViewById(R.id.macroNutrient3Label);
         totalCaloriesReport = findViewById(R.id.totalCaloriesReport);
+        bmiCategoryReport  = findViewById(R.id.bmiCategoryReport);
+        idealWeightReportLabel = findViewById(R.id.idealWeightReportLabel);
+        idealWeightReport  = findViewById(R.id.idealWeightReport);
+
+        weightDifferenceReport  = findViewById(R.id.weightDifferenceReport);
         macroNutrientGrid = findViewById(R.id.macroNutrientGrid);
         userDetailGrid = findViewById(R.id.userDetailGrid);
-        totalCaloriesRel = findViewById(R.id.totalCaloriesRel);
+        detailsReportRel = findViewById(R.id.detailsReportRel);
         macroNutrientPieChart=findViewById(R.id.macroNutrientPieChart);
 
         progressUserReport = findViewById(R.id.progressUserReport);
@@ -213,6 +224,37 @@ public class UserReport extends AppCompatActivity implements View.OnClickListene
             }
         });
 
+        bmiCategoryReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CustomDialogClass customDialogClass;
+
+                switch (bmiCategoryReport.getText().toString()){
+
+                    case "Underweight":
+                        customDialogClass = new CustomDialogClass(UserReport.this, "Attention", getResources().getString(R.string.underweight), "Normal");
+                        customDialogClass.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        customDialogClass.show();
+                        break;
+                    case "Healthy":
+                        customDialogClass = new CustomDialogClass(UserReport.this, "Attention", getResources().getString(R.string.healthy), "Normal");
+                        customDialogClass.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        customDialogClass.show();
+                        break;
+                    case "Overweight":
+                        customDialogClass = new CustomDialogClass(UserReport.this, "Attention", getResources().getString(R.string.overweight), "Normal");
+                        customDialogClass.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        customDialogClass.show();
+                        break;
+                    case "Obese":
+                        customDialogClass = new CustomDialogClass(UserReport.this, "Attention", getResources().getString(R.string.obese), "Normal");
+                        customDialogClass.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        customDialogClass.show();
+                        break;
+
+                }
+            }
+        });
 
 
     }
@@ -223,7 +265,7 @@ public class UserReport extends AppCompatActivity implements View.OnClickListene
         dataPieChart.setVisibility(View.GONE);
         macroNutrientGrid.setVisibility(View.GONE);
         userDetailGrid.setVisibility(View.GONE);
-        totalCaloriesRel.setVisibility(View.GONE);
+        detailsReportRel.setVisibility(View.GONE);
         macroNutrientPieChart.setVisibility(View.GONE);
     }
 
@@ -255,7 +297,6 @@ public class UserReport extends AppCompatActivity implements View.OnClickListene
                     userDetailGrid.setVisibility(View.VISIBLE);
                     reportBmi.setText(user.getBmi().toString());
                     reportWeight.setText(user.getWeight().toString());
-                    totalCaloriesRel.setVisibility(View.VISIBLE);
                     totalCaloriesReport.setText(user.getBmr().toString());
 
                     if (user.getBmrReport() == null || user.getBmrReport().size()<2){
@@ -285,8 +326,16 @@ public class UserReport extends AppCompatActivity implements View.OnClickListene
                     userDetailGrid.setVisibility(View.VISIBLE);
                     reportBmi.setText(user.getBmi().toString());
                     reportWeight.setText(user.getWeight().toString());
-                    totalCaloriesRel.setVisibility(View.VISIBLE);
-                    totalCaloriesReport.setText(user.getBmr().toString());
+                    if (user.getBmi()>0){
+                        detailsReportRel.setVisibility(View.VISIBLE);
+                        totalCaloriesReport.setText(user.getBmr().toString());
+                        SpannableString content = new SpannableString(bmiCategory(user.getBmi()));
+                        content.setSpan(new UnderlineSpan(),0,content.length(),0);
+                        bmiCategoryReport.setText(content);
+                        weightDifferenceReport.setText(weightDifferenceCalculation(user.getBmrReport()));
+                        idealWeightReport.setText(idealWeightCalculation());
+                    }
+
 
                     //int[] data={0};
 
@@ -311,7 +360,7 @@ public class UserReport extends AppCompatActivity implements View.OnClickListene
                         dataPieChart.setVisibility(View.VISIBLE);
                         progressUserReport.setVisibility(View.GONE);
 
-
+                        // To add data to graph
                         for (BmrProgress bmiList: user.getBmrReport()){
                             long dayDifference = ((bmiList.getAddedDate().getTime() - user.getAccCreateDttm().getTime())/ 1000 / 60 / 60 / 24);
                             progressDataPoint.appendData(new DataPoint(dayDifference,bmiList.getBmrValue()), true, user.getBmrReport().size());
@@ -319,8 +368,8 @@ public class UserReport extends AppCompatActivity implements View.OnClickListene
                             progressGraphView.addSeries(progressDataPoint);
                         }
 
+                        // To add data to pie-chart
                         List<String> macro = new ArrayList<>();
-
                         if (user.getMacroNutrientDetails() != null) {
                             for (MacroNutrient macroList : user.getMacroNutrientDetails()){
                                 dataPieChart.setText("Macro Nutrient Split Up");
@@ -336,6 +385,7 @@ public class UserReport extends AppCompatActivity implements View.OnClickListene
                                     macro.add(macroList.getName());
                                 }
                             }
+
                             macroNutrient1Label.setText(macro.get(0));
                             macroNutrient2Label.setText(macro.get(1));
                             macroNutrient3Label.setText(macro.get(2));
@@ -360,6 +410,65 @@ public class UserReport extends AppCompatActivity implements View.OnClickListene
         });
     }
 
+    private String idealWeightCalculation() {
+
+        return "";
+    }
+
+    private String weightDifferenceCalculation(List<BmrProgress> bmrReport) {
+        String weightDifference="NA";
+
+        if (bmrReport.size()>1){
+
+            Double startWeight = bmrReport.get(0).getBmrValue();
+            Double currentWeight = bmrReport.get(bmrReport.size()-1).getBmrValue();
+
+            BigDecimal difference = new BigDecimal(startWeight - currentWeight).setScale(1, RoundingMode.HALF_UP);
+
+            if (difference.doubleValue()==0){
+                weightDifference = difference + " kg";
+            }
+            else if(difference.doubleValue()>0){
+                weightDifference = "Reduced " + difference + " kg";
+            }
+            else {
+                weightDifference = "Gained " + (-(difference.doubleValue())) + " kg";
+            }
+
+            return weightDifference;
+        }
+        else{
+
+
+            return weightDifference;
+        }
+
+    }
+
+    private String bmiCategory(Double bmi) {
+
+        if (bmi< 18.5){
+
+            idealWeightReportLabel.setVisibility(View.VISIBLE);
+            idealWeightReport.setVisibility(View.VISIBLE);
+            return "Underweight";
+
+        }
+        else if (bmi>= 18.5 && bmi<=24.9){
+            return "Healthy";
+        }
+        else if(bmi>=25 && bmi<=29.9){
+            idealWeightReportLabel.setVisibility(View.VISIBLE);
+            idealWeightReport.setVisibility(View.VISIBLE);
+            return "Overweight";
+        }
+        else {
+            idealWeightReportLabel.setVisibility(View.VISIBLE);
+            idealWeightReport.setVisibility(View.VISIBLE);
+            return "Obese";
+        }
+
+    }
 
 
     @Override

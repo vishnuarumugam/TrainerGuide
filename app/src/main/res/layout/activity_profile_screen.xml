@@ -171,7 +171,6 @@
                                         android:id="@+id/profilePhoneNumber"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="9597978967"
                                         style="@style/TextAppearance.AppCompat.Medium"
                                         android:layout_toRightOf="@id/profilePhoneImage"
                                         android:layout_alignTop="@id/profilePhoneImage"/>
@@ -202,7 +201,6 @@
                                         android:id="@+id/profileEmailId"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="vishnuarumugam95@gmail.com"
                                         style="@style/TextAppearance.AppCompat.Medium"
                                         android:layout_toRightOf="@id/profileEmailImage"
                                         android:layout_alignTop="@id/profileEmailImage"/>
@@ -297,7 +295,6 @@
                                         android:id="@+id/profileDob"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="10/08/1995"
                                         style="@style/TextAppearance.AppCompat.Medium"
                                         android:layout_toRightOf="@id/profileDobImage"
                                         android:layout_alignTop="@id/profileDobImage"/>
@@ -482,7 +479,6 @@
                                         android:id="@+id/profileFoodType"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Non - Vegetarian"
                                         style="@style/TextAppearance.AppCompat.Medium"
                                         android:layout_toRightOf="@id/profileFoodTypeImage"
                                         android:layout_alignTop="@id/profileFoodTypeImage"/>

@@ -122,7 +122,6 @@
 
                 </LinearLayout>
 
-
                 <GridLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -245,37 +244,115 @@
                 </GridLayout>
 
             <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:padding="2dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="20dp"
                 android:layout_gravity="center_horizontal"
-                android:id="@+id/totalCaloriesRel">
+                android:id="@+id/detailsReportRel">
+
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Daily Required Calories: "
+                    android:text="BMI category: "
+                    android:textStyle="normal"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@color/themeColourOne"
+                    android:id="@+id/bmiCategoryReportLabel" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/bmiCategoryReport"
+                    android:layout_toRightOf="@id/bmiCategoryReportLabel"
+                    android:layout_alignStart="@+id/totalCaloriesReport"
+                    android:textAlignment="center"
+                    style="@style/TextAppearance.AppCompat.Small"
+                    android:textStyle="bold"
+                    android:textColor="@color/themeColourTwo" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ideal weight: "
+                    android:textStyle="normal"
+                    android:visibility="gone"
+                    android:textColor="@color/themeColourOne"
+                    android:id="@+id/idealWeightReportLabel"
+                    android:layout_below="@+id/bmiCategoryReportLabel"
+                    android:layout_alignStart="@+id/bmiCategoryReportLabel" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/idealWeightReport"
+                    android:text="test"
+                    android:visibility="gone"
+                    android:layout_toRightOf="@id/idealWeightReportLabel"
+                    android:layout_below="@+id/bmiCategoryReport"
+                    android:layout_alignStart="@+id/totalCaloriesReport"
+                    android:textAlignment="center"
+                    style="@style/TextAppearance.AppCompat.Small"
+                    android:textStyle="bold"
+                    android:textColor="@color/themeColourOne"  />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Weight difference: "
+                    android:textStyle="normal"
+                    android:textColor="@color/themeColourOne"
+                    android:id="@+id/weightDifferenceReportLabel"
+                    android:layout_below="@+id/idealWeightReportLabel"
+                    android:layout_alignStart="@+id/idealWeightReportLabel" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/weightDifferenceReport"
+                    android:layout_toRightOf="@id/weightDifferenceReportLabel"
+                    android:layout_below="@+id/idealWeightReport"
+                    android:layout_alignStart="@+id/totalCaloriesReport"
+                    android:textAlignment="center"
+                    style="@style/TextAppearance.AppCompat.Small"
+                    android:textStyle="bold"
+                    android:textColor="@color/themeColourOne"  />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Required calories per day for your weight: "
                     android:textStyle="normal"
                     android:textColor="@color/themeColourOne"
                     android:id="@+id/totalCaloriesReportLabel"
-                    android:gravity="center"/>
+                    android:layout_below="@+id/weightDifferenceReportLabel"
+                    android:layout_alignStart="@+id/weightDifferenceReportLabel"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:id="@+id/totalCaloriesReport"
-                    android:layout_marginLeft="5dp"
-                    android:layout_centerVertical="true"
-                    android:text="test"
+                    android:layout_marginLeft="3dp"
                     android:layout_toRightOf="@id/totalCaloriesReportLabel"
+                    android:layout_below="@+id/weightDifferenceReport"
                     android:textAlignment="center"
                     style="@style/TextAppearance.AppCompat.Small"
-                    android:textColor="@color/black" />
+                    android:textStyle="bold"
+                    android:textColor="@color/themeColourOne" />
 
             </RelativeLayout>
 
-                <TextView
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/themeColourTwo"
+                android:layout_marginTop="20dp"/>
+
+
+            <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
@@ -479,6 +556,8 @@
             </GridLayout>
 
         </LinearLayout>
+
+
 
     </ScrollView>
 

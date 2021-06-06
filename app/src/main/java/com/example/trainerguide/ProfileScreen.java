@@ -75,6 +75,8 @@ import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -1277,7 +1279,6 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
             final StorageReference fileReference = storageReference.child("FitnessGuide/Trainer").child(FirebaseAuth.getInstance().getUid()+".null");
             final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(path);
 
-
             uploadTask = fileReference.putFile(imageUri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
@@ -1287,8 +1288,28 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                                 public void onComplete(@NonNull Task<Uri> task) {
                                     HashMap<String,Object> imageMetaData = new HashMap<>();
                                     String image = task.getResult().toString();
-                                    imageMetaData.put("image",image);
+                                    imageMetaData.put("image", image);
                                     databaseReference.updateChildren(imageMetaData);
+
+                                    if (userType.equals("User")){
+                                        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                Trainee trainee = snapshot.getValue(Trainee.class);
+
+                                                if (trainee.getTrainerId()!=null && trainee.getTrainerId().length()>0){
+                                                    DatabaseReference databaseReferenceTrainer = FirebaseDatabase.getInstance().getReference("Trainer/"+trainee.getTrainerId()+"/usersList/"+trainee.getUserId());
+                                                    databaseReferenceTrainer.updateChildren(imageMetaData);
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError error) {
+
+                                            }
+                                        });
+
+                                    }
                                     Toast.makeText(ProfileScreen.this, "Successfully Updated", Toast.LENGTH_SHORT).show();
                                 }
                             });
@@ -1301,6 +1322,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                             Toast.makeText(ProfileScreen.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
+
         }
         else{
             Toast.makeText(this, "File not selected", Toast.LENGTH_SHORT).show();
@@ -1343,23 +1365,12 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
             databaseReference.updateChildren(hash);
 
             if ((new Double(user.getWeight())>0) && (new Double(user.getHeight())>0)){
-                userBmi = userBmValue.bmiCalculation(user.getWeight(), user.getHeight());
                 userBmr = userBmValue.bmrCalculation(user.getWeight(), user.getHeight());
 
-                hash.put("bmi", new Double(round(userBmi)));
                 hash.put("bmr", new Double(round(userBmr)));
                 hash.put("lastModDttm",Calendar.getInstance().getTime());
 
 
-                if (user.getBmrReport()==null && (user.getLastModDttm().equals(user.getAccCreateDttm()))){
-                    bmrProgressList.add(new BmrProgress(user.getLastModDttm(),user.getWeight()));
-                    bmrProgressList.add(new BmrProgress(Calendar.getInstance().getTime(),user.getWeight()));
-                    hash.put("bmrReport",bmrProgressList);
-                }
-                else{
-                    bmrProgressList.add(new BmrProgress(Calendar.getInstance().getTime(),user.getWeight()));
-                    hash.put("bmrReport",bmrProgressList);
-                }
             }
 
 
@@ -1367,10 +1378,30 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
 
         else if (userField.equals("weight") || userField.equals("height")){
             if(new Double(value)>0) {
-                Double userProfileValue = new Double(value);
+                Double userProfileValue = new Double(new BigDecimal(value).setScale(2, RoundingMode.HALF_UP).doubleValue());
                 hash.put(userField, userProfileValue);
                 Double userBmi = null;
                 Double userBmr = null;
+
+
+                if (userField.equals("weight")){
+
+                    user.setWeight(userProfileValue);
+                    bmrProgressList.add(new BmrProgress(Calendar.getInstance().getTime(),userProfileValue));
+                    hash.put("bmrReport",bmrProgressList);
+                    /*if (user.getBmrReport()==null && (user.getLastModDttm().equals(user.getAccCreateDttm()))){
+                        bmrProgressList.add(new BmrProgress(user.getLastModDttm(),user.getWeight()));
+
+
+                    }
+                    else{
+                        bmrProgressList.add(new BmrProgress(Calendar.getInstance().getTime(),userProfileValue));
+                        hash.put("bmrReport",bmrProgressList);
+                    }*/
+                }
+                else{
+                    user.setHeight(userProfileValue);
+                }
 
                 if( (new Double(user.getWeight())>0) && (new Double(user.getHeight())>0) ){
                     switch (userField) {
@@ -1379,22 +1410,11 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
 
                             userBmi = userBmValue.bmiCalculation(userProfileValue, user.getHeight());
                             userBmr = userBmValue.bmrCalculation(userProfileValue, user.getHeight());
-
-                            if (user.getBmrReport()==null && (user.getLastModDttm().equals(user.getAccCreateDttm()))){
-                                bmrProgressList.add(new BmrProgress(user.getLastModDttm(),user.getWeight()));
-                                bmrProgressList.add(new BmrProgress(Calendar.getInstance().getTime(),userProfileValue));
-                                hash.put("bmrReport",bmrProgressList);
-                            }
-                            else{
-                                bmrProgressList.add(new BmrProgress(Calendar.getInstance().getTime(),userProfileValue));
-                                hash.put("bmrReport",bmrProgressList);
-                            }
-
                             break;
                         case "height":
-                            System.out.println("inSwitch");
                             userBmi = userBmValue.bmiCalculation(user.getWeight(), userProfileValue);
                             userBmr = userBmValue.bmrCalculation(user.getWeight(), userProfileValue);
+
                             break;
                         default:
                             break;
@@ -1402,10 +1422,11 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
 
                     hash.put("bmi", new Double(round(userBmi)));
                     hash.put("bmr", new Double(round(userBmr)));
-
-
-
                     hash.put("lastModDttm",Calendar.getInstance().getTime());
+                    if (userType.equals("User")){
+                        System.out.println("traineeMetaDataUpdatewief");
+                        traineeMetaDataUpdate(new Double(round(userBmi)));
+                    }
                 }
 
             }
@@ -1536,6 +1557,29 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
             PopulateUserDetails();
 
         }
+    }
+    public void traineeMetaDataUpdate(Double bmi){
+            System.out.println("traineeMetaDataUpdate");
+            final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(path);
+            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    Trainee trainee = snapshot.getValue(Trainee.class);
+
+                    if (trainee.getTrainerId()!=null && trainee.getTrainerId().length()>0){
+                        HashMap hash= new HashMap();
+                        hash.put("bmi", bmi);
+                        DatabaseReference databaseReferenceTrainer = FirebaseDatabase.getInstance().getReference("Trainer/"+trainee.getTrainerId()+"/usersList/"+trainee.getUserId());
+                        databaseReferenceTrainer.updateChildren(hash);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
     }
 
 }
