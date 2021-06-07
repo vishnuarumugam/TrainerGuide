@@ -29,6 +29,9 @@
     <string name="overweight">A BMI of 25–29.9 indicates that you are slightly overweight, so you may need to lose some weight for health reasons. Consult a doctor or with a trainer in the app for advice.</string>
     <string name="obese">A BMI of over 30 indicates that you have obesity. Your health may be at risk if you do not lose weight. Consult a doctor or with a trainer in the app for advice.</string>
     <string name="deleteTrainee">Do you really want to remove the trainee?</string>
+    <string name="extendSubscription">Do you want to extend the subscription?</string>
+    <string name="removeSubscription">Do you want to remove the subscription?</string>
+
 
     <string name="title_activity_pdf_creation">Pdf_creation</string>
     <!-- Strings used for fragments for navigation -->

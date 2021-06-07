@@ -14,10 +14,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -329,35 +331,60 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
             @Override
             public void onClick(View v) {
                 extend.startAnimation(buttonBounce);
-                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(path);
 
-                databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+
+                AlertDialog dialog = new AlertDialog.Builder(ProfileScreen.this).create();
+                dialog.setMessage(getResources().getString(R.string.extendSubscription));
+                dialog.setCancelable(true);
+
+                dialog.setButton(DialogInterface.BUTTON_POSITIVE, "Yes", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        Trainee trainee = snapshot.getValue(Trainee.class);
-                        Notification notify = new Notification();
-                        notify.setNotificationId(UUID.randomUUID().toString());
-                        notify.setNotification(trainee.getName() + " requested for extending subscription for 30 Days");
-                        notify.setNotificationHeader("Extend subscription request notification");
-                        notify.setAddedDate(Calendar.getInstance().getTime());
-                        notify.setNotificationType("Extend");
-                        notify.setTrainer(false);
-                        notify.setUserId(trainee.getUserId());
-                        DatabaseReference trainerDatabaseReference = FirebaseDatabase.getInstance().getReference("Trainer/"+trainee.getTrainerId()+"/Notification/"+notify.getNotificationId());
+                    public void onClick(DialogInterface dialog, int which) {
 
-                        trainerDatabaseReference.setValue(notify);
+                        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(path);
 
-                        Toast.makeText(ProfileScreen.this, "Extend Request sent to Trainer", Toast.LENGTH_SHORT).show();
-                        extend.setEnabled(false);
-                        extend.setBackgroundColor(getResources().getColor(R.color.themeColourFour));
-                        //startActivity(new Intent(ProfileScreen.this,ProfileScreen.class));
-                    }
+                        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                Trainee trainee = snapshot.getValue(Trainee.class);
+                                Notification notify = new Notification();
+                                notify.setNotificationId(UUID.randomUUID().toString());
+                                notify.setNotification(trainee.getName() + " requested for extending subscription for 30 Days");
+                                notify.setNotificationHeader("Extend subscription request notification");
+                                notify.setAddedDate(Calendar.getInstance().getTime());
+                                notify.setNotificationType("Extend");
+                                notify.setTrainer(false);
+                                notify.setUserId(trainee.getUserId());
+                                DatabaseReference trainerDatabaseReference = FirebaseDatabase.getInstance().getReference("Trainer/"+trainee.getTrainerId()+"/Notification/"+notify.getNotificationId());
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
+                                trainerDatabaseReference.setValue(notify);
+
+                                Toast.makeText(ProfileScreen.this, "Extend Request sent to Trainer", Toast.LENGTH_SHORT).show();
+                                extend.setEnabled(false);
+                                extend.setBackgroundColor(getResources().getColor(R.color.themeColourFour));
+                                //startActivity(new Intent(ProfileScreen.this,ProfileScreen.class));
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
 
                     }
                 });
+
+                dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int buttonId) {
+
+                    }
+                });
+                dialog.show();
+
+
+
+
+
             }
         });
 
@@ -366,34 +393,52 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
             public void onClick(View v) {
                 subscriptionRemoveBtn.startAnimation(buttonBounce);
 
-                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(path);
 
-                databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        Trainee trainee = snapshot.getValue(Trainee.class);
-                        Notification notify = new Notification();
-                        notify.setNotificationId(UUID.randomUUID().toString());
-                        notify.setNotification(trainee.getName() + " requested for ending the subscription");
-                        notify.setNotificationHeader("Remove subscription request notification");
-                        notify.setAddedDate(Calendar.getInstance().getTime());
-                        notify.setNotificationType("Remove");
-                        notify.setTrainer(false);
-                        notify.setUserId(trainee.getUserId());
-                        DatabaseReference trainerDatabaseReference = FirebaseDatabase.getInstance().getReference("Trainer/"+trainee.getTrainerId()+"/Notification/"+notify.getNotificationId());
+                AlertDialog dialog = new AlertDialog.Builder(ProfileScreen.this).create();
+                dialog.setMessage(getResources().getString(R.string.removeSubscription));
+                dialog.setCancelable(true);
 
-                        trainerDatabaseReference.setValue(notify);
+                dialog.setButton(DialogInterface.BUTTON_POSITIVE, "Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int buttonId) {
+                        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(path);
 
-                        Toast.makeText(ProfileScreen.this, "Remove request sent to Trainer", Toast.LENGTH_SHORT).show();
-                        subscriptionRemoveBtn.setEnabled(false);
-                        subscriptionRemoveBtn.setBackgroundColor(getResources().getColor(R.color.themeColourFour));
+                        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                Trainee trainee = snapshot.getValue(Trainee.class);
+                                Notification notify = new Notification();
+                                notify.setNotificationId(UUID.randomUUID().toString());
+                                notify.setNotification(trainee.getName() + " requested for ending the subscription");
+                                notify.setNotificationHeader("Remove subscription request notification");
+                                notify.setAddedDate(Calendar.getInstance().getTime());
+                                notify.setNotificationType("Remove");
+                                notify.setTrainer(false);
+                                notify.setUserId(trainee.getUserId());
+                                DatabaseReference trainerDatabaseReference = FirebaseDatabase.getInstance().getReference("Trainer/"+trainee.getTrainerId()+"/Notification/"+notify.getNotificationId());
+
+                                trainerDatabaseReference.setValue(notify);
+
+                                Toast.makeText(ProfileScreen.this, "Remove request sent to Trainer", Toast.LENGTH_SHORT).show();
+                                subscriptionRemoveBtn.setEnabled(false);
+                                subscriptionRemoveBtn.setBackgroundColor(getResources().getColor(R.color.themeColourFour));
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
                     }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
+                });
+                dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int buttonId) {
 
                     }
                 });
+                dialog.show();
+
+
+
             }
         });
 
