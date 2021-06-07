@@ -126,7 +126,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
     private ImageButton profileImage;
     MaterialCardView accCardView, personalInfoCardView, foodInfoCardView, healthInfoCardView, subscriptionInfoCardView, profileActionView;
     TextView profileAccDrop, profilePersonalInfoDrop, profileFoodInfoDrop, profileWeight,profilePhoneNumber, profileEmailId, profileDob, profileHeight, profileFoodType, profileHealthInfoDrop, foodAllergyOther, healthIssuesOther, profileExperience, profileSubscriptionInfoDrop, profileSubscriptionType, profileSubscriptionFees, profileSubscriptionDescription, profileSubscriptionTrainer, requestTrainerNavText, foodChartNavText;
-    RelativeLayout accRelativeCollapse, personalRelativeCollapse, foodInfoRelativeCollapse, dobRelativeLay, healthInfoRelativeCollapse, weightRelativeLay, heightRelativeLay, foodTypeRelativeLay, foodAllergyRelativeLay, healthIssuesRelativeLay, experienceRelativeLay, subscriptionInfoRelativeCollapse, subscriptionTypeRelativeLay, subscriptionTrainerRelativeLay, subscriptionFeesRelativeLay, subscriptionDescriptionRelativeLay, subscriptionExtendRelativeLay, foodChartNavRelativeLabel;
+    RelativeLayout accRelativeCollapse, personalRelativeCollapse, foodInfoRelativeCollapse, dobRelativeLay, healthInfoRelativeCollapse, weightRelativeLay, heightRelativeLay, foodTypeRelativeLay, foodAllergyRelativeLay, healthIssuesRelativeLay, experienceRelativeLay, subscriptionInfoRelativeCollapse, subscriptionTypeRelativeLay, subscriptionTrainerRelativeLay, subscriptionFeesRelativeLay, subscriptionDescriptionRelativeLay, subscriptionExtendRelativeLay, foodChartNavRelativeLabel, subscriptionRemoveRelativeLay;
 
     private String userId;
     private String path;
@@ -249,6 +249,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         subscriptionFeesRelativeLay = findViewById(R.id.subscriptionFeesRelativeLay);
         subscriptionDescriptionRelativeLay = findViewById(R.id.subscriptionDescriptionRelativeLay);
         subscriptionExtendRelativeLay = findViewById(R.id.subscriptionExtendRelativeLay);
+        subscriptionRemoveRelativeLay = findViewById(R.id.subscriptionRemoveRelativeLay);
 
         //Menu Item variables
         profileMenu = findViewById(R.id.nav_profile);
@@ -287,6 +288,8 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
             if(!(userType.equals("Trainer"))){
                 extendReadonly=true;
                 extend.setVisibility(View.VISIBLE);
+                subscriptionRemoveBtn.setVisibility(View.VISIBLE);
+                subscriptionRemoveRelativeLay.setVisibility(View.VISIBLE);
                 //txtSubscriptionDate.setVisibility(View.VISIBLE);
             }
         }
@@ -302,6 +305,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                 profileActionView.setVisibility(View.VISIBLE);
                 requestTrainerNavText.setVisibility(View.GONE);
                 subscriptionRemoveBtn.setVisibility(View.GONE);
+                subscriptionRemoveRelativeLay.setVisibility(View.GONE);
                 foodChartNavText.setVisibility(View.VISIBLE);
             }
         }
@@ -995,6 +999,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                             subscriptionExtendRelativeLay.setVisibility(View.GONE);
                             extend.setVisibility(View.GONE);
                             subscriptionRemoveBtn.setVisibility(View.GONE);
+                            subscriptionRemoveRelativeLay.setVisibility(View.GONE);
                             txtSubscriptionDate.setText("- - -");
                         }
 
@@ -1009,6 +1014,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                         subscriptionExtendRelativeLay.setVisibility(View.GONE);
                         extend.setVisibility(View.GONE);
                         subscriptionRemoveBtn.setVisibility(View.GONE);
+                        subscriptionRemoveRelativeLay.setVisibility(View.GONE);
                     }
                     profileSubscriptionType.setText(trainee.getSubscriptionType());
 

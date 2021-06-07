@@ -258,7 +258,7 @@
                     android:layout_height="wrap_content"
                     android:text="BMI category: "
                     android:textStyle="normal"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="30dp"
                     android:textColor="@color/themeColourOne"
                     android:id="@+id/bmiCategoryReportLabel" />
 
@@ -276,7 +276,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Ideal weight: "
+                    android:text="Ideal BMI: "
                     android:textStyle="normal"
                     android:visibility="gone"
                     android:textColor="@color/themeColourOne"
@@ -288,7 +288,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:id="@+id/idealWeightReport"
-                    android:text="test"
                     android:visibility="gone"
                     android:layout_toRightOf="@id/idealWeightReportLabel"
                     android:layout_below="@+id/bmiCategoryReport"
@@ -324,7 +323,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Required calories per day for your weight: "
+                    android:text="Required calories per day: "
                     android:textStyle="normal"
                     android:textColor="@color/themeColourOne"
                     android:id="@+id/totalCaloriesReportLabel"
@@ -335,7 +334,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:id="@+id/totalCaloriesReport"
-                    android:layout_marginLeft="3dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@id/totalCaloriesReportLabel"
                     android:layout_below="@+id/weightDifferenceReport"
                     android:textAlignment="center"

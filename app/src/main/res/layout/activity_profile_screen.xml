@@ -907,7 +907,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:id="@+id/subscriptionRemoveRelativeLay"
-                                    android:visibility="visible"
+                                    android:visibility="gone"
                                     android:layout_below="@id/subscriptionExtendRelativeLay"
                                     android:layout_alignStart="@id/subscriptionExtendRelativeLay">
 
@@ -916,8 +916,7 @@
                                         android:layout_height="50dp"
                                         android:backgroundTint="@color/themeColourFour"
                                         android:id="@+id/subscriptionRemoveBtn"
-                                        android:text="Remove Subscription"
-                                        android:visibility="visible"/>
+                                        android:text="Remove Subscription" />
 
                                 </RelativeLayout>
 

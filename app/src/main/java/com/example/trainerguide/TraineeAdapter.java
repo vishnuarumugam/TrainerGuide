@@ -104,22 +104,18 @@ public class TraineeAdapter extends RecyclerView.Adapter<TraineeAdapter.ViewHold
         String subscriptionStatus = findSubscriptionStatus(trainee.get(position).getSubscriptionEndDate());
 
         //int[] subscriptionStatusColours = new int[]{Color.parseColor(String.valueOf(R.color.subscriptionGreen)),Color.parseColor(String.valueOf(R.color.subscriptionRed)), Color.parseColor(String.valueOf(R.color.subscriptionOrange))};
-        int[] subscriptionStatusColours = new int[]{Color.parseColor("#F44336"), Color.parseColor("#FFBF00"), Color.parseColor("#4CAF50")};
+        int[] subscriptionStatusColours = new int[]{Color.parseColor("#F44336"), Color.parseColor("#FFBF00"), Color.parseColor("#1D3C45")};
         holder.traineeSubscriptionStatus.setText(subscriptionStatus);
         if (subscriptionStatus.equals("Active")){
-            System.out.println("Active");
             holder.traineeSubscriptionStatus.setTextColor(subscriptionStatusColours[2]);
-
             //holder.traineeSubscriptionStatus.setTextColor(R.color.themeColourFour);
         }
 
         else if(subscriptionStatus.equals("Inactive")){
-            System.out.println("Inactive");
             holder.traineeSubscriptionStatus.setTextColor(subscriptionStatusColours[0]);
         }
 
         else{
-            System.out.println("Expire");
             holder.traineeSubscriptionStatus.setTextColor(subscriptionStatusColours[1]);
         }
 
@@ -190,8 +186,15 @@ public class TraineeAdapter extends RecyclerView.Adapter<TraineeAdapter.ViewHold
             System.out.println(subscriptionEndDate);
             Long noOfDays = ChronoUnit.DAYS.between(Calendar.getInstance().toInstant(), subscriptionEndDate.toInstant());
 
-            if (noOfDays<=7){
-                return "Expires in "+ noOfDays;
+            if (noOfDays>=0 && noOfDays<=7){
+                System.out.println(noOfDays);
+                if (noOfDays == 0){
+                    return "Expires Today";
+                }
+                else{
+                    return "Expires in "+ noOfDays + " days";
+                }
+
             }
             else if(noOfDays>7){
                 return "Active";

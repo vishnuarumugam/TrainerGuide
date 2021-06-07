@@ -334,6 +334,8 @@ public class UserReport extends AppCompatActivity implements View.OnClickListene
                         bmiCategoryReport.setText(content);
                         weightDifferenceReport.setText(weightDifferenceCalculation(user.getBmrReport()));
                         idealWeightReport.setText(idealWeightCalculation());
+                        idealWeightReport.setText("18.5 - 24.9");
+
                     }
 
 

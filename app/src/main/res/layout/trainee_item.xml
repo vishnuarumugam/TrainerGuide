@@ -114,7 +114,7 @@
                 android:id="@+id/traineeSubscriptionStatus"
                 android:text="Status"
                 android:paddingHorizontal="4dp"
-                android:textStyle="bold"
+                android:textStyle="normal|italic"
                 android:layout_marginRight="10dp"
                 android:textColor="@color/themeColourOne"
                 android:layout_alignParentEnd="true"

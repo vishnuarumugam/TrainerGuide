@@ -49,6 +49,8 @@ import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
@@ -412,6 +414,7 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
 
         //Initialize Adapter
         System.out.println("size"+traineesList.size());
+        //sortTraineesList();
         traineeAdapter = new TraineeAdapter(TraineesScreen.this, traineesList, buttonBounce);
         //Set Adapter
         traineeRecycler.setAdapter(traineeAdapter);
@@ -559,5 +562,18 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
         });
         dialog.show();
 
+    }
+
+    public void sortTraineesList(){
+
+        Collections.sort(traineesList, Comparator.comparing(UserMetaData::getSubscriptionEndDate).reversed());
+
+        System.out.println("sortTraineesList");
+        /*notificationsList.sort(new Comparator<Notification>() {
+            @Override
+            public int compare(Notification o1, Notification o2) {
+                return o1.getAddedDate().compareTo(o2.getAddedDate());
+            }
+        });*/
     }
 }
