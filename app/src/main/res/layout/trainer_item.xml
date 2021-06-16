@@ -118,7 +118,6 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/trainerItemFeeLabel"
-                android:text="2000/- per month"
                 android:textColor="@color/black"
                 android:textStyle="bold|italic"/>
 

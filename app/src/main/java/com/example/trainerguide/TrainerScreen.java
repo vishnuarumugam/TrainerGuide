@@ -304,10 +304,12 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
 
                             try{
                                 trainer.setExperience(jsonObject.getDouble("experience")) ;
+                                trainer.setSubscriptionFees(jsonObject.getDouble("subscriptionFees"));
 
                             }
                             catch (Exception e){
                                 trainer.setExperience(0.0) ;
+                                trainer.setSubscriptionFees(0.0);
                             }
                             //Add Data
                             trainersList.add(trainer);
@@ -337,10 +339,12 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
 
                             try{
                                 trainer.setExperience(jsonObject.getDouble("experience")) ;
+                                trainer.setSubscriptionFees(jsonObject.getDouble("subscriptionFees"));
 
                             }
                             catch (Exception e){
                                 trainer.setExperience(0.0) ;
+                                trainer.setSubscriptionFees(0.0);
                             }
                             //Add Data
                             trainersList.add(trainer);

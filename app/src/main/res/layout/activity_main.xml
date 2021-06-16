@@ -20,94 +20,94 @@
 
 
     <LinearLayout
-            android:id="@+id/linearLayout"
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:background="@drawable/theme_colour_one_round_shape"
+        android:elevation="10dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.51"
+        tools:layout_editor_absoluteX="10dp">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/lgn_txtLayEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
-            android:background="@drawable/theme_colour_one_round_shape"
-            android:elevation="10dp"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.51"
-            tools:layout_editor_absoluteX="10dp">
+            android:layout_marginTop="15dp">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/lgn_txtLayEmail"
+            <EditText
+                android:id="@+id/userEmail_Input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginTop="15dp">
+                android:background="@drawable/round_shape"
+                android:hint="Email"
+                android:inputType="textEmailAddress"
+                android:textColor="@color/black" />
 
-                <EditText
-                    android:id="@+id/userEmail_Input"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/round_shape"
-                    android:hint="Email"
-                    android:inputType="textEmailAddress"
-                    android:textColor="@color/black" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-            </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/lgn_txtLayPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="15dp"
+            app:passwordToggleEnabled="true">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/lgn_txtLayPassword"
+            <EditText
+                android:id="@+id/userPassword_Input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/round_shape"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:textColor="@color/black" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="15dp"
+            android:backgroundTint="@color/themeColourTwo"
+            android:text="GO"
+            android:textColor="@color/black"
+            android:textSize="16dp"
+            android:textStyle="bold"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txtCreateAccount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
                 android:layout_marginHorizontal="10dp"
+                android:layout_marginLeft="10dp"
                 android:layout_marginTop="15dp"
-                app:passwordToggleEnabled="true">
+                android:text="Create New Account"
+                android:textColor="@color/white" />
 
-                <EditText
-                    android:id="@+id/userPassword_Input"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/round_shape"
-                    android:hint="Password"
-                    android:inputType="textPassword"
-                    android:textColor="@color/black" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <Button
-                android:id="@+id/btnLogin"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/txtForgotPassword"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginTop="15dp"
-                android:backgroundTint="@color/themeColourTwo"
-                android:text="GO"
-                android:textColor="@color/black"
-                android:textSize="16dp"
-                android:textStyle="bold"/>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/txtCreateAccount"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_marginHorizontal="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="15dp"
-                    android:text="Create New Account"
-                    android:textColor="@color/white" />
-
-                <TextView
-                    android:id="@+id/txtForgotPassword"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerInParent="true"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="30dp"
-                    android:text="Forgot Password?"
-                    android:textColor="@color/white" />
-            </RelativeLayout>
-        </LinearLayout>
+                android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="30dp"
+                android:text="Forgot Password?"
+                android:textColor="@color/white" />
+        </RelativeLayout>
+    </LinearLayout>
 
 
 

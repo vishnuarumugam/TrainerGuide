@@ -134,8 +134,8 @@
                     android:id="@+id/profileWeightDialogInput"
                     android:theme="@style/DialogEditText"
                     android:textAlignment="center"
-                    android:inputType="numberDecimal"
-                    android:maxLength="7"
+                    android:inputType="number"
+                    android:maxLength="3"
                     android:layout_gravity="center"
                     android:layout_marginTop="15dp"/>
 
@@ -202,9 +202,9 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/profileHeightDialogInput"
                     android:hint="Height"
-                    android:maxLength="7"
+                    android:inputType="number"
+                    android:maxLength="3"
                     android:theme="@style/DialogEditText"
-                    android:inputType="numberDecimal"
                     android:textAlignment="center"
                     android:layout_gravity="center"
                     android:layout_marginTop="15dp"/>
@@ -273,9 +273,9 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/profileExperienceDialogInput"
                     android:hint="Experience"
-                    android:inputType="numberDecimal"
                     android:theme="@style/DialogEditText"
-                    android:maxLength="5"
+                    android:inputType="number"
+                    android:maxLength="2"
                     android:textAlignment="center"
                     android:layout_gravity="center"
                     android:layout_marginTop="15dp"/>

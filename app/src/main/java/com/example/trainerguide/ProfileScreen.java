@@ -330,9 +330,9 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         extend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                extend.setEnabled(false);
+                extend.setBackgroundColor(getResources().getColor(R.color.themeColourFour));
                 extend.startAnimation(buttonBounce);
-
-
                 AlertDialog dialog = new AlertDialog.Builder(ProfileScreen.this).create();
                 dialog.setMessage(getResources().getString(R.string.extendSubscription));
                 dialog.setCancelable(true);
@@ -360,8 +360,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                                 trainerDatabaseReference.setValue(notify);
 
                                 Toast.makeText(ProfileScreen.this, "Extend Request sent to Trainer", Toast.LENGTH_SHORT).show();
-                                extend.setEnabled(false);
-                                extend.setBackgroundColor(getResources().getColor(R.color.themeColourFour));
+
                                 //startActivity(new Intent(ProfileScreen.this,ProfileScreen.class));
                             }
 
@@ -376,7 +375,8 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
 
                 dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "No", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int buttonId) {
-
+                        extend.setEnabled(true);
+                        extend.setBackgroundColor(getResources().getColor(R.color.themeColourTwo));
                     }
                 });
                 dialog.show();
@@ -391,6 +391,8 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         subscriptionRemoveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                subscriptionRemoveBtn.setEnabled(false);
+                subscriptionRemoveBtn.setBackgroundColor(getResources().getColor(R.color.themeColourFour));
                 subscriptionRemoveBtn.startAnimation(buttonBounce);
 
 
@@ -419,8 +421,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                                 trainerDatabaseReference.setValue(notify);
 
                                 Toast.makeText(ProfileScreen.this, "Remove request sent to Trainer", Toast.LENGTH_SHORT).show();
-                                subscriptionRemoveBtn.setEnabled(false);
-                                subscriptionRemoveBtn.setBackgroundColor(getResources().getColor(R.color.themeColourFour));
+
                             }
 
                             @Override
@@ -432,6 +433,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                 });
                 dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "No", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int buttonId) {
+                        subscriptionRemoveBtn.setEnabled(true);
 
                     }
                 });
@@ -445,6 +447,8 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         requestTrainerNavText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                requestTrainerNavText.setEnabled(false);
+                requestTrainerNavText.setBackgroundColor(getResources().getColor(R.color.themeColourFour));
                 requestTrainerNavText.startAnimation(buttonBounce);
                 final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(path+"/Notification");
                 final DatabaseReference databaseReferenceAdd = FirebaseDatabase.getInstance().getReference("User/"+ FirebaseAuth.getInstance().getCurrentUser().getUid());
@@ -903,8 +907,8 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                 String pattern = "dd-MM-yyyy";
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 
-                profileWeight.setText(user.getWeight().toString());
-                profileHeight.setText(user.getHeight().toString());
+                profileWeight.setText(String.valueOf(user.getWeight().intValue()));
+                profileHeight.setText(String.valueOf(user.getHeight().intValue()));
                 profileEmailId.setText(user.getEmail());
                 profilePhoneNumber.setText(user.getPhoneNumber().toString());
                 profileDob.setText(simpleDateFormat.format(user.getDateOfBirth()));
@@ -1010,7 +1014,8 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                 if (userType.equals("Trainer")){
                     Trainer trainer = snapshot.getValue(Trainer.class);
                     if (trainer.getExperience() != null){
-                        profileExperience.setText(trainer.getExperience().toString());
+
+                        profileExperience.setText(String.valueOf(trainer.getExperience().intValue()));
                     }
                     else{
                         profileExperience.setText("0.0");
@@ -1034,10 +1039,10 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                     if(extendReadonly && trainee.getTrainerId()!= null && trainee.getTrainerId()!="") {
                         subscriptionExtendRelativeLay.setVisibility(View.VISIBLE);
 
-                        System.out.println(trainee.getSubscriptionEndDate().toString() + "trainee.getSubscriptionEndDate().toString()");
                         if (trainee.getSubscriptionEndDate()!=null){
-
-                            txtSubscriptionDate.setText(trainee.getSubscriptionEndDate().toString());
+                            Date endDate = trainee.getSubscriptionEndDate();
+                            SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
+                            txtSubscriptionDate.setText(formatDate.format(endDate));
                         }
 
                         else{
@@ -1151,6 +1156,11 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                     break;
                 case  "NotificationScreen":
                     intent = new Intent(ProfileScreen.this,NotificationScreen.class);
+                    startActivity(intent);
+                    finish();
+                    break;
+                case "FoodSourceListScreen":
+                    intent = new Intent(ProfileScreen.this,FoodSourceListScreen.class);
                     startActivity(intent);
                     finish();
                     break;
@@ -1370,7 +1380,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(ProfileScreen.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ProfileScreen.this, "Something gone wrong", Toast.LENGTH_SHORT).show();
                         }
                     });
 
@@ -1428,18 +1438,18 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         }
 
         else if (userField.equals("weight") || userField.equals("height")){
-            if(new Double(value)>0) {
+            if( !(value.isEmpty()) && (new Double(value)>0)) {
                 Double userProfileValue = new Double(new BigDecimal(value).setScale(2, RoundingMode.HALF_UP).doubleValue());
-                hash.put(userField, userProfileValue);
                 Double userBmi = null;
                 Double userBmr = null;
 
 
                 if (userField.equals("weight")){
-
-                    user.setWeight(userProfileValue);
-                    bmrProgressList.add(new BmrProgress(Calendar.getInstance().getTime(),userProfileValue));
-                    hash.put("bmrReport",bmrProgressList);
+                    if (userProfileValue.intValue()>=30 && userProfileValue.intValue()<=300){
+                        user.setWeight(userProfileValue);
+                        bmrProgressList.add(new BmrProgress(Calendar.getInstance().getTime(),userProfileValue));
+                        hash.put("bmrReport",bmrProgressList);
+                        hash.put(userField, userProfileValue);
                     /*if (user.getBmrReport()==null && (user.getLastModDttm().equals(user.getAccCreateDttm()))){
                         bmrProgressList.add(new BmrProgress(user.getLastModDttm(),user.getWeight()));
 
@@ -1449,9 +1459,23 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                         bmrProgressList.add(new BmrProgress(Calendar.getInstance().getTime(),userProfileValue));
                         hash.put("bmrReport",bmrProgressList);
                     }*/
+                    }
+                    else {
+                        save=false;
+                        profileWeightDialogInput.setError("Please enter a valid Weight");
+                    }
+
                 }
                 else{
-                    user.setHeight(userProfileValue);
+
+                    if (userProfileValue.intValue()>=90 && userProfileValue.intValue()<=230){
+                        user.setHeight(userProfileValue);
+                        hash.put(userField, userProfileValue);
+                    }
+                    else {
+                        save=false;
+                        profileHeightDialogInput.setError("Please enter a valid Height");
+                    }
                 }
 
                 if( (new Double(user.getWeight())>0) && (new Double(user.getHeight())>0) ){
@@ -1502,7 +1526,33 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
 
             if (userField.equals("experience") || userField.equals("subscriptionFees")){
                 if(value.length()>0){
-                    hash.put(userField, new Double(value));
+
+                    if (userField.equals("experience")){
+
+                        if (new Double(value).intValue()<=60){
+                            hash.put(userField, new Double(value));
+                        }
+                        else{
+                            save=false;
+                            profileExperienceDialogInput.setError("Please enter a valid Experience");
+                        }
+
+                    }
+                    else{
+
+                        if (userField.equals("subscriptionFees")){
+                            if (new Double(value).intValue()>=1){
+                                hash.put(userField, new Double(value));
+                            }
+                            else{
+                                save=false;
+                                profileSubscriptionFeesDialogInput.setError("Please enter a valid Fees");
+                            }
+                        }
+
+
+                    }
+
                 }else{
                     switch (userField) {
 

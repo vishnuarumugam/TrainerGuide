@@ -794,7 +794,7 @@
                                         android:id="@+id/profileSubscriptionTrainerLabel"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Trainer"
+                                        android:text="Your Trainer"
                                         style="@style/TextAppearance.AppCompat.Body1"
                                         android:layout_toRightOf="@id/profileSubscriptionTrainerImage"
                                         android:layout_below="@id/profileSubscriptionTrainer" />

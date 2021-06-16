@@ -78,6 +78,8 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
     TextView noNotificationText;
     ProgressBar progressBar;
     SwipeRefreshLayout notificationRefresh;
+    private String navigationScreen ="";
+
 
 
     @Override
@@ -95,6 +97,9 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
         path = userType+ "/" + fAuth.getCurrentUser().getUid() + "/Notification";
         userPath = userType+ "/" + fAuth.getCurrentUser().getUid();
         databaseReference = FirebaseDatabase.getInstance().getReference(path);
+        if (getIntent().hasExtra("Screen")){
+            navigationScreen = getIntent().getExtras().getString("Screen", "");
+        }
 
         //Navigation view variables
         drawerLayout = findViewById(R.id.notification_drawer_layout);
@@ -371,9 +376,15 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
                             trainee.setTrainerId(fAuth.getCurrentUser().getUid());
 
 
-                            HashMap<String, Object> trainerId = new HashMap<>();
+                            //HashMap<String, Object> trainerId = new HashMap<>();
+                            HashMap trainerId= new HashMap();
                             trainerId.put("trainerId", fAuth.getCurrentUser().getUid());
                             trainerId.put("subscriptionEndDate", c.getTime());
+
+                            System.out.println("subscriptionEndDate" + trainerId.get("subscriptionEndDate"));
+                            System.out.println("subscriptionEndDate" + trainerId.get("trainerId"));
+                            System.out.println(trainerId);
+
 
                             Notification notify = new Notification();
                             notify.setNotificationId(UUID.randomUUID().toString());
@@ -732,9 +743,38 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
         }
         else
         {
-            Intent intent = new Intent(NotificationScreen.this,HomeScreen.class);
-            startActivity(intent);
-            finish();
+            {
+                Intent intent;
+                switch(navigationScreen){
+
+                    case "TraineesScreen":
+                        intent = new Intent(NotificationScreen.this,TraineesScreen.class);
+                        startActivity(intent);
+                        finish();
+                        break;
+                    case "TrainerScreen":
+                        intent = new Intent(NotificationScreen.this,TrainerScreen.class);
+                        startActivity(intent);
+                        finish();
+                        break;
+                    case  "NotificationScreen":
+                        intent = new Intent(NotificationScreen.this,NotificationScreen.class);
+                        startActivity(intent);
+                        finish();
+                        break;
+                    case "FoodSourceListScreen":
+                        intent = new Intent(NotificationScreen.this,FoodSourceListScreen.class);
+                        startActivity(intent);
+                        finish();
+                        break;
+                    default:
+                        intent = new Intent(NotificationScreen.this,HomeScreen.class);
+                        startActivity(intent);
+                        finish();
+                        break;
+                }
+
+            }
         }
     }
 

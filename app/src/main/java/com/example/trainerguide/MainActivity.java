@@ -8,6 +8,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -81,6 +85,23 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(getApplicationContext(),HomeScreen.class));
         }*/
 
+        userPasswordIn.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                txtLayPassword.setPasswordVisibilityToggleEnabled(true);
+                userPasswordIn.setError(null);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override

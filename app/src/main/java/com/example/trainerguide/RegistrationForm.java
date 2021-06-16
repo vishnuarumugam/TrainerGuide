@@ -9,6 +9,8 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -16,6 +18,7 @@ import android.view.animation.AnimationUtils;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -48,6 +51,7 @@ public class RegistrationForm extends AppCompatActivity{
     private RadioGroup radioGroup;
     private RadioButton radioButton;
     private Button registerButton;
+    private ImageButton userRgrPassHint;
     private static String userId;
     UserInputValidation userInputValidation;
     private boolean IsTrainerProfile;
@@ -77,6 +81,7 @@ public class RegistrationForm extends AppCompatActivity{
         password = findViewById(R.id.userRgrPassword_Input);
         confirmPassword = findViewById(R.id.userRgrConPassword_Input);
         registerButton = findViewById(R.id.rgrButton);
+        userRgrPassHint = findViewById(R.id.userRgrPassHint);
         txtLayPassword = findViewById(R.id.txtLayRgrPassword_Input);
         txtLayConPassword = findViewById(R.id.txtLayRgrConPassword_Input);
         storageReference = FirebaseStorage.getInstance().getReference("FitnessGuide");
@@ -87,23 +92,43 @@ public class RegistrationForm extends AppCompatActivity{
 
         userInputValidation = new UserInputValidation();
 
-        password.setOnTouchListener(new View.OnTouchListener() {
+        userRgrPassHint.setTooltipText("Password must contain one lower & upper case alphabet, one number and one among @#$");
+        password.addTextChangedListener(new TextWatcher() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
                 txtLayPassword.setPasswordVisibilityToggleEnabled(true);
                 password.setError(null);
-                return false;
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
             }
         });
 
-        confirmPassword.setOnTouchListener(new View.OnTouchListener() {
+        confirmPassword.addTextChangedListener(new TextWatcher() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
                 txtLayConPassword.setPasswordVisibilityToggleEnabled(true);
                 confirmPassword.setError(null);
-                return false;
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
             }
         });
+
 
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override

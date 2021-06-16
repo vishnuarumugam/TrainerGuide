@@ -70,6 +70,8 @@ public class FoodSourceListScreen extends AppCompatActivity implements View.OnCl
     private String userPath;
     private String userType;
     Animation buttonBounce;
+    private String navigationScreen ="";
+
 
     private FloatingActionButton foodSourceAdd;
     private ProgressBar progress_bar;
@@ -185,9 +187,14 @@ public class FoodSourceListScreen extends AppCompatActivity implements View.OnCl
         userId = sp.getString("userId",null);
         userPath = userType+ "/" + userId;
 
+        //To pass the previous screen
+        if (getIntent().hasExtra("Screen")){
+            navigationScreen = getIntent().getExtras().getString("Screen", "");
+        }
 
         foodPath = "Food/Common/";
         PopulateFoodList("Veg");
+
 
         //Navigation view variables
         drawerLayout = findViewById(R.id.food_source_layout);
@@ -208,8 +215,14 @@ public class FoodSourceListScreen extends AppCompatActivity implements View.OnCl
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Intent intent;
                 switch (item.getItemId()){
+
                     case R.id.nav_profile:
+                        intent = new Intent(FoodSourceListScreen.this,ProfileScreen.class);
+                        intent.putExtra("Screen", "FoodSourceListScreen");
+                        startActivity(intent);
+                        finish();
                         break;
                     /*case R.id.nav_trainees:
 
@@ -217,7 +230,10 @@ public class FoodSourceListScreen extends AppCompatActivity implements View.OnCl
                         finish();
                         break;*/
                     case R.id.nav_notification:
-                        startActivity(new Intent(FoodSourceListScreen.this,NotificationScreen.class));
+
+                        intent = new Intent(FoodSourceListScreen.this,NotificationScreen.class);
+                        intent.putExtra("Screen", "FoodSourceListScreen");
+                        startActivity(intent);
                         finish();
                         break;
                     /*case R.id.nav_trainer:
@@ -468,6 +484,7 @@ public class FoodSourceListScreen extends AppCompatActivity implements View.OnCl
                         HashMap hash= new HashMap();
                         hash.put(foodObject.getName(),foodObject);
                         databaseReference.updateChildren(hash);
+                        Toast.makeText(FoodSourceListScreen.this, "Food added successfully", Toast.LENGTH_SHORT).show();
                         foodAddType = "Veg";
                         vegToggle();
                         PopulateFoodList("Veg");
@@ -485,11 +502,11 @@ public class FoodSourceListScreen extends AppCompatActivity implements View.OnCl
 
         else {
             DatabaseReference databaseReference;
-            System.out.println("updateNonVeg");
             databaseReference = FirebaseDatabase.getInstance().getReference("Food/").child(userId +"/Nonveg/");
             HashMap hash= new HashMap();
             hash.put(foodObject.getName(),foodObject);
             databaseReference.updateChildren(hash);
+            Toast.makeText(FoodSourceListScreen.this, "Food added successfully", Toast.LENGTH_SHORT).show();
             foodAddType = "Non-Veg";
             nonVegToggle();
             PopulateFoodList("Non-Veg");
@@ -511,6 +528,7 @@ public class FoodSourceListScreen extends AppCompatActivity implements View.OnCl
             Intent intent = new Intent(FoodSourceListScreen.this,HomeScreen.class);
             startActivity(intent);
             finish();
+
         }
     }
 
