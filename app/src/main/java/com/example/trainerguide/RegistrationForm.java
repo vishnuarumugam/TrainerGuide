@@ -172,7 +172,7 @@ public class RegistrationForm extends AppCompatActivity{
                 registerButton.startAnimation(buttonBounce);
                 registerButton.setBackgroundColor(getResources().getColor(R.color.themeColourFour));
                 if (RegistrationValidation()) {
-                    Toast.makeText(RegistrationForm.this, "In", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(RegistrationForm.this, "In", Toast.LENGTH_SHORT).show();
                     int selectedId=radioGroup.getCheckedRadioButtonId();
                     radioButton=(RadioButton)findViewById(selectedId);
                     // Firebase Authentication User Creation
@@ -203,9 +203,12 @@ public class RegistrationForm extends AppCompatActivity{
 
                                         // Upload Profile Picture into FireBase Storage
                                         uploadFile(userId,trainee);
-                                    }
 
-                                    SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+                                    }
+            // TODO Shared Pref comment because of Email verification
+
+                                    /*SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                                     SharedPreferences.Editor editor = settings.edit();
                                     editor.putString("userId", fAuth.getCurrentUser().getUid());
                                     editor.putBoolean("IsLoggedIn",true);
@@ -214,13 +217,25 @@ public class RegistrationForm extends AppCompatActivity{
                                     else {
                                         editor.putString("ProfileType", "User");}
 
-                                    editor.commit();
+                                    editor.commit();*/
 
-                                    Intent intent = new Intent(RegistrationForm.this, HomeScreen.class);
-                                    intent.putExtra("UserId",fAuth.getCurrentUser().getUid());
-                                    startActivity(intent);
 
-                                    finish();
+                                    fAuth.getCurrentUser().sendEmailVerification()
+                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if (task.isSuccessful()) {
+                                                        Toast.makeText(RegistrationForm.this, "Profile Creation Successful Please check your Email", Toast.LENGTH_LONG).show();
+                                                        Intent intent = new Intent(RegistrationForm.this, MainActivity.class);
+                                                        //Part of EmailVerification
+                                                        intent.putExtra("Message","Hi Welcome to FittifyMe, Please Verify Your Email before logging in");
+                                                        startActivity(intent);
+                                                        finish();
+                                                    }
+                                                }
+                                            });
+
+
 
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
@@ -323,9 +338,9 @@ public class RegistrationForm extends AppCompatActivity{
         System.out.println("nameValid" + nameValid + " emailValid" + emailValid + " mobileNumberValid" + mobileNumberValid + "passwordValid" + passwordValid);
 
         if (nameValid.equals("Valid") && passwordValid.equals("Valid") && emailValid.equals("Valid") && mobileNumberValid.equals("Valid")) {
-            Toast.makeText(RegistrationForm.this, "RegistrationValidation", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(RegistrationForm.this, "RegistrationValidation", Toast.LENGTH_SHORT).show();
             if (password.getText().toString().equals(confirmPassword.getText().toString())) {
-                Toast.makeText(RegistrationForm.this, "InIn", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(RegistrationForm.this, "InIn", Toast.LENGTH_SHORT).show();
                 return true;
             } else {
                 //txtLayConPassword.setPasswordVisibilityToggleEnabled(false);

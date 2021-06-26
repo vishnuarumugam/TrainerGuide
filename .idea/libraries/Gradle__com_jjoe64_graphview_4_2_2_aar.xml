@@ -4,6 +4,9 @@
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/8d82f6f3add05d356a25a45b9340ea2b/jetified-graphview-4.2.2/AndroidManifest.xml" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/8d82f6f3add05d356a25a45b9340ea2b/jetified-graphview-4.2.2/res" />
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/8d82f6f3add05d356a25a45b9340ea2b/jetified-graphview-4.2.2/jars/classes.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/8bfb625bca95558e085d080f0660cd71/jetified-graphview-4.2.2/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/8bfb625bca95558e085d080f0660cd71/jetified-graphview-4.2.2/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/8bfb625bca95558e085d080f0660cd71/jetified-graphview-4.2.2/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jjoe64/graphview/4.2.2/f99aaac74cae0d1bfad1e46354e7fbbe7fb49206/graphview-4.2.2-javadoc.jar!/" />
