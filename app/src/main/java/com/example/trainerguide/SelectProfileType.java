@@ -1,6 +1,7 @@
 package com.example.trainerguide;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -44,4 +45,12 @@ MaterialCardView trainerCardView,traineeCardView;
                 break;
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(SelectProfileType.this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
 }

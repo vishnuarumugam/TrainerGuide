@@ -2,25 +2,25 @@ package com.example.trainerguide;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.KeyEvent;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.trainerguide.models.Notification;
 import com.example.trainerguide.validation.UserInputValidation;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -33,23 +33,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.auth.User;
-
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.PriorityQueue;
-import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
 
     private EditText userEmailIn, userPasswordIn;
     private TextView createAccount, forgotPassword;
+    private ConstraintLayout loginView;
     private TextInputLayout txtLayPassword;
     private FirebaseAuth fAuth;
     private FirebaseFirestore fStore;
     DatabaseReference databaseReferenceTrainer, databaseReference;
     private String profileType;
+    private boolean isPasswordVisible;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,9 +58,16 @@ public class MainActivity extends AppCompatActivity {
         createAccount = findViewById(R.id.txtCreateAccount);
         forgotPassword = findViewById(R.id.txtForgotPassword);
         fAuth = FirebaseAuth.getInstance();
-        txtLayPassword = findViewById(R.id.lgn_txtLayPassword);
+        //txtLayPassword = findViewById(R.id.lgn_txtLayPassword);
 
         Button loginButton = findViewById(R.id.btnLogin);
+
+        /*loginView = findViewById(R.id.loginView);
+
+        ScrollView scrollView = new ScrollView(getApplicationContext());
+        //scrollView.addView(loginView);
+        loginView.canScrollVertically(v);
+        //setContentView(scrollView);*/
 
 
         final SharedPreferences sp;
@@ -85,7 +87,36 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(getApplicationContext(),HomeScreen.class));
         }*/
 
-        userPasswordIn.addTextChangedListener(new TextWatcher() {
+        userPasswordIn.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                final int RIGHT = 2;
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    if (event.getRawX() >= (userPasswordIn.getRight() - userPasswordIn.getCompoundDrawables()[RIGHT].getBounds().width())) {
+                        int selection = userPasswordIn.getSelectionEnd();
+                        if (isPasswordVisible) {
+                            // set drawable image
+                            userPasswordIn.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_visibility_off, 0);
+                            // hide Password
+                            userPasswordIn.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                            isPasswordVisible = false;
+                        } else  {
+                            // set drawable image
+                            userPasswordIn.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_visibility_on, 0);
+                            // show Password
+                            userPasswordIn.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                            isPasswordVisible = true;
+                        }
+                        userPasswordIn.setSelection(selection);
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
+
+
+   /*     userPasswordIn.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -102,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
+*/
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -225,14 +256,14 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             loginButton.setEnabled(true);
-                            loginButton.setBackgroundColor(getResources().getColor(R.color.themeColourTwo));
+                            loginButton.setBackgroundColor(getResources().getColor(R.color.themeColourOne));
                             Toast.makeText(MainActivity.this, "Please provide valid User Name and Password", Toast.LENGTH_SHORT).show();
                         }
                     });                }
 
                 else{
                     loginButton.setEnabled(true);
-                    loginButton.setBackgroundColor(getResources().getColor(R.color.themeColourTwo));
+                    loginButton.setBackgroundColor(getResources().getColor(R.color.themeColourOne));
                 }
 
             }
@@ -274,7 +305,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             if ( !passwordValid.equals("Valid")){
-                txtLayPassword.setPasswordVisibilityToggleEnabled(false);
+                //txtLayPassword.setPasswordVisibilityToggleEnabled(false);
                 userPasswordIn.setError(passwordValid);
             }
         }

@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -61,7 +63,7 @@ public class RegistrationForm extends AppCompatActivity{
     private Uri fileUri;
     DatabaseReference databaseReference;
     FirebaseAuth fAuth;
-
+    private boolean isPasswordVisible;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,8 +84,8 @@ public class RegistrationForm extends AppCompatActivity{
         confirmPassword = findViewById(R.id.userRgrConPassword_Input);
         registerButton = findViewById(R.id.rgrButton);
         userRgrPassHint = findViewById(R.id.userRgrPassHint);
-        txtLayPassword = findViewById(R.id.txtLayRgrPassword_Input);
-        txtLayConPassword = findViewById(R.id.txtLayRgrConPassword_Input);
+        /*txtLayPassword = findViewById(R.id.txtLayRgrPassword_Input);
+        txtLayConPassword = findViewById(R.id.txtLayRgrConPassword_Input);*/
         storageReference = FirebaseStorage.getInstance().getReference("FitnessGuide");
         radioGroup=(RadioGroup)findViewById(R.id.radioGroup);
         radioGroup.check(R.id.radioBtnMale);
@@ -93,7 +95,40 @@ public class RegistrationForm extends AppCompatActivity{
         userInputValidation = new UserInputValidation();
 
         userRgrPassHint.setTooltipText("Password must contain one lower & upper case alphabet, one number and one among @#$");
-        password.addTextChangedListener(new TextWatcher() {
+        password.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                final int RIGHT = 2;
+
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    password.setError(null);
+
+                    if (event.getRawX() >= (password.getRight() - password.getCompoundDrawables()[RIGHT].getBounds().width())) {
+                        int selection = password.getSelectionEnd();
+                        if (isPasswordVisible) {
+                            // set drawable image
+                            System.out.println("set drawable image visi of");
+
+                            password.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_visibility_on, 0);
+                            // hide Password
+                            password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                            isPasswordVisible = false;
+                        } else  {
+                            // set drawable image
+                            System.out.println("set drawable image visi");
+                            password.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_visibility_on, 0);
+                            // show Password
+                            password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                            isPasswordVisible = true;
+                        }
+                        password.setSelection(selection);
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
+        /*password.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -101,7 +136,7 @@ public class RegistrationForm extends AppCompatActivity{
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                txtLayPassword.setPasswordVisibilityToggleEnabled(true);
+                //txtLayPassword.setPasswordVisibilityToggleEnabled(true);
                 password.setError(null);
             }
 
@@ -119,7 +154,7 @@ public class RegistrationForm extends AppCompatActivity{
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                txtLayConPassword.setPasswordVisibilityToggleEnabled(true);
+                //txtLayConPassword.setPasswordVisibilityToggleEnabled(true);
                 confirmPassword.setError(null);
             }
 
@@ -128,13 +163,13 @@ public class RegistrationForm extends AppCompatActivity{
 
             }
         });
-
+*/
 
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                registerButton.startAnimation(buttonBounce);
                 registerButton.setEnabled(false);
+                registerButton.startAnimation(buttonBounce);
                 registerButton.setBackgroundColor(getResources().getColor(R.color.themeColourFour));
                 if (RegistrationValidation()) {
                     Toast.makeText(RegistrationForm.this, "In", Toast.LENGTH_SHORT).show();
@@ -193,12 +228,12 @@ public class RegistrationForm extends AppCompatActivity{
                         public void onFailure(@NonNull Exception e) {
                             Toast.makeText(RegistrationForm.this, "Profile Creation Failed", Toast.LENGTH_SHORT).show();
                             registerButton.setEnabled(true);
-                            registerButton.setBackgroundColor(getResources().getColor(R.color.themeColourTwo));
+                            registerButton.setBackgroundColor(getResources().getColor(R.color.themeColourOne));
                         }
                     });
                 } else {
                     registerButton.setEnabled(true);
-                    registerButton.setBackgroundColor(getResources().getColor(R.color.themeColourTwo));
+                    registerButton.setBackgroundColor(getResources().getColor(R.color.themeColourOne));
                 }
 
             }
@@ -293,7 +328,7 @@ public class RegistrationForm extends AppCompatActivity{
                 Toast.makeText(RegistrationForm.this, "InIn", Toast.LENGTH_SHORT).show();
                 return true;
             } else {
-                txtLayConPassword.setPasswordVisibilityToggleEnabled(false);
+                //txtLayConPassword.setPasswordVisibilityToggleEnabled(false);
                 confirmPassword.setError("Confirm Password doesn't match with Password");
                 return false;
             }
@@ -304,7 +339,8 @@ public class RegistrationForm extends AppCompatActivity{
             }
 
             if (!passwordValid.equals("Valid")) {
-                txtLayPassword.setPasswordVisibilityToggleEnabled(false);
+                isPasswordVisible = false;
+                //txtLayPassword.setPasswordVisibilityToggleEnabled(false);
                 password.setError(passwordValid);
             }
             if (!mobileNumberValid.equals("Valid")) {
@@ -314,11 +350,19 @@ public class RegistrationForm extends AppCompatActivity{
                 email.setError(emailValid);
             }
             if (confirmPassword.getText().toString().isEmpty()) {
-                txtLayConPassword.setPasswordVisibilityToggleEnabled(false);
+                //txtLayConPassword.setPasswordVisibilityToggleEnabled(false);
                 confirmPassword.setError("Password cannot be empty");
             }
             return false;
 
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(RegistrationForm.this, SelectProfileType.class);
+        startActivity(intent);
+        finish();
+    }
+
 }

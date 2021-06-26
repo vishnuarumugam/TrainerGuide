@@ -1,5 +1,6 @@
 <resources>
-    <string name="app_name">Trainer Guide</string>
+    <string name="app_name">Fittify</string>
+    <string name="appSubLine"><u>We make you feel better</u></string>
     <string name="Navigation_Drawer_Open">Open Navigation Drawer</string>
     <string name="Navigation_Drawer_Close">Close Navigation Drawer</string>
 
@@ -23,7 +24,8 @@
     </string-array>
 
     <string name="urlLink">https://www.google.com/search?q=how+many+calories+are+in+</string>
-    
+
+
     <string name="underweight">A BMI of under 18.5 indicates that you have an insufficient weight, so you may need to put on some weight. Consult a doctor or with a trainer in the app for advice.</string>
     <string name="healthy">A BMI of 18.5–24.9 indicates that you have healthy weight for your height. By maintaining a healthy weight, you can lower your risk of developing serious health problems.</string>
     <string name="overweight">A BMI of 25–29.9 indicates that you are slightly overweight, so you may need to lose some weight for health reasons. Consult a doctor or with a trainer in the app for advice.</string>

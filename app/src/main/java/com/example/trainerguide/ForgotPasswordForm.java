@@ -95,4 +95,10 @@ public class ForgotPasswordForm extends AppCompatActivity {
         return false;
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(ForgotPasswordForm.this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }
