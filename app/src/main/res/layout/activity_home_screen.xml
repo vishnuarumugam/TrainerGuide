@@ -6,11 +6,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:background="@color/homeScreenBgColor"
     tools:context=".HomeScreen"
     tools:openDrawer="start">
 
     <include layout="@layout/common_navigator"/>
-    <ScrollView
+    <!--<ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -18,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            
+
             <include layout="@layout/common_toolbar" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -314,7 +315,517 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
-    </ScrollView>
+    </ScrollView>-->
+
+    <include layout="@layout/common_toolbar" />
+
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="60dp"
+                android:layout_marginBottom="60dp"
+                android:background="@color/homeScreenBgColor"
+                app:layout_constraintBottom_toTopOf="@+id/homeScreenTabLayout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.5">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/homeScreenTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="25dp"
+                        android:layout_marginBottom="15dp"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="Hello"
+                        android:textColor="@color/themeColourOne"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/dashboard_user_name"
+                        android:layout_toRightOf="@+id/homeScreenTitle"
+                        android:layout_alignTop="@+id/homeScreenTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginBottom="15dp"
+                        android:fontFamily="@font/poppins_medium"
+                        android:textColor="@color/themeColourOne"
+                        android:textSize="16sp" />
+
+
+                    <!--Ad Layout-->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/ad_layout_shadow"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_below="@+id/homeScreenTitle"
+                        android:layout_marginHorizontal="45dp"
+                        android:layout_marginTop="16dp"
+                        android:backgroundTint="@color/adShadowOne"
+                        app:cardCornerRadius="10dp">
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_below="@+id/homeScreenTitle"
+                        android:layout_marginHorizontal="30dp"
+                        android:layout_marginTop="8dp"
+                        android:backgroundTint="@color/adShadowTwo"
+                        app:cardCornerRadius="10dp"/>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/ad_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_below="@+id/homeScreenTitle"
+                        android:layout_marginHorizontal="15dp"
+                        android:backgroundTint="@color/adShadowThree"
+                        app:cardCornerRadius="10dp">
+
+                        <androidx.viewpager.widget.ViewPager
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginHorizontal="20dp"
+                            android:layout_marginVertical="20dp"
+                            android:background="@mipmap/ad_image" />
+                    </androidx.cardview.widget.CardView>
+
+                    <!--Goal Layout-->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/home_screen_goal_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/ad_layout_shadow"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_marginTop="35dp"
+                        android:backgroundTint="@color/white"
+                        android:elevation="5dp"
+                        app:cardCornerRadius="10dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingVertical="10dp">
+
+                            <TextView
+                                android:id="@+id/homeScreenGoalTitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginVertical="10dp"
+                                android:layout_marginLeft="10dp"
+                                android:fontFamily="@font/poppins_medium"
+                                android:text="Goal"
+                                android:textColor="@color/themeColourOne"
+                                android:textSize="18sp" />
+
+                            <HorizontalScrollView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/homeScreenGoalTitle"
+                                android:paddingVertical="5dp">
+
+                                <RadioGroup
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginHorizontal="15dp"
+                                    android:layout_marginTop="10dp"
+                                    android:gravity="center"
+                                    android:orientation="horizontal">
+
+                                    <RadioButton
+                                        android:layout_width="100dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginRight="30dp"
+                                        android:background="@drawable/radio_button_selector"
+                                        android:button="@android:color/transparent"
+                                        android:elevation="4dp"
+                                        android:fontFamily="@font/poppins_medium"
+                                        android:padding="5dp"
+                                        android:text="Weight Loss"
+                                        android:textAlignment="center"
+                                        android:textColor="@drawable/radio_button_text_selector" />
+
+                                    <RadioButton
+                                        android:layout_width="100dp"
+                                        android:layout_height="wrap_content"
+                                        android:background="@drawable/radio_button_selector"
+                                        android:button="@android:color/transparent"
+                                        android:elevation="4dp"
+                                        android:fontFamily="@font/poppins_medium"
+                                        android:padding="5dp"
+                                        android:text="Weight Gain"
+                                        android:textAlignment="center"
+                                        android:textColor="@drawable/radio_button_text_selector" />
+
+                                    <RadioButton
+                                        android:layout_width="100dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="30dp"
+                                        android:background="@drawable/radio_button_selector"
+                                        android:button="@android:color/transparent"
+                                        android:elevation="4dp"
+                                        android:fontFamily="@font/poppins_medium"
+                                        android:padding="5dp"
+                                        android:text="Stay Fit"
+
+                                        android:textAlignment="center"
+                                        android:textColor="@drawable/radio_button_text_selector" />
+
+
+                                </RadioGroup>
+
+
+                            </HorizontalScrollView>
+
+
+                        </RelativeLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <!--Track Fit Layout-->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/home_screen_track_fit_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/home_screen_goal_layout"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_marginTop="25dp"
+                        android:backgroundTint="@color/white"
+                        android:elevation="5dp"
+                        app:cardCornerRadius="10dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingVertical="10dp">
+
+                            <TextView
+                                android:id="@+id/homeScreenTrackFitTitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginVertical="10dp"
+                                android:layout_marginLeft="10dp"
+                                android:fontFamily="@font/poppins_medium"
+                                android:text="Track your fitness"
+                                android:textColor="@color/themeColourOne"
+                                android:textSize="18sp" />
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/homeScreenTrackFitTitle"
+                                android:layout_marginHorizontal="10dp"
+                                android:layout_marginTop="10dp"
+                                android:orientation="horizontal"
+                                android:padding="5dp">
+
+                                <RelativeLayout
+                                    android:id="@+id/weightLayout"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentLeft="true"
+                                    android:layout_marginLeft="10dp"
+                                    android:padding="5dp">
+
+                                    <ImageView
+                                        android:id="@+id/weightIcon"
+                                        android:layout_width="22dp"
+                                        android:layout_height="20dp"
+                                        android:layout_centerHorizontal="true"
+                                        android:src="@mipmap/weight" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@+id/weightIcon"
+                                        android:layout_marginTop="5dp"
+                                        android:fontFamily="@font/poppins_medium"
+                                        android:text="Weight"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/themeColourOne" />
+
+
+                                </RelativeLayout>
+
+                                <RelativeLayout
+                                    android:id="@+id/heightLayout"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerInParent="true"
+                                    android:layout_marginHorizontal="10dp"
+                                    android:padding="5dp">
+
+                                    <ImageView
+                                        android:id="@+id/heightIcon"
+                                        android:layout_width="22dp"
+                                        android:layout_height="20dp"
+                                        android:layout_centerHorizontal="true"
+                                        android:src="@mipmap/height" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@+id/heightIcon"
+                                        android:layout_marginTop="5dp"
+                                        android:fontFamily="@font/poppins_medium"
+                                        android:text="Height"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/themeColourOne" />
+
+
+                                </RelativeLayout>
+
+                                <RelativeLayout
+                                    android:id="@+id/progressLayout"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_marginRight="10dp"
+                                    android:padding="5dp">
+
+                                    <ImageView
+                                        android:id="@+id/progressIcon"
+                                        android:layout_width="22dp"
+                                        android:layout_height="20dp"
+                                        android:layout_centerHorizontal="true"
+                                        android:src="@mipmap/progress" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@+id/progressIcon"
+                                        android:layout_marginTop="5dp"
+                                        android:fontFamily="@font/poppins_medium"
+                                        android:text="Progress"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/themeColourOne" />
+
+
+                                </RelativeLayout>
+
+                            </RelativeLayout>
+
+
+                        </RelativeLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <!--Personal Fit Layout-->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/home_screen_personal_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/home_screen_track_fit_layout"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_marginTop="25dp"
+                        android:layout_marginBottom="10dp"
+                        android:backgroundTint="@color/white"
+                        android:elevation="5dp"
+                        app:cardCornerRadius="10dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingVertical="10dp">
+
+                            <TextView
+                                android:id="@+id/homeScreenPersonalTitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginVertical="10dp"
+                                android:layout_marginLeft="10dp"
+                                android:fontFamily="@font/poppins_medium"
+                                android:text="Personal"
+                                android:textColor="@color/themeColourOne"
+                                android:textSize="18sp" />
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/homeScreenPersonalTitle"
+                                android:layout_marginHorizontal="10dp"
+                                android:layout_marginTop="10dp"
+                                android:orientation="horizontal"
+                                android:padding="5dp">
+
+                                <RelativeLayout
+                                    android:id="@+id/dietTypeLayout"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentLeft="true"
+                                    android:layout_marginLeft="10dp"
+                                    android:padding="5dp">
+
+                                    <ImageView
+                                        android:id="@+id/dietTypeIcon"
+                                        android:layout_width="22dp"
+                                        android:layout_height="20dp"
+                                        android:layout_centerHorizontal="true"
+                                        android:src="@mipmap/diet_type" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@+id/dietTypeIcon"
+                                        android:layout_marginTop="5dp"
+                                        android:fontFamily="@font/poppins_medium"
+                                        android:text="Diet Type"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/themeColourOne" />
+
+
+                                </RelativeLayout>
+
+                                <RelativeLayout
+                                    android:id="@+id/allergicLayout"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerInParent="true"
+                                    android:layout_marginHorizontal="10dp"
+                                    android:padding="5dp">
+
+                                    <ImageView
+                                        android:id="@+id/allergicIcon"
+                                        android:layout_width="22dp"
+                                        android:layout_height="20dp"
+                                        android:layout_centerHorizontal="true"
+                                        android:src="@mipmap/food_allergy" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@+id/allergicIcon"
+                                        android:layout_marginTop="5dp"
+                                        android:fontFamily="@font/poppins_medium"
+                                        android:text="Allergic"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/themeColourOne" />
+
+
+                                </RelativeLayout>
+
+                                <RelativeLayout
+                                    android:id="@+id/healthIssueLayout"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_marginRight="10dp"
+                                    android:padding="5dp">
+
+                                    <ImageView
+                                        android:id="@+id/healthIssueIcon"
+                                        android:layout_width="22dp"
+                                        android:layout_height="20dp"
+                                        android:layout_centerHorizontal="true"
+                                        android:src="@mipmap/health_issues" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@+id/healthIssueIcon"
+                                        android:layout_marginTop="5dp"
+                                        android:fontFamily="@font/poppins_medium"
+                                        android:text="Health Issues"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/themeColourOne" />
+
+
+                                </RelativeLayout>
+
+                            </RelativeLayout>
+
+
+                        </RelativeLayout>
+                    </androidx.cardview.widget.CardView>
+
+                </RelativeLayout>
+
+            </androidx.core.widget.NestedScrollView>
+
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/homeScreenTabLayout"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                app:tabMode="scrollable"
+                app:tabTextColor="@color/themeColourOne"
+                app:tabIndicatorColor="@color/themeColourTwo"
+                app:tabBackground="@drawable/dashboard_tab"
+                android:background="@android:color/transparent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:id="@+id/homeTab"
+                    android:text="Home"
+                    android:textAlignment="center"
+                    android:icon="@mipmap/home"/>
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:id="@+id/trainersTab"
+                    android:text="Trainers"
+                    android:textAlignment="center"
+                    android:icon="@mipmap/trainers"/>
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:id="@+id/traineesTab"
+                    android:text="Trainees"
+                    android:textAlignment="center"
+                    android:icon="@mipmap/trainees"/>
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:id="@+id/foodListTab"
+                    android:text="Food List"
+                    android:textAlignment="center"
+                    android:icon="@mipmap/foodlist"/>
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:id="@+id/profileTab"
+                    android:text="Profile"
+                    android:textAlignment="center"
+                    android:icon="@mipmap/profile"/>
+
+
+
+            </com.google.android.material.tabs.TabLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
 
 
 </androidx.drawerlayout.widget.DrawerLayout>

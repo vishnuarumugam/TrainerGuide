@@ -433,6 +433,7 @@
                         android:layout_marginHorizontal="35dp"
                         android:layout_marginTop="15dp"
                         android:fontFamily="@font/poppins_medium"
+                        android:textColor="@color/themeColourTwo"
                         android:backgroundTint="@color/themeColourOne"
                         android:text="REGISTER"
                         android:textAlignment="center"

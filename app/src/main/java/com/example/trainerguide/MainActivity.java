@@ -160,7 +160,10 @@ public class MainActivity extends AppCompatActivity {
                                                     @Override
                                                     public void onComplete(@NonNull Task<Void> task) {
                                                         if (task.isSuccessful()) {
-                                                            Toast.makeText(MainActivity.this, "Please verify the Email address", Toast.LENGTH_SHORT).show();
+                                                            loginButton.setEnabled(true);
+                                                            loginButton.setBackgroundColor(getResources().getColor(R.color.themeColourOne));
+                                                            userPasswordIn.setText("");
+                                                            Toast.makeText(MainActivity.this, "We have sent an email to your email address. Please verify to login", Toast.LENGTH_SHORT).show();
                                                         }
                                                     }
                                                 });
@@ -171,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
                         public void onFailure(@NonNull Exception e) {
                             loginButton.setEnabled(true);
                             loginButton.setBackgroundColor(getResources().getColor(R.color.themeColourOne));
-                            Toast.makeText(MainActivity.this, "Please provide valid User Name and Password", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, "Please provide valid User name and Password", Toast.LENGTH_SHORT).show();
                         }
                     });
                 } else {

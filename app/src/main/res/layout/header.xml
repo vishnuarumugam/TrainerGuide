@@ -8,8 +8,8 @@
         android:padding="15dp">
 
         <ImageView
-            android:layout_width="90dp"
-            android:layout_height="90dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:background="@color/themeColourOne"
             android:src="@mipmap/profile" />
         <TextView
@@ -17,14 +17,14 @@
             android:layout_height="wrap_content"
             android:id="@+id/sideUserName"
             android:textColor="@color/white"
-            android:text="Trainer Guide"
+            android:text="@string/app_full_name"
             android:textSize="24sp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
             android:layout_marginTop="10dp"
-            android:text="Welcome !!!"
+            android:text="@string/appSubLine"
             android:textSize="14sp"/>
 
     </LinearLayout>

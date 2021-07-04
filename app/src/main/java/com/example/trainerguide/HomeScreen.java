@@ -26,6 +26,8 @@ import com.example.trainerguide.models.Trainer;
 import com.example.trainerguide.models.User;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.tabs.TabItem;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -51,6 +53,10 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
     private RelativeLayout profileDashboard, reportDashboard, trainerDashboard, traineeDashboard, foodDashboard, pdf_dashboard;
     private TextView dashboard_user_name;
     private ImageView dashboard_profile_pic;
+    private TabLayout homeScreenTabLayout;
+    private String selectedHomeScreenTab;
+    private TabItem traineesTab, foodListTab;
+
 
     //User Detail variables
     private String userId, path, userType;
@@ -100,24 +106,29 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
         //Dashboard variables
 
-        profileDashboard = findViewById(R.id.profile_dashboard);
+        homeScreenTabLayout = findViewById(R.id.homeScreenTabLayout);
+        dashboard_user_name = findViewById(R.id.dashboard_user_name);
+        toolBarNotification.setOnClickListener(this);
+        traineesTab = findViewById(R.id.traineesTab);
+        foodListTab = findViewById(R.id.foodListTab);
+
+        /*profileDashboard = findViewById(R.id.profile_dashboard);
         reportDashboard = findViewById(R.id.report_dashboard);
         trainerDashboard = findViewById(R.id.trainer_dashboard);
         traineeDashboard = findViewById(R.id.trainee_dashboard);
         foodDashboard = findViewById(R.id.food_dashboard);
 
-        dashboard_user_name = findViewById(R.id.dashboard_user_name);
-        dashboard_profile_pic = findViewById(R.id.dashboard_profile_pic);
+        dashboard_profile_pic = findViewById(R.id.dashboard_profile_pic);*/
 
         //pdf_dashboard = findViewById(R.id.pdf_dashboard);
 
-        profileDashboard.setOnClickListener(this);
+        /*profileDashboard.setOnClickListener(this);
         reportDashboard.setOnClickListener(this);
         trainerDashboard.setOnClickListener(this);
         traineeDashboard.setOnClickListener(this);
         foodDashboard.setOnClickListener(this);
         //pdf_dashboard.setOnClickListener(this);
-        toolBarNotification.setOnClickListener(this);
+        toolBarNotification.setOnClickListener(this);*/
 
         //Graph representation
         //progressGraphView = findViewById(R.id.userProgressGraph);
@@ -134,18 +145,40 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         userType = sp.getString("ProfileType",null);
 
         if (userType.equals("Trainer")){
-            traineeDashboard.setVisibility(View.VISIBLE);
+           /* traineeDashboard.setVisibility(View.VISIBLE);
             foodDashboard.setVisibility(View.VISIBLE);
-            //pdf_dashboard.setVisibility(View.GONE);
+            //pdf_dashboard.setVisibility(View.GONE);*/
         }
         else{
-            traineeDashboard.setVisibility(View.GONE);
+            /*traineeDashboard.setVisibility(View.GONE);
             foodDashboard.setVisibility(View.GONE);
-            //pdf_dashboard.setVisibility(View.GONE);
+            //pdf_dashboard.setVisibility(View.GONE);*/
         }
 
         userId = sp.getString("userId",null);
         path = userType+ "/" + userId;
+
+        selectedHomeScreenTab = homeScreenTabLayout.getTabAt(homeScreenTabLayout.getSelectedTabPosition()).getText().toString();
+        homeScreenTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+
+                int position = tab.getPosition();
+                selectedHomeScreenTab = tab.getText().toString();
+                tabMovement(selectedHomeScreenTab);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
 
         PopulateUserDetails();
 
@@ -201,11 +234,37 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
     }
 
+    public void tabMovement (String selectedHomeScreenTab){
+
+        switch (selectedHomeScreenTab){
+
+            case "Trainers":
+                startActivity(new Intent(HomeScreen.this,TrainerScreen.class));
+                finish();
+                break;
+            case "Trainees":
+                startActivity(new Intent(HomeScreen.this,TraineesScreen.class));
+                finish();
+                break;
+            case "Food List":
+                startActivity(new Intent(HomeScreen.this,FoodSourceListScreen.class));
+                finish();
+                break;
+            case "Profile":
+                startActivity(new Intent(HomeScreen.this,ProfileScreen.class));
+                finish();
+                break;
+            default:
+                break;
+
+        }
+    }
+
     public void onClick(View option) {
 
         switch (option.getId()) {
 
-            case R.id.profile_dashboard:
+            /*case R.id.profile_dashboard:
                 startActivity(new Intent(HomeScreen.this,ProfileScreen.class));
                 finish();
                 break;
@@ -225,11 +284,8 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
             case R.id.food_dashboard:
                 startActivity(new Intent(HomeScreen.this,FoodSourceListScreen.class));
                 finish();
-                break;
-            /*case R.id.pdf_dashboard:
-                startActivity(new Intent(HomeScreen.this, PdfCreation.class));
-                finish();
                 break;*/
+
             case R.id.toolBarNotification:
                 option.startAnimation(buttonBounce);
                 startActivity(new Intent(HomeScreen.this,NotificationScreen.class));
@@ -261,11 +317,11 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                     System.out.println("out");
                     Trainer user = snapshot.getValue(Trainer.class);
                     dashboard_user_name.setText(user.getName().toString() + " !");
-                    Picasso.get().load(user.getImage())
+                    /*Picasso.get().load(user.getImage())
                             .placeholder(R.mipmap.profile)
                             .fit()
                             .centerCrop()
-                            .into(dashboard_profile_pic);
+                            .into(dashboard_profile_pic);*/
                     //sideUserName.setText(user.getName().toString());
 
                 }
@@ -273,11 +329,11 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 else{
                     User user = snapshot.getValue(User.class);
                     dashboard_user_name.setText(user.getName().toString() + " !");
-                    Picasso.get().load(user.getImage())
+                    /*Picasso.get().load(user.getImage())
                             .placeholder(R.mipmap.profile)
                             .fit()
                             .centerCrop()
-                            .into(dashboard_profile_pic);
+                            .into(dashboard_profile_pic);*/
                     //sideUserName.setText(user.getName().toString());
 
                 }
