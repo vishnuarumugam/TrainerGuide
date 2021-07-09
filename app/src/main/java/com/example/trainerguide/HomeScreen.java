@@ -4,26 +4,38 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.trainerguide.models.BmrProgress;
+import com.example.trainerguide.models.Trainee;
 import com.example.trainerguide.models.Trainer;
 import com.example.trainerguide.models.User;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabItem;
@@ -34,7 +46,24 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.jjoe64.graphview.GraphView;
+import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
+import com.smarteist.autoimageslider.IndicatorView.animation.type.WormAnimation;
+import com.smarteist.autoimageslider.SliderAnimations;
+import com.smarteist.autoimageslider.SliderView;
 import com.squareup.picasso.Picasso;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static java.lang.Math.round;
 
 public class HomeScreen extends AppCompatActivity implements View.OnClickListener {
 
@@ -48,15 +77,28 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
     private MenuItem profileMenu, logoutMenu, shareMenu, ratingMenu, traineeMenu;
     Intent intent;
     Animation buttonBounce;
+    private User user;
+
+    //PopUp Dialog
+    private Dialog profileDialog;
+    private ImageView profileDialogClose;
 
     //Dashboard variables
     private RelativeLayout profileDashboard, reportDashboard, trainerDashboard, traineeDashboard, foodDashboard, pdf_dashboard;
+    private RelativeLayout progressLayout, weightLayout;
+    private LinearLayout profileDobDialogTitleLin, profileWeightDialogTitleLin, profileHeightDialogTitleLin, profileExperienceDialogTitleLin, profileFoodTypeDialogTitleLin, profileFoodAllergyDialogTitleLin, profileHealthInfoDialogTitleLin, profileSubscriptionTypeDialogTitleLin, profileSubscriptionFeesDialogTitleLin, profileSubscriptionDescDialogTitleLin;
     private TextView dashboard_user_name;
     private ImageView dashboard_profile_pic;
-    private TabLayout homeScreenTabLayout;
+    private BottomNavigationView homeScreenTabLayout;
     private String selectedHomeScreenTab;
     private TabItem traineesTab, foodListTab;
+    private Menu bottomMenu;
+    private CardView homeScreenGoalLayout;
+    private RadioButton weightLossSubscription, weightGainSubscription, weightMaintainSubscription;;
 
+    //Ad Slider
+    SliderView topAdSliderView;
+    int[] adImages = {R.mipmap.ad_image,R.mipmap.create_account_image, R.mipmap.login_image};
 
     //User Detail variables
     private String userId, path, userType;
@@ -76,6 +118,8 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         // loading Animation from
         buttonBounce= AnimationUtils.loadAnimation(this, R.anim.button_bounce);
 
+        //Initialize Progress Dialog
+        progressDialog = new ProgressDialog(this);
 
         navigationView = findViewById(R.id.nav_view);
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -108,9 +152,43 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
         homeScreenTabLayout = findViewById(R.id.homeScreenTabLayout);
         dashboard_user_name = findViewById(R.id.dashboard_user_name);
+        homeScreenGoalLayout = findViewById(R.id.home_screen_goal_layout);
+        weightLossSubscription = findViewById(R.id.weightLossSubscription);
+        weightGainSubscription = findViewById(R.id.weightGainSubscription);
+        weightMaintainSubscription = findViewById(R.id.weightMaintainSubscription);
+
+        weightLossSubscription.setOnClickListener(this);
+        weightGainSubscription.setOnClickListener(this);
+        weightMaintainSubscription.setOnClickListener(this);
+
+        progressLayout = findViewById(R.id.progressLayout);
+        weightLayout = findViewById(R.id.weightLayout);
+        progressLayout.setOnClickListener(this);
+        weightLayout.setOnClickListener(this);
+
+        //PopUp Dialog
+        profileDialog = new Dialog(this);
+        profileDialog.setContentView(R.layout.profile_screen_dialog);
+        profileDialogClose = profileDialog.findViewById(R.id.profileDialogClose);
+
+        profileDobDialogTitleLin = profileDialog.findViewById(R.id.profileDobDialogTitleLin);
+        profileWeightDialogTitleLin = profileDialog.findViewById(R.id.profileWeightDialogTitleLin);
+        profileHeightDialogTitleLin = profileDialog.findViewById(R.id.profileHeightDialogTitleLin);
+        profileExperienceDialogTitleLin = profileDialog.findViewById(R.id.profileExperienceDialogTitleLin);
+        profileFoodTypeDialogTitleLin = profileDialog.findViewById(R.id.profileFoodTypeDialogTitleLin);
+        profileFoodAllergyDialogTitleLin = profileDialog.findViewById(R.id.profileFoodAllergyDialogTitleLin);
+        profileHealthInfoDialogTitleLin = profileDialog.findViewById(R.id.profileHealthInfoDialogTitleLin);
+        profileSubscriptionTypeDialogTitleLin = profileDialog.findViewById(R.id.profileSubscriptionTypeDialogTitleLin);
+        profileSubscriptionFeesDialogTitleLin = profileDialog.findViewById(R.id.profileSubscriptionFeesDialogTitleLin);
+        profileSubscriptionDescDialogTitleLin = profileDialog.findViewById(R.id.profileSubscriptionDescDialogTitleLin);
+
+
+        //Ad Slider Variables
+        topAdSliderView = findViewById(R.id.homeScreenTopAdSlider);
+
         toolBarNotification.setOnClickListener(this);
-        traineesTab = findViewById(R.id.traineesTab);
-        foodListTab = findViewById(R.id.foodListTab);
+        //traineesTab = findViewById(R.id.traineesTab);
+        //foodListTab = findViewById(R.id.foodListTab);
 
         /*profileDashboard = findViewById(R.id.profile_dashboard);
         reportDashboard = findViewById(R.id.report_dashboard);
@@ -145,11 +223,15 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         userType = sp.getString("ProfileType",null);
 
         if (userType.equals("Trainer")){
+            homeScreenGoalLayout.setVisibility(View.GONE);
            /* traineeDashboard.setVisibility(View.VISIBLE);
             foodDashboard.setVisibility(View.VISIBLE);
             //pdf_dashboard.setVisibility(View.GONE);*/
         }
         else{
+            homeScreenTabLayout.getMenu().removeItem(R.id.foodListTab);
+            homeScreenTabLayout.getMenu().removeItem(R.id.traineesTab);
+
             /*traineeDashboard.setVisibility(View.GONE);
             foodDashboard.setVisibility(View.GONE);
             //pdf_dashboard.setVisibility(View.GONE);*/
@@ -158,26 +240,49 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         userId = sp.getString("userId",null);
         path = userType+ "/" + userId;
 
-        selectedHomeScreenTab = homeScreenTabLayout.getTabAt(homeScreenTabLayout.getSelectedTabPosition()).getText().toString();
-        homeScreenTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+
+
+        homeScreenTabLayout.setSelectedItemId(R.id.homeTab);
+        homeScreenTabLayout.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public void onTabSelected(TabLayout.Tab tab) {
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-                int position = tab.getPosition();
-                selectedHomeScreenTab = tab.getText().toString();
-                tabMovement(selectedHomeScreenTab);
-            }
+                switch (item.getItemId()){
+                    case R.id.homeTab:
+                        break;
+                    case R.id.trainersTab:
+                        startActivity(new Intent(HomeScreen.this,TrainerScreen.class));
+                        overridePendingTransition(0,0);
+                        finish();
+                        break;
+                    case R.id.traineesTab:
+                        startActivity(new Intent(HomeScreen.this,TraineesScreen.class));
+                        overridePendingTransition(0,0);
+                        finish();
+                        break;
+                    case R.id.foodListTab:startActivity(new Intent(HomeScreen.this,FoodSourceListScreen.class));
+                        overridePendingTransition(0,0);
+                        finish();
+                        break;
+                    case R.id.profileTab:
+                        startActivity(new Intent(HomeScreen.this,ProfileScreen.class));
+                        overridePendingTransition(0,0);
+                        finish();
+                        break;
+                    default:
+                        break;
 
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
+                }
+                return false;
             }
         });
+
+        AdSliderAdapter topAdSliderAdapter = new AdSliderAdapter(adImages);
+
+        topAdSliderView.setSliderAdapter(topAdSliderAdapter);
+        topAdSliderView.setIndicatorAnimation(IndicatorAnimationType.WORM);
+        topAdSliderView.setSliderTransformAnimation(SliderAnimations.DEPTHTRANSFORMATION);
+        topAdSliderView.startAutoCycle();
 
 
         PopulateUserDetails();
@@ -234,35 +339,39 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
     }
 
-    public void tabMovement (String selectedHomeScreenTab){
-
-        switch (selectedHomeScreenTab){
-
-            case "Trainers":
-                startActivity(new Intent(HomeScreen.this,TrainerScreen.class));
-                finish();
-                break;
-            case "Trainees":
-                startActivity(new Intent(HomeScreen.this,TraineesScreen.class));
-                finish();
-                break;
-            case "Food List":
-                startActivity(new Intent(HomeScreen.this,FoodSourceListScreen.class));
-                finish();
-                break;
-            case "Profile":
-                startActivity(new Intent(HomeScreen.this,ProfileScreen.class));
-                finish();
-                break;
-            default:
-                break;
-
-        }
-    }
 
     public void onClick(View option) {
 
         switch (option.getId()) {
+
+            case R.id.profileSubscriptionTypeDialogUpdate:
+                String subscriptionValue = "Not mentioned";
+                if (weightLossSubscription.isChecked()) {
+                    subscriptionValue = "Weight Loss";
+                } else if (weightGainSubscription.isChecked()) {
+                    subscriptionValue = "Weight Gain";
+                } else if (weightMaintainSubscription.isChecked()) {
+                    subscriptionValue = "Weight Maintain";
+                }
+                updateProfile("subscriptionType", subscriptionValue);
+                break;
+
+            case R.id.weightLossSubscription:
+                updateProfile("subscriptionType", "Weight Loss");
+                break;
+            case R.id.weightGainSubscription:
+                updateProfile("subscriptionType", "Weight Gain");
+                break;
+            case R.id.weightMaintainSubscription:
+                updateProfile("subscriptionType", "Stay Fit");
+                break;
+            case R.id.weightLayout:
+                ShowDialog("Weight");
+                break;
+            case R.id.progressLayout:
+                startActivity(new Intent(HomeScreen.this,UserReport.class));
+                finish();
+                break;
 
             /*case R.id.profile_dashboard:
                 startActivity(new Intent(HomeScreen.this,ProfileScreen.class));
@@ -296,7 +405,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         }
     }
 
-    public void PopulateUserDetails(){
+    /*public void PopulateUserDetails(){
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(path);
 
@@ -317,23 +426,39 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                     System.out.println("out");
                     Trainer user = snapshot.getValue(Trainer.class);
                     dashboard_user_name.setText(user.getName().toString() + " !");
-                    /*Picasso.get().load(user.getImage())
+                    *//*Picasso.get().load(user.getImage())
                             .placeholder(R.mipmap.profile)
                             .fit()
                             .centerCrop()
-                            .into(dashboard_profile_pic);*/
+                            .into(dashboard_profile_pic);*//*
                     //sideUserName.setText(user.getName().toString());
 
                 }
 
                 else{
-                    User user = snapshot.getValue(User.class);
-                    dashboard_user_name.setText(user.getName().toString() + " !");
-                    /*Picasso.get().load(user.getImage())
+                    Trainee trainee = snapshot.getValue(Trainee.class);
+                    dashboard_user_name.setText(trainee.getName() + " !");
+
+                    if (trainee.getSubscriptionType()!=null){
+                        switch (trainee.getSubscriptionType()){
+                            case "Weight Loss":
+                                weightLossSubscription.setChecked(true);
+                                break;
+                            case "Weight Gain":
+                                weightGainSubscription.setChecked(true);
+                                break;
+                            case "Weight Maintain":
+                                weightMaintainSubscription.setChecked(true);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    *//*Picasso.get().load(user.getImage())
                             .placeholder(R.mipmap.profile)
                             .fit()
                             .centerCrop()
-                            .into(dashboard_profile_pic);*/
+                            .into(dashboard_profile_pic);*//*
                     //sideUserName.setText(user.getName().toString());
 
                 }
@@ -341,12 +466,12 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 //Dismiss Progress Dialog
                 progressDialog.dismiss();
 
-                /*LineGraphSeries<DataPoint> progressDatapoint = new LineGraphSeries<>(new DataPoint[]{
+                *//*LineGraphSeries<DataPoint> progressDatapoint = new LineGraphSeries<>(new DataPoint[]{
                         new DataPoint(0,user.getBmi()),
                         new DataPoint(1,19),
                 });
 
-                progressGraphView.addSeries(progressDatapoint);*/
+                progressGraphView.addSeries(progressDatapoint);*//*
 
             }
 
@@ -355,8 +480,614 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
             }
         });
+    }*/
+
+    public void PopulateUserDetails(){
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(path);
+        //Show Progress Dialog
+        progressDialog.show();
+        //Set Content
+        progressDialog.setContentView(R.layout.progressdialog);
+        //Set Transparent Background
+        progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                System.out.println("********OnDataChange*******");
+                user = snapshot.getValue(User.class);
+
+                dashboard_user_name.setText(user.getName().toString() + " !");
+
+                String pattern = "dd-MM-yyyy";
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+
+                /*profileWeight.setText(String.valueOf(user.getWeight().intValue()));
+                profileHeight.setText(String.valueOf(user.getHeight().intValue()));
+                profileEmailId.setText(user.getEmail());
+                profilePhoneNumber.setText(user.getPhoneNumber().toString());
+                profileDob.setText(simpleDateFormat.format(user.getDateOfBirth()));
+                Picasso.get().load(user.getImage())
+                        .placeholder(R.drawable.ic_share)
+                        .fit()
+                        .centerCrop()
+                        .into(profileImage);
+                profileFoodType.setText(user.getFoodType());
+                if (user.getFoodType()!=null){
+                    switch (user.getFoodType()){
+                        case "Vegetarian":
+                            vegFoodType.setChecked(true);
+                            break;
+                        case "Eggetarian":
+                            vegEggFoodType.setChecked(true);
+                            break;
+                        case "Non-Vegetarian":
+                            nonVegFoodType.setChecked(true);
+                            break;
+                        default:
+                            break;
+                    }
+                }*/
+                //Health Issue Recycler View Data
+                /*if(user.getHealthIssues()!=null) {
+                    healthItems.clear();
+
+                    for (Map.Entry healthIssue : user.getHealthIssues().entrySet()) {
+
+                        if (!"Others".equals(healthIssue.getKey())){
+                            healthItems.add(healthIssue.getValue().toString());
+
+                            if (healthIssue.getValue().toString().equals("Diabetes")){
+                                diabetesHealthIssue.setChecked(true);
+                            }
+                            if(healthIssue.getValue().toString().equals("Cholesterol")){
+                                cholesterolHealthIssue.setChecked(true);
+                            }
+                            if(healthIssue.getValue().toString().equals("Thyroid")){
+                                thyroidHealthIssue.setChecked(true);
+                            }
+                            if(healthIssue.getValue().toString().equals("Blood Pressure")){
+                                bpHealthIssue.setChecked(true);
+                            }
+                            if(healthIssue.getValue().toString().equals("Heart Problems")){
+                                heartHealthIssue.setChecked(true);
+                            }
+                            if(healthIssue.getValue().toString().equals("Physical Injuries")){
+                                physicalInjuriesHealthIssue.setChecked(true);
+                            }
+
+                        }
+                        else{
+                            profileOtherRelativeLayHealth.setVisibility(View.VISIBLE);
+                            healthIssuesOther.setText(healthIssue.getValue().toString());
+                            otherHealthIssue.setText(healthIssue.getValue().toString());
+                        }
+
+
+                    }
+                    profileAdapter.notifyDataSetChanged();
+                }*/
+
+                //Food Allergy Recycler View Data
+                /*if(user.getFoodAllergy()!=null) {
+                    foodAllergy.clear();
+                    for (Map.Entry  foodAllergyItem : user.getFoodAllergy().entrySet()) {
+
+                        if (!"Others".equals(foodAllergyItem.getKey())){
+                            foodAllergy.add(foodAllergyItem.getValue().toString());
+
+                            if (foodAllergyItem.getValue().toString().equals("Diary")){
+                                diaryFoodAllergy.setChecked(true);
+                            }
+                            if (foodAllergyItem.getValue().toString().equals("Wheat")){
+                                wheatFoodAllergy.setChecked(true);
+                            }
+                            if (foodAllergyItem.getValue().toString().equals("Nuts")){
+                                nutsFoodAllergy.setChecked(true);
+                            }
+                            if (foodAllergyItem.getValue().toString().equals("Sea Food")){
+                                seaFoodAllergy.setChecked(true);
+                            }
+                            if (foodAllergyItem.getValue().toString().equals("Mutton")){
+                                muttonFoodAllergy.setChecked(true);
+                            }
+                            if (foodAllergyItem.getValue().toString().equals("Chicken")){
+                                chickenFoodAllergy.setChecked(true);
+                            }
+
+                        }
+                        else{
+                            profileOtherRelativeLayFood.setVisibility(View.VISIBLE);
+                            foodAllergyOther.setText(foodAllergyItem.getValue().toString());
+                            otherFoodAllergy.setText(foodAllergyItem.getValue().toString());
+
+                        }
+                    }
+                }*/
+
+
+                if (userType.equals("Trainer")){
+                    Trainer trainer = snapshot.getValue(Trainer.class);
+                    /*if (trainer.getExperience() != null){
+
+                        profileExperience.setText(String.valueOf(trainer.getExperience().intValue()));
+                    }
+                    else{
+                        profileExperience.setText("0.0");
+                    }
+                    if (trainer.getSubscriptionFees() != null){
+                        profileSubscriptionFees.setText(trainer.getSubscriptionFees().toString());
+                    }
+                    else{
+                        profileSubscriptionFees.setText("0.0");
+                    }
+                    if (trainer.getSubscriptionDescription() != null){
+                        profileSubscriptionDescription.setText(trainer.getSubscriptionDescription().toString());
+                    }
+                    else{
+                        profileSubscriptionDescription.setText("Not mentioned");
+                    }*/
+
+                }
+                else{
+                    Trainee trainee = snapshot.getValue(Trainee.class);
+                    System.out.println("Trainee");
+                    /*if(extendReadonly && trainee.getTrainerId()!= null && trainee.getTrainerId()!="") {
+                        subscriptionExtendRelativeLay.setVisibility(View.VISIBLE);
+
+                        if (trainee.getSubscriptionEndDate()!=null){
+                            Date endDate = trainee.getSubscriptionEndDate();
+                            SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
+                            txtSubscriptionDate.setText(formatDate.format(endDate));
+                        }
+
+                        else{
+                            subscriptionExtendRelativeLay.setVisibility(View.GONE);
+                            extend.setVisibility(View.GONE);
+                            subscriptionRemoveBtn.setVisibility(View.GONE);
+                            subscriptionRemoveRelativeLay.setVisibility(View.GONE);
+                            txtSubscriptionDate.setText("- - -");
+                        }
+
+                    }
+                    //String trainerName = GetTrainerName(trainee.getTrainerId());
+                    if (trainee.getTrainerId()!=null && !(trainee.getTrainerId().equals("")) ){
+                        GetTrainerName(trainee.getTrainerId());
+                    }
+                    else{
+                        profileSubscriptionTrainer.setText("No Trainer assigned");
+                        profileSubscriptionTrainer.setTextColor(getResources().getColor(R.color.orange));
+                        subscriptionExtendRelativeLay.setVisibility(View.GONE);
+                        extend.setVisibility(View.GONE);
+                        subscriptionRemoveBtn.setVisibility(View.GONE);
+                        subscriptionRemoveRelativeLay.setVisibility(View.GONE);
+                    }*/
+                    //profileSubscriptionType.setText(trainee.getSubscriptionType());
+
+                    /*if (trainee.getFoodType()!=null){
+                        switch (trainee.getFoodType()){
+                            case "Vegetarian":
+                                vegFoodType.setChecked(true);
+                                break;
+                            case "Eggetarian":
+                                vegEggFoodType.setChecked(true);
+                                break;
+                            case "Non-Vegetarian":
+                                nonVegFoodType.setChecked(true);
+                                break;
+                            default:
+                                break;
+                        }
+                    }*/
+                    if (trainee.getSubscriptionType()!=null){
+                        System.out.println("Trainee1");
+
+                        switch (trainee.getSubscriptionType()){
+                            case "Weight Loss":
+                                weightLossSubscription.setChecked(true);
+                                break;
+                            case "Weight Gain":
+                                weightGainSubscription.setChecked(true);
+                                break;
+                            case "Stay Fit":
+                                weightMaintainSubscription.setChecked(true);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+
+                //Dismiss Progress Dialog
+                progressDialog.dismiss();
+
+                //profileAdapterFood.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+    private void updateProfile(String userField, String value){
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(path);
+        String pattern = "dd-MM-yyyy";
+        final SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        HashMap hash= new HashMap();
+        User userBmValue = user;
+        HashMap<String,String> healthIssues = new HashMap<>();
+        Boolean save = true;
+        List<BmrProgress> bmrProgressList;
+        if (user.getBmrReport()!=null){
+            bmrProgressList = user.getBmrReport();
+        }
+        else {
+
+            bmrProgressList = new ArrayList<BmrProgress>();
+        }
+
+
+
+        if (userField.equals("dateOfBirth")|| userField.equals("lastModDttm")){
+            /*Date dateUpdate = null;
+            Double userBmi = null;
+            Double userBmr = null;
+
+            try {
+                dateUpdate = simpleDateFormat.parse(value);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            hash.put(userField,dateUpdate);
+            databaseReference.updateChildren(hash);
+
+            if ((new Double(user.getWeight())>0) && (new Double(user.getHeight())>0)){
+                userBmr = userBmValue.bmrCalculation(user.getWeight(), user.getHeight());
+
+                hash.put("bmr", new Double(round(userBmr)));
+                hash.put("lastModDttm", Calendar.getInstance().getTime());
+
+
+            }
+
+*/
+        }
+
+        else if (userField.equals("weight") || userField.equals("height")){
+            /*if( !(value.isEmpty()) && (new Double(value)>0)) {
+                Double userProfileValue = new Double(new BigDecimal(value).setScale(2, RoundingMode.HALF_UP).doubleValue());
+                Double userBmi = null;
+                Double userBmr = null;
+
+
+                if (userField.equals("weight")){
+                    if (userProfileValue.intValue()>=30 && userProfileValue.intValue()<=300){
+                        user.setWeight(userProfileValue);
+                        bmrProgressList.add(new BmrProgress(Calendar.getInstance().getTime(),userProfileValue));
+                        hash.put("bmrReport",bmrProgressList);
+                        hash.put(userField, userProfileValue);
+
+                    }
+                    else {
+                        save=false;
+                        profileWeightDialogInput.setError("Please enter a valid Weight");
+                    }
+
+                }
+                else{
+
+                    if (userProfileValue.intValue()>=90 && userProfileValue.intValue()<=230){
+                        user.setHeight(userProfileValue);
+                        hash.put(userField, userProfileValue);
+                    }
+                    else {
+                        save=false;
+                        profileHeightDialogInput.setError("Please enter a valid Height");
+                    }
+                }
+
+                if( (new Double(user.getWeight())>0) && (new Double(user.getHeight())>0) ){
+                    switch (userField) {
+
+                        case "weight":
+
+                            userBmi = userBmValue.bmiCalculation(userProfileValue, user.getHeight());
+                            userBmr = userBmValue.bmrCalculation(userProfileValue, user.getHeight());
+                            break;
+                        case "height":
+                            userBmi = userBmValue.bmiCalculation(user.getWeight(), userProfileValue);
+                            userBmr = userBmValue.bmrCalculation(user.getWeight(), userProfileValue);
+
+                            break;
+                        default:
+                            break;
+                    }
+
+                    hash.put("bmi", new Double(round(userBmi)));
+                    hash.put("bmr", new Double(round(userBmr)));
+                    hash.put("lastModDttm",Calendar.getInstance().getTime());
+                    if (userType.equals("User")){
+                        System.out.println("traineeMetaDataUpdatewief");
+                        traineeMetaDataUpdate(new Double(round(userBmi)));
+                    }
+                }
+
+            }
+            else{
+                switch (userField) {
+
+                    case "weight":
+                        profileWeightDialogInput.setError("Please enter a valid Weight");
+                        break;
+                    case "height":
+                        profileHeightDialogInput.setError("Please enter a valid Height");
+                        break;
+                    default:
+                        break;
+                }
+                save=false;
+            }*/
+
+        }
+
+        else if (userField.equals("foodType") || userField.equals("subscriptionType")  || userField.equals("experience") || userField.equals("subscriptionFees") || userField.equals("subscriptionDescription")){
+
+            if (userField.equals("experience") || userField.equals("subscriptionFees")){
+                if(value.length()>0){
+
+                    if (userField.equals("experience")){
+/*
+
+                        if (new Double(value).intValue()<=60){
+                            hash.put(userField, new Double(value));
+                        }
+                        else{
+                            save=false;
+                            profileExperienceDialogInput.setError("Please enter a valid Experience");
+                        }
+*/
+
+                    }
+                    else{
+/*
+                        if (userField.equals("subscriptionFees")){
+                            if (new Double(value).intValue()>=1){
+                                hash.put(userField, new Double(value));
+                            }
+                            else{
+                                save=false;
+                                profileSubscriptionFeesDialogInput.setError("Please enter a valid Fees");
+                            }
+                        }*/
+
+
+                    }
+
+                }else{
+                    switch (userField) {
+/*
+                        case "experience":
+                            profileExperienceDialogInput.setError("Please enter a valid Experience");
+                            break;
+                        case "subscriptionFees":
+                            profileSubscriptionFeesDialogInput.setError("Please enter a valid Fees");
+                            break;
+                        default:
+                            break;*/
+                    }
+                    save=false;
+                }
+            }
+            else if (userField.equals("subscriptionDescription")){
+/*
+                if(value.length()>0){
+                    hash.put(userField, value);
+                }
+                else {
+                    profileSubscriptionDescDialogInput.setError("Please enter a valid Description");
+                    save=false;
+                }*/
+
+            }
+            else{
+                hash.put(userField, value);
+            }
+
+        }
+
+        else if (userField.equals("foodAllergy")){
+
+           /* HashMap<String,String> foodAllergy = new HashMap<>();
+
+            if (diaryFoodAllergy.isChecked()){
+                foodAllergy.put("Diary","Diary");
+            }
+            if(wheatFoodAllergy.isChecked()){
+                foodAllergy.put("Wheat","Wheat");
+            }
+            if(nutsFoodAllergy.isChecked()){
+                foodAllergy.put("Nuts","Nuts");
+            }
+            if(seaFoodAllergy.isChecked()){
+                foodAllergy.put("Sea Food","Sea Food");
+            }
+            if(muttonFoodAllergy.isChecked()){
+                foodAllergy.put("Mutton","Mutton");
+            }
+            if (chickenFoodAllergy.isChecked()){
+                foodAllergy.put("Chicken","Chicken");
+            }
+            if (otherFoodAllergy.getText().toString().length()>0){
+                foodAllergy.put("Others",otherFoodAllergy.getText().toString());
+            }
+            hash.put(userField, foodAllergy);*/
+        }
+
+        else if (userField.equals("healthIssues")){
+
+            /*HashMap<String,String> healthIssue = new HashMap<>();
+
+            if (diabetesHealthIssue.isChecked()){
+                healthIssue.put("Diabetes","Diabetes");
+            }
+            if(cholesterolHealthIssue.isChecked()){
+                healthIssue.put("Cholesterol","Cholesterol");
+            }
+            if (thyroidHealthIssue.isChecked()){
+                healthIssue.put("Thyroid","Thyroid");
+            }
+            if(bpHealthIssue.isChecked()){
+                healthIssue.put("Blood Pressure","Blood Pressure");
+            }
+            if(heartHealthIssue.isChecked()){
+                healthIssue.put("Heart Problems","Heart Problems");
+            }
+            if(physicalInjuriesHealthIssue.isChecked()){
+                healthIssue.put("Physical Injuries","Physical Injuries");
+            }
+            if (otherHealthIssue.getText().toString().length()>0){
+                healthIssue.put("Others",otherHealthIssue.getText().toString());
+            }
+
+            hash.put(userField, healthIssue);*/
+        }
+
+        if(save) {
+            System.out.println("Profile data updated successfully");
+            databaseReference.updateChildren(hash);
+
+            try {
+                Thread.sleep(1000);
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            Toast.makeText(this, "Updated successfully", Toast.LENGTH_SHORT).show();
+
+            //profileDialog.dismiss();
+            //PopulateUserDetails();
+
+        }
     }
 
+    private void ShowDialog(String profileType) {
+        profileDobDialogTitleLin.setVisibility(View.GONE);
+        profileWeightDialogTitleLin.setVisibility(View.GONE);
+        profileHeightDialogTitleLin.setVisibility(View.GONE);
+        profileExperienceDialogTitleLin.setVisibility(View.GONE);
+        profileFoodTypeDialogTitleLin.setVisibility(View.GONE);
+        profileFoodAllergyDialogTitleLin.setVisibility(View.GONE);
+        profileHealthInfoDialogTitleLin.setVisibility(View.GONE);
+        profileSubscriptionTypeDialogTitleLin.setVisibility(View.GONE);
+        profileSubscriptionFeesDialogTitleLin.setVisibility(View.GONE);
+        profileSubscriptionDescDialogTitleLin.setVisibility(View.GONE);
+
+        if (profileType.equals("DateOfBirth")){
+            /*profileDobDialogTitleLin.setVisibility(View.VISIBLE);
+            profileDobDialogUpdate.setClickable(false);
+            profileDobDialogTitle.setText("Date of birth");
+            profileDob.getText().toString();
+            String pattern = "dd-MM-yyyy";
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+            int day = Integer.parseInt(profileDob.getText().toString().substring(0,2));
+            int month = Integer.parseInt(profileDob.getText().toString().substring(3,5)) - 1;
+            int year = Integer.parseInt(profileDob.getText().toString().substring(6,10));
+
+            profileDobDialogDatePicker.setMaxDate(currentDate.getTime());
+            profileDobDialogDatePicker.updateDate(year,month,day);
+            profileDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                profileDobDialogDatePicker.setOnDateChangedListener(new DatePicker.OnDateChangedListener() {
+                    @Override
+                    public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        int  month = monthOfYear + 1;
+                        userProfileUpdateValue = dayOfMonth +"-" + month +"-"+ year;
+                        profileDobDialogUpdate.setClickable(true);
+
+                    }
+                });
+            }
+            profileDialog.show();*/
+        }
+
+        else if (profileType.equals("Weight")){
+            profileWeightDialogTitleLin.setVisibility(View.VISIBLE);
+            //profileWeightDialogTitle.setText("Weight");
+            //profileWeightDialogInput.setText(profileWeight.getText().toString());
+            profileDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            profileDialog.show();
+        }
+
+        else if (profileType.equals("Height")){
+            /*profileHeightDialogTitleLin.setVisibility(View.VISIBLE);
+            profileHeightDialogTitle.setText("Height");
+            profileHeightDialogInput.setText(profileHeight.getText().toString());
+            profileDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            profileDialog.show();*/
+        }
+
+        else if (profileType.equals("Experience")){
+            /*profileExperienceDialogTitleLin.setVisibility(View.VISIBLE);
+            profileExperienceDialogTitle.setText("Experience");
+            if (!profileExperience.getText().toString().isEmpty()){
+                profileExperienceDialogInput.setText(profileExperience.getText().toString());
+            }
+            profileDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            profileDialog.show();*/
+
+        }
+
+
+        else if(profileType.equals("FoodAllergy")){
+            /*profileFoodAllergyDialogTitleLin.setVisibility(View.VISIBLE);
+            profileFoodAllergyDialogTitle.setText("Food Allergy");
+            profileDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            profileDialog.show();*/
+        }
+
+        else if(profileType.equals("HealthIssues")){
+            /*profileHealthInfoDialogTitleLin.setVisibility(View.VISIBLE);
+            profileHealthInfoDialogTitle.setText("Health Issues");
+            profileDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            profileDialog.show();
+*/
+        }
+        else if(profileType.equals("SubscriptionType")){
+            /*profileSubscriptionTypeDialogTitleLin.setVisibility(View.VISIBLE);
+            profileDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            profileDialog.show();*/
+        }
+        else if(profileType.equals("SubscriptionFees")){
+            /*profileSubscriptionFeesDialogTitleLin.setVisibility(View.VISIBLE);
+            profileSubscriptionFeesDialogInput.setText(profileSubscriptionFees.getText().toString());
+            profileDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            profileDialog.show();*/
+        }
+
+        else if(profileType.equals("SubscriptionDescription")){
+            /*profileSubscriptionDescDialogTitleLin.setVisibility(View.VISIBLE);
+            profileSubscriptionDescDialogInput.setText(profileSubscriptionDescription.getText().toString());
+            profileDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            profileDialog.show();*/
+        }
+
+        profileDialogClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                profileDialog.dismiss();
+                profileDobDialogTitleLin.setVisibility(View.GONE);
+                profileWeightDialogTitleLin.setVisibility(View.GONE);
+                profileHeightDialogTitleLin.setVisibility(View.GONE);
+                profileFoodTypeDialogTitleLin.setVisibility(View.GONE);
+                profileFoodAllergyDialogTitleLin.setVisibility(View.GONE);
+                profileHealthInfoDialogTitleLin.setVisibility(View.GONE);
+                profileSubscriptionTypeDialogTitleLin.setVisibility(View.GONE);
+            }
+        });
+    }
 
 
     @Override
@@ -371,6 +1102,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
             super.onBackPressed();
         }
     }
+
 
 
 }

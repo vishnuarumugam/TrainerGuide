@@ -20,7 +20,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:id="@+id/foodSourceLinear">
+                    android:id="@+id/foodSourceLinear"
+                    android:layout_marginBottom="60dp"
+                    android:background="@color/white"
+                    app:layout_constraintBottom_toTopOf="@+id/homeScreenTabLayout"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.5">
 
 
                     <include layout="@layout/common_toolbar"/>
@@ -90,6 +97,20 @@
 
                 </LinearLayout>
 
+
+                <com.google.android.material.bottomnavigation.BottomNavigationView
+                    android:layout_width="match_parent"
+                    android:id="@+id/homeScreenTabLayout"
+                    android:layout_height="60dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:itemTextColor="@color/themeColourOne"
+                    android:background="@color/homeScreenBgColor"
+                    app:itemTextAppearanceActive="@style/fontStyle"
+                    app:menu="@menu/bottom_nav_menu">
+
+                </com.google.android.material.bottomnavigation.BottomNavigationView>
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

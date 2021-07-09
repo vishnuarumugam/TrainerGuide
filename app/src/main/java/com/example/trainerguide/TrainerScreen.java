@@ -16,11 +16,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,6 +33,7 @@ import com.example.trainerguide.models.Trainee;
 import com.example.trainerguide.models.Trainer;
 import com.example.trainerguide.models.User;
 import com.example.trainerguide.models.UserMetaData;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -60,11 +65,16 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
     private Toolbar toolbar;
     private Button toolBarNotification;
     private MenuItem profileMenu, logoutMenu, shareMenu, ratingMenu, traineeMenu;
+    private EditText searchTxt;
+    private ImageButton search;
 
     //Common variables
     Intent intent;
     TextView noTrainerText;
     Animation buttonBounce;
+    private String userType;
+    private BottomNavigationView homeScreenTabLayout;
+
 
 
     //Recycler view variables
@@ -110,6 +120,11 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
         toolbar.setTitleTextColor(getResources().getColor(R.color.themeColourThree));
         ActionBarDrawerToggle toggle = CommonNavigator.navigatorInitmethod(drawerLayout,navigationView,toolbar,this);
         toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.themeColourTwo));
+
+        //Search box initialize
+        searchTxt = findViewById(R.id.searchNametxt);
+        search = findViewById(R.id.search);
+        //search.setEnabled(false);
 
         //Menu Item variables
         profileMenu = findViewById(R.id.nav_profile);
@@ -172,7 +187,7 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
 
         //Pagination Get Data
         System.out.println("initial");
-        getData("\"$key\"",startAt,limit);
+        getData("\"$key\"",startAt,limit, false);
         nestedScrollView.isSmoothScrollingEnabled();
 
         nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
@@ -191,10 +206,43 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
                         progressBar.setVisibility(View.VISIBLE);
                         //Call Method
                         System.out.println("second");
-                        getData("\"$key\"",startAt,limit);
+                        if(searchTxt.getText().length() > 0)
+                        {
+                            getData("\"name\"", startAt, limit, false);
+                        }
+                        else {
+                            getData("\"$key\"", startAt, limit, false);
+                        }
                     }
 
                 }
+            }
+        });
+
+        searchTxt.addTextChangedListener(new TextWatcher() {
+
+            public void afterTextChanged(Editable s) {
+            }
+
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+            }
+
+            public void onTextChanged(CharSequence s, int start,
+                                      int before, int count) {
+                if(s.length() > 3)
+                {
+                    //search.setEnabled(true);
+                }
+            }
+        });
+
+        // Search Data
+
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getData("\"name\"", searchTxt.getText().toString(), limit, true);
             }
         });
 
@@ -214,9 +262,61 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
             }
         });
 */
+
+        homeScreenTabLayout = findViewById(R.id.homeScreenTabLayout);
+
+        final SharedPreferences sp;
+        sp= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+        userType = sp.getString("ProfileType",null);
+
+        if (userType.equals("Trainer")){
+
+        }
+        else{
+            homeScreenTabLayout.getMenu().removeItem(R.id.foodListTab);
+            homeScreenTabLayout.getMenu().removeItem(R.id.traineesTab);
+
+        }
+
+        homeScreenTabLayout.setSelectedItemId(R.id.trainersTab);
+        homeScreenTabLayout.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                switch (item.getItemId()){
+                    case R.id.homeTab:
+                        startActivity(new Intent(TrainerScreen.this,HomeScreen.class));
+                        overridePendingTransition(0,0);
+                        finish();
+                        break;
+                    case R.id.trainersTab:
+                        break;
+                    case R.id.traineesTab:
+                        startActivity(new Intent(TrainerScreen.this,TraineesScreen.class));
+                        overridePendingTransition(0,0);
+                        finish();
+                        break;
+                    case R.id.foodListTab:startActivity(new Intent(TrainerScreen.this,FoodSourceListScreen.class));
+                        overridePendingTransition(0,0);
+                        finish();
+                        break;
+                    case R.id.profileTab:
+                        startActivity(new Intent(TrainerScreen.this,ProfileScreen.class));
+                        overridePendingTransition(0,0);
+                        finish();
+                        break;
+                    default:
+                        break;
+
+                }
+                return false;
+            }
+        });
+
     }
 
-    private void getData(String orderBy, String startAt, int limit) {
+    private void getData(String orderBy, String startAt, int limit, boolean IsSearched) {
         //Initialize Retrofit
         System.out.println("us"+startAt);
         Retrofit retrofit = new Retrofit.Builder()
@@ -229,8 +329,13 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
         //Create interface
         PaginationInterface paginationInterface = retrofit.create((PaginationInterface.class));
         //Initialize Call
-        Call<String> call = paginationInterface.STRING_CALL(orderBy,startAt,limit);
-
+        Call<String> call;
+        if(!IsSearched) {
+            call = paginationInterface.STRING_CALL(orderBy, startAt, limit);
+        }else
+        {
+            call = paginationInterface.STRING_CALL_SearchTrainer("\"name\"", "\""+startAt+"\"", "\""+startAt+"\\uf8ff"+"\"", 100);
+        }
 
         System.out.println(call);
         call.enqueue(new Callback<String>() {
@@ -262,12 +367,23 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
                         //Initialize JSON Array
                         //JSONArray jsonArray = new JSONArray(response.body());
                         //Parse JSON Array
-                        parseResult(jsonArray);
+                        if(!IsSearched)
+                        {
+                            parseResult(jsonArray, false);
+                        }else
+                        {
+                            parseResult(jsonArray, true);
+                        }
+
                         noTrainerText.setVisibility(View.VISIBLE);
                         noTrainerText.setText("Trainers List");
                     } catch (JSONException e) {
                         e.printStackTrace();
                         noTrainerText.setVisibility(View.VISIBLE);
+                        trainersList.clear();
+                        trainerAdapter = new TrainerAdapter(trainersList,TrainerScreen.this);
+                        //Set Adapter
+                        trainerRecycler.setAdapter(trainerAdapter);
                         noTrainerText.setText("No trainers available");
                     }
                 }
@@ -280,14 +396,21 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
         });
     }
 
-    private void parseResult(JSONArray jsonArray) {
+    private void parseResult(JSONArray jsonArray, boolean IsSearched) {
         //Use for loop
 
         try {
+            int limit_;
+            limit_ = limit;
+            if(IsSearched)
+            {
+                limit_ = 100;
+                trainersList.clear();
+            }
             if(jsonArray.length() > 0) {
                 JSONObject jsonObject1;
 
-                if(jsonArray.length() == limit){
+                if(jsonArray.length() == limit_){
                     for(int i=0; i<jsonArray.length()-1; i++){
 
                         System.out.println("i" + i);
@@ -323,7 +446,7 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
                 }
 
 
-                if (jsonArray.length() < limit){
+                if (jsonArray.length() < limit_){
 
                     for(int i=0; i<jsonArray.length(); i++){
                         try {
@@ -374,7 +497,7 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
         catch (JSONException e1) {
             e1.printStackTrace();
         }
-        
+
         //Initialize Adapter
         trainerAdapter = new TrainerAdapter(trainersList,TrainerScreen.this);
         //Set Adapter

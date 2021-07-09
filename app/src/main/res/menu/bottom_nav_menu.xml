@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/homeTab"
+        android:title="Home"
+        android:textAlignment="center"
+        android:icon="@mipmap/home"/>
+
+    <item
+        android:id="@+id/trainersTab"
+        android:title="Trainers"
+        android:textAlignment="center"
+        android:icon="@mipmap/trainers" />
+
+    <item
+        android:id="@+id/traineesTab"
+        android:title="Trainees"
+        android:textAlignment="center"
+        android:icon="@mipmap/trainees" />
+    <item
+        android:id="@+id/foodListTab"
+        android:title="Food List"
+        android:textAlignment="center"
+        android:icon="@mipmap/foodlist" />
+    <item
+        android:id="@+id/profileTab"
+        android:title="Profile"
+        android:textAlignment="center"
+        android:icon="@mipmap/profile" />
+
+
+
+
+
+
+</menu>

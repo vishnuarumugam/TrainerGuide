@@ -15,6 +15,14 @@ public interface PaginationInterface {
             @Query("limitToFirst") int limitToFirst
     );
 
+    @GET("/Trainer.json")
+    Call<String> STRING_CALL_SearchTrainer(
+            @Query("orderBy") String orderBy,
+            @Query("startAt") String startAt,
+            @Query("endAt") String endAt,
+            @Query("limitToFirst") int limitToFirst
+    );
+
     @GET(".json")
     Call<String> STRING_CALL_Trainees(
             @Query("orderBy") String orderBy,

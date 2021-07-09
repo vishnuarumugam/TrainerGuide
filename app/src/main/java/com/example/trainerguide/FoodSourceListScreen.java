@@ -39,6 +39,7 @@ import com.example.trainerguide.models.Food;
 import com.example.trainerguide.models.User;
 import com.example.trainerguide.models.UserMetaData;
 import com.example.trainerguide.validation.FoodValidation;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
@@ -71,6 +72,8 @@ public class FoodSourceListScreen extends AppCompatActivity implements View.OnCl
     private String userType;
     Animation buttonBounce;
     private String navigationScreen ="";
+    private BottomNavigationView homeScreenTabLayout;
+
 
 
     private FloatingActionButton foodSourceAdd;
@@ -271,6 +274,51 @@ public class FoodSourceListScreen extends AppCompatActivity implements View.OnCl
             }
         });
 
+        homeScreenTabLayout = findViewById(R.id.homeScreenTabLayout);
+
+        if (userType.equals("Trainer")){
+
+        }
+        else{
+            homeScreenTabLayout.getMenu().removeItem(R.id.foodListTab);
+            homeScreenTabLayout.getMenu().removeItem(R.id.traineesTab);
+
+        }
+        homeScreenTabLayout.setSelectedItemId(R.id.foodListTab);
+        homeScreenTabLayout.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                switch (item.getItemId()){
+                    case R.id.homeTab:
+                        startActivity(new Intent(FoodSourceListScreen.this,HomeScreen.class));
+                        overridePendingTransition(0,0);
+                        finish();
+                        break;
+                    case R.id.trainersTab:
+                        startActivity(new Intent(FoodSourceListScreen.this,TrainerScreen.class));
+                        overridePendingTransition(0,0);
+                        finish();
+                        break;
+                    case R.id.traineesTab:
+                        startActivity(new Intent(FoodSourceListScreen.this,TraineesScreen.class));
+                        overridePendingTransition(0,0);
+                        finish();
+                        break;
+                    case R.id.foodListTab:
+                        break;
+                    case R.id.profileTab:
+                        startActivity(new Intent(FoodSourceListScreen.this,ProfileScreen.class));
+                        overridePendingTransition(0,0);
+                        finish();
+                        break;
+                    default:
+                        break;
+
+                }
+                return false;
+            }
+        });
 
 
     }

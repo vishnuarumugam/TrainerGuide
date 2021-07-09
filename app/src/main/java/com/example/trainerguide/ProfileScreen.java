@@ -59,6 +59,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.android.material.navigation.NavigationView;
@@ -130,6 +131,10 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
     TextView profileAccDrop, profilePersonalInfoDrop, profileFoodInfoDrop, profileWeight,profilePhoneNumber, profileEmailId, profileDob, profileHeight, profileFoodType, profileHealthInfoDrop, foodAllergyOther, healthIssuesOther, profileExperience, profileSubscriptionInfoDrop, profileSubscriptionType, profileSubscriptionFees, profileSubscriptionDescription, profileSubscriptionTrainer, requestTrainerNavText, foodChartNavText;
     RelativeLayout accRelativeCollapse, personalRelativeCollapse, foodInfoRelativeCollapse, dobRelativeLay, healthInfoRelativeCollapse, weightRelativeLay, heightRelativeLay, foodTypeRelativeLay, foodAllergyRelativeLay, healthIssuesRelativeLay, experienceRelativeLay, subscriptionInfoRelativeCollapse, subscriptionTypeRelativeLay, subscriptionTrainerRelativeLay, subscriptionFeesRelativeLay, subscriptionDescriptionRelativeLay, subscriptionExtendRelativeLay, foodChartNavRelativeLabel, subscriptionRemoveRelativeLay;
 
+
+    //Common variables
+    private Intent intent;
+    private Date currentDate = new Date();
     private String userId;
     private String path;
     private String userProfileUpdateValue;
@@ -140,12 +145,9 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
     private Boolean extendReadonly = false;
     private Boolean IsTrainerProfile;
     Animation buttonBounce;
+    private BottomNavigationView homeScreenTabLayout;
 
 
-
-    //Common variables
-    private Intent intent;
-    private Date currentDate = new Date();
 
     //PopUp Dialog
     Dialog profileDialog;
@@ -762,6 +764,53 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                 return false;
             }
         });
+
+        homeScreenTabLayout = findViewById(R.id.homeScreenTabLayout);
+
+        if (userType.equals("Trainer")){
+
+        }
+        else{
+            homeScreenTabLayout.getMenu().removeItem(R.id.foodListTab);
+            homeScreenTabLayout.getMenu().removeItem(R.id.traineesTab);
+
+        }
+        homeScreenTabLayout.setSelectedItemId(R.id.profileTab);
+        homeScreenTabLayout.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                switch (item.getItemId()){
+                    case R.id.homeTab:
+                        startActivity(new Intent(ProfileScreen.this,HomeScreen.class));
+                        overridePendingTransition(0,0);
+                        finish();
+                        break;
+                    case R.id.trainersTab:
+                        startActivity(new Intent(ProfileScreen.this,TrainerScreen.class));
+                        overridePendingTransition(0,0);
+                        finish();
+                        break;
+                    case R.id.traineesTab:
+                        startActivity(new Intent(ProfileScreen.this,TraineesScreen.class));
+                        overridePendingTransition(0,0);
+                        finish();
+                        break;
+                    case R.id.foodListTab:
+                        startActivity(new Intent(ProfileScreen.this,FoodSourceListScreen.class));
+                        overridePendingTransition(0,0);
+                        finish();
+                        break;
+                    case R.id.profileTab:
+                        break;
+                    default:
+                        break;
+
+                }
+                return false;
+            }
+        });
+
 
     }
 
