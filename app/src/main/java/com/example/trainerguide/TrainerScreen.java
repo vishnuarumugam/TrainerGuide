@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,15 +19,19 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
 import com.example.trainerguide.models.Trainee;
@@ -124,7 +129,7 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
         //Search box initialize
         searchTxt = findViewById(R.id.searchNametxt);
         search = findViewById(R.id.search);
-        //search.setEnabled(false);
+        search.setVisibility(View.GONE);
 
         //Menu Item variables
         profileMenu = findViewById(R.id.nav_profile);
@@ -219,6 +224,19 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
             }
         });
 
+        searchTxt.setOnEditorActionListener(new OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    searchTxt.clearFocus();
+                    InputMethodManager in = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    in.hideSoftInputFromWindow(searchTxt.getWindowToken(), 0);
+                    getData("\"name\"", searchTxt.getText().toString(), limit, true);
+                    return true;
+                }
+                return false;
+            }
+        });
         searchTxt.addTextChangedListener(new TextWatcher() {
 
             public void afterTextChanged(Editable s) {
@@ -230,9 +248,13 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
 
             public void onTextChanged(CharSequence s, int start,
                                       int before, int count) {
-                if(s.length() > 3)
+                if(s.length() > 0)
                 {
-                    //search.setEnabled(true);
+                    search.setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                    search.setVisibility(View.GONE);
                 }
             }
         });
@@ -242,7 +264,9 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getData("\"name\"", searchTxt.getText().toString(), limit, true);
+                trainersList.clear();
+                searchTxt.getText().clear();
+                getData("\"$key\"",startAt,limit, false);
             }
         });
 

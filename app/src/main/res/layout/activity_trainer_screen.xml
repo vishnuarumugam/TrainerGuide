@@ -61,16 +61,19 @@
                                 android:layout_height="match_parent"
                                 android:hint="Search Name"
                                 android:padding="5dp"
+                                android:imeOptions="actionSearch"
+                                android:inputType="text"
+                                android:maxLines="1"
                                 android:id="@+id/searchNametxt"
                                 />
                             <ImageButton
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
                                 android:id="@+id/search"
                                 android:layout_alignTop="@+id/searchNametxt"
                                 android:layout_alignBottom="@+id/searchNametxt"
                                 android:layout_alignRight="@+id/searchNametxt"
-                                android:src="@drawable/ic_person_search"
+                                android:src="@drawable/ic_close"
                                 ></ImageButton>
 
                         </RelativeLayout>

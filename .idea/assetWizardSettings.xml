@@ -18,7 +18,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/Applications/Android%20Studio.app/Contents/plugins/android/lib/android.jar!/images/material/icons/materialicons/person_search/baseline_person_search_24.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material/icons/materialicons/close/baseline_close_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -28,8 +28,9 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="color" value="a4a4a4" />
-                            <entry key="outputName" value="ic_person_search" />
+                            <entry key="color" value="f30505" />
+                            <entry key="outputName" value="ic_close" />
+                            <entry key="sourceFile" value="C:\Sathish\TrainerGuide" />
                           </map>
                         </option>
                       </PersistentState>
