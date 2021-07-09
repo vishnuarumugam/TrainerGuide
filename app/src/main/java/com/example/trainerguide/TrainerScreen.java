@@ -228,10 +228,12 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    searchTxt.clearFocus();
-                    InputMethodManager in = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-                    in.hideSoftInputFromWindow(searchTxt.getWindowToken(), 0);
-                    getData("\"name\"", searchTxt.getText().toString(), limit, true);
+                    if(searchTxt.getText().length() > 0) {
+                        searchTxt.clearFocus();
+                        InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        in.hideSoftInputFromWindow(searchTxt.getWindowToken(), 0);
+                        getData("\"name\"", searchTxt.getText().toString(), limit, true);
+                    }
                     return true;
                 }
                 return false;
