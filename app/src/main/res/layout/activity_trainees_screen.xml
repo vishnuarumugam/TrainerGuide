@@ -10,7 +10,7 @@
     android:background="@color/white"
     tools:openDrawer="start">
 
-    <!--<include layout="@layout/common_navigator"/>-->
+    <include layout="@layout/common_navigator"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
