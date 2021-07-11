@@ -99,8 +99,6 @@ public class RegistrationForm extends AppCompatActivity{
         checkbox = findViewById(R.id.checkbox);
 
         fAuth = FirebaseAuth.getInstance();
-        registerButton.setEnabled(false);
-        registerButton.setBackgroundColor(getResources().getColor(R.color.themeColourFour));
 
         userInputValidation = new UserInputValidation();
 
@@ -111,18 +109,16 @@ public class RegistrationForm extends AppCompatActivity{
                 {
                     // Show Password
                     password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                    confirmPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                 }
                 else
                 {
                     // Hide Password
                     password.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                    confirmPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
                 }
             }
         });
 
-        name.addTextChangedListener(new TextWatcher() {
+        /*name.addTextChangedListener(new TextWatcher() {
 
             public void afterTextChanged(Editable s) {
             }
@@ -138,7 +134,7 @@ public class RegistrationForm extends AppCompatActivity{
                 registerButton.setBackgroundColor(getResources().getColor(R.color.themeColourFour));
 
             }
-        });
+        });*/
 
         userRgrPassHint.setTooltipText("Password must contain one lower & upper case alphabet, one number and one among @#$");
         /*password.setOnTouchListener(new View.OnTouchListener() {
@@ -175,7 +171,7 @@ public class RegistrationForm extends AppCompatActivity{
             }
         });*/
 
-        verifyUserName.setOnClickListener(new View.OnClickListener() {
+        /*verifyUserName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 verifyUserName.startAnimation(buttonBounce);
@@ -227,7 +223,8 @@ public class RegistrationForm extends AppCompatActivity{
                     Toast.makeText(RegistrationForm.this, "UserName should have atleast 3 charecters", Toast.LENGTH_SHORT).show();
                 }
             }
-        });
+        });*/
+
 
         /*password.addTextChangedListener(new TextWatcher() {
             @Override
@@ -266,53 +263,121 @@ public class RegistrationForm extends AppCompatActivity{
         });
 */
 
+
+
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 registerButton.setEnabled(false);
+
                 registerButton.startAnimation(buttonBounce);
                 registerButton.setBackgroundColor(getResources().getColor(R.color.themeColourFour));
                 if (RegistrationValidation()) {
-                    //Toast.makeText(RegistrationForm.this, "In", Toast.LENGTH_SHORT).show();
-                    int selectedId=radioGroup.getCheckedRadioButtonId();
-                    radioButton=(RadioButton)findViewById(selectedId);
-                    // Firebase Authentication User Creation
-                    fAuth.createUserWithEmailAndPassword(email.getText().toString().trim(),password.getText().toString().trim())
-                            .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                                @Override
-                                public void onSuccess(AuthResult authResult) {
-                                    //Upload Details in Firebase FirstTime
-                                    databaseReference = FirebaseDatabase.getInstance().getReference();
-                                    userId = fAuth.getCurrentUser().getUid();
-                                    System.out.println(mobileNumber.getText().toString());
-                                    String firstLetStr = name.getText().toString().substring(0, 1);
-                                    // Get remaining letter using substring
-                                    String remLetStr = name.getText().toString().substring(1);
+                    UserNameValidation();
+                } else {
+                    registerButton.setEnabled(true);
+                    registerButton.setBackgroundColor(getResources().getColor(R.color.themeColourOne));
+                }
 
-                                    String userName = firstLetStr.toUpperCase()+remLetStr.toLowerCase();
-                                    // Upload Profile Picture into FireBase Database with Profile Picture metadata
-                                    if (IsTrainerProfile) {
-                                        Trainer trainer = new Trainer(userId, userName, radioButton.getText().toString(), Calendar.getInstance().getTime(), IsTrainerProfile, Calendar.getInstance().getTime(), "image", email.getText().toString(),Long.parseLong(mobileNumber.getText().toString()));
+            }
+        });
+    }
+
+    public void UserNameValidation()
+    {
+        if(name.getText().toString().length() > 2) {
+            databaseReference = FirebaseDatabase.getInstance().getReference();
+
+            String firstLetStr = name.getText().toString().substring(0, 1);
+            // Get remaining letter using substring
+            String remLetStr = name.getText().toString().substring(1);
+
+            String userName = firstLetStr.toUpperCase() + remLetStr.toLowerCase();
+            databaseReference.child("User").orderByChild("name").equalTo(userName).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        //username exist
+                        Toast.makeText(RegistrationForm.this, "UserName Already Exists", Toast.LENGTH_LONG).show();
+                        verifyUserName.setVisibility(View.VISIBLE);
+                    } else {
+                        databaseReference.child("Trainer").orderByChild("name").equalTo(userName).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                if (snapshot.exists()) {
+                                    //username exist
+                                    Toast.makeText(RegistrationForm.this, "UserName Already Exists", Toast.LENGTH_LONG).show();
+                                    verifyUserName.setVisibility(View.VISIBLE);
+                                    registerButton.setEnabled(true);
+                                    registerButton.setBackgroundColor(getResources().getColor(R.color.themeColourOne));
+                                } else {
+                                    Register();
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
+        else
+        {
+            Toast.makeText(RegistrationForm.this, "UserName should have atleast 3 charecters", Toast.LENGTH_SHORT).show();
+            verifyUserName.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void Register()
+    {
+        //Toast.makeText(RegistrationForm.this, "In", Toast.LENGTH_SHORT).show();
+        int selectedId=radioGroup.getCheckedRadioButtonId();
+        radioButton=(RadioButton)findViewById(selectedId);
+        // Firebase Authentication User Creation
+        fAuth.createUserWithEmailAndPassword(email.getText().toString().trim(),password.getText().toString().trim())
+                .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                    @Override
+                    public void onSuccess(AuthResult authResult) {
+                        //Upload Details in Firebase FirstTime
+                        databaseReference = FirebaseDatabase.getInstance().getReference();
+                        userId = fAuth.getCurrentUser().getUid();
+                        System.out.println(mobileNumber.getText().toString());
+                        String firstLetStr = name.getText().toString().substring(0, 1);
+                        // Get remaining letter using substring
+                        String remLetStr = name.getText().toString().substring(1);
+
+                        String userName = firstLetStr.toUpperCase()+remLetStr.toLowerCase();
+                        // Upload Profile Picture into FireBase Database with Profile Picture metadata
+                        if (IsTrainerProfile) {
+                            Trainer trainer = new Trainer(userId, userName, radioButton.getText().toString(), Calendar.getInstance().getTime(), IsTrainerProfile, Calendar.getInstance().getTime(), "image", email.getText().toString(),Long.parseLong(mobileNumber.getText().toString()));
                                         /*List<String> healthIssues = new ArrayList<>();
                                         healthIssues.add("BloodPressure");
                                         healthIssues.add("Cholestrol");
                                         trainer.setHealthIssues(healthIssues);*/
-                                        databaseReference.child("Trainer").child(userId).setValue(trainer);
+                            databaseReference.child("Trainer").child(userId).setValue(trainer);
 
-                                        // Upload Profile Picture into FireBase Storage
-                                        uploadFile(userId,trainer);
+                            // Upload Profile Picture into FireBase Storage
+                            uploadFile(userId,trainer);
 
-                                    } else {
-                                        System.out.println(IsTrainerProfile);
-                                        Trainee trainee = new Trainee(userId, userName, radioButton.getText().toString(), Calendar.getInstance().getTime(), IsTrainerProfile, Calendar.getInstance().getTime(), "image", email.getText().toString(),null,Long.parseLong(mobileNumber.getText().toString()));
-                                        databaseReference.child("User").child(userId).setValue(trainee);
+                        } else {
+                            System.out.println(IsTrainerProfile);
+                            Trainee trainee = new Trainee(userId, userName, radioButton.getText().toString(), Calendar.getInstance().getTime(), IsTrainerProfile, Calendar.getInstance().getTime(), "image", email.getText().toString(),null,Long.parseLong(mobileNumber.getText().toString()));
+                            databaseReference.child("User").child(userId).setValue(trainee);
 
-                                        // Upload Profile Picture into FireBase Storage
-                                        uploadFile(userId,trainee);
+                            // Upload Profile Picture into FireBase Storage
+                            uploadFile(userId,trainee);
 
 
-                                    }
-            // TODO Shared Pref comment because of Email verification
+                        }
+                        // TODO Shared Pref comment because of Email verification
 
                                     /*SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                                     SharedPreferences.Editor editor = settings.edit();
@@ -326,37 +391,30 @@ public class RegistrationForm extends AppCompatActivity{
                                     editor.commit();*/
 
 
-                                    fAuth.getCurrentUser().sendEmailVerification()
-                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<Void> task) {
-                                                    if (task.isSuccessful()) {
-                                                        Toast.makeText(RegistrationForm.this, "Profile Creation Successful Please check your Email", Toast.LENGTH_LONG).show();
-                                                        Intent intent = new Intent(RegistrationForm.this, MainActivity.class);
-                                                        //Part of EmailVerification
-                                                        intent.putExtra("Message","Hi Welcome to FittifyMe, Please Verify Your Email before logging in");
-                                                        startActivity(intent);
-                                                        finish();
-                                                    }
-                                                }
-                                            });
+                        fAuth.getCurrentUser().sendEmailVerification()
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            Toast.makeText(RegistrationForm.this, "Profile Creation Successful Please check your Email", Toast.LENGTH_LONG).show();
+                                            Intent intent = new Intent(RegistrationForm.this, MainActivity.class);
+                                            //Part of EmailVerification
+                                            intent.putExtra("Message","Hi Welcome to FittifyMe, Please Verify Your Email before logging in");
+                                            startActivity(intent);
+                                            finish();
+                                        }
+                                    }
+                                });
 
 
 
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(RegistrationForm.this, "Profile Creation Failed", Toast.LENGTH_SHORT).show();
-                            registerButton.setEnabled(true);
-                            registerButton.setBackgroundColor(getResources().getColor(R.color.themeColourOne));
-                        }
-                    });
-                } else {
-                    registerButton.setEnabled(true);
-                    registerButton.setBackgroundColor(getResources().getColor(R.color.themeColourOne));
-                }
-
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(RegistrationForm.this, "Profile Creation Failed", Toast.LENGTH_SHORT).show();
+                registerButton.setEnabled(true);
+                registerButton.setBackgroundColor(getResources().getColor(R.color.themeColourOne));
             }
         });
     }

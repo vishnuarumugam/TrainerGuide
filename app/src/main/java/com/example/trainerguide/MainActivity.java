@@ -15,6 +15,8 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -47,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     DatabaseReference databaseReferenceTrainer, databaseReference;
     private String profileType;
     private boolean isPasswordVisible;
+    private CheckBox checkbox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
         createAccount = findViewById(R.id.txtCreateAccount);
         forgotPassword = findViewById(R.id.txtForgotPassword);
         fAuth = FirebaseAuth.getInstance();
+        checkbox = findViewById(R.id.checkbox);
 
         Button loginButton = findViewById(R.id.btnLogin);
 
@@ -73,6 +77,22 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(),HomeScreen.class));
             finish();
         }
+
+        checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean value) {
+                if (value)
+                {
+                    // Show Password
+                    userPasswordIn.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                }
+                else
+                {
+                    // Hide Password
+                    userPasswordIn.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                }
+            }
+        });
 
         userPasswordIn.setOnTouchListener(new View.OnTouchListener() {
             @Override
