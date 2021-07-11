@@ -18,7 +18,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material/icons/materialicons/close/baseline_close_24.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material/icons/materialicons/verified/baseline_verified_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -28,8 +28,8 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="color" value="f30505" />
-                            <entry key="outputName" value="ic_close" />
+                            <entry key="color" value="4dd412" />
+                            <entry key="outputName" value="ic_verified" />
                             <entry key="sourceFile" value="C:\Sathish\TrainerGuide" />
                           </map>
                         </option>

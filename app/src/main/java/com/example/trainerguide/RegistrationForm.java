@@ -19,6 +19,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
@@ -36,8 +38,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
@@ -53,7 +58,7 @@ public class RegistrationForm extends AppCompatActivity{
     private RadioGroup radioGroup;
     private RadioButton radioButton;
     private Button registerButton;
-    private ImageButton userRgrPassHint;
+    private ImageButton userRgrPassHint, verifyUserName;
     private static String userId;
     UserInputValidation userInputValidation;
     private boolean IsTrainerProfile;
@@ -61,6 +66,7 @@ public class RegistrationForm extends AppCompatActivity{
     private StorageTask uploadTask;
     private String imageDownloadUrl;
     private Uri fileUri;
+    private CheckBox checkbox;
     DatabaseReference databaseReference;
     FirebaseAuth fAuth;
     private boolean isPasswordVisible;
@@ -89,13 +95,53 @@ public class RegistrationForm extends AppCompatActivity{
         storageReference = FirebaseStorage.getInstance().getReference("FitnessGuide");
         radioGroup=(RadioGroup)findViewById(R.id.radioGroup);
         radioGroup.check(R.id.radioBtnMale);
+        verifyUserName = findViewById(R.id.verifyUserName);
+        checkbox = findViewById(R.id.checkbox);
 
         fAuth = FirebaseAuth.getInstance();
+        registerButton.setEnabled(false);
+        registerButton.setBackgroundColor(getResources().getColor(R.color.themeColourFour));
 
         userInputValidation = new UserInputValidation();
 
+        checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean value) {
+                if (value)
+                {
+                    // Show Password
+                    password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    confirmPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                }
+                else
+                {
+                    // Hide Password
+                    password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    confirmPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                }
+            }
+        });
+
+        name.addTextChangedListener(new TextWatcher() {
+
+            public void afterTextChanged(Editable s) {
+            }
+
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+            }
+
+            public void onTextChanged(CharSequence s, int start,
+                                      int before, int count) {
+                verifyUserName.setImageResource(R.drawable.ic_verify);
+                registerButton.setEnabled(false);
+                registerButton.setBackgroundColor(getResources().getColor(R.color.themeColourFour));
+
+            }
+        });
+
         userRgrPassHint.setTooltipText("Password must contain one lower & upper case alphabet, one number and one among @#$");
-        password.setOnTouchListener(new View.OnTouchListener() {
+        /*password.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 final int RIGHT = 2;
@@ -127,7 +173,62 @@ public class RegistrationForm extends AppCompatActivity{
                 }
                 return false;
             }
+        });*/
+
+        verifyUserName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                verifyUserName.startAnimation(buttonBounce);
+                if(name.getText().toString().length() > 2) {
+                    databaseReference = FirebaseDatabase.getInstance().getReference();
+
+                    String firstLetStr = name.getText().toString().substring(0, 1);
+                    // Get remaining letter using substring
+                    String remLetStr = name.getText().toString().substring(1);
+
+                    String userName = firstLetStr.toUpperCase() + remLetStr.toLowerCase();
+                    databaseReference.child("User").orderByChild("name").equalTo(userName).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.exists()) {
+                                //username exist
+                                Toast.makeText(RegistrationForm.this, "UserName Already Exists", Toast.LENGTH_LONG).show();
+                            } else {
+                                databaseReference.child("Trainer").orderByChild("name").equalTo(userName).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        if (snapshot.exists()) {
+                                            //username exist
+                                            Toast.makeText(RegistrationForm.this, "UserName Already Exists", Toast.LENGTH_LONG).show();
+                                        } else {
+                                            verifyUserName.setImageResource(R.drawable.ic_verified);
+                                            registerButton.setEnabled(true);
+                                            registerButton.setBackgroundColor(getResources().getColor(R.color.themeColourOne));
+
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                }
+                else
+                {
+                    Toast.makeText(RegistrationForm.this, "UserName should have atleast 3 charecters", Toast.LENGTH_SHORT).show();
+                }
+            }
         });
+
         /*password.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -184,9 +285,14 @@ public class RegistrationForm extends AppCompatActivity{
                                     databaseReference = FirebaseDatabase.getInstance().getReference();
                                     userId = fAuth.getCurrentUser().getUid();
                                     System.out.println(mobileNumber.getText().toString());
+                                    String firstLetStr = name.getText().toString().substring(0, 1);
+                                    // Get remaining letter using substring
+                                    String remLetStr = name.getText().toString().substring(1);
+
+                                    String userName = firstLetStr.toUpperCase()+remLetStr.toLowerCase();
                                     // Upload Profile Picture into FireBase Database with Profile Picture metadata
                                     if (IsTrainerProfile) {
-                                        Trainer trainer = new Trainer(userId, name.getText().toString(), radioButton.getText().toString(), Calendar.getInstance().getTime(), IsTrainerProfile, Calendar.getInstance().getTime(), "image", email.getText().toString(),Long.parseLong(mobileNumber.getText().toString()));
+                                        Trainer trainer = new Trainer(userId, userName, radioButton.getText().toString(), Calendar.getInstance().getTime(), IsTrainerProfile, Calendar.getInstance().getTime(), "image", email.getText().toString(),Long.parseLong(mobileNumber.getText().toString()));
                                         /*List<String> healthIssues = new ArrayList<>();
                                         healthIssues.add("BloodPressure");
                                         healthIssues.add("Cholestrol");
@@ -198,7 +304,7 @@ public class RegistrationForm extends AppCompatActivity{
 
                                     } else {
                                         System.out.println(IsTrainerProfile);
-                                        Trainee trainee = new Trainee(userId, name.getText().toString(), radioButton.getText().toString(), Calendar.getInstance().getTime(), IsTrainerProfile, Calendar.getInstance().getTime(), "image", email.getText().toString(),null,Long.parseLong(mobileNumber.getText().toString()));
+                                        Trainee trainee = new Trainee(userId, userName, radioButton.getText().toString(), Calendar.getInstance().getTime(), IsTrainerProfile, Calendar.getInstance().getTime(), "image", email.getText().toString(),null,Long.parseLong(mobileNumber.getText().toString()));
                                         databaseReference.child("User").child(userId).setValue(trainee);
 
                                         // Upload Profile Picture into FireBase Storage

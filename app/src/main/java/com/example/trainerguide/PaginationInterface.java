@@ -29,4 +29,12 @@ public interface PaginationInterface {
             @Query("startAt") String startAt,
             @Query("limitToFirst") int limitToFirst
     );
+
+    @GET(".json")
+    Call<String> STRING_CALL_SearchTrainees(
+            @Query("orderBy") String orderBy,
+            @Query("startAt") String startAt,
+            @Query("endAt") String endAt,
+            @Query("limitToFirst") int limitToFirst
+    );
 }

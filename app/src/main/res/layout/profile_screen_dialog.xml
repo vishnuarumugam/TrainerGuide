@@ -134,8 +134,8 @@
                     android:id="@+id/profileWeightDialogInput"
                     android:theme="@style/DialogEditText"
                     android:textAlignment="center"
-                    android:inputType="number"
-                    android:maxLength="3"
+                    android:inputType="numberDecimal"
+                    android:maxLength="6"
                     android:layout_gravity="center"
                     android:layout_marginTop="15dp"/>
 
@@ -202,8 +202,8 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/profileHeightDialogInput"
                     android:hint="Height"
-                    android:inputType="number"
-                    android:maxLength="3"
+                    android:inputType="numberDecimal"
+                    android:maxLength="6"
                     android:theme="@style/DialogEditText"
                     android:textAlignment="center"
                     android:layout_gravity="center"
@@ -307,7 +307,7 @@
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:id="@+id/profileFoodTypeDialogImg"
-                    android:src="@mipmap/food_type"
+                    android:src="@mipmap/diet_type"
                     android:elevation="5dp"
                     android:layout_gravity="center"/>
 
@@ -529,7 +529,7 @@
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:id="@+id/profileHealthInfoDialogImg"
-                    android:src="@mipmap/health_issue"
+                    android:src="@mipmap/health_issues"
                     android:elevation="5dp"
                     android:layout_gravity="center"/>
 

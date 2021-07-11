@@ -52,7 +52,7 @@
 
                     <com.google.android.material.card.MaterialCardView
                         android:layout_width="match_parent"
-                        android:layout_height="50dp">
+                        android:layout_height="40dp">
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
@@ -62,19 +62,22 @@
                                 android:hint="Search Name"
                                 android:padding="5dp"
                                 android:imeOptions="actionSearch"
+                                android:background="@color/homeScreenBgColor"
+                                android:fontFamily="@font/poppins_medium"
                                 android:inputType="text"
                                 android:maxLines="1"
                                 android:id="@+id/searchNametxt"
                                 />
-                            <ImageButton
-                                android:layout_width="25dp"
-                                android:layout_height="25dp"
-                                android:id="@+id/search"
+                            <Button
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/searchClear"
+                                android:fontFamily="@font/poppins_medium"
                                 android:layout_alignTop="@+id/searchNametxt"
                                 android:layout_alignBottom="@+id/searchNametxt"
                                 android:layout_alignRight="@+id/searchNametxt"
-                                android:src="@drawable/ic_close"
-                                ></ImageButton>
+                                android:text="Clear"
+                                ></Button>
 
                         </RelativeLayout>
                     </com.google.android.material.card.MaterialCardView>

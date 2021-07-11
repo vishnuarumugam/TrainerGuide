@@ -55,11 +55,17 @@
                         android:elevation="5dp"/>
 
 
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:orientation="horizontal">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="35dp"
                         android:layout_marginTop="30dp"
+                        android:id="@+id/userNameLinear"
                         android:background="@drawable/theme_colour_one_round_shape"
                         android:padding="1dp">
 
@@ -89,13 +95,25 @@
                                 android:background="@android:color/transparent"
                                 android:hint="user name"
                                 android:textSize="16sp"
-                                android:inputType="textPassword"
+                                android:inputType="text"
                                 android:textColor="@color/themeColourTwo"
                                 android:fontFamily="@font/poppins_medium"
                                 />
-
                         </LinearLayout>
                     </LinearLayout>
+                    <ImageButton
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_verify"
+                        android:id="@+id/verifyUserName"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_centerVertical="true"
+                        android:background="@color/white"
+                        android:layout_alignRight="@id/userNameLinear"
+                        android:layout_alignParentEnd="true"
+                        ></ImageButton>
+                    </RelativeLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -218,7 +236,6 @@
                                     android:layout_marginLeft="3dp"
                                     android:layout_marginRight="7dp"
                                     android:background="@android:color/transparent"
-                                    android:drawableRight="@drawable/ic_visibility_off"
                                     android:hint="password"
                                     android:inputType="textPassword"
                                     android:textSize="16sp"
@@ -287,6 +304,19 @@
 
                         </LinearLayout>
                     </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="35dp"
+                    android:layout_marginTop="0dp"
+                    android:padding="0dp">
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        android:id="@+id/checkbox"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Show Password" />
+                </LinearLayout>
 
                     <!--<com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
@@ -398,7 +428,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="35dp"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="5dp"
                         android:orientation="horizontal"
                         android:theme="@style/RadioButtonStyle">
 

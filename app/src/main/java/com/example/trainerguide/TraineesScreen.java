@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,11 +20,18 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -66,7 +74,6 @@ import retrofit2.Retrofit;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 
-
 public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.OnAddClickListener, View.OnClickListener, TraineeAdapter.OnViewReportListener,NotificationAdapter.OnDeleteClickListener{
 
     //Navigation view variables
@@ -75,6 +82,8 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
     private Toolbar toolbar;
     private Button toolBarNotification;
     private MenuItem profileMenu, logoutMenu, shareMenu, ratingMenu, traineeMenu;
+    private EditText searchTxt;
+    private ImageButton searchClear;
 
     //Recycler view variables
     private SwipeRefreshLayout traineeRefresh;
@@ -137,6 +146,12 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
         toolbar.setTitleTextColor(getResources().getColor(R.color.themeColourThree));
         ActionBarDrawerToggle toggle = CommonNavigator.navigatorInitmethod(drawerLayout,navigationView,toolbar,this);
         toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.themeColourTwo));
+
+        //Search box initialize
+        searchTxt = findViewById(R.id.searchNametxt);
+        searchClear = findViewById(R.id.searchClear);
+        searchClear.setVisibility(View.GONE);
+
 
         //Menu Item variables
         profileMenu = findViewById(R.id.nav_profile);
@@ -203,7 +218,7 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
 
         //Pagination Get Data
         System.out.println("initial");
-        getData(userId,"\"$key\"",startAt,limit);
+        getData("\"$key\"",startAt,limit,false);
         nestedScrollView.isSmoothScrollingEnabled();
 
 
@@ -223,13 +238,72 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
                         progressBar.setVisibility(View.VISIBLE);
                         //Call Method
                         System.out.println("second");
-                        getData(userId,"\"$key\"",startAt,limit);
+                        if(searchTxt.getText().length() > 0)
+                        {
+                            //getData("\"name\"", startAt, limit, true);
+                        }
+                        else {
+                            getData("\"$key\"", startAt, limit, false);
+                        }
                     }
 
                 }
             }
         });
 
+
+        searchTxt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    if(searchTxt.getText().length() > 0) {
+                        searchTxt.clearFocus();
+                        InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        in.hideSoftInputFromWindow(searchTxt.getWindowToken(), 0);
+
+                        String firstLetStr = searchTxt.getText().toString().substring(0, 1);
+                        // Get remaining letter using substring
+                        String remLetStr = searchTxt.getText().toString().substring(1);
+
+                        String userName = firstLetStr.toUpperCase() + remLetStr.toLowerCase();
+                        getData("\"name\"", userName, limit, true);
+                    }
+                    return true;
+                }
+                return false;
+            }
+        });
+        searchTxt.addTextChangedListener(new TextWatcher() {
+
+            public void afterTextChanged(Editable s) {
+            }
+
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+            }
+
+            public void onTextChanged(CharSequence s, int start,
+                                      int before, int count) {
+                if(s.length() > 0)
+                {
+                    searchClear.setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                    searchClear.setVisibility(View.GONE);
+                }
+            }
+        });
+
+
+        searchClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                traineesList.clear();
+                searchTxt.getText().clear();
+                getData("\"$key\"",startAt,limit, false);
+            }
+        });
 
         homeScreenTabLayout = findViewById(R.id.homeScreenTabLayout);
 
@@ -284,7 +358,7 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
         });
     }
 
-    private void getData(String userId, String orderBy, String startAt, int limit) {
+    private void getData(String orderBy, String startAt, int limit, boolean IsSearched) {
 
         //Initialize Retrofit
         System.out.println("us"+startAt);
@@ -295,7 +369,13 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
         //Create interface
         PaginationInterface paginationInterface = retrofit.create((PaginationInterface.class));
         //Initialize Call
-        Call<String> call = paginationInterface.STRING_CALL_Trainees(orderBy,startAt,limit);
+        Call<String> call;
+        if(!IsSearched) {
+            call = paginationInterface.STRING_CALL_Trainees(orderBy, startAt, limit);
+        }else
+        {
+            call = paginationInterface.STRING_CALL_SearchTrainees("\"name\"", "\""+startAt+"\"", "\""+startAt+"\\uf8ff"+"\"", 100);
+        }
         System.out.println("**orderBy  "+orderBy);
         System.out.println("**startAt  "+startAt);
         System.out.println("**limit  "+limit);
@@ -324,12 +404,22 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
                         }
 
                         //Parse JSON Array
-                        parseResult(jsonArray);
+                        if(!IsSearched)
+                        {
+                            parseResult(jsonArray, false);
+                        }else
+                        {
+                            parseResult(jsonArray, true);
+                        }
                         noTraineeText.setVisibility(View.VISIBLE);
                         noTraineeText.setText("Trainees List");
                     } catch (JSONException e) {
                         e.printStackTrace();
                         noTraineeText.setVisibility(View.VISIBLE);
+                        traineesList.clear();
+                        traineeAdapter = new TraineeAdapter(TraineesScreen.this, traineesList, buttonBounce);
+                        //Set Adapter
+                        traineeRecycler.setAdapter(traineeAdapter);
                         noTraineeText.setText("No Trainees under you");
                     }
                 }
@@ -343,18 +433,25 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
 
     }
 
-    private void parseResult(JSONArray jsonArray) {
+    private void parseResult(JSONArray jsonArray, boolean IsSearched) {
         //Use for loop
 
 
         try {
+            int limit_;
+            limit_ = limit;
+            if(IsSearched)
+            {
+                limit_ = 100;
+                traineesList.clear();
+            }
             if(jsonArray.length() > 0) {
                 JSONObject jsonObject1;
 
                 System.out.println("jsonArray.length()"+jsonArray.length());
-                System.out.println("limit.length()"+limit);
+                System.out.println("limit.length()"+limit_);
 
-                if(jsonArray.length() == limit){
+                if(jsonArray.length() == limit_){
                     for(int i=0; i<jsonArray.length()-1; i++){
                         System.out.println("inside for");
 
@@ -390,7 +487,7 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
                     }
                 }
 
-                if (jsonArray.length() < limit){
+                if (jsonArray.length() < limit_){
                     for(int i=0; i<jsonArray.length(); i++){
                         System.out.println("inside for");
 

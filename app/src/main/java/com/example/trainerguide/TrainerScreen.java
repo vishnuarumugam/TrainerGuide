@@ -71,7 +71,7 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
     private Button toolBarNotification;
     private MenuItem profileMenu, logoutMenu, shareMenu, ratingMenu, traineeMenu;
     private EditText searchTxt;
-    private ImageButton search;
+    private Button searchClear;
 
     //Common variables
     Intent intent;
@@ -128,8 +128,8 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
 
         //Search box initialize
         searchTxt = findViewById(R.id.searchNametxt);
-        search = findViewById(R.id.search);
-        search.setVisibility(View.GONE);
+        searchClear = findViewById(R.id.searchClear);
+        searchClear.setVisibility(View.GONE);
 
         //Menu Item variables
         profileMenu = findViewById(R.id.nav_profile);
@@ -213,7 +213,7 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
                         System.out.println("second");
                         if(searchTxt.getText().length() > 0)
                         {
-                            getData("\"name\"", startAt, limit, false);
+                            //getData("\"name\"", startAt, limit, true);
                         }
                         else {
                             getData("\"$key\"", startAt, limit, false);
@@ -232,7 +232,13 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
                         searchTxt.clearFocus();
                         InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                         in.hideSoftInputFromWindow(searchTxt.getWindowToken(), 0);
-                        getData("\"name\"", searchTxt.getText().toString(), limit, true);
+
+                        String firstLetStr = searchTxt.getText().toString().substring(0, 1);
+                        // Get remaining letter using substring
+                        String remLetStr = searchTxt.getText().toString().substring(1);
+
+                        String userName = firstLetStr.toUpperCase() + remLetStr.toLowerCase();
+                        getData("\"name\"", userName, limit, true);
                     }
                     return true;
                 }
@@ -252,18 +258,18 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
                                       int before, int count) {
                 if(s.length() > 0)
                 {
-                    search.setVisibility(View.VISIBLE);
+                    searchClear.setVisibility(View.VISIBLE);
                 }
                 else
                 {
-                    search.setVisibility(View.GONE);
+                    searchClear.setVisibility(View.GONE);
                 }
             }
         });
 
         // Search Data
 
-        search.setOnClickListener(new View.OnClickListener() {
+        searchClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 trainersList.clear();

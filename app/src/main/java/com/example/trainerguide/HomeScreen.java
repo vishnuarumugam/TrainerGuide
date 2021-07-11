@@ -24,6 +24,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -37,6 +38,7 @@ import com.example.trainerguide.models.Trainer;
 import com.example.trainerguide.models.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
@@ -82,11 +84,18 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
     //PopUp Dialog
     private Dialog profileDialog;
     private ImageView profileDialogClose;
+    private LinearLayout profileDobDialogTitleLin, profileWeightDialogTitleLin, profileHeightDialogTitleLin, profileExperienceDialogTitleLin, profileFoodTypeDialogTitleLin, profileFoodAllergyDialogTitleLin, profileHealthInfoDialogTitleLin, profileSubscriptionTypeDialogTitleLin, profileSubscriptionFeesDialogTitleLin, profileSubscriptionDescDialogTitleLin;
+    private TextView profileDobDialogTitle, profileWeightDialogTitle, profileHeightDialogTitle, profileExperienceDialogTitle, profileFoodTypeDialogTitle, profileFoodAllergyDialogTitle, profileHealthInfoDialogTitle, profileSubscriptionTypeDialogTitle, profileSubscriptionFeesDialogTitle, profileSubscriptionDescDialogTitle, txtSubscriptionDate;
+    private EditText profileWeightDialogInput, profileHeightDialogInput, profileExperienceDialogInput, profileSubscriptionFeesDialogInput, profileSubscriptionDescDialogInput;
+    private Button profileDobDialogUpdate, profileWeightDialogUpdate, profileHeightDialogUpdate, profileExperienceDialogUpdate, profileHealthInfoDialogUpdate, profileFoodAllergyDialogUpdate, profileFoodTypeDialogUpdate, profileSubscriptionTypeDialogUpdate, profileSubscriptionFeesDialogUpdate, profileSubscriptionDescDialogUpdate;
+    private MaterialCheckBox diabetesHealthIssue, cholesterolHealthIssue, thyroidHealthIssue, bpHealthIssue, heartHealthIssue, physicalInjuriesHealthIssue;
+    private MaterialCheckBox diaryFoodAllergy, wheatFoodAllergy, nutsFoodAllergy, seaFoodAllergy, muttonFoodAllergy, chickenFoodAllergy;
+    private RadioButton vegFoodType, vegEggFoodType, nonVegFoodType;
+    private EditText otherHealthIssue, otherFoodAllergy;
 
     //Dashboard variables
     private RelativeLayout profileDashboard, reportDashboard, trainerDashboard, traineeDashboard, foodDashboard, pdf_dashboard;
-    private RelativeLayout progressLayout, weightLayout;
-    private LinearLayout profileDobDialogTitleLin, profileWeightDialogTitleLin, profileHeightDialogTitleLin, profileExperienceDialogTitleLin, profileFoodTypeDialogTitleLin, profileFoodAllergyDialogTitleLin, profileHealthInfoDialogTitleLin, profileSubscriptionTypeDialogTitleLin, profileSubscriptionFeesDialogTitleLin, profileSubscriptionDescDialogTitleLin;
+    private RelativeLayout progressLayout, weightLayout, heightLayout, dietTypeLayout, allergicLayout, healthIssueLayout;
     private TextView dashboard_user_name;
     private ImageView dashboard_profile_pic;
     private BottomNavigationView homeScreenTabLayout;
@@ -106,8 +115,6 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
     //Progress Bar
     private ProgressDialog progressDialog;
 
-    //Progress Graph view
-    private GraphView progressGraphView;
 
 
     @Override
@@ -149,7 +156,6 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         //traineeMenu = findViewById(R.id.nav_trainees);
 
         //Dashboard variables
-
         homeScreenTabLayout = findViewById(R.id.homeScreenTabLayout);
         dashboard_user_name = findViewById(R.id.dashboard_user_name);
         homeScreenGoalLayout = findViewById(R.id.home_screen_goal_layout);
@@ -163,8 +169,19 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
         progressLayout = findViewById(R.id.progressLayout);
         weightLayout = findViewById(R.id.weightLayout);
-        progressLayout.setOnClickListener(this);
+        heightLayout = findViewById(R.id.heightLayout);
+        dietTypeLayout = findViewById(R.id.dietTypeLayout);
+        allergicLayout = findViewById(R.id.allergicLayout);
+        healthIssueLayout = findViewById(R.id.healthIssueLayout);
+
         weightLayout.setOnClickListener(this);
+        heightLayout.setOnClickListener(this);
+        progressLayout.setOnClickListener(this);
+        dietTypeLayout.setOnClickListener(this);
+        allergicLayout.setOnClickListener(this);
+        healthIssueLayout.setOnClickListener(this);
+
+
 
         //PopUp Dialog
         profileDialog = new Dialog(this);
@@ -182,41 +199,53 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         profileSubscriptionFeesDialogTitleLin = profileDialog.findViewById(R.id.profileSubscriptionFeesDialogTitleLin);
         profileSubscriptionDescDialogTitleLin = profileDialog.findViewById(R.id.profileSubscriptionDescDialogTitleLin);
 
+        //Pop-up dialog
+        profileWeightDialogTitle = profileDialog.findViewById(R.id.profileWeightDialogTitle);
+        profileWeightDialogUpdate = profileDialog.findViewById(R.id.profileWeightDialogUpdate);
+        profileWeightDialogInput = profileDialog.findViewById(R.id.profileWeightDialogInput);
+
+        profileHeightDialogTitle = profileDialog.findViewById(R.id.profileHeightDialogTitle);
+        profileHeightDialogUpdate = profileDialog.findViewById(R.id.profileHeightDialogUpdate);
+        profileHeightDialogInput = profileDialog.findViewById(R.id.profileHeightDialogInput);
+
+        profileFoodTypeDialogTitle = profileDialog.findViewById(R.id.profileFoodTypeDialogTitle);
+        vegFoodType = profileDialog.findViewById(R.id.vegFoodType);
+        vegEggFoodType = profileDialog.findViewById(R.id.vegEggFoodType);
+        nonVegFoodType = profileDialog.findViewById(R.id.nonVegFoodType);
+        profileFoodTypeDialogUpdate = profileDialog.findViewById(R.id.profileFoodTypeDialogUpdate);
+
+        profileFoodAllergyDialogTitle = profileDialog.findViewById(R.id.profileFoodAllergyDialogTitle);
+        profileFoodAllergyDialogUpdate = profileDialog.findViewById(R.id.profileFoodAllergyDialogUpdate);
+        diaryFoodAllergy = profileDialog.findViewById(R.id.diaryFoodAllergy);
+        wheatFoodAllergy = profileDialog.findViewById(R.id.wheatFoodAllergy);
+        nutsFoodAllergy = profileDialog.findViewById(R.id.nutsFoodAllergy);
+        seaFoodAllergy = profileDialog.findViewById(R.id.seaFoodAllergy);
+        muttonFoodAllergy = profileDialog.findViewById(R.id.muttonFoodAllergy);
+        chickenFoodAllergy = profileDialog.findViewById(R.id.chickenFoodAllergy);
+        otherFoodAllergy = profileDialog.findViewById(R.id.otherFoodAllergy);
+
+        profileHealthInfoDialogTitle = profileDialog.findViewById(R.id.profileHealthInfoDialogTitle);
+        profileHealthInfoDialogUpdate = profileDialog.findViewById(R.id.profileHealthInfoDialogUpdate);
+        diabetesHealthIssue = profileDialog.findViewById(R.id.diabetesHealthIssue);
+        cholesterolHealthIssue = profileDialog.findViewById(R.id.cholesterolHealthIssue);
+        thyroidHealthIssue = profileDialog.findViewById(R.id.thyroidHealthIssue);
+        bpHealthIssue = profileDialog.findViewById(R.id.bpHealthIssue);
+        heartHealthIssue = profileDialog.findViewById(R.id.heartHealthIssue);
+        physicalInjuriesHealthIssue = profileDialog.findViewById(R.id.physicalInjuriesHealthIssue);
+        otherHealthIssue = profileDialog.findViewById(R.id.otherHealthIssue);
+
+        profileWeightDialogUpdate.setOnClickListener(this);
+        profileHeightDialogUpdate.setOnClickListener(this);
+        profileFoodTypeDialogUpdate.setOnClickListener(this);
+        profileFoodAllergyDialogUpdate.setOnClickListener(this);
+        profileHealthInfoDialogUpdate.setOnClickListener(this);
 
         //Ad Slider Variables
         topAdSliderView = findViewById(R.id.homeScreenTopAdSlider);
 
         toolBarNotification.setOnClickListener(this);
-        //traineesTab = findViewById(R.id.traineesTab);
-        //foodListTab = findViewById(R.id.foodListTab);
 
-        /*profileDashboard = findViewById(R.id.profile_dashboard);
-        reportDashboard = findViewById(R.id.report_dashboard);
-        trainerDashboard = findViewById(R.id.trainer_dashboard);
-        traineeDashboard = findViewById(R.id.trainee_dashboard);
-        foodDashboard = findViewById(R.id.food_dashboard);
 
-        dashboard_profile_pic = findViewById(R.id.dashboard_profile_pic);*/
-
-        //pdf_dashboard = findViewById(R.id.pdf_dashboard);
-
-        /*profileDashboard.setOnClickListener(this);
-        reportDashboard.setOnClickListener(this);
-        trainerDashboard.setOnClickListener(this);
-        traineeDashboard.setOnClickListener(this);
-        foodDashboard.setOnClickListener(this);
-        //pdf_dashboard.setOnClickListener(this);
-        toolBarNotification.setOnClickListener(this);*/
-
-        //Graph representation
-        //progressGraphView = findViewById(R.id.userProgressGraph);
-
-        /*userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        path = "Trainer/" + userId;
-        System.out.println("******H**"+userId+"**S******");*/
-
-        //User Info variables
-        //userId = getIntent().getStringExtra("UserId");
         final SharedPreferences sp;
         sp= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
@@ -356,44 +385,54 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 updateProfile("subscriptionType", subscriptionValue);
                 break;
 
-            case R.id.weightLossSubscription:
-                updateProfile("subscriptionType", "Weight Loss");
-                break;
-            case R.id.weightGainSubscription:
-                updateProfile("subscriptionType", "Weight Gain");
-                break;
-            case R.id.weightMaintainSubscription:
-                updateProfile("subscriptionType", "Stay Fit");
-                break;
             case R.id.weightLayout:
                 ShowDialog("Weight");
+                break;
+            case R.id.heightLayout:
+                ShowDialog("Height");
                 break;
             case R.id.progressLayout:
                 startActivity(new Intent(HomeScreen.this,UserReport.class));
                 finish();
                 break;
+            case R.id.dietTypeLayout:
+                ShowDialog("FoodType");
+                break;
+            case R.id.allergicLayout:
+                ShowDialog("FoodAllergy");
+                break;
+            case R.id.healthIssueLayout:
+                ShowDialog("HealthIssues");
+                break;
+            case R.id.profileWeightDialogUpdate:
+                option.startAnimation(buttonBounce);
+                updateProfile("weight", profileWeightDialogInput.getText().toString());
+                break;
+            case R.id.profileHeightDialogUpdate:
+                option.startAnimation(buttonBounce);
+                updateProfile("height", profileHeightDialogInput.getText().toString());
+                break;
+            case R.id.profileFoodTypeDialogUpdate:
+                option.startAnimation(buttonBounce);
+                String foodTypeValue = "Not mentioned";
+                if (vegFoodType.isChecked()) {
+                    foodTypeValue = "Vegetarian";
+                } else if (vegEggFoodType.isChecked()) {
+                    foodTypeValue = "Eggetarian";
+                } else if (nonVegFoodType.isChecked()) {
+                    foodTypeValue = "Non-Vegetarian";
+                }
+                updateProfile("foodType", foodTypeValue);
+                break;
+            case R.id.profileFoodAllergyDialogUpdate:
+                option.startAnimation(buttonBounce);
+                updateProfile("foodAllergy", null);
+                break;
+            case R.id.profileHealthInfoDialogUpdate:
+                option.startAnimation(buttonBounce);
+                updateProfile("healthIssues", null);
+                break;
 
-            /*case R.id.profile_dashboard:
-                startActivity(new Intent(HomeScreen.this,ProfileScreen.class));
-                finish();
-                break;
-            case R.id.report_dashboard:
-                startActivity(new Intent(HomeScreen.this,UserReport.class));
-                finish();
-                //Toast.makeText(HomeScreen.this, "Will be released soon",Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.trainer_dashboard:
-                startActivity(new Intent(HomeScreen.this,TrainerScreen.class));
-                finish();
-                break;
-            case R.id.trainee_dashboard:
-                startActivity(new Intent(HomeScreen.this,TraineesScreen.class));
-                finish();
-                break;
-            case R.id.food_dashboard:
-                startActivity(new Intent(HomeScreen.this,FoodSourceListScreen.class));
-                finish();
-                break;*/
 
             case R.id.toolBarNotification:
                 option.startAnimation(buttonBounce);
@@ -500,20 +539,6 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
                 dashboard_user_name.setText(user.getName().toString() + " !");
 
-                String pattern = "dd-MM-yyyy";
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-
-                /*profileWeight.setText(String.valueOf(user.getWeight().intValue()));
-                profileHeight.setText(String.valueOf(user.getHeight().intValue()));
-                profileEmailId.setText(user.getEmail());
-                profilePhoneNumber.setText(user.getPhoneNumber().toString());
-                profileDob.setText(simpleDateFormat.format(user.getDateOfBirth()));
-                Picasso.get().load(user.getImage())
-                        .placeholder(R.drawable.ic_share)
-                        .fit()
-                        .centerCrop()
-                        .into(profileImage);
-                profileFoodType.setText(user.getFoodType());
                 if (user.getFoodType()!=null){
                     switch (user.getFoodType()){
                         case "Vegetarian":
@@ -528,15 +553,17 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                         default:
                             break;
                     }
-                }*/
+                }
+
+                String pattern = "dd-MM-yyyy";
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+
                 //Health Issue Recycler View Data
-                /*if(user.getHealthIssues()!=null) {
-                    healthItems.clear();
+                if(user.getHealthIssues()!=null) {
 
                     for (Map.Entry healthIssue : user.getHealthIssues().entrySet()) {
 
                         if (!"Others".equals(healthIssue.getKey())){
-                            healthItems.add(healthIssue.getValue().toString());
 
                             if (healthIssue.getValue().toString().equals("Diabetes")){
                                 diabetesHealthIssue.setChecked(true);
@@ -559,23 +586,18 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
                         }
                         else{
-                            profileOtherRelativeLayHealth.setVisibility(View.VISIBLE);
-                            healthIssuesOther.setText(healthIssue.getValue().toString());
                             otherHealthIssue.setText(healthIssue.getValue().toString());
                         }
 
 
                     }
-                    profileAdapter.notifyDataSetChanged();
-                }*/
+                }
 
                 //Food Allergy Recycler View Data
-                /*if(user.getFoodAllergy()!=null) {
-                    foodAllergy.clear();
+                if(user.getFoodAllergy()!=null) {
                     for (Map.Entry  foodAllergyItem : user.getFoodAllergy().entrySet()) {
 
                         if (!"Others".equals(foodAllergyItem.getKey())){
-                            foodAllergy.add(foodAllergyItem.getValue().toString());
 
                             if (foodAllergyItem.getValue().toString().equals("Diary")){
                                 diaryFoodAllergy.setChecked(true);
@@ -598,13 +620,12 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
                         }
                         else{
-                            profileOtherRelativeLayFood.setVisibility(View.VISIBLE);
-                            foodAllergyOther.setText(foodAllergyItem.getValue().toString());
+
                             otherFoodAllergy.setText(foodAllergyItem.getValue().toString());
 
                         }
                     }
-                }*/
+                }
 
 
                 if (userType.equals("Trainer")){
@@ -711,6 +732,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
             }
         });
     }
+
     private void updateProfile(String userField, String value){
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(path);
@@ -757,7 +779,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         }
 
         else if (userField.equals("weight") || userField.equals("height")){
-            /*if( !(value.isEmpty()) && (new Double(value)>0)) {
+            if( !(value.isEmpty()) && (new Double(value)>0)) {
                 Double userProfileValue = new Double(new BigDecimal(value).setScale(2, RoundingMode.HALF_UP).doubleValue());
                 Double userBmi = null;
                 Double userBmr = null;
@@ -829,78 +851,17 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                         break;
                 }
                 save=false;
-            }*/
+            }
 
         }
 
-        else if (userField.equals("foodType") || userField.equals("subscriptionType")  || userField.equals("experience") || userField.equals("subscriptionFees") || userField.equals("subscriptionDescription")){
-
-            if (userField.equals("experience") || userField.equals("subscriptionFees")){
-                if(value.length()>0){
-
-                    if (userField.equals("experience")){
-/*
-
-                        if (new Double(value).intValue()<=60){
-                            hash.put(userField, new Double(value));
-                        }
-                        else{
-                            save=false;
-                            profileExperienceDialogInput.setError("Please enter a valid Experience");
-                        }
-*/
-
-                    }
-                    else{
-/*
-                        if (userField.equals("subscriptionFees")){
-                            if (new Double(value).intValue()>=1){
-                                hash.put(userField, new Double(value));
-                            }
-                            else{
-                                save=false;
-                                profileSubscriptionFeesDialogInput.setError("Please enter a valid Fees");
-                            }
-                        }*/
-
-
-                    }
-
-                }else{
-                    switch (userField) {
-/*
-                        case "experience":
-                            profileExperienceDialogInput.setError("Please enter a valid Experience");
-                            break;
-                        case "subscriptionFees":
-                            profileSubscriptionFeesDialogInput.setError("Please enter a valid Fees");
-                            break;
-                        default:
-                            break;*/
-                    }
-                    save=false;
-                }
-            }
-            else if (userField.equals("subscriptionDescription")){
-/*
-                if(value.length()>0){
-                    hash.put(userField, value);
-                }
-                else {
-                    profileSubscriptionDescDialogInput.setError("Please enter a valid Description");
-                    save=false;
-                }*/
-
-            }
-            else{
-                hash.put(userField, value);
-            }
-
+        else if (userField.equals("foodType")){
+            hash.put(userField, value);
         }
 
         else if (userField.equals("foodAllergy")){
 
-           /* HashMap<String,String> foodAllergy = new HashMap<>();
+            HashMap<String,String> foodAllergy = new HashMap<>();
 
             if (diaryFoodAllergy.isChecked()){
                 foodAllergy.put("Diary","Diary");
@@ -923,12 +884,12 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
             if (otherFoodAllergy.getText().toString().length()>0){
                 foodAllergy.put("Others",otherFoodAllergy.getText().toString());
             }
-            hash.put(userField, foodAllergy);*/
+            hash.put(userField, foodAllergy);
         }
 
         else if (userField.equals("healthIssues")){
 
-            /*HashMap<String,String> healthIssue = new HashMap<>();
+            HashMap<String,String> healthIssue = new HashMap<>();
 
             if (diabetesHealthIssue.isChecked()){
                 healthIssue.put("Diabetes","Diabetes");
@@ -952,7 +913,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 healthIssue.put("Others",otherHealthIssue.getText().toString());
             }
 
-            hash.put(userField, healthIssue);*/
+            hash.put(userField, healthIssue);
         }
 
         if(save) {
@@ -967,7 +928,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
             }
             Toast.makeText(this, "Updated successfully", Toast.LENGTH_SHORT).show();
 
-            //profileDialog.dismiss();
+            profileDialog.dismiss();
             //PopulateUserDetails();
 
         }
@@ -985,93 +946,41 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         profileSubscriptionFeesDialogTitleLin.setVisibility(View.GONE);
         profileSubscriptionDescDialogTitleLin.setVisibility(View.GONE);
 
-        if (profileType.equals("DateOfBirth")){
-            /*profileDobDialogTitleLin.setVisibility(View.VISIBLE);
-            profileDobDialogUpdate.setClickable(false);
-            profileDobDialogTitle.setText("Date of birth");
-            profileDob.getText().toString();
-            String pattern = "dd-MM-yyyy";
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-            int day = Integer.parseInt(profileDob.getText().toString().substring(0,2));
-            int month = Integer.parseInt(profileDob.getText().toString().substring(3,5)) - 1;
-            int year = Integer.parseInt(profileDob.getText().toString().substring(6,10));
-
-            profileDobDialogDatePicker.setMaxDate(currentDate.getTime());
-            profileDobDialogDatePicker.updateDate(year,month,day);
-            profileDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                profileDobDialogDatePicker.setOnDateChangedListener(new DatePicker.OnDateChangedListener() {
-                    @Override
-                    public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        int  month = monthOfYear + 1;
-                        userProfileUpdateValue = dayOfMonth +"-" + month +"-"+ year;
-                        profileDobDialogUpdate.setClickable(true);
-
-                    }
-                });
-            }
-            profileDialog.show();*/
-        }
-
-        else if (profileType.equals("Weight")){
+        if (profileType.equals("Weight")){
             profileWeightDialogTitleLin.setVisibility(View.VISIBLE);
-            //profileWeightDialogTitle.setText("Weight");
-            //profileWeightDialogInput.setText(profileWeight.getText().toString());
+            profileWeightDialogTitle.setText("Weight");
+            profileWeightDialogInput.setText(user.getWeight().toString());
             profileDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             profileDialog.show();
         }
 
         else if (profileType.equals("Height")){
-            /*profileHeightDialogTitleLin.setVisibility(View.VISIBLE);
+            profileHeightDialogTitleLin.setVisibility(View.VISIBLE);
             profileHeightDialogTitle.setText("Height");
-            profileHeightDialogInput.setText(profileHeight.getText().toString());
+            profileHeightDialogInput.setText(user.getHeight().toString());
             profileDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            profileDialog.show();*/
+            profileDialog.show();
         }
 
-        else if (profileType.equals("Experience")){
-            /*profileExperienceDialogTitleLin.setVisibility(View.VISIBLE);
-            profileExperienceDialogTitle.setText("Experience");
-            if (!profileExperience.getText().toString().isEmpty()){
-                profileExperienceDialogInput.setText(profileExperience.getText().toString());
-            }
+        else if (profileType.equals("FoodType")){
+            profileFoodTypeDialogTitleLin.setVisibility(View.VISIBLE);
+            profileFoodTypeDialogTitle.setText("Food Type");
             profileDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            profileDialog.show();*/
-
+            profileDialog.show();
         }
-
 
         else if(profileType.equals("FoodAllergy")){
-            /*profileFoodAllergyDialogTitleLin.setVisibility(View.VISIBLE);
+            profileFoodAllergyDialogTitleLin.setVisibility(View.VISIBLE);
             profileFoodAllergyDialogTitle.setText("Food Allergy");
             profileDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            profileDialog.show();*/
+            profileDialog.show();
         }
 
         else if(profileType.equals("HealthIssues")){
-            /*profileHealthInfoDialogTitleLin.setVisibility(View.VISIBLE);
+            profileHealthInfoDialogTitleLin.setVisibility(View.VISIBLE);
             profileHealthInfoDialogTitle.setText("Health Issues");
             profileDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             profileDialog.show();
-*/
-        }
-        else if(profileType.equals("SubscriptionType")){
-            /*profileSubscriptionTypeDialogTitleLin.setVisibility(View.VISIBLE);
-            profileDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            profileDialog.show();*/
-        }
-        else if(profileType.equals("SubscriptionFees")){
-            /*profileSubscriptionFeesDialogTitleLin.setVisibility(View.VISIBLE);
-            profileSubscriptionFeesDialogInput.setText(profileSubscriptionFees.getText().toString());
-            profileDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            profileDialog.show();*/
-        }
-
-        else if(profileType.equals("SubscriptionDescription")){
-            /*profileSubscriptionDescDialogTitleLin.setVisibility(View.VISIBLE);
-            profileSubscriptionDescDialogInput.setText(profileSubscriptionDescription.getText().toString());
-            profileDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            profileDialog.show();*/
         }
 
         profileDialogClose.setOnClickListener(new View.OnClickListener() {
@@ -1103,6 +1012,29 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         }
     }
 
+    public void traineeMetaDataUpdate(Double bmi){
+        System.out.println("traineeMetaDataUpdate");
+        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(path);
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Trainee trainee = snapshot.getValue(Trainee.class);
+
+                if (trainee.getTrainerId()!=null && trainee.getTrainerId().length()>0){
+                    HashMap hash= new HashMap();
+                    hash.put("bmi", bmi);
+                    DatabaseReference databaseReferenceTrainer = FirebaseDatabase.getInstance().getReference("Trainer/"+trainee.getTrainerId()+"/usersList/"+trainee.getUserId());
+                    databaseReferenceTrainer.updateChildren(hash);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
 
 
 }
