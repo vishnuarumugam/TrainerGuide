@@ -58,7 +58,7 @@ public class RegistrationForm extends AppCompatActivity{
     private RadioGroup radioGroup;
     private RadioButton radioButton;
     private Button registerButton;
-    private ImageButton userRgrPassHint, verifyUserName;
+    private ImageButton userRgrPassHint;
     private static String userId;
     UserInputValidation userInputValidation;
     private boolean IsTrainerProfile;
@@ -95,7 +95,7 @@ public class RegistrationForm extends AppCompatActivity{
         storageReference = FirebaseStorage.getInstance().getReference("FitnessGuide");
         radioGroup=(RadioGroup)findViewById(R.id.radioGroup);
         radioGroup.check(R.id.radioBtnMale);
-        verifyUserName = findViewById(R.id.verifyUserName);
+        //verifyUserName = findViewById(R.id.verifyUserName);
         checkbox = findViewById(R.id.checkbox);
 
         fAuth = FirebaseAuth.getInstance();
@@ -298,16 +298,18 @@ public class RegistrationForm extends AppCompatActivity{
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.exists()) {
                         //username exist
-                        Toast.makeText(RegistrationForm.this, "UserName Already Exists", Toast.LENGTH_LONG).show();
-                        verifyUserName.setVisibility(View.VISIBLE);
+                        name.setError("User Name Already Exists");
+                        //Toast.makeText(RegistrationForm.this, "UserName Already Exists", Toast.LENGTH_LONG).show();
+                        //verifyUserName.setVisibility(View.VISIBLE);
                     } else {
                         databaseReference.child("Trainer").orderByChild("name").equalTo(userName).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 if (snapshot.exists()) {
                                     //username exist
-                                    Toast.makeText(RegistrationForm.this, "UserName Already Exists", Toast.LENGTH_LONG).show();
-                                    verifyUserName.setVisibility(View.VISIBLE);
+                                    name.setError("User Name Already Exists");
+                                    /*Toast.makeText(RegistrationForm.this, "UserName Already Exists", Toast.LENGTH_LONG).show();
+                                    verifyUserName.setVisibility(View.VISIBLE);*/
                                     registerButton.setEnabled(true);
                                     registerButton.setBackgroundColor(getResources().getColor(R.color.themeColourOne));
                                 } else {
@@ -331,8 +333,9 @@ public class RegistrationForm extends AppCompatActivity{
         }
         else
         {
-            Toast.makeText(RegistrationForm.this, "UserName should have atleast 3 charecters", Toast.LENGTH_SHORT).show();
-            verifyUserName.setVisibility(View.VISIBLE);
+            /*Toast.makeText(RegistrationForm.this, "UserName should have atleast 3 charecters", Toast.LENGTH_SHORT).show();
+            verifyUserName.setVisibility(View.VISIBLE);*/
+            name.setError("UserName should have atleast 3 charecters");
         }
     }
 

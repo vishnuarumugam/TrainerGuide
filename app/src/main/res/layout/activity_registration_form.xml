@@ -102,7 +102,7 @@
                                 />
                         </LinearLayout>
                     </LinearLayout>
-                    <ImageButton
+                    <!--<ImageButton
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:src="@drawable/ic_verify"
@@ -114,7 +114,7 @@
                         android:background="@color/white"
                         android:layout_alignRight="@id/userNameLinear"
                         android:layout_alignParentEnd="true"
-                        ></ImageButton>
+                        ></ImageButton>-->
                     </RelativeLayout>
 
                     <LinearLayout
