@@ -298,22 +298,24 @@ public class RegistrationForm extends AppCompatActivity{
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.exists()) {
                         //username exist
-                        name.setError("User Name Already Exists");
+                        name.setError("User Name already taken");
                         //Toast.makeText(RegistrationForm.this, "UserName Already Exists", Toast.LENGTH_LONG).show();
                         //verifyUserName.setVisibility(View.VISIBLE);
+                        registerButton.setEnabled(true);
+                        registerButton.setBackgroundColor(getResources().getColor(R.color.themeColourOne));
                     } else {
                         databaseReference.child("Trainer").orderByChild("name").equalTo(userName).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 if (snapshot.exists()) {
                                     //username exist
-                                    name.setError("User Name Already Exists");
+                                    name.setError("User Name already taken");
                                     /*Toast.makeText(RegistrationForm.this, "UserName Already Exists", Toast.LENGTH_LONG).show();
                                     verifyUserName.setVisibility(View.VISIBLE);*/
                                     registerButton.setEnabled(true);
                                     registerButton.setBackgroundColor(getResources().getColor(R.color.themeColourOne));
                                 } else {
-                                    Register();
+                                    PhoneNumberValidation();
                                 }
                             }
 
@@ -335,8 +337,52 @@ public class RegistrationForm extends AppCompatActivity{
         {
             /*Toast.makeText(RegistrationForm.this, "UserName should have atleast 3 charecters", Toast.LENGTH_SHORT).show();
             verifyUserName.setVisibility(View.VISIBLE);*/
-            name.setError("UserName should have atleast 3 charecters");
+            name.setError("UserName should have atleast 3 characters");
         }
+    }
+
+    public void PhoneNumberValidation() {
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+
+        databaseReference.child("User").orderByChild("phoneNumber").equalTo(Long.parseLong(mobileNumber.getText().toString())).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    //username exist
+                    mobileNumber.setError("Phone Number already exists");
+                    //Toast.makeText(RegistrationForm.this, "UserName Already Exists", Toast.LENGTH_LONG).show();
+                    //verifyUserName.setVisibility(View.VISIBLE);
+                    registerButton.setEnabled(true);
+                    registerButton.setBackgroundColor(getResources().getColor(R.color.themeColourOne));
+                } else {
+                    databaseReference.child("Trainer").orderByChild("phoneNumber").equalTo(Long.parseLong(mobileNumber.getText().toString())).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.exists()) {
+                                //username exist
+                                mobileNumber.setError("Phone Number already exists");
+                                    /*Toast.makeText(RegistrationForm.this, "UserName Already Exists", Toast.LENGTH_LONG).show();
+                                    verifyUserName.setVisibility(View.VISIBLE);*/
+                                registerButton.setEnabled(true);
+                                registerButton.setBackgroundColor(getResources().getColor(R.color.themeColourOne));
+                            } else {
+                                Register();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void Register()
