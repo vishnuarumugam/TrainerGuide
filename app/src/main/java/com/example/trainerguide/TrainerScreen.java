@@ -572,7 +572,7 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
         sp= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         String userId = sp.getString("userId", null);
 
-        Intent intent = new Intent(TrainerScreen.this,ProfileScreen.class);
+        Intent intent = new Intent(TrainerScreen.this,TrainerProfileView.class);
         intent.putExtra("Screen", "TrainerScreen");
 
         if(trainer.getUserId().equals(userId)){

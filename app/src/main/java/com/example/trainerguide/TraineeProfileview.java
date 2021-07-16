@@ -55,7 +55,7 @@ public class TraineeProfileview extends AppCompatActivity {
         setContentView(R.layout.activity_trainee_profileview);
 
 
-        traineeuserId = getIntent().getStringExtra("TraineeUserId");
+        traineeuserId = getIntent().getStringExtra("userId");
         navScreen = getIntent().getStringExtra("Screen");
 
         //Navigation view variables

@@ -75,6 +75,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:id="@+id/searchClear"
+                                android:backgroundTint="@color/themeColourTwo"
                                 android:fontFamily="@font/poppins_medium"
                                 android:layout_alignTop="@+id/searchNametxt"
                                 android:layout_alignBottom="@+id/searchNametxt"

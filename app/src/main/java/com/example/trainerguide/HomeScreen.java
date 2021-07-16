@@ -253,6 +253,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
         if (userType.equals("Trainer")){
             homeScreenGoalLayout.setVisibility(View.GONE);
+
            /* traineeDashboard.setVisibility(View.VISIBLE);
             foodDashboard.setVisibility(View.VISIBLE);
             //pdf_dashboard.setVisibility(View.GONE);*/

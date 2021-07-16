@@ -42,7 +42,7 @@ import java.util.UUID;
 
 public class TrainerProfileView extends AppCompatActivity {
 
-    TextView name, experience, ratingUserCount, description;
+    TextView name, experience, ratingUserCount, description, email, mobile;
     RatingBar ratingBar;
     ImageView profileimg;
     Button requestbtn;
@@ -66,7 +66,7 @@ public class TrainerProfileView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trainer_profile_view);
 
-        traineruserId = getIntent().getStringExtra("TrainerUserId");
+        traineruserId = getIntent().getStringExtra("userId");
         navScreen = getIntent().getStringExtra("Screen");
 
 
@@ -89,6 +89,8 @@ public class TrainerProfileView extends AppCompatActivity {
         requestbtn = findViewById(R.id.btnRequest);
         profileimg = findViewById(R.id.trainerImg);
         ratingBar = findViewById(R.id.ratingBar);
+        email = findViewById(R.id.txtEmail);
+        mobile = findViewById(R.id.txtPhnNo);
 
         final SharedPreferences sp;
         sp= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -226,6 +228,8 @@ public class TrainerProfileView extends AppCompatActivity {
                 name.setText(user.getName());
                 experience.setText(String.valueOf(user.getExperience())+" Year(s)");
                 description.setText(user.getSubscriptionDescription() != null ? user.getSubscriptionDescription() : "Description not provided");
+                mobile.setText(String.valueOf(user.getPhoneNumber()));
+                email.setText(user.getEmail());
                 ratingBar.setNumStars(5);
                 ratingBar.setRating(4);
                 ratingUserCount.setText("(3)");

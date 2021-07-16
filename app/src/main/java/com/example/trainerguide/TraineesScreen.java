@@ -83,7 +83,7 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
     private Button toolBarNotification;
     private MenuItem profileMenu, logoutMenu, shareMenu, ratingMenu, traineeMenu;
     private EditText searchTxt;
-    private ImageButton searchClear;
+    private Button searchClear;
 
     //Recycler view variables
     private SwipeRefreshLayout traineeRefresh;
@@ -635,7 +635,7 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
     public void onAddclick(int position) {
         final UserMetaData trainee = traineesList.get(position);
 
-        Intent intent = new Intent(TraineesScreen.this,ProfileScreen.class);
+        Intent intent = new Intent(TraineesScreen.this,TraineeProfileview.class);
         intent.putExtra("userId",trainee.getUserId());
         intent.putExtra("IsTrainer", false);
         intent.putExtra("ReadOnly", true);
