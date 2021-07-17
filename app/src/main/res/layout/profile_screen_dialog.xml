@@ -44,10 +44,10 @@
                 android:visibility="gone">
 
                 <ImageView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:id="@+id/profileDobDialogImg"
-                    android:src="@drawable/ic_dob"
+                    android:src="@mipmap/profile_dob"
                     android:elevation="5dp"
                     android:layout_gravity="center"/>
 
@@ -59,11 +59,11 @@
                     android:textAlignment="center"
                     android:layout_marginTop="15dp"
                     android:elevation="10dp"
-                    android:text="Title"
-                    android:textColor="@color/grey"
+                    android:text="Date of Birth"
+                    android:textColor="@color/themeColourFour"
                     android:textStyle="bold"
-                    style="@style/TextAppearance.AppCompat.Body1"
-                    android:textSize="25dp"/>
+                    android:textSize="16sp"
+                    android:fontFamily="@font/poppins_medium"/>
 
                 <DatePicker
                     android:layout_width="wrap_content"
@@ -71,7 +71,9 @@
                     android:id="@+id/profileDobDialogDatePicker"
                     android:layout_marginTop="15dp"
                     android:layout_gravity="center"
+                    android:calendarTextColor="@color/themeColourOne"
                     android:theme="@style/DialogDatePicker"/>
+
 
                 <com.google.android.material.button.MaterialButton
                     android:layout_width="wrap_content"
@@ -79,7 +81,7 @@
                     android:id="@+id/profileDobDialogUpdate"
                     android:layout_gravity="center"
                     android:text="UPDATE"
-                    android:backgroundTint="@color/themeColourOne"/>
+                    style="@style/DialogUpdateButton"/>
 
             </LinearLayout>
 
@@ -94,10 +96,10 @@
                 android:layout_marginBottom="25dp">
 
                 <ImageView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:id="@+id/profileWeightDialogImg"
-                    android:src="@drawable/ic_weight"
+                    android:src="@mipmap/weight"
                     android:elevation="5dp"
                     android:layout_gravity="center"/>
 
@@ -110,10 +112,10 @@
                     android:layout_marginTop="15dp"
                     android:elevation="10dp"
                     android:text="Weight"
-                    android:textColor="@color/grey"
+                    android:textColor="@color/themeColourOne"
                     android:textStyle="bold"
-                    style="@style/TextAppearance.AppCompat.Body1"
-                    android:textSize="25dp"/>
+                    android:textSize="16sp"
+                    android:fontFamily="@font/poppins_medium"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -124,9 +126,10 @@
                     android:layout_marginTop="15dp"
                     android:elevation="10dp"
                     android:text="(in kgs)"
-                    android:textColor="@color/themeColourOne"
+                    android:fontFamily="@font/poppins_light"
+                    android:textColor="@color/themeColourFour"
                     android:textStyle="bold"
-                    style="@style/TextAppearance.AppCompat.Body1"/>
+                    android:textSize="14sp"/>
 
                 <EditText
                     android:layout_width="100dp"
@@ -137,7 +140,8 @@
                     android:inputType="numberDecimal"
                     android:maxLength="6"
                     android:layout_gravity="center"
-                    android:layout_marginTop="15dp"/>
+                    android:layout_marginTop="15dp"
+                    android:textColor="@color/themeColourTwo"/>
 
                 <com.google.android.material.button.MaterialButton
                     android:layout_width="wrap_content"
@@ -146,7 +150,8 @@
                     android:id="@+id/profileWeightDialogUpdate"
                     android:layout_marginTop="10dp"
                     android:text="UPDATE"
-                    android:backgroundTint="@color/themeColourOne"/>
+                    style="@style/DialogUpdateButton"
+                    />
 
 
             </LinearLayout>
@@ -162,10 +167,10 @@
                 android:layout_marginBottom="25dp">
 
                 <ImageView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:id="@+id/profileHeightDialogImg"
-                    android:src="@drawable/ic_height"
+                    android:src="@mipmap/height"
                     android:elevation="5dp"
                     android:layout_gravity="center"/>
 
@@ -178,10 +183,10 @@
                     android:layout_marginTop="15dp"
                     android:elevation="10dp"
                     android:text="Height"
-                    android:textColor="@color/grey"
+                    android:textColor="@color/themeColourOne"
                     android:textStyle="bold"
-                    style="@style/TextAppearance.AppCompat.Body1"
-                    android:textSize="25dp"/>
+                    android:textSize="16sp"
+                    android:fontFamily="@font/poppins_medium"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -192,9 +197,10 @@
                     android:layout_marginTop="15dp"
                     android:elevation="10dp"
                     android:text="(in cms)"
-                    android:textColor="@color/themeColourOne"
+                    android:fontFamily="@font/poppins_light"
+                    android:textColor="@color/themeColourFour"
                     android:textStyle="bold"
-                    style="@style/TextAppearance.AppCompat.Body1" />
+                    android:textSize="14sp"  />
 
 
                 <EditText
@@ -207,7 +213,8 @@
                     android:theme="@style/DialogEditText"
                     android:textAlignment="center"
                     android:layout_gravity="center"
-                    android:layout_marginTop="15dp"/>
+                    android:layout_marginTop="15dp"
+                    android:textColor="@color/themeColourTwo"/>
 
 
                 <com.google.android.material.button.MaterialButton
@@ -217,7 +224,7 @@
                     android:id="@+id/profileHeightDialogUpdate"
                     android:layout_marginTop="10dp"
                     android:text="UPDATE"
-                    android:backgroundTint="@color/themeColourOne"/>
+                    style="@style/DialogUpdateButton"/>
 
 
             </LinearLayout>
@@ -233,10 +240,10 @@
                 android:layout_marginBottom="25dp">
 
                 <ImageView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:id="@+id/profileExperienceDialogImg"
-                    android:src="@drawable/ic_height"
+                    android:src="@mipmap/experience"
                     android:elevation="5dp"
                     android:layout_gravity="center"/>
 
@@ -249,10 +256,10 @@
                     android:layout_marginTop="15dp"
                     android:elevation="10dp"
                     android:text="Experience"
-                    android:textColor="@color/grey"
+                    android:textColor="@color/themeColourOne"
                     android:textStyle="bold"
-                    style="@style/TextAppearance.AppCompat.Body1"
-                    android:textSize="25dp"/>
+                    android:textSize="16sp"
+                    android:fontFamily="@font/poppins_medium"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -263,9 +270,10 @@
                     android:layout_marginTop="15dp"
                     android:elevation="10dp"
                     android:text="(in years)"
-                    android:textColor="@color/themeColourOne"
+                    android:fontFamily="@font/poppins_light"
+                    android:textColor="@color/themeColourFour"
                     android:textStyle="bold"
-                    style="@style/TextAppearance.AppCompat.Body1" />
+                    android:textSize="14sp"/>
 
 
                 <EditText
@@ -274,11 +282,13 @@
                     android:id="@+id/profileExperienceDialogInput"
                     android:hint="Experience"
                     android:theme="@style/DialogEditText"
-                    android:inputType="number"
-                    android:maxLength="2"
+                    android:inputType="numberDecimal"
+                    android:maxLength="5"
                     android:textAlignment="center"
                     android:layout_gravity="center"
-                    android:layout_marginTop="15dp"/>
+                    android:layout_marginTop="15dp"
+                    android:textColor="@color/themeColourTwo"
+                    />
 
 
                 <com.google.android.material.button.MaterialButton
@@ -288,7 +298,7 @@
                     android:id="@+id/profileExperienceDialogUpdate"
                     android:layout_marginTop="10dp"
                     android:text="UPDATE"
-                    android:backgroundTint="@color/themeColourOne"/>
+                    style="@style/DialogUpdateButton"/>
 
 
             </LinearLayout>
@@ -304,8 +314,8 @@
                 android:layout_marginBottom="25dp">
 
                 <ImageView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:id="@+id/profileFoodTypeDialogImg"
                     android:src="@mipmap/diet_type"
                     android:elevation="5dp"
@@ -320,10 +330,10 @@
                     android:layout_marginTop="15dp"
                     android:elevation="10dp"
                     android:text="Food Type"
-                    android:textColor="@color/grey"
+                    android:textColor="@color/themeColourOne"
                     android:textStyle="bold"
-                    style="@style/TextAppearance.AppCompat.Body1"
-                    android:textSize="25dp"/>
+                    android:textSize="16sp"
+                    android:fontFamily="@font/poppins_medium"/>
 
                 <RadioGroup
                     android:layout_width="wrap_content"
@@ -341,23 +351,24 @@
                         android:theme="@style/DialogRadioButton"
                         android:layout_margin="5dp"
                         android:text="Veg"
-                        style="@style/TextAppearance.AppCompat.Body1"/>
+                        android:textColor="@color/themeColourOne"
+                        />
                     <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/vegEggFoodType"
                         android:text="Veg with Egg"
                         android:theme="@style/DialogRadioButton"
-                        android:layout_margin="5dp"
-                        style="@style/TextAppearance.AppCompat.Body1"/>
+                        android:textColor="@color/themeColourOne"
+                        android:layout_margin="5dp"/>
                     <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/nonVegFoodType"
                         android:text="Non - Veg"
                         android:theme="@style/DialogRadioButton"
-                        android:layout_margin="5dp"
-                        style="@style/TextAppearance.AppCompat.Body1"/>
+                        android:textColor="@color/themeColourOne"
+                        android:layout_margin="5dp"/>
 
                 </RadioGroup>
 
@@ -368,7 +379,7 @@
                     android:id="@+id/profileFoodTypeDialogUpdate"
                     android:layout_marginTop="10dp"
                     android:text="UPDATE"
-                    android:backgroundTint="@color/themeColourOne"/>
+                    style="@style/DialogUpdateButton"/>
 
 
             </LinearLayout>
@@ -384,8 +395,8 @@
                 android:layout_marginBottom="25dp">
 
                 <ImageView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:id="@+id/profileFoodAllergyDialogImg"
                     android:src="@mipmap/food_allergy"
                     android:elevation="5dp"
@@ -400,10 +411,10 @@
                     android:layout_marginTop="15dp"
                     android:elevation="10dp"
                     android:text="Food Allergies"
-                    android:textColor="@color/grey"
+                    android:textColor="@color/themeColourOne"
                     android:textStyle="bold"
-                    style="@style/TextAppearance.AppCompat.Body1"
-                    android:textSize="25dp"/>
+                    android:textSize="16sp"
+                    android:fontFamily="@font/poppins_medium"/>
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -425,6 +436,7 @@
                             android:layout_height="wrap_content"
                             android:id="@+id/diaryFoodAllergy"
                             android:text="Diary"
+                            android:textColor="@color/themeColourOne"
                             android:theme="@style/DialogCheckBox"
                             android:layout_alignParentLeft="true"/>
 
@@ -433,6 +445,7 @@
                             android:layout_height="wrap_content"
                             android:id="@+id/wheatFoodAllergy"
                             android:text="Wheat"
+                            android:textColor="@color/themeColourOne"
                             android:theme="@style/DialogCheckBox"
                             android:layout_below="@+id/diaryFoodAllergy"/>
 
@@ -441,6 +454,7 @@
                             android:layout_height="wrap_content"
                             android:id="@+id/nutsFoodAllergy"
                             android:text="Nuts"
+                            android:textColor="@color/themeColourOne"
                             android:theme="@style/DialogCheckBox"
                             android:layout_below="@+id/wheatFoodAllergy"/>
 
@@ -458,6 +472,7 @@
                             android:layout_height="wrap_content"
                             android:id="@+id/seaFoodAllergy"
                             android:text="Sea Food"
+                            android:textColor="@color/themeColourOne"
                             android:theme="@style/DialogCheckBox"
                             android:layout_alignParentLeft="true"/>
 
@@ -466,6 +481,7 @@
                             android:layout_height="wrap_content"
                             android:id="@+id/muttonFoodAllergy"
                             android:text="Mutton"
+                            android:textColor="@color/themeColourOne"
                             android:theme="@style/DialogCheckBox"
                             android:layout_below="@+id/seaFoodAllergy"/>
 
@@ -474,6 +490,7 @@
                             android:layout_height="wrap_content"
                             android:id="@+id/chickenFoodAllergy"
                             android:text="Chicken"
+                            android:textColor="@color/themeColourOne"
                             android:theme="@style/DialogCheckBox"
                             android:layout_below="@+id/muttonFoodAllergy"/>
 
@@ -496,7 +513,10 @@
                         android:hint="Other"
                         android:maxLength="30"
                         android:background="@drawable/round_shape"
-                        android:textColorHint="@color/black">
+                        android:textColorHint="@color/themeColourTwo"
+                        style="@style/DialogEditText"
+                        android:textColor="@color/themeColourOne"
+                        android:fontFamily="@font/poppins_light">
 
                     </EditText>
 
@@ -510,7 +530,7 @@
                     android:id="@+id/profileFoodAllergyDialogUpdate"
                     android:layout_marginTop="10dp"
                     android:text="UPDATE"
-                    android:backgroundTint="@color/themeColourOne"/>
+                    style="@style/DialogUpdateButton"/>
 
 
             </LinearLayout>
@@ -526,8 +546,8 @@
                 android:layout_marginBottom="25dp">
 
                 <ImageView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:id="@+id/profileHealthInfoDialogImg"
                     android:src="@mipmap/health_issues"
                     android:elevation="5dp"
@@ -542,10 +562,10 @@
                     android:layout_marginTop="15dp"
                     android:elevation="10dp"
                     android:text="Health Issues"
-                    android:textColor="@color/grey"
+                    android:textColor="@color/themeColourOne"
                     android:textStyle="bold"
-                    style="@style/TextAppearance.AppCompat.Body1"
-                    android:textSize="25dp"/>
+                    android:textSize="16sp"
+                    android:fontFamily="@font/poppins_medium"/>
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -567,6 +587,7 @@
                             android:layout_height="wrap_content"
                             android:id="@+id/diabetesHealthIssue"
                             android:text="Diabetes"
+                            android:textColor="@color/themeColourOne"
                             android:theme="@style/DialogCheckBox"
                             android:layout_alignParentLeft="true"/>
 
@@ -575,6 +596,7 @@
                             android:layout_height="wrap_content"
                             android:id="@+id/cholesterolHealthIssue"
                             android:text="Cholesterol"
+                            android:textColor="@color/themeColourOne"
                             android:theme="@style/DialogCheckBox"
                             android:layout_below="@+id/diabetesHealthIssue"/>
 
@@ -583,6 +605,7 @@
                             android:layout_height="wrap_content"
                             android:id="@+id/thyroidHealthIssue"
                             android:text="Thyroid"
+                            android:textColor="@color/themeColourOne"
                             android:theme="@style/DialogCheckBox"
                             android:layout_below="@+id/cholesterolHealthIssue"/>
 
@@ -600,6 +623,7 @@
                             android:layout_height="wrap_content"
                             android:id="@+id/bpHealthIssue"
                             android:text="Blood Pressure"
+                            android:textColor="@color/themeColourOne"
                             android:theme="@style/DialogCheckBox"
                             android:layout_alignParentLeft="true"/>
 
@@ -608,6 +632,7 @@
                             android:layout_height="wrap_content"
                             android:id="@+id/heartHealthIssue"
                             android:text="Heart Problems"
+                            android:textColor="@color/themeColourOne"
                             android:theme="@style/DialogCheckBox"
                             android:layout_below="@+id/bpHealthIssue"/>
 
@@ -616,6 +641,7 @@
                             android:layout_height="wrap_content"
                             android:id="@+id/physicalInjuriesHealthIssue"
                             android:text="Physical Injuries"
+                            android:textColor="@color/themeColourOne"
                             android:theme="@style/DialogCheckBox"
                             android:layout_below="@+id/heartHealthIssue"/>
 
@@ -637,8 +663,11 @@
                         android:id="@+id/otherHealthIssue"
                         android:hint="Other"
                         android:maxLength="30"
+                        style="@style/DialogEditText"
                         android:background="@drawable/round_shape"
-                        android:textColorHint="@color/black">
+                        android:textColorHint="@color/themeColourTwo"
+                        android:textColor="@color/themeColourOne"
+                        android:fontFamily="@font/poppins_light">
 
                     </EditText>
 
@@ -652,13 +681,13 @@
                     android:id="@+id/profileHealthInfoDialogUpdate"
                     android:layout_marginTop="10dp"
                     android:text="UPDATE"
-                    android:backgroundTint="@color/themeColourOne"/>
+                    style="@style/DialogUpdateButton"/>
 
 
             </LinearLayout>
 
             <!-- Subscription Type Dialog-->
-            <LinearLayout
+            <!--<LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -736,7 +765,7 @@
                     android:backgroundTint="@color/themeColourOne"/>
 
 
-            </LinearLayout>
+            </LinearLayout>-->
 
             <!-- Subscription Fees Dialog-->
             <LinearLayout
@@ -749,10 +778,10 @@
                 android:layout_marginBottom="25dp">
 
                 <ImageView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:id="@+id/profileSubscriptionFeesDialogImg"
-                    android:src="@drawable/ic_money"
+                    android:src="@mipmap/rupee"
                     android:elevation="5dp"
                     android:layout_gravity="center"/>
 
@@ -765,10 +794,10 @@
                     android:layout_marginTop="15dp"
                     android:elevation="10dp"
                     android:text="Subscription Fees"
-                    android:textColor="@color/grey"
+                    android:textColor="@color/themeColourOne"
                     android:textStyle="bold"
-                    style="@style/TextAppearance.AppCompat.Body1"
-                    android:textSize="25dp"/>
+                    android:textSize="16sp"
+                    android:fontFamily="@font/poppins_medium"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -778,10 +807,11 @@
                     android:textAlignment="center"
                     android:layout_marginTop="15dp"
                     android:elevation="10dp"
-                    android:text="(in Rupees / month)"
-                    android:textColor="@color/themeColourOne"
+                    android:text="(in rupees per month)"
+                    android:fontFamily="@font/poppins_light"
+                    android:textColor="@color/themeColourFour"
                     android:textStyle="bold"
-                    style="@style/TextAppearance.AppCompat.Body1" />
+                    android:textSize="14sp"/>
 
 
                 <EditText
@@ -794,7 +824,8 @@
                     android:inputType="numberDecimal"
                     android:textAlignment="center"
                     android:layout_gravity="center"
-                    android:layout_marginTop="15dp"/>
+                    android:layout_marginTop="15dp"
+                    android:textColor="@color/themeColourTwo"/>
 
 
                 <com.google.android.material.button.MaterialButton
@@ -804,7 +835,7 @@
                     android:id="@+id/profileSubscriptionFeesDialogUpdate"
                     android:layout_marginTop="10dp"
                     android:text="UPDATE"
-                    android:backgroundTint="@color/themeColourOne"/>
+                    style="@style/DialogUpdateButton"/>
 
 
             </LinearLayout>
@@ -820,10 +851,10 @@
                 android:layout_marginBottom="25dp">
 
                 <ImageView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:id="@+id/profileSubscriptionDescDialogImg"
-                    android:src="@drawable/ic_money"
+                    android:src="@mipmap/description"
                     android:elevation="5dp"
                     android:layout_gravity="center"/>
 
@@ -836,10 +867,10 @@
                     android:layout_marginTop="15dp"
                     android:elevation="10dp"
                     android:text="Description"
-                    android:textColor="@color/grey"
+                    android:textColor="@color/themeColourOne"
                     android:textStyle="bold"
-                    style="@style/TextAppearance.AppCompat.Body1"
-                    android:textSize="25dp"/>
+                    android:textSize="16sp"
+                    android:fontFamily="@font/poppins_medium"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -849,10 +880,11 @@
                     android:textAlignment="center"
                     android:layout_marginTop="15dp"
                     android:elevation="10dp"
-                    android:text="(Your training details)"
-                    android:textColor="@color/themeColourOne"
+                    android:text="(your training details)"
+                    android:fontFamily="@font/poppins_light"
+                    android:textColor="@color/themeColourFour"
                     android:textStyle="bold"
-                    style="@style/TextAppearance.AppCompat.Body1" />
+                    android:textSize="14sp" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="200dp"
@@ -871,7 +903,7 @@
                         android:textAlignment="center"
                         android:layout_margin="15dp"
                         android:maxLength="300"
-                        android:backgroundTint="@color/lightGrey"
+                        android:textColor="@color/themeColourTwo"
                         android:background="@drawable/round_shape"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -883,7 +915,7 @@
                     android:id="@+id/profileSubscriptionDescDialogUpdate"
                     android:layout_marginTop="10dp"
                     android:text="UPDATE"
-                    android:backgroundTint="@color/themeColourOne"/>
+                    style="@style/DialogUpdateButton"/>
 
 
             </LinearLayout>

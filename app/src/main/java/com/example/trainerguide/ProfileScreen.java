@@ -64,6 +64,8 @@ import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -530,6 +532,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         accountTabView.setVisibility(View.GONE);
         profileTabView.setVisibility(View.VISIBLE);
         profileLogoutLayout.setVisibility(View.GONE);
+        profileLogoutLayout.setOnClickListener(this);
 
         profileTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -566,9 +569,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
 
     private void ShowDialog(String profileType) {
         profileDobDialogTitleLin.setVisibility(View.GONE);
-
         profileExperienceDialogTitleLin.setVisibility(View.GONE);
-
         profileSubscriptionFeesDialogTitleLin.setVisibility(View.GONE);
         profileSubscriptionDescDialogTitleLin.setVisibility(View.GONE);
 
@@ -676,7 +677,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
 
                     if (trainer.getExperience() != null){
 
-                        profileExperience.setText(String.valueOf(trainer.getExperience().intValue()));
+                        profileExperience.setText(String.valueOf(trainer.getExperience().toString()));
                     }
                     else{
                         profileExperience.setText("0.0");
@@ -710,7 +711,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                             subscriptionExtendRelativeLay.setVisibility(View.GONE);
                             extend.setVisibility(View.GONE);
                             subscriptionRemoveBtn.setVisibility(View.GONE);
-                            txtSubscriptionDate.setText("- - -");
+                            txtSubscriptionDate.setText("--");
                         }
 
                     }
@@ -815,6 +816,9 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                 case R.id.dobRelativeLay:
                     ShowDialog("DateOfBirth");
                     break;
+                case R.id.experienceRelativeLay:
+                    ShowDialog("Experience");
+                    break;
                 case R.id.subscriptionFeesRelativeLay:
                     ShowDialog("SubscriptionFees");
                     break;
@@ -837,6 +841,17 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                 case R.id.profileSubscriptionDescDialogUpdate:
                     option.startAnimation(buttonBounce);
                     updateProfile("subscriptionDescription", profileSubscriptionDescDialogInput.getText().toString());
+                    break;
+                case R.id.profileLogoutLayout:
+                    startActivity(new Intent(ProfileScreen.this,MainActivity.class));
+                    SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                    SharedPreferences.Editor editor = settings.edit();
+                    editor.remove("userId");
+                    editor.remove("ProfileType");
+                    editor.remove("IsLoggedIn");
+                    //editor.putBoolean("IsLoggedIn",false);
+                    editor.commit();
+                    finish();
                     break;
                 default:
                     break;
@@ -1007,11 +1022,12 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
 
             if (userField.equals("experience") || userField.equals("subscriptionFees")){
                 if(value.length()>0){
+                    Double userProfileValue = new Double(new BigDecimal(value).setScale(2, RoundingMode.HALF_UP).doubleValue());
 
                     if (userField.equals("experience")){
 
                         if (new Double(value).intValue()<=60){
-                            hash.put(userField, new Double(value));
+                            hash.put(userField, userProfileValue);
                         }
                         else{
                             save=false;
@@ -1023,7 +1039,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
 
                         if (userField.equals("subscriptionFees")){
                             if (new Double(value).intValue()>=1){
-                                hash.put(userField, new Double(value));
+                                hash.put(userField, userProfileValue);
                             }
                             else{
                                 save=false;

@@ -23,6 +23,8 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.trainerguide.models.Trainee;
+import com.example.trainerguide.models.User;
 import com.example.trainerguide.validation.UserInputValidation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -144,6 +146,8 @@ public class MainActivity extends AppCompatActivity {
                                             @Override
                                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                                 System.out.println("********OnDataChange*******");
+                                                SharedPreferences.Editor editor = sp.edit();
+
 
                                                 if (snapshot.hasChild(fAuth.getCurrentUser().getUid())) {
                                                     profileType = "Trainer";
@@ -152,19 +156,40 @@ public class MainActivity extends AppCompatActivity {
                                                 }
                                                 databaseReference = FirebaseDatabase.getInstance().getReference(profileType + "/" + fAuth.getCurrentUser().getUid());
 
-                                                SharedPreferences.Editor editor = sp.edit();
-                                                editor.putString("userId", fAuth.getCurrentUser().getUid());
-                                                editor.putBoolean("IsLoggedIn", true);
-                                                editor.putString("ProfileType", profileType);
-                                                editor.commit();
+                                                databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                                                    @Override
+                                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                                        User user = snapshot.getValue(User.class);
+
+                                                        editor.putString("UserName", user.getName());
+
+                                                        if (profileType.equals("User")){
+                                                            Trainee trainee = snapshot.getValue(Trainee.class);
+                                                            editor.putString("UserGoal", trainee.getSubscriptionType());
+                                                        }
+
+                                                        editor.putString("userId", fAuth.getCurrentUser().getUid());
+                                                        editor.putBoolean("IsLoggedIn", true);
+                                                        editor.putString("ProfileType", profileType);
+                                                        editor.commit();
 
 
-                                                Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                                                Intent intent = new Intent(MainActivity.this, HomeScreen.class);
-                                                intent.putExtra("UserId", fAuth.getCurrentUser().getUid());
+                                                        Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                                                        Intent intent = new Intent(MainActivity.this, HomeScreen.class);
+                                                        intent.putExtra("UserId", fAuth.getCurrentUser().getUid());
 
-                                                startActivity(intent);
-                                                finish();
+                                                        startActivity(intent);
+                                                        finish();
+                                                    }
+
+                                                    @Override
+                                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                                    }
+                                                });
+
+
                                             }
                                             @Override
                                             public void onCancelled(@NonNull DatabaseError error) {

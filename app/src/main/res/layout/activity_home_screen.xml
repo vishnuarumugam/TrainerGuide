@@ -11,315 +11,6 @@
     tools:openDrawer="start">
 
     <include layout="@layout/common_navigator"/>
-    <!--<ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <include layout="@layout/common_toolbar" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="1dp"
-                android:background="@color/themeColourTwo">
-
-
-
-                <LinearLayout
-                    android:id="@+id/linearLayout2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="120dp"
-                        android:background="@color/themeColourOne">
-
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:id="@+id/dashboard_profile_pic_rel"
-                            android:layout_marginRight="30dp"
-                            app:cardCornerRadius="50dp"
-                            android:layout_centerVertical="true"
-                            android:layout_marginTop="30dp"
-                            android:padding="2dp"
-                            android:background="@drawable/theme_colour_four_round_shape">
-
-                            <ImageView
-                                android:layout_width="70dp"
-                                android:layout_height="70dp"
-                                android:id="@+id/dashboard_profile_pic"
-                                android:scaleType="centerCrop"
-                                android:background="@mipmap/profile"/>
-
-                        </androidx.cardview.widget.CardView>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/dashboard_hello"
-                            android:layout_marginRight="5dp"
-                            android:layout_toLeftOf="@id/dashboard_user_name"
-                            android:layout_alignTop="@id/dashboard_user_name"
-                            style="@style/TextAppearance.AppCompat.Title"
-                            android:textColor="@color/white"
-                            android:text="Hello"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/dashboard_user_name"
-                            android:layout_marginRight="30dp"
-                            android:layout_toLeftOf="@id/dashboard_profile_pic_rel"
-                            android:layout_alignBottom="@id/dashboard_profile_pic_rel"
-                            style="@style/TextAppearance.AppCompat.Title"
-                            android:textColor="@color/white"/>
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="150dp"
-                        android:id="@+id/profile_dashboard"
-                        android:background="@color/white"
-                        android:padding="10dp"
-                        android:layout_marginTop="25dp">
-                        <com.google.android.material.card.MaterialCardView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_alignParentLeft="true"
-                            android:backgroundTint="@color/themeColourOne">
-
-                            <RelativeLayout
-                                android:layout_width="250dp"
-                                android:layout_height="match_parent"
-                                android:layout_marginRight="3dp"
-                                android:background="@color/white">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerVertical="true"
-                                    android:layout_marginHorizontal="20dp"
-                                    style="@style/TextAppearance.AppCompat.Title"
-                                    android:text="Profile"
-                                    android:textColor="@color/themeColourOne"
-                                    android:textSize="20sp"/>
-                            </RelativeLayout>
-                        </com.google.android.material.card.MaterialCardView>
-
-                        <ImageView
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:id="@+id/img_profile"
-                            android:elevation="10dp"
-                            android:layout_centerVertical="true"
-                            android:layout_marginRight="10dp"
-                            android:layout_alignParentRight="true"
-                            android:src="@mipmap/profile_dashboard"/>
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="150dp"
-                        android:id="@+id/report_dashboard"
-                        android:background="@color/white"
-                        android:padding="10dp"
-                        android:layout_marginTop="1dp">
-                        <com.google.android.material.card.MaterialCardView
-                            android:elevation="10dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_alignParentRight="true"
-                            android:backgroundTint="@color/themeColourTwo">
-
-                            <RelativeLayout
-                                android:layout_width="250dp"
-                                android:layout_height="match_parent"
-                                android:layout_marginLeft="3dp"
-                                android:background="@color/white">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerVertical="true"
-                                    android:layout_alignParentRight="true"
-                                    android:layout_marginRight="20dp"
-                                    android:text="Report"
-                                    style="@style/TextAppearance.AppCompat.Title"
-                                    android:textColor="@color/themeColourTwo"
-                                    android:textSize="20sp"/>
-                            </RelativeLayout>
-
-                        </com.google.android.material.card.MaterialCardView>
-                        <ImageView
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:id="@+id/img_report"
-                            android:layout_marginLeft="10dp"
-                            android:layout_centerVertical="true"
-                            android:layout_alignParentLeft="true"
-                            android:elevation="10dp"
-                            android:src="@mipmap/report"/>
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="150dp"
-                        android:id="@+id/trainer_dashboard"
-                        android:background="@color/white"
-                        android:layout_marginTop="1dp"
-                        android:padding="10dp">
-
-                        <com.google.android.material.card.MaterialCardView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:elevation="10dp"
-                            android:backgroundTint="@color/themeColourFour"
-                            android:layout_alignParentLeft="true">
-
-                            <RelativeLayout
-                                android:layout_width="250dp"
-                                android:layout_height="match_parent"
-                                android:layout_marginRight="3dp"
-                                android:background="@color/white">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerVertical="true"
-                                    style="@style/TextAppearance.AppCompat.Title"
-                                    android:layout_marginLeft="20dp"
-                                    android:textColor="@color/themeColourFour"
-                                    android:text="Trainer"
-                                    android:textSize="20sp"/>
-                            </RelativeLayout>
-                        </com.google.android.material.card.MaterialCardView>
-
-                        <ImageView
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:id="@+id/img_trainer"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginRight="10dp"
-                            android:layout_centerVertical="true"
-                            android:src="@mipmap/personal_trainer"/>
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="150dp"
-                        android:id="@+id/trainee_dashboard"
-                        android:background="@color/white"
-                        android:padding="10dp"
-                        android:layout_marginTop="1dp">
-
-                        <com.google.android.material.card.MaterialCardView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:elevation="10dp"
-                            android:layout_alignParentRight="true"
-                            android:backgroundTint="@color/themeColourOne">
-
-                            <RelativeLayout
-                                android:layout_width="250dp"
-                                android:layout_height="match_parent"
-                                android:layout_marginLeft="3dp"
-                                android:background="@color/white">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerVertical="true"
-                                    android:layout_alignParentRight="true"
-                                    android:layout_marginRight="20dp"
-                                    android:text="Trainee"
-                                    style="@style/TextAppearance.AppCompat.Title"
-                                    android:textColor="@color/themeColourOne"
-                                    android:textSize="20sp"/>
-
-                            </RelativeLayout>
-
-                        </com.google.android.material.card.MaterialCardView>
-
-                        <ImageView
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:id="@+id/img_trainee"
-                            android:layout_marginLeft="10dp"
-                            android:layout_centerVertical="true"
-                            android:layout_alignParentLeft="true"
-                            android:src="@mipmap/fitness"/>
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="150dp"
-                        android:id="@+id/food_dashboard"
-                        android:background="@color/white"
-                        android:layout_marginTop="1dp"
-                        android:padding="10dp">
-
-                        <com.google.android.material.card.MaterialCardView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_alignParentLeft="true"
-                            android:backgroundTint="@color/themeColourTwo">
-
-                            <RelativeLayout
-                                android:layout_width="250dp"
-                                android:layout_height="match_parent"
-                                android:layout_marginRight="3dp"
-                                android:background="@color/white">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerVertical="true"
-                                    android:layout_marginLeft="20dp"
-                                    style="@style/TextAppearance.AppCompat.Title"
-                                    android:text="Food List"
-                                    android:textColor="@color/themeColourTwo"
-                                    android:textSize="20sp"/>
-
-                            </RelativeLayout>
-                        </com.google.android.material.card.MaterialCardView>
-
-                        <ImageView
-                            android:id="@+id/img_food"
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:layout_centerVertical="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginRight="10dp"
-                            android:src="@mipmap/food_type" />
-
-                    </RelativeLayout>
-
-              </LinearLayout>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </LinearLayout>
-    </ScrollView>-->
-
-    <!--<include layout="@layout/common_toolbar" />-->
-
-
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
@@ -384,6 +75,7 @@
                             android:layout_height="200dp"
                             android:layout_below="@+id/homeScreenTitle"
                             android:layout_marginHorizontal="45dp"
+                            android:layout_marginBottom="35dp"
                             android:layout_marginTop="14dp"
                             android:backgroundTint="@color/adShadowOne"
                             app:cardCornerRadius="10dp">
@@ -442,7 +134,7 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/ad_layout_shadow"
                             android:layout_marginHorizontal="10dp"
-                            android:layout_marginTop="35dp"
+                            android:layout_marginBottom="25dp"
                             android:backgroundTint="@color/white"
                             android:elevation="5dp"
                             app:cardCornerRadius="10dp">
@@ -535,7 +227,7 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/home_screen_goal_layout"
                             android:layout_marginHorizontal="10dp"
-                            android:layout_marginTop="25dp"
+                            android:layout_marginBottom="25dp"
                             android:backgroundTint="@color/white"
                             android:elevation="5dp"
                             app:cardCornerRadius="10dp">
@@ -662,7 +354,6 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/home_screen_track_fit_layout"
                             android:layout_marginHorizontal="10dp"
-                            android:layout_marginTop="25dp"
                             android:layout_marginBottom="10dp"
                             android:backgroundTint="@color/white"
                             android:elevation="5dp"

@@ -80,11 +80,12 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
     Intent intent;
     Animation buttonBounce;
     private User user;
+    private Trainee trainee;
 
     //PopUp Dialog
     private Dialog profileDialog;
     private ImageView profileDialogClose;
-    private LinearLayout profileDobDialogTitleLin, profileWeightDialogTitleLin, profileHeightDialogTitleLin, profileExperienceDialogTitleLin, profileFoodTypeDialogTitleLin, profileFoodAllergyDialogTitleLin, profileHealthInfoDialogTitleLin, profileSubscriptionTypeDialogTitleLin, profileSubscriptionFeesDialogTitleLin, profileSubscriptionDescDialogTitleLin;
+    private LinearLayout profileDobDialogTitleLin, profileWeightDialogTitleLin, profileHeightDialogTitleLin, profileExperienceDialogTitleLin, profileFoodTypeDialogTitleLin, profileFoodAllergyDialogTitleLin, profileHealthInfoDialogTitleLin, profileSubscriptionFeesDialogTitleLin, profileSubscriptionDescDialogTitleLin;
     private TextView profileDobDialogTitle, profileWeightDialogTitle, profileHeightDialogTitle, profileExperienceDialogTitle, profileFoodTypeDialogTitle, profileFoodAllergyDialogTitle, profileHealthInfoDialogTitle, profileSubscriptionTypeDialogTitle, profileSubscriptionFeesDialogTitle, profileSubscriptionDescDialogTitle, txtSubscriptionDate;
     private EditText profileWeightDialogInput, profileHeightDialogInput, profileExperienceDialogInput, profileSubscriptionFeesDialogInput, profileSubscriptionDescDialogInput;
     private Button profileDobDialogUpdate, profileWeightDialogUpdate, profileHeightDialogUpdate, profileExperienceDialogUpdate, profileHealthInfoDialogUpdate, profileFoodAllergyDialogUpdate, profileFoodTypeDialogUpdate, profileSubscriptionTypeDialogUpdate, profileSubscriptionFeesDialogUpdate, profileSubscriptionDescDialogUpdate;
@@ -111,6 +112,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
     //User Detail variables
     private String userId, path, userType;
+    private SharedPreferences sp;
 
     //Progress Bar
     private ProgressDialog progressDialog;
@@ -195,7 +197,6 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         profileFoodTypeDialogTitleLin = profileDialog.findViewById(R.id.profileFoodTypeDialogTitleLin);
         profileFoodAllergyDialogTitleLin = profileDialog.findViewById(R.id.profileFoodAllergyDialogTitleLin);
         profileHealthInfoDialogTitleLin = profileDialog.findViewById(R.id.profileHealthInfoDialogTitleLin);
-        profileSubscriptionTypeDialogTitleLin = profileDialog.findViewById(R.id.profileSubscriptionTypeDialogTitleLin);
         profileSubscriptionFeesDialogTitleLin = profileDialog.findViewById(R.id.profileSubscriptionFeesDialogTitleLin);
         profileSubscriptionDescDialogTitleLin = profileDialog.findViewById(R.id.profileSubscriptionDescDialogTitleLin);
 
@@ -246,10 +247,15 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         toolBarNotification.setOnClickListener(this);
 
 
-        final SharedPreferences sp;
+
         sp= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         userType = sp.getString("ProfileType",null);
+
+        dashboard_user_name.setText(sp.getString("UserName",null));
+
+        System.out.println("UserName"+sp.getString("UserName",null));
+        System.out.println(sp.getString("UserGoal",null));
 
         if (userType.equals("Trainer")){
             homeScreenGoalLayout.setVisibility(View.GONE);
@@ -259,6 +265,20 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
             //pdf_dashboard.setVisibility(View.GONE);*/
         }
         else{
+
+            switch (sp.getString("UserGoal",null)){
+                case "Weight Loss":
+                    weightLossSubscription.setChecked(true);
+                    break;
+                case "Weight Gain":
+                    weightGainSubscription.setChecked(true);
+                    break;
+                case "Stay Fit":
+                    weightMaintainSubscription.setChecked(true);
+                    break;
+                default:
+                    break;
+            }
             homeScreenTabLayout.getMenu().removeItem(R.id.foodListTab);
             homeScreenTabLayout.getMenu().removeItem(R.id.traineesTab);
 
@@ -339,14 +359,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                         startActivity(new Intent(HomeScreen.this,NotificationScreen.class));
                         finish();
                         break;
-                    /*case R.id.nav_trainer:
-                        startActivity(new Intent(HomeScreen.this,TrainerScreen.class));
-                        finish();
-                        break;*/
-                    /*case R.id.nav_foodPrep:
-                        startActivity(new Intent(HomeScreen.this,PrepareFoodChart.class));
-                        finish();
-                        break;*/
+
                     case R.id.nav_logout:
                         startActivity(new Intent(HomeScreen.this,MainActivity.class));
                         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -372,20 +385,24 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
     public void onClick(View option) {
 
+        SharedPreferences.Editor editor = sp.edit();
         switch (option.getId()) {
 
-            case R.id.profileSubscriptionTypeDialogUpdate:
-                String subscriptionValue = "Not mentioned";
-                if (weightLossSubscription.isChecked()) {
-                    subscriptionValue = "Weight Loss";
-                } else if (weightGainSubscription.isChecked()) {
-                    subscriptionValue = "Weight Gain";
-                } else if (weightMaintainSubscription.isChecked()) {
-                    subscriptionValue = "Weight Maintain";
-                }
-                updateProfile("subscriptionType", subscriptionValue);
+            case R.id.weightLossSubscription:
+                editor.putString("UserGoal", "Weight Loss");
+                trainee.setSubscriptionType("Weight Loss");
+                updateProfile("subscriptionType", "Weight Loss");
                 break;
-
+            case R.id.weightGainSubscription:
+                editor.putString("UserGoal", "Weight Gain");
+                trainee.setSubscriptionType("Weight Gain");
+                updateProfile("subscriptionType", "Weight Gain");
+                break;
+            case R.id.weightMaintainSubscription:
+                editor.putString("UserGoal", "Stay Fit");
+                trainee.setSubscriptionType("Stay Fit");
+                updateProfile("subscriptionType", "Stay Fit");
+                break;
             case R.id.weightLayout:
                 ShowDialog("Weight");
                 break;
@@ -445,88 +462,11 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         }
     }
 
-    /*public void PopulateUserDetails(){
-
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(path);
-
-        //Show Progress Dialog
-        progressDialog.show();
-        //Set Content
-        progressDialog.setContentView(R.layout.progressdialog);
-        //Set Transparent Background
-        progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-
-
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                System.out.println("********HSOnDataChange*******");
-                if (userType.equals("Trainer")){
-                    System.out.println("Trainer"+snapshot.getValue(Trainer.class));
-                    System.out.println("out");
-                    Trainer user = snapshot.getValue(Trainer.class);
-                    dashboard_user_name.setText(user.getName().toString() + " !");
-                    *//*Picasso.get().load(user.getImage())
-                            .placeholder(R.mipmap.profile)
-                            .fit()
-                            .centerCrop()
-                            .into(dashboard_profile_pic);*//*
-                    //sideUserName.setText(user.getName().toString());
-
-                }
-
-                else{
-                    Trainee trainee = snapshot.getValue(Trainee.class);
-                    dashboard_user_name.setText(trainee.getName() + " !");
-
-                    if (trainee.getSubscriptionType()!=null){
-                        switch (trainee.getSubscriptionType()){
-                            case "Weight Loss":
-                                weightLossSubscription.setChecked(true);
-                                break;
-                            case "Weight Gain":
-                                weightGainSubscription.setChecked(true);
-                                break;
-                            case "Weight Maintain":
-                                weightMaintainSubscription.setChecked(true);
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                    *//*Picasso.get().load(user.getImage())
-                            .placeholder(R.mipmap.profile)
-                            .fit()
-                            .centerCrop()
-                            .into(dashboard_profile_pic);*//*
-                    //sideUserName.setText(user.getName().toString());
-
-                }
-
-                //Dismiss Progress Dialog
-                progressDialog.dismiss();
-
-                *//*LineGraphSeries<DataPoint> progressDatapoint = new LineGraphSeries<>(new DataPoint[]{
-                        new DataPoint(0,user.getBmi()),
-                        new DataPoint(1,19),
-                });
-
-                progressGraphView.addSeries(progressDatapoint);*//*
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }*/
-
     public void PopulateUserDetails(){
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(path);
         //Show Progress Dialog
-        progressDialog.show();
+        //progressDialog.show();
         //Set Content
         progressDialog.setContentView(R.layout.progressdialog);
         //Set Transparent Background
@@ -538,7 +478,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 System.out.println("********OnDataChange*******");
                 user = snapshot.getValue(User.class);
 
-                dashboard_user_name.setText(user.getName().toString() + " !");
+                //dashboard_user_name.setText(user.getName().toString() + " !");
 
                 if (user.getFoodType()!=null){
                     switch (user.getFoodType()){
@@ -631,77 +571,12 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
                 if (userType.equals("Trainer")){
                     Trainer trainer = snapshot.getValue(Trainer.class);
-                    /*if (trainer.getExperience() != null){
-
-                        profileExperience.setText(String.valueOf(trainer.getExperience().intValue()));
-                    }
-                    else{
-                        profileExperience.setText("0.0");
-                    }
-                    if (trainer.getSubscriptionFees() != null){
-                        profileSubscriptionFees.setText(trainer.getSubscriptionFees().toString());
-                    }
-                    else{
-                        profileSubscriptionFees.setText("0.0");
-                    }
-                    if (trainer.getSubscriptionDescription() != null){
-                        profileSubscriptionDescription.setText(trainer.getSubscriptionDescription().toString());
-                    }
-                    else{
-                        profileSubscriptionDescription.setText("Not mentioned");
-                    }*/
 
                 }
                 else{
-                    Trainee trainee = snapshot.getValue(Trainee.class);
+                    trainee = snapshot.getValue(Trainee.class);
                     System.out.println("Trainee");
-                    /*if(extendReadonly && trainee.getTrainerId()!= null && trainee.getTrainerId()!="") {
-                        subscriptionExtendRelativeLay.setVisibility(View.VISIBLE);
 
-                        if (trainee.getSubscriptionEndDate()!=null){
-                            Date endDate = trainee.getSubscriptionEndDate();
-                            SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
-                            txtSubscriptionDate.setText(formatDate.format(endDate));
-                        }
-
-                        else{
-                            subscriptionExtendRelativeLay.setVisibility(View.GONE);
-                            extend.setVisibility(View.GONE);
-                            subscriptionRemoveBtn.setVisibility(View.GONE);
-                            subscriptionRemoveRelativeLay.setVisibility(View.GONE);
-                            txtSubscriptionDate.setText("- - -");
-                        }
-
-                    }
-                    //String trainerName = GetTrainerName(trainee.getTrainerId());
-                    if (trainee.getTrainerId()!=null && !(trainee.getTrainerId().equals("")) ){
-                        GetTrainerName(trainee.getTrainerId());
-                    }
-                    else{
-                        profileSubscriptionTrainer.setText("No Trainer assigned");
-                        profileSubscriptionTrainer.setTextColor(getResources().getColor(R.color.orange));
-                        subscriptionExtendRelativeLay.setVisibility(View.GONE);
-                        extend.setVisibility(View.GONE);
-                        subscriptionRemoveBtn.setVisibility(View.GONE);
-                        subscriptionRemoveRelativeLay.setVisibility(View.GONE);
-                    }*/
-                    //profileSubscriptionType.setText(trainee.getSubscriptionType());
-
-                    /*if (trainee.getFoodType()!=null){
-                        switch (trainee.getFoodType()){
-                            case "Vegetarian":
-                                vegFoodType.setChecked(true);
-                                break;
-                            case "Eggetarian":
-                                vegEggFoodType.setChecked(true);
-                                break;
-                            case "Non-Vegetarian":
-                                nonVegFoodType.setChecked(true);
-                                break;
-                            default:
-                                break;
-                        }
-                    }*/
                     if (trainee.getSubscriptionType()!=null){
                         System.out.println("Trainee1");
 
@@ -943,7 +818,6 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         profileFoodTypeDialogTitleLin.setVisibility(View.GONE);
         profileFoodAllergyDialogTitleLin.setVisibility(View.GONE);
         profileHealthInfoDialogTitleLin.setVisibility(View.GONE);
-        profileSubscriptionTypeDialogTitleLin.setVisibility(View.GONE);
         profileSubscriptionFeesDialogTitleLin.setVisibility(View.GONE);
         profileSubscriptionDescDialogTitleLin.setVisibility(View.GONE);
 
@@ -994,7 +868,6 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 profileFoodTypeDialogTitleLin.setVisibility(View.GONE);
                 profileFoodAllergyDialogTitleLin.setVisibility(View.GONE);
                 profileHealthInfoDialogTitleLin.setVisibility(View.GONE);
-                profileSubscriptionTypeDialogTitleLin.setVisibility(View.GONE);
             }
         });
     }

@@ -27,6 +27,9 @@
 
     <style name="DialogRadioButton" parent="Theme.MaterialComponents.Light">
         <item name="colorAccent">@color/themeColourTwo</item>
+        <item name="fontFamily">@font/poppins_light</item>
+        <item name="android:textColor">@color/themeColourOne</item>
+        <item name="android:textSize">12sp</item>
     </style>
 
     <style name="ProgressBarStyle" parent="Theme.MaterialComponents.Light">
@@ -35,14 +38,31 @@
 
     <style name="DialogCheckBox" parent="Theme.MaterialComponents.Light">
         <item name="colorAccent">@color/themeColourTwo</item>
+        <item name="fontFamily">@font/poppins_light</item>
+        <item name="android:textColor">@color/themeColourOne</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="DialogEditText" parent="Theme.MaterialComponents.Light">
         <item name="colorAccent">@color/themeColourTwo</item>
+        <item name="fontFamily">@font/poppins_medium</item>
+        <item name="android:textColor">@color/themeColourTwo</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
     <style name="DialogDatePicker" parent="Theme.AppCompat.Light.Dialog">
         <item name="colorAccent">@color/themeColourOne</item>
+        <item name="fontFamily">@font/poppins_medium</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="DialogUpdateButton" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:textColor">@color/white</item>
+        <item name="fontFamily">@font/poppins_light</item>
+        <item name="backgroundTint">@color/themeColourOne</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
     <style name="RatingBar" parent="android:style/Widget.Material.RatingBar.Small">
@@ -64,7 +84,7 @@
     <style name="ProfileTabStyle" parent="TextAppearance.Design.Tab">
         <item name="textAllCaps">false</item>
         <item name="fontFamily">@font/poppins_medium</item>
-        <item name="android:textSize">16dp</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textAllCaps">false</item>
     </style>
