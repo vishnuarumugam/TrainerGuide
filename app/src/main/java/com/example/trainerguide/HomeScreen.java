@@ -252,10 +252,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
         userType = sp.getString("ProfileType",null);
 
-        dashboard_user_name.setText(sp.getString("UserName",null));
-
-        System.out.println("UserName"+sp.getString("UserName",null));
-        System.out.println(sp.getString("UserGoal",null));
+        dashboard_user_name.setText(sp.getString("UserName",null) + "!");
 
         if (userType.equals("Trainer")){
             homeScreenGoalLayout.setVisibility(View.GONE);

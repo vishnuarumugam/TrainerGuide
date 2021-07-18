@@ -77,13 +77,13 @@
                             android:padding="1dp">
 
                             <ImageView
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginVertical="2dp"
                                 android:layout_marginLeft="10dp"
                                 android:background="@color/white"
-                                android:src="@mipmap/name" />
+                                android:src="@mipmap/profile_user_name" />
 
                             <EditText
                                 android:id="@+id/userRgrName_Input"
@@ -95,7 +95,7 @@
                                 android:background="@android:color/transparent"
                                 android:hint="user name"
                                 android:maxLength="15"
-                                android:textSize="16sp"
+                                android:textSize="14sp"
                                 android:inputType="text"
                                 android:textColor="@color/themeColourTwo"
                                 android:fontFamily="@font/poppins_medium"
@@ -133,13 +133,13 @@
                             android:padding="1dp">
 
                             <ImageView
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginVertical="2dp"
                                 android:layout_marginLeft="10dp"
                                 android:background="@color/white"
-                                android:src="@mipmap/email" />
+                                android:src="@mipmap/profile_email" />
 
                             <EditText
                                 android:id="@+id/userRgrEmail_Input"
@@ -151,7 +151,7 @@
                                 android:maxLength="60"
                                 android:background="@android:color/transparent"
                                 android:hint="email address"
-                                android:textSize="16sp"
+                                android:textSize="14sp"
                                 android:fontFamily="@font/poppins_medium"
                                 android:textColor="@color/themeColourTwo" />
 
@@ -169,19 +169,19 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="42dp"
+                            android:layout_height="wrap_content"
                             android:background="@drawable/round_shape"
                             android:orientation="horizontal"
                             android:padding="1dp">
 
                             <ImageView
-                                android:layout_width="40dp"
+                                android:layout_width="30dp"
                                 android:layout_height="30dp"
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginVertical="2dp"
                                 android:layout_marginLeft="10dp"
                                 android:background="@color/white"
-                                android:src="@mipmap/mobile" />
+                                android:src="@mipmap/profile_mobile" />
 
                             <EditText
                                 android:id="@+id/userRgrMobile_Input"
@@ -193,7 +193,7 @@
                                 android:background="@android:color/transparent"
                                 android:hint="mobile"
                                 android:maxLength="10"
-                                android:textSize="16sp"
+                                android:textSize="14sp"
                                 android:inputType="number"
                                 android:fontFamily="@font/poppins_medium"
                                 android:textColor="@color/themeColourTwo" />
@@ -224,13 +224,13 @@
                                 android:padding="1dp">
 
                                 <ImageView
-                                    android:layout_width="40dp"
-                                    android:layout_height="40dp"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
                                     android:layout_gravity="center_vertical"
                                     android:layout_marginVertical="2dp"
                                     android:layout_marginLeft="10dp"
                                     android:background="@color/white"
-                                    android:src="@mipmap/password" />
+                                    android:src="@mipmap/profile_password" />
 
                                 <EditText
                                     android:id="@+id/userRgrPassword_Input"
@@ -243,7 +243,7 @@
                                     android:hint="password"
                                     android:maxLength="15"
                                     android:inputType="textPassword"
-                                    android:textSize="16sp"
+                                    android:textSize="14sp"
                                     android:fontFamily="@font/poppins_medium"
                                     android:textColor="@color/themeColourTwo" />
 
@@ -283,13 +283,13 @@
                             android:padding="1dp">
 
                             <ImageView
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginVertical="2dp"
                                 android:layout_marginLeft="10dp"
                                 android:background="@color/white"
-                                android:src="@mipmap/password" />
+                                android:src="@mipmap/profile_password" />
 
                             <EditText
                                 android:id="@+id/userRgrConPassword_Input"
@@ -302,7 +302,7 @@
                                 android:hint="confirm password"
                                 android:inputType="textVisiblePassword"
                                 android:maxLength="15"
-                                android:textSize="16sp"
+                                android:textSize="14sp"
                                 android:fontFamily="@font/poppins_medium"
                                 android:textColor="@color/themeColourTwo" />
 
@@ -321,7 +321,9 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_medium"
                         android:textColor="@color/themeColourOne"
-                        android:text="Show Password" />
+                        android:text="Show Password"
+                        android:textSize="14sp"
+                        android:textAlignment="center"/>
                 </LinearLayout>
 
                     <!--<com.google.android.material.textfield.TextInputLayout
@@ -444,7 +446,7 @@
                             android:layout_height="wrap_content"
                             android:padding="10dp"
                             android:text="Male"
-                            android:textSize="16sp"
+                            android:textSize="14sp"
                             android:fontFamily="@font/poppins_medium"
                             android:textColor="@color/themeColourOne" />
 
@@ -455,7 +457,7 @@
                             android:layout_marginLeft="15dp"
                             android:padding="10dp"
                             android:text="Female"
-                            android:textSize="16sp"
+                            android:textSize="14sp"
                             android:fontFamily="@font/poppins_medium"
                             android:textColor="@color/themeColourOne"
                             />
@@ -468,12 +470,13 @@
                         android:layout_height="50dp"
                         android:layout_marginHorizontal="35dp"
                         android:layout_marginTop="15dp"
-                        android:fontFamily="@font/poppins_medium"
+                        android:fontFamily="@font/poppins_light"
                         android:textColor="@color/themeColourTwo"
+                        android:textStyle="bold"
                         android:backgroundTint="@color/themeColourOne"
                         android:text="REGISTER"
                         android:textAlignment="center"
-                        android:textSize="18sp" />
+                        android:textSize="16sp" />
 
 
                 </LinearLayout>

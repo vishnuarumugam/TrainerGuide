@@ -52,7 +52,7 @@
                             android:textAlignment="center"
                             android:textColor="@color/white"
                             android:textScaleX="1.25"
-                            android:textSize="28sp"
+                            android:textSize="24sp"
                             android:textStyle="bold" />
 
                         <TextView
@@ -66,7 +66,7 @@
                             android:textAlignment="center"
                             android:textColor="@color/themeColourTwo"
                             android:textScaleX="1.25"
-                            android:textSize="28sp"
+                            android:textSize="24sp"
                             android:textStyle="bold" />
 
                     </LinearLayout>
@@ -79,9 +79,10 @@
                         android:layout_centerInParent="true"
                         android:text="@string/appSubLine"
                         android:textAlignment="center"
+                        android:fontFamily="@font/poppins_light"
                         android:textColor="@color/themeColourThree"
-                        android:textSize="14sp"
-                        android:textStyle="normal" />
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
 
 
                 </RelativeLayout>
@@ -121,7 +122,7 @@
                             android:text="Welcome Back"
                             android:textAlignment="center"
                             android:textColor="@color/themeColourOne"
-                            android:textSize="20sp"
+                            android:textSize="16sp"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -142,13 +143,13 @@
                                 android:padding="1dp">
 
                                 <ImageView
-                                    android:layout_width="40dp"
-                                    android:layout_height="40dp"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
                                     android:layout_gravity="center_vertical"
                                     android:layout_marginVertical="2dp"
                                     android:layout_marginLeft="10dp"
                                     android:background="@color/white"
-                                    android:src="@mipmap/email" />
+                                    android:src="@mipmap/profile_email" />
 
 
                                 <EditText
@@ -164,7 +165,7 @@
                                     android:hint="email address"
                                     android:inputType="textEmailAddress"
                                     android:textColor="@color/themeColourTwo"
-                                    android:textSize="16sp" />
+                                    android:textSize="14sp" />
 
 
                             </LinearLayout>
@@ -186,13 +187,13 @@
                                 android:padding="1dp">
 
                                 <ImageView
-                                    android:layout_width="40dp"
-                                    android:layout_height="40dp"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
                                     android:layout_gravity="center_vertical"
                                     android:layout_marginVertical="2dp"
                                     android:layout_marginLeft="10dp"
                                     android:background="@color/white"
-                                    android:src="@mipmap/password" />
+                                    android:src="@mipmap/profile_password" />
 
                                 <EditText
                                     android:id="@+id/userPassword_Input"
@@ -207,7 +208,7 @@
                                     android:hint="password"
                                     android:inputType="textPassword"
                                     android:textColor="@color/themeColourTwo"
-                                    android:textSize="16sp" />
+                                    android:textSize="14sp" />
 
 
                             </LinearLayout>
@@ -224,8 +225,10 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins_medium"
+                                android:textSize="14sp"
                                 android:textColor="@color/themeColourOne"
-                                android:text="Show Password" />
+                                android:text="Show Password"
+                                android:textAlignment="center"/>
                         </LinearLayout>
 
                         <Button
@@ -235,11 +238,12 @@
                             android:layout_marginHorizontal="15dp"
                             android:layout_marginTop="25dp"
                             android:backgroundTint="@color/themeColourOne"
-                            android:fontFamily="@font/poppins_medium"
+                            android:fontFamily="@font/poppins_light"
                             android:text="LOGIN"
+                            android:textStyle="bold"
                             android:textColor="@color/themeColourTwo"
                             android:textAlignment="center"
-                            android:textSize="18sp" />
+                            android:textSize="16sp" />
 
                         <TextView
                             android:id="@+id/txtForgotPassword"
@@ -252,7 +256,7 @@
                             android:text="Forgot Password?"
                             android:textAlignment="center"
                             android:textColor="@color/themeColourOne"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
 
 
                     </LinearLayout>

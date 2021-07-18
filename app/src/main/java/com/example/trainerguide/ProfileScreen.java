@@ -118,7 +118,6 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
     private String navigationScreen ="";
     private String userType;
     private Boolean readonly = false;
-    private Boolean extendReadonly = false;
     private Boolean IsTrainerProfile;
     Animation buttonBounce;
     private BottomNavigationView homeScreenTabLayout;
@@ -170,6 +169,11 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         profileTraineeDetailsLayout = findViewById(R.id.profileTraineeDetailsLayout);
         profileTrainerDetailsLayout = findViewById(R.id.profileTrainerDetailsLayout);
 
+        ratingTraineesLayout.setVisibility(View.GONE);
+        profileTrainerDetailsLayout.setVisibility(View.GONE);
+        profileTraineeDetailsLayout.setVisibility(View.GONE);
+
+
         extend = findViewById(R.id.extendbtn);
         subscriptionRemoveBtn = findViewById(R.id.subscriptionRemoveBtn);
         txtSubscriptionDate = findViewById(R.id.txtSubscriptionDate);
@@ -194,6 +198,8 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         subscriptionFeesRelativeLay = findViewById(R.id.subscriptionFeesRelativeLay);
         subscriptionDescriptionRelativeLay = findViewById(R.id.subscriptionDescriptionRelativeLay);
         subscriptionExtendRelativeLay = findViewById(R.id.subscriptionExtendRelativeLay);
+        subscriptionExtendRelativeLay.setVisibility(View.GONE);
+
 
 
         //User Info variables
@@ -201,71 +207,25 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         sp= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         IsTrainerProfile = false;
         String passedUserId = "";
+        userType = sp.getString("ProfileType", null);
+        userId = sp.getString("userId", null);
+
 
         if (getIntent().hasExtra("Screen")){
             navigationScreen = getIntent().getExtras().getString("Screen", "");
         }
 
-        if(getIntent().hasExtra("IsTrainer") &&
-                getIntent().hasExtra("userId") &&
-                getIntent().hasExtra("ReadOnly"))
-        {
-            IsTrainerProfile = getIntent().getExtras().getBoolean("IsTrainer");
-            passedUserId = getIntent().getExtras().getString("userId", "");
-            readonly = getIntent().getExtras().getBoolean("ReadOnly", false);
-        }
-
-        if(!passedUserId.equals("")){
-            userType = IsTrainerProfile ? "Trainer" : "User";
-            userId=passedUserId;
-            if(!(userType.equals("Trainer"))){
-                extendReadonly=true;
-            }
-        }
-        else {
-            userType = sp.getString("ProfileType", null);
-            userId = sp.getString("userId", null);
-            if(!(userType.equals("Trainer"))){
-                extendReadonly=true;
-                extend.setVisibility(View.VISIBLE);
-                subscriptionRemoveBtn.setVisibility(View.VISIBLE);
-                //txtSubscriptionDate.setVisibility(View.VISIBLE);
-            }
-        }
-
-        if(readonly){
-            toolBarNotification.setVisibility(View.GONE);
-            if(IsTrainerProfile && !sp.getString("ProfileType", null).equals("Trainer")){
-                /*profileActionView.setVisibility(View.VISIBLE);
-                requestTrainerNavText.setVisibility(View.VISIBLE);
-                foodChartNavText.setVisibility(View.GONE);*/
-            }
-            else if(!IsTrainerProfile && sp.getString("ProfileType", null).equals("Trainer")){
-               /* profileActionView.setVisibility(View.VISIBLE);
-                requestTrainerNavText.setVisibility(View.GONE);*/
-                subscriptionRemoveBtn.setVisibility(View.GONE);
-                //foodChartNavText.setVisibility(View.VISIBLE);
-            }
-        }
         path = userType+ "/" + userId;
-
 
         if (userType.equals("Trainer")){
             ratingTraineesLayout.setVisibility(View.VISIBLE);
             profileTrainerDetailsLayout.setVisibility(View.VISIBLE);
             profileTraineeDetailsLayout.setVisibility(View.GONE);
-            /*experienceRelativeLay.setVisibility(View.VISIBLE);
-            subscriptionDescriptionRelativeLay.setVisibility(View.VISIBLE);
-            subscriptionFeesRelativeLay.setVisibility(View.VISIBLE);*/
-            //navigationView.findViewById(R.id.nav_trainees).setVisibility(View.GONE);
         }
         else {
             ratingTraineesLayout.setVisibility(View.GONE);
             profileTrainerDetailsLayout.setVisibility(View.GONE);
             profileTraineeDetailsLayout.setVisibility(View.VISIBLE);
-            /*subscriptionTrainerRelativeLay.setVisibility(View.VISIBLE);
-            subscriptionTypeRelativeLay.setVisibility(View.VISIBLE);
-            subscriptionExtendRelativeLay.setVisibility(View.VISIBLE);*/
 
         }
 
@@ -698,10 +658,11 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                 }
                 else{
                     Trainee trainee = snapshot.getValue(Trainee.class);
-                    if(extendReadonly && trainee.getTrainerId()!= null && trainee.getTrainerId()!="") {
-                        subscriptionExtendRelativeLay.setVisibility(View.VISIBLE);
+                    if(trainee.getTrainerId()!= null && trainee.getTrainerId()!="") {
 
                         if (trainee.getSubscriptionEndDate()!=null){
+                            System.out.println("subscriptionExtendRelativeLay");
+                            subscriptionExtendRelativeLay.setVisibility(View.VISIBLE);
                             Date endDate = trainee.getSubscriptionEndDate();
                             SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
                             txtSubscriptionDate.setText(formatDate.format(endDate));
@@ -709,9 +670,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
 
                         else{
                             subscriptionExtendRelativeLay.setVisibility(View.GONE);
-                            extend.setVisibility(View.GONE);
-                            subscriptionRemoveBtn.setVisibility(View.GONE);
-                            txtSubscriptionDate.setText("--");
+                            //txtSubscriptionDate.setText("--");
                         }
 
                     }
@@ -723,8 +682,6 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                         profileSubscriptionTrainer.setText("No Trainer assigned");
                         profileSubscriptionTrainer.setTextColor(getResources().getColor(R.color.orange));
                         subscriptionExtendRelativeLay.setVisibility(View.GONE);
-                        extend.setVisibility(View.GONE);
-                        subscriptionRemoveBtn.setVisibility(View.GONE);
                     }
 
                 }
@@ -804,9 +761,8 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View option) {
-        if (!readonly) {
 
-            switch (option.getId()) {
+        switch (option.getId()) {
                 case R.id.toolBarNotification:
                     option.startAnimation(buttonBounce);
                     System.out.println("toolbar");
@@ -857,7 +813,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                     break;
 
             }
-        }
+
     }
 
     private void FileChooser()
