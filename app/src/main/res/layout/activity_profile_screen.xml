@@ -398,9 +398,9 @@
                                         android:layout_centerVertical="true"
                                         android:layout_toRightOf="@id/profileResetPassImage"
                                         android:fontFamily="@font/poppins_medium"
-                                        android:text="Reset Password"
+                                        android:text="@string/resetPassword"
                                         android:textColor="@color/themeColourOne"
-                                        android:textSize="12sp"
+                                        android:textSize="14sp"
                                         android:textStyle="bold" />
 
                                 </RelativeLayout>

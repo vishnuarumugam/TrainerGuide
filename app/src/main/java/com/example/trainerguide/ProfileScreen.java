@@ -43,6 +43,7 @@ import com.example.trainerguide.models.Notification;
 import com.example.trainerguide.models.Trainee;
 import com.example.trainerguide.models.Trainer;
 import com.example.trainerguide.models.User;
+import com.example.trainerguide.validation.UserInputValidation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -102,7 +103,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
     //ProfileScreen Variables
     private ImageButton profileImage;
     private TextView profileUsername, traineesNumber, trainerRating, profileType, profilePhoneNumber, profileEmailId, profileGender, profileDob, profileExperience, profileSubscriptionFees, profileSubscriptionDescription, profileSubscriptionTrainer;
-    private RelativeLayout  dobRelativeLay, experienceRelativeLay, subscriptionTrainerRelativeLay, subscriptionFeesRelativeLay, subscriptionDescriptionRelativeLay, subscriptionExtendRelativeLay;
+    private RelativeLayout  dobRelativeLay, experienceRelativeLay, subscriptionTrainerRelativeLay, subscriptionFeesRelativeLay, subscriptionDescriptionRelativeLay, subscriptionExtendRelativeLay, profilePhoneRelativeLay, profileResetPassRelativeLay;
     private TabLayout profileTabLayout;
     private RelativeLayout accountTabView, profileTabView, profileLogoutLayout, profileTraineeDetailsLayout, profileTrainerDetailsLayout;
     private LinearLayout ratingTraineesLayout;
@@ -128,10 +129,10 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
     Dialog profileDialog;
     ImageView profileDialogClose;
     TextView profileDobDialogTitle, profileExperienceDialogTitle,  profileSubscriptionFeesDialogTitle, profileSubscriptionDescDialogTitle, txtSubscriptionDate;
-    LinearLayout profileDobDialogTitleLin,  profileExperienceDialogTitleLin, profileSubscriptionFeesDialogTitleLin, profileSubscriptionDescDialogTitleLin;
+    LinearLayout profileDobDialogTitleLin,  profileExperienceDialogTitleLin, profileSubscriptionFeesDialogTitleLin, profileSubscriptionDescDialogTitleLin, profileMobileDialogTitleLin;
     DatePicker profileDobDialogDatePicker;
-    Button profileDobDialogUpdate,  profileExperienceDialogUpdate,  profileSubscriptionFeesDialogUpdate, profileSubscriptionDescDialogUpdate;
-    EditText  profileExperienceDialogInput, profileSubscriptionFeesDialogInput, profileSubscriptionDescDialogInput;
+    Button profileDobDialogUpdate,  profileExperienceDialogUpdate,  profileSubscriptionFeesDialogUpdate, profileSubscriptionDescDialogUpdate, profileMobileDialogUpdate;
+    EditText  profileExperienceDialogInput, profileSubscriptionFeesDialogInput, profileSubscriptionDescDialogInput, profileMobileDialogInput;
 
 
     @Override
@@ -198,7 +199,11 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         subscriptionFeesRelativeLay = findViewById(R.id.subscriptionFeesRelativeLay);
         subscriptionDescriptionRelativeLay = findViewById(R.id.subscriptionDescriptionRelativeLay);
         subscriptionExtendRelativeLay = findViewById(R.id.subscriptionExtendRelativeLay);
+        profilePhoneRelativeLay = findViewById(R.id.profilePhoneRelativeLay);
+        profileResetPassRelativeLay = findViewById(R.id.profileResetPassRelativeLay);
         subscriptionExtendRelativeLay.setVisibility(View.GONE);
+
+
 
 
 
@@ -368,6 +373,9 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         profileExperienceDialogUpdate = profileDialog.findViewById(R.id.profileExperienceDialogUpdate);
         profileExperienceDialogInput = profileDialog.findViewById(R.id.profileExperienceDialogInput);
 
+        profileMobileDialogTitleLin = profileDialog.findViewById(R.id.profileMobileDialogTitleLin);
+        profileMobileDialogUpdate = profileDialog.findViewById(R.id.profileMobileDialogUpdate);
+        profileMobileDialogInput = profileDialog.findViewById(R.id.profileMobileDialogInput);
 
         profileSubscriptionFeesDialogTitle = profileDialog.findViewById(R.id.profileSubscriptionFeesDialogTitle);
         profileSubscriptionFeesDialogInput = profileDialog.findViewById(R.id.profileSubscriptionFeesDialogInput);
@@ -382,15 +390,16 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         subscriptionTrainerRelativeLay.setOnClickListener(this);
         subscriptionFeesRelativeLay.setOnClickListener(this);
         subscriptionDescriptionRelativeLay.setOnClickListener(this);
+        profilePhoneRelativeLay.setOnClickListener(this);
+        profileResetPassRelativeLay.setOnClickListener(this);
 
         //ToolBar
         toolBarNotification.setOnClickListener(this);
 
         //Dialog update
         profileDobDialogUpdate.setOnClickListener(this);
-
         profileExperienceDialogUpdate.setOnClickListener(this);
-
+        profileMobileDialogUpdate.setOnClickListener(this);
         profileSubscriptionFeesDialogUpdate.setOnClickListener(this);
         profileSubscriptionDescDialogUpdate.setOnClickListener(this);
 
@@ -532,6 +541,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         profileExperienceDialogTitleLin.setVisibility(View.GONE);
         profileSubscriptionFeesDialogTitleLin.setVisibility(View.GONE);
         profileSubscriptionDescDialogTitleLin.setVisibility(View.GONE);
+        profileMobileDialogTitleLin.setVisibility(View.GONE);
 
         if (profileType.equals("DateOfBirth")){
             profileDobDialogTitleLin.setVisibility(View.VISIBLE);
@@ -570,6 +580,13 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
             profileDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             profileDialog.show();
 
+        }
+
+        else if (profileType.equals("PhoneNumber")){
+            profileMobileDialogTitleLin.setVisibility(View.VISIBLE);
+            profileMobileDialogInput.setText(profilePhoneNumber.getText().toString());
+            profileDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            profileDialog.show();
         }
 
         else if(profileType.equals("SubscriptionFees")){
@@ -781,6 +798,37 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                 case R.id.subscriptionDescriptionRelativeLay:
                     ShowDialog("SubscriptionDescription");
                     break;
+                case R.id.profilePhoneRelativeLay:
+                    ShowDialog("PhoneNumber");
+                    break;
+            case R.id.profileResetPassRelativeLay:
+                FirebaseAuth fAuth;
+                fAuth = FirebaseAuth.getInstance();
+
+                fAuth.sendPasswordResetEmail(user.getEmail().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(ProfileScreen.this, "Password Link sent to your Email. Please reset your password and login again", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                            SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                            SharedPreferences.Editor editor = settings.edit();
+                            editor.remove("userId");
+                            editor.remove("ProfileType");
+                            editor.remove("IsLoggedIn");
+                            editor.commit();
+                            finish();
+
+                        } else {
+                            //Toast.makeText(ForgotPasswordForm.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ProfileScreen.this, "Some error occurred. Please try after sometime", Toast.LENGTH_SHORT).show();
+
+                        }
+
+                    }
+                });
+
+                break;
                 case R.id.profileDobDialogUpdate:
                     option.startAnimation(buttonBounce);
                     updateProfile("dateOfBirth", userProfileUpdateValue);
@@ -789,7 +837,10 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                     option.startAnimation(buttonBounce);
                     updateProfile("experience", profileExperienceDialogInput.getText().toString());
                     break;
-
+                case R.id.profileMobileDialogUpdate:
+                    option.startAnimation(buttonBounce);
+                    updateProfile("phoneNumber", profileMobileDialogInput.getText().toString());
+                    break;
                 case R.id.profileSubscriptionFeesDialogUpdate:
                     option.startAnimation(buttonBounce);
                     updateProfile("subscriptionFees", profileSubscriptionFeesDialogInput.getText().toString());
@@ -971,6 +1022,20 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
 
             }
 
+
+        }
+
+        else if (userField.equals("phoneNumber")){
+            UserInputValidation userInputValidation = new UserInputValidation();
+            String mobileNumberValid = userInputValidation.mobileNumberValidation(value);
+
+            if (!mobileNumberValid.equals("Valid")) {
+                save=false;
+                profileMobileDialogInput.setError(mobileNumberValid);
+            }
+            else {
+                hash.put(userField, Long.parseLong(value));
+            }
 
         }
 

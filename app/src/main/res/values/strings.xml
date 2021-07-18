@@ -35,6 +35,7 @@
     <string name="extendSubscription">Do you want to extend the subscription?</string>
     <string name="removeSubscription">Do you want to remove the subscription?</string>
 
+    <string name="resetPassword"><u>Reset Password</u></string>
 
     <string name="title_activity_pdf_creation">Pdf_creation</string>
     <!-- Strings used for fragments for navigation -->

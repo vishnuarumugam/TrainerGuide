@@ -85,11 +85,11 @@ public class UserInputValidation {
 
         String characters = "[A-Za-z]";
 
-        if (mobileNumber.toString().isEmpty()){
+        if (mobileNumber.isEmpty()){
             return "Mobile number cannot be empty";
         }
 
-        else if ((mobileNumber.toString().matches(characters)) && (mobileNumber.length()<10)){
+        else if ((mobileNumber.matches(characters)) || (mobileNumber.length()<10)){
             return "Invalid Mobile number";
         }
 
