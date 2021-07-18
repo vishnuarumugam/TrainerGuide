@@ -45,6 +45,15 @@
                         android:orientation="vertical"
                         android:padding="10dp">
 
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            android:id="@+id/yourTrainerText"
+                            android:layout_gravity="center"
+                            android:fontFamily="@font/poppins_medium"
+                            />
+
                         <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -58,9 +67,10 @@
 
                                 <TextView
                                     android:id="@+id/txtNameLabel"
-                                    android:layout_width="80dp"
+                                    android:layout_width="100dp"
                                     android:layout_height="wrap_content"
                                     android:layout_centerVertical="true"
+                                    android:fontFamily="@font/poppins_medium"
                                     android:layout_marginStart="15dp"
                                     android:layout_marginTop="15dp"
                                     android:text="Name :" />
@@ -70,6 +80,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_centerVertical="true"
+                                    android:fontFamily="@font/poppins_medium"
                                     android:layout_marginStart="15dp"
                                     android:layout_marginTop="15dp"
                                     android:layout_toRightOf="@+id/txtNameLabel"
@@ -91,9 +102,10 @@
 
                                 <TextView
                                     android:id="@+id/txtExperienceLabel"
-                                    android:layout_width="80dp"
+                                    android:layout_width="100dp"
                                     android:layout_height="wrap_content"
                                     android:layout_centerVertical="true"
+                                    android:fontFamily="@font/poppins_medium"
                                     android:layout_marginStart="15dp"
                                     android:layout_marginTop="15dp"
                                     android:text="Experiance :" />
@@ -103,6 +115,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_centerVertical="true"
+                                    android:fontFamily="@font/poppins_medium"
                                     android:layout_marginStart="15dp"
                                     android:layout_marginTop="15dp"
                                     android:layout_toRightOf="@+id/txtExperienceLabel"
@@ -125,9 +138,10 @@
 
                                 <TextView
                                     android:id="@+id/txtDescriptionLabel"
-                                    android:layout_width="80dp"
+                                    android:layout_width="100dp"
                                     android:layout_height="wrap_content"
                                     android:layout_centerVertical="true"
+                                    android:fontFamily="@font/poppins_medium"
                                     android:layout_marginStart="15dp"
                                     android:layout_marginTop="15dp"
                                     android:text="Description :" />
@@ -137,6 +151,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_centerVertical="true"
+                                    android:fontFamily="@font/poppins_medium"
                                     android:layout_marginStart="15dp"
                                     android:layout_marginTop="15dp"
                                     android:layout_toRightOf="@+id/txtDescriptionLabel"
@@ -157,9 +172,10 @@
 
                                 <TextView
                                     android:id="@+id/txtPhnNoLabel"
-                                    android:layout_width="80dp"
+                                    android:layout_width="100dp"
                                     android:layout_height="wrap_content"
                                     android:layout_centerVertical="true"
+                                    android:fontFamily="@font/poppins_medium"
                                     android:layout_marginStart="15dp"
                                     android:layout_marginTop="15dp"
                                     android:text="Mobile :" />
@@ -169,6 +185,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_centerVertical="true"
+                                    android:fontFamily="@font/poppins_medium"
                                     android:layout_marginStart="15dp"
                                     android:layout_marginTop="15dp"
                                     android:layout_toRightOf="@+id/txtPhnNoLabel"
@@ -189,11 +206,12 @@
 
                                 <TextView
                                     android:id="@+id/txtEmailLabel"
-                                    android:layout_width="80dp"
+                                    android:layout_width="100dp"
                                     android:layout_height="wrap_content"
                                     android:layout_centerVertical="true"
                                     android:layout_marginStart="15dp"
                                     android:layout_marginTop="15dp"
+                                    android:fontFamily="@font/poppins_medium"
                                     android:text="Email :" />
 
                                 <TextView
@@ -203,6 +221,7 @@
                                     android:layout_centerVertical="true"
                                     android:layout_marginStart="15dp"
                                     android:layout_marginTop="15dp"
+                                    android:fontFamily="@font/poppins_medium"
                                     android:layout_toRightOf="@+id/txtEmailLabel"
                                     android:text="" />
                             </RelativeLayout>
@@ -222,36 +241,46 @@
 
                                 <TextView
                                     android:id="@+id/txtRatingLabel"
-                                    android:layout_width="80dp"
+                                    android:layout_width="100dp"
                                     android:layout_height="wrap_content"
                                     android:layout_centerVertical="true"
                                     android:layout_marginStart="15dp"
                                     android:layout_marginTop="15dp"
+                                    android:fontFamily="@font/poppins_medium"
                                     android:text="Rating :" />
 
                                 <RatingBar
                                     android:id="@+id/ratingBar"
-                                    style="@style/RatingBar"
+                                    android:isIndicator="false"
+                                    style="?android:attr/ratingBarStyleSmall"
+                                    android:theme="@style/RatingBar"
+                                    android:stepSize="0.5"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_centerVertical="true"
                                     android:layout_marginStart="15dp"
                                     android:layout_marginTop="15dp"
                                     android:layout_toRightOf="@+id/txtRatingLabel"
-                                    android:numStars="5"
-                                    android:rating="2.5" />
+                                    android:numStars="5" />
+                                <Button
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/ratingSubmit"
+                                    android:visibility="gone"
+                                    android:layout_alignParentEnd="true"
+                                    android:text="Submit"/>
+
                                 <TextView
                                     android:id="@+id/txtUserCount"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_centerVertical="true"
+                                    android:fontFamily="@font/poppins_medium"
                                     android:layout_marginStart="15dp"
                                     android:layout_marginTop="15dp"
-                                    android:layout_toRightOf="@+id/ratingBar"
-                                    android:text="(1)" />
+                                    android:layout_toRightOf="@+id/ratingBar"/>
                             </RelativeLayout>
                         </androidx.cardview.widget.CardView>
-
 
                         <Button
                             android:id="@+id/btnRequest"

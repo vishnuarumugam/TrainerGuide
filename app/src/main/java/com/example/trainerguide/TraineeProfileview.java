@@ -13,6 +13,9 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -33,10 +36,12 @@ import com.squareup.picasso.Picasso;
 
 public class TraineeProfileview extends AppCompatActivity {
 
-    TextView name, goal, bmi;
+    TextView name, goal, bmi, weight, height, mobile, email;
     ImageView profileimg;
-    Button requestbtn;
+    Button createFoodChart;
     private String traineeuserId, path, navScreen;
+    Animation buttonBounce;
+    private Trainee user;
 
     private ProgressDialog progressDialog;
 
@@ -54,6 +59,7 @@ public class TraineeProfileview extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trainee_profileview);
 
+        buttonBounce= AnimationUtils.loadAnimation(this, R.anim.button_bounce);
 
         traineeuserId = getIntent().getStringExtra("userId");
         navScreen = getIntent().getStringExtra("Screen");
@@ -72,8 +78,13 @@ public class TraineeProfileview extends AppCompatActivity {
         name = findViewById(R.id.txtTraineeName);
         goal = findViewById(R.id.txtTraineeGoals);
         bmi = findViewById(R.id.txtTraineeBmi);
+        weight = findViewById(R.id.txtTraineeWeight);
+        height = findViewById(R.id.txtTraineeHeight);
+        mobile = findViewById(R.id.txtTraineePhnNo);
+        email = findViewById(R.id.txtTraineeEmail);
         //requestbtn = findViewById(R.id.btnRequest);
         profileimg = findViewById(R.id.traineeImage);
+        createFoodChart = findViewById(R.id.btnCreateFoodchart);
 
         //Toolbar customisation
         setSupportActionBar(toolbar);
@@ -88,6 +99,19 @@ public class TraineeProfileview extends AppCompatActivity {
         //Menu Item variables
         profileMenu = findViewById(R.id.nav_profile);
         //traineeMenu = findViewById(R.id.nav_trainees);
+
+        createFoodChart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createFoodChart.startAnimation(buttonBounce);
+                Intent intent = new Intent(TraineeProfileview.this,PrepareFoodChart.class);
+                intent.putExtra("userId",user.getUserId());
+                intent.putExtra("userName", user.getName());
+                intent.putExtra("totalCalories", user.getBmr().doubleValue());
+                startActivity(intent);
+                finish();
+            }
+        });
 
 //Method to re-direct the page from menu
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -141,7 +165,7 @@ public class TraineeProfileview extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 System.out.println("********OnDataChange*******");
-                Trainee user = snapshot.getValue(Trainee.class);
+                user = snapshot.getValue(Trainee.class);
                 System.out.println("********" + user + "*******");
 
                 Picasso.get().load(user.getImage())
@@ -153,6 +177,10 @@ public class TraineeProfileview extends AppCompatActivity {
                 name.setText(user.getName());
                 goal.setText(user.getSubscriptionType());
                 bmi.setText(user.getBmi().toString());
+                weight.setText(String.valueOf(user.getWeight()));
+                height.setText(String.valueOf(user.getHeight()));
+                mobile.setText(String.valueOf(user.getPhoneNumber()));
+                email.setText(String.valueOf(user.getEmail()));
 
                 //Dismiss Progress Dialog
                 progressDialog.dismiss();
@@ -163,8 +191,6 @@ public class TraineeProfileview extends AppCompatActivity {
 
             }
         });
-
-
     }
 
     @Override

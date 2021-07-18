@@ -9,7 +9,25 @@ public class Trainer extends User {
     private Double subscriptionFees;
     private String subscriptionDescription;
     private Double experience;
+    private double rating;
+    private double ratedTraineescount;
 
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+
+    public double getRatedTraineescount() {
+        return ratedTraineescount;
+    }
+
+    public void setRatedTraineescount(double ratedTraineescount) {
+        this.ratedTraineescount = ratedTraineescount;
+    }
 
     public void setUser(UserMetaData user) {
         if (this.usersList == null) {

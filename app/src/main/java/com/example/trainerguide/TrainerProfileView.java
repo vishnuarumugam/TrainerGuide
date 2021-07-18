@@ -7,13 +7,17 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -42,11 +46,13 @@ import java.util.UUID;
 
 public class TrainerProfileView extends AppCompatActivity {
 
-    TextView name, experience, ratingUserCount, description, email, mobile;
+    TextView name, experience, ratingUserCount, description, email, mobile, yourTrainer;
     RatingBar ratingBar;
     ImageView profileimg;
-    Button requestbtn;
-    private String traineruserId, path,navScreen;
+    Button requestbtn, ratingSubmit;
+    private String traineruserId, path,navScreen, userType;
+
+    Animation buttonBounce;
 
     private ProgressDialog progressDialog;
 
@@ -58,7 +64,8 @@ public class TrainerProfileView extends AppCompatActivity {
     private NavigationView navigationView;
     private Toolbar toolbar;
     private MenuItem profileMenu, logoutMenu, shareMenu, ratingMenu, traineeMenu;
-
+    private Trainee trainee;
+    private Trainer trainer;
 
 
     @Override
@@ -69,6 +76,8 @@ public class TrainerProfileView extends AppCompatActivity {
         traineruserId = getIntent().getStringExtra("userId");
         navScreen = getIntent().getStringExtra("Screen");
 
+        // loading Animation from
+        buttonBounce= AnimationUtils.loadAnimation(this, R.anim.button_bounce);
 
         //Navigation view variables
         drawerLayout = findViewById(R.id.trainer_view_drawer_layout);
@@ -80,7 +89,7 @@ public class TrainerProfileView extends AppCompatActivity {
 
         progressDialog = new ProgressDialog(this);
 
-        path = "Trainer/" + traineruserId;
+        path = "Trainer/" + (traineruserId != null ? traineruserId : FirebaseAuth.getInstance().getUid());
 
         name = findViewById(R.id.txtName);
         experience = findViewById(R.id.txtExperience);
@@ -91,11 +100,15 @@ public class TrainerProfileView extends AppCompatActivity {
         ratingBar = findViewById(R.id.ratingBar);
         email = findViewById(R.id.txtEmail);
         mobile = findViewById(R.id.txtPhnNo);
+        ratingSubmit = findViewById(R.id.ratingSubmit);
+        yourTrainer = findViewById(R.id.yourTrainerText);
+
+        ratingBar.setEnabled(false);
 
         final SharedPreferences sp;
         sp= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
-        final String userType = sp.getString("ProfileType",null);
+        userType = sp.getString("ProfileType",null);
 
         if(userType.equals("Trainer"))
         {
@@ -113,44 +126,42 @@ public class TrainerProfileView extends AppCompatActivity {
 
         //Menu Item variables
         profileMenu = findViewById(R.id.nav_profile);
-//        traineeMenu = findViewById(R.id.nav_trainees);
 
         requestbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(path+"/Notification");
-                final DatabaseReference databaseReferenceAdd = FirebaseDatabase.getInstance().getReference("User/"+ FirebaseAuth.getInstance().getCurrentUser().getUid());
+                final DatabaseReference databaseReferenceTrainer = FirebaseDatabase.getInstance().getReference(path + "/Notification");
+                final DatabaseReference databaseReferenceTrainee = FirebaseDatabase.getInstance().getReference("User/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
 
-                databaseReferenceAdd.addListenerForSingleValueEvent(new ValueEventListener() {
+                requestbtn.setEnabled(false);
+                requestbtn.setBackgroundColor(getResources().getColor(R.color.themeColourFour));
+                requestbtn.startAnimation(buttonBounce);
+                databaseReferenceTrainee.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         Trainee trainee = snapshot.getValue(Trainee.class);
-
-                        if(trainee.getTrainerId().equals("") || trainee.getTrainerId() == null) {
+                        System.out.println(trainee.getTrainerId());
+                        if (trainee.getTrainerId() == null || trainee.getTrainerId().equals("")) {
                             if (trainee.isTrainer() == false) {
+                                //Create Notification for Trainer
                                 Notification notify = new Notification();
                                 notify.setNotificationId(UUID.randomUUID().toString());
-                                notify.setNotification(trainee.getName()+" requested for joining as your trainee");
+                                notify.setNotification(trainee.getName() + " requested for joining as your trainee");
+                                notify.setNotificationHeader("New subscription request notification");
                                 notify.setAddedDate(Calendar.getInstance().getTime());
                                 notify.setNotificationType("Request");
                                 notify.setTrainer(false);
                                 notify.setUserId(trainee.getUserId());
-/*
 
-                                HashMap<String, Notification> notification = new HashMap<>();
-                                HashMap hash= new HashMap();
+                                databaseReferenceTrainer.child(notify.getNotificationId()).setValue(notify);
 
-                                notification.put(notify.getNotificationId(),notify);
-                                hash.put("Notification",notification);
-*/
-
-                                databaseReference.child(notify.getNotificationId()).setValue(notify);
+                                Toast.makeText(TrainerProfileView.this, "Request sent to Trainer", Toast.LENGTH_SHORT).show();
+                                requestbtn.setEnabled(false);
+                                requestbtn.setBackgroundColor(getResources().getColor(R.color.themeColourFour));
                             }
-                        }
-                        else
-                        {
+                        } else {
                             AlertDialogBox alertDialogBox = new AlertDialogBox();
-                            alertDialogBox.show(getSupportFragmentManager(),"Alert");
+                            alertDialogBox.show(getSupportFragmentManager(), "Alert");
                         }
 
                     }
@@ -161,6 +172,47 @@ public class TrainerProfileView extends AppCompatActivity {
                     }
                 });
             }
+        });
+
+        ratingSubmit.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View arg0) {
+                //Getting the rating and displaying it on the toast
+                double userRating=ratingBar.getRating();
+                Toast.makeText(getApplicationContext(), String.valueOf(userRating)+" Rating Given to Trainer " + trainer.getName(), Toast.LENGTH_SHORT).show();
+
+                final DatabaseReference databaseReferenceTrainer = FirebaseDatabase.getInstance().getReference(path);
+                DatabaseReference databaseReferenceTrainee = FirebaseDatabase.getInstance().getReference("User/" + FirebaseAuth.getInstance().getUid());
+
+                HashMap hash= new HashMap();
+                HashMap hashRating= new HashMap();
+
+                hash.put("lastRatedDttm",Calendar.getInstance().getTime());
+                double totalRating = 0;
+                int usersCount = 0;
+
+                if(trainer != null && trainer.getRating() > 0) {
+                    //Rating Calculation
+                    totalRating = trainer.getRating();
+                    usersCount = (int) trainer.getRatedTraineescount();
+                    totalRating = ((totalRating * usersCount) + userRating) / (usersCount + 1);
+                }
+                else
+                {
+                    totalRating = userRating;
+                }
+                hashRating.put("rating", totalRating);
+                hashRating.put("ratedTraineescount", usersCount+1);
+
+                //Update Ratings
+                databaseReferenceTrainer.updateChildren(hashRating);
+
+                //Update LastModDttm
+                databaseReferenceTrainee.updateChildren(hash);
+
+                PopulateUserDetails();
+            }
+
         });
 
         //Method to re-direct the page from menu
@@ -202,10 +254,10 @@ public class TrainerProfileView extends AppCompatActivity {
     }
 
 
-
     public void PopulateUserDetails(){
 
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(path);
+        DatabaseReference databaseReferenceTrainer = FirebaseDatabase.getInstance().getReference(path);
+        DatabaseReference databaseReferenceTrainee = FirebaseDatabase.getInstance().getReference("User/" + FirebaseAuth.getInstance().getUid());
         //Show Progress Dialog
         progressDialog.show();
         //Set Content
@@ -213,28 +265,66 @@ public class TrainerProfileView extends AppCompatActivity {
         //Set Transparent Background
         progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        databaseReferenceTrainer.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 System.out.println("********OnDataChange*******");
-                Trainer user = snapshot.getValue(Trainer.class);
-                System.out.println("********"+user+"*******");
+                trainer = snapshot.getValue(Trainer.class);
+                System.out.println("********"+trainer+"*******");
 
-                Picasso.get().load(user.getImage())
+                Picasso.get().load(trainer.getImage())
                         .placeholder(R.drawable.ic_share)
                         .fit()
                         .centerCrop()
                         .into(profileimg);
-                name.setText(user.getName());
-                experience.setText(String.valueOf(user.getExperience())+" Year(s)");
-                description.setText(user.getSubscriptionDescription() != null ? user.getSubscriptionDescription() : "Description not provided");
-                mobile.setText(String.valueOf(user.getPhoneNumber()));
-                email.setText(user.getEmail());
+                name.setText(trainer.getName());
+                experience.setText(String.valueOf(trainer.getExperience())+" Year(s)");
+                description.setText(trainer.getSubscriptionDescription() != null ? trainer.getSubscriptionDescription() : "Description not provided");
+                mobile.setText(String.valueOf(trainer.getPhoneNumber()));
+                email.setText(trainer.getEmail());
                 ratingBar.setNumStars(5);
-                ratingBar.setRating(4);
-                ratingUserCount.setText("(3)");
+                if(trainer !=null) {
+                    ratingBar.setRating((float)trainer.getRating());
+                    ratingUserCount.setText("(" + String.valueOf((int) trainer.getRatedTraineescount()) + ")");
+                }
+                else
+                {
+                    //ratingBar.setRating(5);
+                    ratingUserCount.setText("-");
+                }
                 //Dismiss Progress Dialog
                 progressDialog.dismiss();
+
+                if(! userType.equals("Trainer")) {
+                    databaseReferenceTrainee.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            System.out.println("********OnDataChange*******");
+                            trainee = snapshot.getValue(Trainee.class);
+                            if (trainee != null && trainee.getTrainerId() != null && trainee.getTrainerId().equals(traineruserId)) {
+                                System.out.println(Calendar.getInstance().getTime().getDate());
+
+                                long difference = Calendar.getInstance().getTimeInMillis() - trainee.getLastRatedDttm().getTime();
+                                int days = (int) (difference / (1000 * 60 * 60 * 24));
+                                if (trainee.getLastRatedDttm() != null) {
+                                    ratingSubmit.setVisibility(View.VISIBLE);
+                                    ratingBar.setEnabled(true);
+                                }
+
+                                if (trainer != null && trainer.getUserId().equals(trainee.getTrainerId())) {
+                                    requestbtn.setVisibility(View.GONE);
+                                    yourTrainer.setVisibility(View.VISIBLE);
+                                    yourTrainer.setText("Your Trainer !!!");
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                }
             }
 
             @Override
@@ -242,6 +332,8 @@ public class TrainerProfileView extends AppCompatActivity {
 
             }
         });
+
+
     }
 
 

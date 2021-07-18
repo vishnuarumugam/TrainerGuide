@@ -57,6 +57,7 @@
                                     android:layout_width="80dp"
                                     android:layout_height="wrap_content"
                                     android:layout_centerVertical="true"
+                                    android:fontFamily="@font/poppins_medium"
                                     android:layout_marginStart="15dp"
                                     android:layout_marginTop="15dp"
                                     android:text="Name :" />
@@ -66,10 +67,11 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_centerVertical="true"
+                                    android:fontFamily="@font/poppins_medium"
                                     android:layout_marginStart="15dp"
                                     android:layout_marginTop="15dp"
                                     android:layout_toRightOf="@+id/txtNameLabel"
-                                    android:text="Name" />
+                                    android:text="" />
 
                             </RelativeLayout>
 
@@ -91,6 +93,7 @@
                                     android:layout_width="80dp"
                                     android:layout_height="wrap_content"
                                     android:layout_centerVertical="true"
+                                    android:fontFamily="@font/poppins_medium"
                                     android:layout_marginStart="15dp"
                                     android:layout_marginTop="15dp"
                                     android:text="Goal :" />
@@ -100,14 +103,154 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_centerVertical="true"
+                                    android:fontFamily="@font/poppins_medium"
                                     android:layout_marginStart="15dp"
                                     android:layout_marginTop="15dp"
                                     android:layout_toRightOf="@+id/txtGoalsLabel"
-                                    android:text="Goal" />
+                                    android:text="" />
 
                             </RelativeLayout>
                         </androidx.cardview.widget.CardView>
 
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            app:cardBackgroundColor="#F6F5F3"
+                            app:cardCornerRadius="10dp">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <TextView
+                                    android:id="@+id/txtPhnNoLabelTrainee"
+                                    android:layout_width="80dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:fontFamily="@font/poppins_medium"
+                                    android:layout_marginStart="15dp"
+                                    android:layout_marginTop="15dp"
+                                    android:text="Mobile :" />
+
+                                <TextView
+                                    android:id="@+id/txtTraineePhnNo"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:fontFamily="@font/poppins_medium"
+                                    android:layout_marginStart="15dp"
+                                    android:layout_marginTop="15dp"
+                                    android:layout_toRightOf="@+id/txtPhnNoLabelTrainee"
+                                    android:text="" />
+
+                            </RelativeLayout>
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            app:cardBackgroundColor="#F6F5F3"
+                            app:cardCornerRadius="10dp">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <TextView
+                                    android:id="@+id/txtEmailLabel"
+                                    android:layout_width="80dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:fontFamily="@font/poppins_medium"
+                                    android:layout_marginStart="15dp"
+                                    android:layout_marginTop="15dp"
+                                    android:text="Email :" />
+
+                                <TextView
+                                    android:id="@+id/txtTraineeEmail"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:fontFamily="@font/poppins_medium"
+                                    android:layout_marginStart="15dp"
+                                    android:layout_marginTop="15dp"
+                                    android:layout_toRightOf="@+id/txtEmailLabel"
+                                    android:text="" />
+
+                            </RelativeLayout>
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            app:cardBackgroundColor="#F6F5F3"
+                            app:cardCornerRadius="10dp">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <TextView
+                                    android:id="@+id/txtWeightLabel"
+                                    android:layout_width="80dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:fontFamily="@font/poppins_medium"
+                                    android:layout_marginStart="15dp"
+                                    android:layout_marginTop="15dp"
+                                    android:text="Weight :" />
+
+                                <TextView
+                                    android:id="@+id/txtTraineeWeight"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:fontFamily="@font/poppins_medium"
+                                    android:layout_marginStart="15dp"
+                                    android:layout_marginTop="15dp"
+                                    android:layout_toRightOf="@+id/txtWeightLabel"
+                                    android:text="" />
+
+                            </RelativeLayout>
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            app:cardBackgroundColor="#F6F5F3"
+                            app:cardCornerRadius="10dp">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <TextView
+                                    android:id="@+id/txtHeightLabel"
+                                    android:layout_width="80dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:fontFamily="@font/poppins_medium"
+                                    android:layout_marginStart="15dp"
+                                    android:layout_marginTop="15dp"
+                                    android:text="Height :" />
+
+                                <TextView
+                                    android:id="@+id/txtTraineeHeight"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:fontFamily="@font/poppins_medium"
+                                    android:layout_marginStart="15dp"
+                                    android:layout_marginTop="15dp"
+                                    android:layout_toRightOf="@+id/txtHeightLabel"
+                                    android:text="" />
+
+                            </RelativeLayout>
+                        </androidx.cardview.widget.CardView>
 
                         <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
@@ -125,6 +268,7 @@
                                     android:layout_width="80dp"
                                     android:layout_height="wrap_content"
                                     android:layout_centerVertical="true"
+                                    android:fontFamily="@font/poppins_medium"
                                     android:layout_marginStart="15dp"
                                     android:layout_marginTop="15dp"
                                     android:text="Bmi :" />
@@ -134,6 +278,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_centerVertical="true"
+                                    android:fontFamily="@font/poppins_medium"
                                     android:layout_marginStart="15dp"
                                     android:layout_marginTop="15dp"
                                     android:layout_toRightOf="@+id/txtBmiLabel"
@@ -141,6 +286,16 @@
 
                             </RelativeLayout>
                         </androidx.cardview.widget.CardView>
+
+                        <Button
+                            android:id="@+id/btnCreateFoodchart"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:backgroundTint="@color/yellow"
+                            android:layout_marginTop="50dp"
+                            android:text="Create Food Chart" />
+
                     </LinearLayout>
                 </RelativeLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>

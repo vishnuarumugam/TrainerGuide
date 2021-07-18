@@ -9,6 +9,7 @@ public class Trainee extends User {
     //private String foodType;
     private String subscriptionType;
     private Date subscriptionEndDate;
+    private Date lastRatedDttm;
     private List<MacroNutrient> macroNutrientDetails;
 
     public Date getSubscriptionEndDate() {
@@ -26,7 +27,15 @@ public class Trainee extends User {
         subscriptionType = subscriptionType;
     }
 
-    public Trainee(String userId, String name, String gender, Date accCreateDttm, boolean isTrainer, Date lastModDttm, String image, String email, String trainerId,Long phoneNumber) {
+    public Date getLastRatedDttm() {
+        return lastRatedDttm;
+    }
+
+    public void setLastRatedDttm(Date lastRatedDttm) {
+        this.lastRatedDttm = lastRatedDttm;
+    }
+
+    public Trainee(String userId, String name, String gender, Date accCreateDttm, boolean isTrainer, Date lastModDttm, String image, String email, String trainerId, Long phoneNumber) {
         super(userId, name, gender, accCreateDttm, isTrainer, lastModDttm, image, email,phoneNumber);
         TrainerId = trainerId;
         subscriptionType = "Not mentioned";
