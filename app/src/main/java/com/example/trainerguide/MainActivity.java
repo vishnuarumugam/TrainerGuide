@@ -4,8 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.method.HideReturnsTransformationMethod;
@@ -18,6 +20,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -52,6 +55,10 @@ public class MainActivity extends AppCompatActivity {
     private String profileType;
     private boolean isPasswordVisible;
     private CheckBox checkbox;
+    private Context context;
+    private RelativeLayout registerLayout;
+    private LinearLayout loginLayout, noInternetLayout;
+    private Button noInternetButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,18 +74,36 @@ public class MainActivity extends AppCompatActivity {
         fAuth = FirebaseAuth.getInstance();
         checkbox = findViewById(R.id.checkbox);
 
+        registerLayout = findViewById(R.id.registerLayout);
+        loginLayout = findViewById(R.id.loginLayout);
+        noInternetLayout = findViewById(R.id.noInternetLayout);
+        noInternetButton = findViewById(R.id.noInternetButton);
+
         Button loginButton = findViewById(R.id.btnLogin);
 
         final SharedPreferences sp;
         sp=PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         Boolean status = sp.getBoolean("IsLoggedIn",false);
-        System.out.println("status"+status);
 
-        if(status)
+
+
+
+        if (networkConnection()){
+            if(status)
             {
+                loginLayout.setVisibility(View.VISIBLE);
+                registerLayout.setVisibility(View.VISIBLE);
+                noInternetLayout.setVisibility(View.GONE);
                 startActivity(new Intent(getApplicationContext(),HomeScreen.class));
-            finish();
+                finish();
+            }
         }
+        else{
+            loginLayout.setVisibility(View.INVISIBLE);
+            registerLayout.setVisibility(View.GONE);
+            noInternetLayout.setVisibility(View.VISIBLE);
+        }
+
 
         checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -96,7 +121,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        userPasswordIn.setOnTouchListener(new View.OnTouchListener() {
+        noInternetButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                overridePendingTransition(0,0);
+                finish();
+
+            }
+        });
+
+       /* userPasswordIn.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 final int RIGHT = 2;
@@ -122,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 return false;
             }
-        });
+        });*/
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -246,6 +281,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    private boolean networkConnection() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getApplicationContext().getSystemService(context.CONNECTIVITY_SERVICE);
+                return connectivityManager.getActiveNetworkInfo()!=null && connectivityManager.getActiveNetworkInfo().isConnectedOrConnecting();
     }
 
     private boolean loginValidation() {

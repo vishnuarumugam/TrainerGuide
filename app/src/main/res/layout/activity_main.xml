@@ -95,7 +95,7 @@
                     android:paddingBottom="10dp">
 
                     <LinearLayout
-                        android:id="@+id/linearLayout3"
+                        android:id="@+id/loginLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="10dp"
@@ -203,7 +203,6 @@
                                     android:layout_marginRight="7dp"
                                     android:maxLength="15"
                                     android:background="@android:color/transparent"
-                                    android:drawableRight="@drawable/ic_visibility_off"
                                     android:fontFamily="@font/poppins_medium"
                                     android:hint="password"
                                     android:inputType="textPassword"
@@ -258,18 +257,78 @@
 
                     </LinearLayout>
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/noInternetLayout"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_centerVertical="true"
+                        android:elevation="10dp"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <ImageView
+                            android:layout_width="190dp"
+                            android:layout_height="120dp"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="20dp"
+                            android:elevation="5dp"
+                            android:src="@mipmap/welcome_image"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="15dp"
+                            android:layout_marginTop="30dp"
+                            android:layout_gravity="center"
+                            android:fontFamily="@font/poppins_medium"
+                            android:text="Oops! No Internet"
+                            android:textAlignment="center"
+                            android:textColor="@color/themeColourOne"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="15dp"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/poppins_light"
+                            android:text="Please check your network connection"
+                            android:textAlignment="center"
+                            android:textColor="@color/themeColourOne"
+                            android:textSize="14sp" />
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/noInternetButton"
+                            android:text="Try again"
+                            android:layout_marginTop="30dp"
+                            android:layout_gravity="center"
+                            android:fontFamily="@font/poppins_light"
+                            android:textStyle="bold"/>
+
+
+
+
+                    </LinearLayout>
 
                 </RelativeLayout>
+
+
 
             </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/registerLayout"
                 android:layout_marginVertical="10dp"
                 app:layout_constraintBottom_toBottomOf="@+id/relativeLayout2"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
+                app:layout_constraintStart_toStartOf="parent"
+                android:visibility="visible">
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
