@@ -1,16 +1,25 @@
 package com.example.trainerguide;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.view.GravityCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.android.material.card.MaterialCardView;
 
 public class SelectProfileType extends AppCompatActivity implements View.OnClickListener{
-MaterialCardView trainerCardView,traineeCardView;
+
+    private MaterialCardView trainerCardView,traineeCardView;
+    private ImageView userProfileCheck, trainerProfileCheck;
+    private Button profileSelectionProceed;
+    private String userType="";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,6 +29,13 @@ MaterialCardView trainerCardView,traineeCardView;
         traineeCardView.setOnClickListener(this);
         trainerCardView.setOnClickListener(this);
 
+        userProfileCheck = findViewById(R.id.userProfileCheck);
+        trainerProfileCheck = findViewById(R.id.trainerProfileCheck);
+        profileSelectionProceed = findViewById(R.id.profileSelectionProceed);
+        profileSelectionProceed.setOnClickListener(this);
+        userProfileCheck.setVisibility(View.INVISIBLE);
+        trainerProfileCheck.setVisibility(View.INVISIBLE);
+
     }
 
     @Override
@@ -28,19 +44,33 @@ MaterialCardView trainerCardView,traineeCardView;
         switch (v.getId())
         {
             case R.id.traineeCardView:
-                intent = new Intent(getApplicationContext(),RegistrationForm.class);
-                intent.putExtra("IsTrainer", false);
-                startActivity(intent);
-                finish();
+                userProfileCheck.setVisibility(View.VISIBLE);
+                trainerProfileCheck.setVisibility(View.INVISIBLE);
+                userType="User";
                 break;
 
             case R.id.trainerCardView:
-                intent = new Intent(getApplicationContext(),RegistrationForm.class);
-                intent.putExtra("IsTrainer", true);
-                startActivity(intent);
-                finish();
+                userProfileCheck.setVisibility(View.INVISIBLE);
+                trainerProfileCheck.setVisibility(View.VISIBLE);
+                userType="Trainer";
                 break;
-
+            case R.id.profileSelectionProceed:
+                intent = new Intent(getApplicationContext(),RegistrationForm.class);
+                if (userType.equals("Trainer")){
+                    intent.putExtra("IsTrainer", true);
+                    startActivity(intent);
+                    finish();
+                    break;
+                }
+                else if (userType.equals("User")){
+                    intent.putExtra("IsTrainer", false);
+                    startActivity(intent);
+                    finish();
+                    break;
+                }
+                else {
+                    Toast.makeText(SelectProfileType.this,"Please select a profile to proceed",Toast.LENGTH_SHORT).show();
+                }
             default:
                 break;
         }

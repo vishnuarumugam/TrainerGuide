@@ -25,6 +25,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.trainerguide.models.Trainee;
@@ -55,6 +56,7 @@ public class RegistrationForm extends AppCompatActivity{
 
     private EditText name, email, mobileNumber, password, confirmPassword;
     private TextInputLayout txtLayPassword, txtLayConPassword;
+    private TextView registerProfileType;
     private RadioGroup radioGroup;
     private RadioButton radioButton;
     private Button registerButton;
@@ -77,6 +79,15 @@ public class RegistrationForm extends AppCompatActivity{
         setContentView(R.layout.activity_registration_form);
         // Get the passed Intent value from Profile Select Activity
         IsTrainerProfile = getIntent().getExtras().getBoolean("IsTrainer");
+
+        registerProfileType = findViewById(R.id.registerProfileType);
+
+        if(IsTrainerProfile){
+            registerProfileType.setText("Trainer Profile");
+        }
+        else {
+            registerProfileType.setText("User Profile");
+        }
 
         // loading Animation from
         final Animation buttonBounce= AnimationUtils.loadAnimation(this, R.anim.button_bounce);
