@@ -23,9 +23,7 @@
 
             <include layout="@layout/common_toolbar"/>
 
-            <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 tools:context=".PrepareFoodChart">
@@ -210,10 +208,11 @@
                     <TextView
                         android:id="@+id/totalCalories"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_alignTop="@id/totalCaloriesLabel"
+                        android:layout_marginLeft="0dp"
                         android:layout_toRightOf="@+id/totalCaloriesLabel"
-                        android:text="450"/>
+                        android:text="450" />
 
 
                     <ImageButton

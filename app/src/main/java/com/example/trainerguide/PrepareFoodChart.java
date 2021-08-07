@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -82,6 +83,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -592,7 +595,8 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
         }
         selectedFoodList.clear();
         selectedFoodList.addAll(selectedFoodItems);
-        totalCaloriesLabel.setText(String.valueOf(totalCalories));
+        //totalCaloriesLabel.setText(String.valueOf(totalCalories));
+        totalCaloriesLabel.setText(String.valueOf(new BigDecimal(totalCalories).setScale(2, RoundingMode.HALF_UP).doubleValue()));
         selectedFoodSourceAdapter.notifyDataSetChanged();
     }
 
@@ -602,8 +606,11 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
         String pdfFile = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(System.currentTimeMillis());
         String filePath=  (CreateAppPath.getAppPath(PrepareFoodChart.this)+getIntent().getExtras().getString("userName").toUpperCase()+ pdfFile +".pdf");
         BaseColor colourAccent = new BaseColor(0,153,204,255);
-        BaseColor colourYellow = new BaseColor(250,204,46,255);
+        //BaseColor colourYellow = new BaseColor(250,204,46,255);
+        BaseColor themeOne = new BaseColor(26,57,66,255);
+        BaseColor themeTwo = new BaseColor(255,114,94,255);
 
+        System.out.println(filePath + "filePath");
         try{
             PdfWriter.getInstance(document,new FileOutputStream(filePath));
 
@@ -612,13 +619,13 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
             document.addCreationDate();
 
             //Custom font
-            BaseFont fontName = BaseFont.createFont("assets/fonts/brandon_medium.otf", "UTF-8", BaseFont.EMBEDDED);
-            Font appTitleFont = new Font(fontName, 36.0f, Font.NORMAL, BaseColor.BLACK);
-            Font titleFont = new Font(fontName, 28.0f, Font.BOLD, colourYellow);
-            Font itemNameFont = new Font(fontName, 24, Font.BOLD);
+            BaseFont fontName = BaseFont.createFont("res/font/poppins_medium.ttf", "UTF-8", BaseFont.EMBEDDED);
+            Font appTitleFont = new Font(fontName, 28.0f, Font.BOLD, themeOne);
+            Font titleFont = new Font(fontName, 24.0f, Font.NORMAL, themeTwo);
+            Font itemNameFont = new Font(fontName, 20, Font.BOLD, themeOne);
 
             //Create title of Doc
-            addNewItem(document, "Trainer Guide", Element.ALIGN_CENTER, appTitleFont);
+            addNewItem(document, "Fittify", Element.ALIGN_CENTER, appTitleFont);
             addLineSpace(document);
             addLineSeparator(document);
             addLineSpace(document);
@@ -729,9 +736,9 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
 
     private void addMacroNutTable(Document document, HashMap<String, Double> macroList) throws DocumentException, IOException{
         {
-            BaseFont fontName = BaseFont.createFont("assets/fonts/brandon_medium.otf", "UTF-8", BaseFont.EMBEDDED);
-            Font itemNameFont = new Font(fontName, 24, Font.NORMAL);
-            Font itemDetailFont = new Font(fontName, 18, Font.NORMAL);
+            BaseFont fontName = BaseFont.createFont("res/font/poppins_medium.ttf", "UTF-8", BaseFont.EMBEDDED);
+            Font itemNameFont = new Font(fontName, 20, Font.NORMAL);
+            Font itemDetailFont = new Font(fontName, 16, Font.NORMAL);
             BaseColor colourAccent = new BaseColor(228,227,227,255);
             Double totalCalorie = macroList.get("Carbohydrate") + macroList.get("Fat") + macroList.get("Micro Nutrients") + macroList.get("Protein");
             Double totalNutritionCal = macroList.get("Carbohydrate") + macroList.get("Fat") + macroList.get("Protein");
@@ -771,7 +778,7 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
                 for (HashMap.Entry<String, Double> macroNutrition : macroList.entrySet()){
 
                     if (!(macroNutrition.getKey().equals("Micro Nutrients"))){
-                        commonCell = new PdfPCell(new Phrase(macroNutrition.getKey(), itemDetailFont));
+                        commonCell = new PdfPCell(new Phrase(macroNutrition.getKey().toUpperCase(), itemDetailFont));
                         commonCell.setHorizontalAlignment(Element.ALIGN_CENTER);
                         commonCell.setPadding(5);
                         table.addCell(commonCell);
@@ -809,24 +816,23 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
 
     }
 
+    @SuppressLint("MissingSuperCall")
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode){
+        switch (requestCode) {
 
             case 1000:
-                if (grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-                    if (selectedFoodListHash.size()>0){
+                    if (selectedFoodListHash.size() > 0) {
                         generatePdf();
-                    }
-                    else{
+                    } else {
                         CustomDialogClass customDialogClass = new CustomDialogClass(PrepareFoodChart.this, "Diet Plan", "Please choose atleast one item in diet chart", "Normal");
                         customDialogClass.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                         customDialogClass.show();
                     }
 
-                }
-                else {
+                } else {
                     Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
                 }
         }
@@ -865,9 +871,9 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
     }
 
     private void addFoodTable (Document document, List<Food>  pdfFoodList) throws DocumentException, IOException {
-        BaseFont fontName = BaseFont.createFont("assets/fonts/brandon_medium.otf", "UTF-8", BaseFont.EMBEDDED);
-        Font itemNameFont = new Font(fontName, 24, Font.NORMAL);
-        Font itemDetailFont = new Font(fontName, 18, Font.NORMAL);
+        BaseFont fontName = BaseFont.createFont("res/font/poppins_medium.ttf", "UTF-8", BaseFont.EMBEDDED);
+        Font itemNameFont = new Font(fontName, 20, Font.NORMAL);
+        Font itemDetailFont = new Font(fontName, 16, Font.NORMAL);
         BaseColor colourAccent = new BaseColor(228,227,227,255);
 
         if (pdfFoodList.size()>0){
@@ -931,19 +937,25 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
         switch (parent.getItemAtPosition(position).toString()){
 
             case "Sedentary":
-                recommendedCalories.setText(String.valueOf(getIntent().getExtras().getDouble("totalCalories") * 1.2));
+                //recommendedCalories.setText(String.valueOf( getIntent().getExtras().getDouble("totalCalories") * 1.2));
+                recommendedCalories.setText(String.valueOf(new BigDecimal(getIntent().getExtras().getDouble("totalCalories") * 1.2).setScale(2, RoundingMode.HALF_UP).doubleValue()));
                 break;
             case "Little Exercise":
-                recommendedCalories.setText(String.valueOf(getIntent().getExtras().getDouble("totalCalories") * 1.35));
+                //recommendedCalories.setText(String.valueOf(getIntent().getExtras().getDouble("totalCalories") * 1.35));
+                recommendedCalories.setText(String.valueOf(new BigDecimal(getIntent().getExtras().getDouble("totalCalories") * 1.35).setScale(2, RoundingMode.HALF_UP).doubleValue()));
                 break;
             case "Regular Exercise":
-                recommendedCalories.setText(String.valueOf(getIntent().getExtras().getDouble("totalCalories") * 1.46));
+                //recommendedCalories.setText(String.valueOf(getIntent().getExtras().getDouble("totalCalories") * 1.46));
+                recommendedCalories.setText(String.valueOf(new BigDecimal(getIntent().getExtras().getDouble("totalCalories") * 1.46).setScale(2, RoundingMode.HALF_UP).doubleValue()));
                 break;
             case "Daily Exercise":
-                recommendedCalories.setText(String.valueOf(getIntent().getExtras().getDouble("totalCalories") * 1.56));
+                //recommendedCalories.setText(String.valueOf(getIntent().getExtras().getDouble("totalCalories") * 1.56));
+                recommendedCalories.setText(String.valueOf(new BigDecimal(getIntent().getExtras().getDouble("totalCalories") * 1.56).setScale(2, RoundingMode.HALF_UP).doubleValue()));
                 break;
             case "Daily Intensive":
-                recommendedCalories.setText(String.valueOf(getIntent().getExtras().getDouble("totalCalories") * 1.8));
+                //recommendedCalories.setText(String.valueOf(getIntent().getExtras().getDouble("totalCalories") * 1.8));
+                recommendedCalories.setText(String.valueOf(new BigDecimal(getIntent().getExtras().getDouble("totalCalories") * 1.8).setScale(2, RoundingMode.HALF_UP).doubleValue()));
+
                 break;
             default:
                 break;

@@ -35,6 +35,8 @@ public class SelectProfileType extends AppCompatActivity implements View.OnClick
         profileSelectionProceed.setOnClickListener(this);
         userProfileCheck.setVisibility(View.INVISIBLE);
         trainerProfileCheck.setVisibility(View.INVISIBLE);
+        traineeCardView.setCardBackgroundColor(getResources().getColor(R.color.adShadowOne));
+        trainerCardView.setCardBackgroundColor(getResources().getColor(R.color.adShadowOne));
 
     }
 
@@ -46,12 +48,16 @@ public class SelectProfileType extends AppCompatActivity implements View.OnClick
             case R.id.traineeCardView:
                 userProfileCheck.setVisibility(View.VISIBLE);
                 trainerProfileCheck.setVisibility(View.INVISIBLE);
+                traineeCardView.setCardBackgroundColor(getResources().getColor(R.color.themeColourOne));
+                trainerCardView.setCardBackgroundColor(getResources().getColor(R.color.adShadowOne));
                 userType="User";
                 break;
 
             case R.id.trainerCardView:
                 userProfileCheck.setVisibility(View.INVISIBLE);
                 trainerProfileCheck.setVisibility(View.VISIBLE);
+                trainerCardView.setCardBackgroundColor(getResources().getColor(R.color.themeColourOne));
+                traineeCardView.setCardBackgroundColor(getResources().getColor(R.color.adShadowOne));
                 userType="Trainer";
                 break;
             case R.id.profileSelectionProceed:
