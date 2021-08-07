@@ -41,20 +41,17 @@
                 android:layout_width="200dp"
                 android:layout_height="450dp"
                 android:id="@+id/traineeCardView"
+                android:layout_marginLeft="10dp"
                 app:cardCornerRadius="30dp"
                 android:layout_marginVertical="10dp"
-                >
+                android:elevation="10dp"
+                android:paddingVertical="5dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    >
+                    android:id="@+id/traineeCardViewLay">
 
-                    <!--<ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:src="@mipmap/select_profile"
-                        android:scaleType="fitXY"/>-->
 
                     <ImageView
                         android:layout_width="120dp"
@@ -119,7 +116,8 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:id="@+id/trainerCardViewLay">
 
                     <ImageView
                         android:layout_width="120dp"

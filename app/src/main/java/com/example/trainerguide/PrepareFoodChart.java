@@ -18,6 +18,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.opengl.GLSurfaceView;
 import android.os.Build;
 import android.os.Bundle;
@@ -49,6 +50,7 @@ import com.example.trainerguide.models.FoodList;
 import com.example.trainerguide.models.MacroNutrient;
 import com.example.trainerguide.models.UserMetaData;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -610,7 +612,7 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
         BaseColor themeOne = new BaseColor(26,57,66,255);
         BaseColor themeTwo = new BaseColor(255,114,94,255);
 
-        System.out.println(filePath + "filePath");
+
         try{
             PdfWriter.getInstance(document,new FileOutputStream(filePath));
 
@@ -725,7 +727,24 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
 
 
             document.close();
-            Toast.makeText(this, "File created", Toast.LENGTH_SHORT).show();
+
+            Snackbar snackbar = Snackbar.make(drawerLayout, "File Created", Snackbar.LENGTH_LONG)
+                                .setAction("OPEN", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Intent intent = new Intent(PrepareFoodChart.this,PdfCreation.class);
+                                        intent.putExtra("userId", getIntent().getExtras().getString("userId"));
+                                        intent.putExtra("userName",  getIntent().getExtras().getString("userName"));
+                                        intent.putExtra("totalCalories",  getIntent().getExtras().getDouble("totalCalories"));
+                                        intent.putExtra("filePath",filePath);
+                                        startActivity(intent);
+                                        finish();
+
+                                    }
+                                });
+            snackbar.setActionTextColor(getResources().getColor(R.color.themeColourTwo));
+            snackbar.show();
+
 
         }
         catch (Exception e){

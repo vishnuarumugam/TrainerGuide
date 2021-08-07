@@ -5,35 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".PdfCreation">
-    <LinearLayout
-        android:id="@+id/linearLayout"
+
+    <com.github.barteksc.pdfviewer.PDFView
+        android:id="@+id/pdfView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:orientation="horizontal"/>
-
-
-    <Button
-        android:id="@+id/createPdf"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:onClick="createMyPDF"
-        android:text="Generate PDF" />
-
-    <EditText
-        android:id="@+id/editText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:layout_marginTop="10dp"
-        android:hint="Your PDF text here"
-        android:layout_below="@id/createPdf"
-        android:gravity="start|top"
-        android:layout_centerHorizontal="true"
-        android:inputType="textMultiLine" />
-
-
+        android:layout_height="match_parent"/>
 </RelativeLayout>

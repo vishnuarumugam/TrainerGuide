@@ -8,7 +8,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.android.material.card.MaterialCardView;
@@ -19,6 +21,8 @@ public class SelectProfileType extends AppCompatActivity implements View.OnClick
     private ImageView userProfileCheck, trainerProfileCheck;
     private Button profileSelectionProceed;
     private String userType="";
+    private RelativeLayout trainerCardViewLay, traineeCardViewLay;
+    private HorizontalScrollView profileTypeHorizontalLay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +42,10 @@ public class SelectProfileType extends AppCompatActivity implements View.OnClick
         traineeCardView.setCardBackgroundColor(getResources().getColor(R.color.adShadowOne));
         trainerCardView.setCardBackgroundColor(getResources().getColor(R.color.adShadowOne));
 
+        profileTypeHorizontalLay=findViewById(R.id.profileTypeHorizontalLay);
+        traineeCardViewLay = findViewById(R.id.traineeCardViewLay);
+        trainerCardViewLay = findViewById(R.id.trainerCardViewLay);
+
     }
 
     @Override
@@ -48,16 +56,22 @@ public class SelectProfileType extends AppCompatActivity implements View.OnClick
             case R.id.traineeCardView:
                 userProfileCheck.setVisibility(View.VISIBLE);
                 trainerProfileCheck.setVisibility(View.INVISIBLE);
-                traineeCardView.setCardBackgroundColor(getResources().getColor(R.color.themeColourOne));
-                trainerCardView.setCardBackgroundColor(getResources().getColor(R.color.adShadowOne));
+                //traineeCardView.setCardBackgroundColor(getResources().getColor(R.color.themeProfileSelect));
+                //trainerCardView.setCardBackgroundColor(getResources().getColor(R.color.adShadowOne));
+                traineeCardViewLay.setBackgroundColor(getResources().getColor(R.color.themeProfileSelect));
+                trainerCardViewLay.setBackgroundColor(getResources().getColor(R.color.adShadowOne));
                 userType="User";
+                profileTypeHorizontalLay.fullScroll(View.FOCUS_LEFT);
                 break;
 
             case R.id.trainerCardView:
                 userProfileCheck.setVisibility(View.INVISIBLE);
                 trainerProfileCheck.setVisibility(View.VISIBLE);
-                trainerCardView.setCardBackgroundColor(getResources().getColor(R.color.themeColourOne));
-                traineeCardView.setCardBackgroundColor(getResources().getColor(R.color.adShadowOne));
+                //trainerCardView.setCardBackgroundColor(getResources().getColor(R.color.themeProfileSelect));
+                //traineeCardView.setCardBackgroundColor(getResources().getColor(R.color.adShadowOne));
+                trainerCardViewLay.setBackgroundColor(getResources().getColor(R.color.themeProfileSelect));
+                traineeCardViewLay.setBackgroundColor(getResources().getColor(R.color.adShadowOne));
+                profileTypeHorizontalLay.fullScroll(View.FOCUS_RIGHT);
                 userType="Trainer";
                 break;
             case R.id.profileSelectionProceed:
