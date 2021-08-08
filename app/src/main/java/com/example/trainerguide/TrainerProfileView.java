@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -39,6 +40,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -46,10 +48,10 @@ import java.util.UUID;
 
 public class TrainerProfileView extends AppCompatActivity {
 
-    TextView name, experience, ratingUserCount, description, email, mobile, yourTrainer;
+    TextView name, experience, ratingUserCount, description, email, mobile, yourTrainer, traineesCount, trainerRatings, ratingSubmit;
     RatingBar ratingBar;
     ImageView profileimg;
-    Button requestbtn, ratingSubmit;
+    Button requestbtn;
     private String traineruserId, path,navScreen, userType;
 
     Animation buttonBounce;
@@ -93,10 +95,12 @@ public class TrainerProfileView extends AppCompatActivity {
 
         name = findViewById(R.id.txtName);
         experience = findViewById(R.id.txtExperience);
+        trainerRatings = findViewById(R.id.trainerRatings);
         description = findViewById(R.id.txtDescription);
         ratingUserCount = findViewById(R.id.txtUserCount);
+        traineesCount = findViewById(R.id.trainerTraineesCount);
         requestbtn = findViewById(R.id.btnRequest);
-        profileimg = findViewById(R.id.trainerImg);
+        profileimg = findViewById(R.id.trainerimage);
         ratingBar = findViewById(R.id.ratingBar);
         email = findViewById(R.id.txtEmail);
         mobile = findViewById(R.id.txtPhnNo);
@@ -211,6 +215,8 @@ public class TrainerProfileView extends AppCompatActivity {
                 databaseReferenceTrainee.updateChildren(hash);
 
                 PopulateUserDetails();
+
+                ratingSubmit.setVisibility(View.GONE);
             }
 
         });
@@ -278,19 +284,24 @@ public class TrainerProfileView extends AppCompatActivity {
                         .centerCrop()
                         .into(profileimg);
                 name.setText(trainer.getName());
-                experience.setText(String.valueOf(trainer.getExperience())+" Year(s)");
+                experience.setText(String.valueOf(trainer.getExperience() == null ? "-" : trainer.getExperience() +" Yrs"));
                 description.setText(trainer.getSubscriptionDescription() != null ? trainer.getSubscriptionDescription() : "Description not provided");
                 mobile.setText(String.valueOf(trainer.getPhoneNumber()));
                 email.setText(trainer.getEmail());
                 ratingBar.setNumStars(5);
                 if(trainer !=null) {
                     ratingBar.setRating((float)trainer.getRating());
+                    DecimalFormat df = new DecimalFormat("#.#");
+                    System.out.println("Rating    "+(df.format(trainer.getRating())));
+                    trainerRatings.setText(trainer.getRating() <= 0 ? "-" : df.format(trainer.getRating()));
                     ratingUserCount.setText("(" + String.valueOf((int) trainer.getRatedTraineescount()) + ")");
+                    traineesCount.setText( String.valueOf((int) trainer.getRatedTraineescount() == 0 ? "-" : (int) trainer.getRatedTraineescount()));
                 }
                 else
                 {
                     //ratingBar.setRating(5);
                     ratingUserCount.setText("-");
+                    traineesCount.setText("-");
                 }
                 //Dismiss Progress Dialog
                 progressDialog.dismiss();
@@ -350,12 +361,12 @@ public class TrainerProfileView extends AppCompatActivity {
             if(navScreen!=null && navScreen.equals("Notification")){
 
                 System.out.println(navScreen.toString());
-            startActivity(new Intent(TrainerProfileView.this,NotificationScreen.class));
-            finish();}
+                startActivity(new Intent(TrainerProfileView.this,NotificationScreen.class));
+                finish();}
             else {
-            startActivity(new Intent(TrainerProfileView.this, TrainerScreen.class));
-            finish();
-        }
+                startActivity(new Intent(TrainerProfileView.this, TrainerScreen.class));
+                finish();
+            }
         }
     }
 
