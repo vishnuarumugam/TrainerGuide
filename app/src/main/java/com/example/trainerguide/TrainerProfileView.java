@@ -124,7 +124,7 @@ public class TrainerProfileView extends AppCompatActivity {
         toolbar.setBackgroundColor(getResources().getColor(R.color.black));
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
         ActionBarDrawerToggle toggle = CommonNavigator.navigatorInitmethod(drawerLayout,navigationView,toolbar,this);
-        toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.yellow));
+        toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.themeColourTwo));
 
         PopulateUserDetails();
 

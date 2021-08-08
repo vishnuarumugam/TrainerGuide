@@ -96,7 +96,7 @@
                                     android:layout_below="@+id/profileType"
                                     android:layout_marginBottom="10dp"
                                     android:orientation="horizontal"
-                                    android:visibility="gone">
+                                    android:visibility="visible">
 
                                     <RelativeLayout
                                         android:id="@+id/trainerRatingLayout"
@@ -117,7 +117,7 @@
                                                 android:layout_height="wrap_content"
                                                 android:layout_centerVertical="true"
                                                 android:fontFamily="@font/poppins_medium"
-                                                android:text="4.4"
+                                                android:text="-"
                                                 android:textColor="@color/themeColourOne"
                                                 android:textSize="14sp"
                                                 android:textStyle="bold" />
@@ -159,7 +159,7 @@
                                             android:layout_height="wrap_content"
                                             android:layout_alignParentLeft="true"
                                             android:fontFamily="@font/poppins_medium"
-                                            android:text="44"
+                                            android:text="-"
                                             android:textColor="@color/themeColourOne"
                                             android:textSize="14sp"
                                             android:textStyle="bold" />
@@ -176,6 +176,8 @@
                                             android:textSize="14sp" />
 
                                     </RelativeLayout>
+
+
 
                                 </LinearLayout>
 

@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/homeScreenBgColor"
     android:id="@+id/trainer_view_drawer_layout"
     tools:context=".TrainerScreen">
 
@@ -34,7 +35,7 @@
                         android:layout_height="250dp"
                         android:layout_alignParentEnd="true"
                         android:layout_marginEnd="0dp"
-                        android:background="@mipmap/profile_background_image"
+                        android:background="@color/homeScreenBgColor"
                         android:scaleType="fitCenter"
                         />
 
@@ -42,145 +43,170 @@
                         android:layout_width="match_parent"
                         android:layout_height="250dp"
                         android:id="@+id/trainerCardView"
-                        android:backgroundTint="@color/white"
-                        android:layout_marginLeft="20dp"
+                        android:layout_marginHorizontal="15dp"
+                        android:elevation="10dp"
                         android:layout_below="@+id/backgroundImg"
                         app:cardCornerRadius="10dp"
                         android:layout_marginTop="-160dp"
                         android:layout_centerHorizontal="true">
                         <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            android:background="@color/adShadowOne">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerInParent="true"
                                 android:id="@+id/txtName"
-                                android:text="Sathish"
+                                android:text="-"
                                 android:fontFamily="@font/poppins_medium"
                                 android:textColor="@color/themeColourOne"
-                                android:textSize="25sp"
+                                android:textSize="18sp"
                                 />
-                            <RelativeLayout
+
+                            <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="10dp"
+                                android:layout_height="match_parent"
                                 android:background="@color/white"
                                 android:layout_below="@+id/txtName"
-                                android:layout_marginHorizontal="10dp"
                                 android:layout_marginTop="10dp"
                                 android:orientation="horizontal"
-                                android:padding="5dp">
+                                android:padding="10dp">
 
                                 <RelativeLayout
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-                                    android:layout_alignParentLeft="true"
-                                    android:layout_marginLeft="10dp"
-                                    android:padding="5dp">
-                                    <TextView
+                                    android:layout_weight="1"
+                                    android:paddingVertical="5dp">
+                                    <RelativeLayout
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_margin="5dp"
-                                        android:id="@+id/trainerExperienceLabel"
-                                        android:background="@drawable/round_shape"
-                                        android:fontFamily="@font/poppins_medium"
-                                        android:textColor="@color/themeColourOne"
-                                        android:layout_centerHorizontal="true"
-                                        android:textAlignment="center"
-                                        android:textSize="15sp"
-                                        android:text="Experience"/>
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_below="@+id/trainerExperienceLabel"
-                                        android:id="@+id/txtExperience"
-                                        android:fontFamily="@font/poppins_light"
-                                        android:textColor="@color/themeColourOne"
-                                        android:textAlignment="center"
-                                        android:layout_centerHorizontal="true"
-                                        android:textSize="15sp"
-                                        android:text="3 Yrs"/>
-                                </RelativeLayout>
+                                        android:layout_alignParentStart="true"
+                                        android:layout_marginStart="10dp"
+                                        android:padding="5dp">
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_margin="5dp"
+                                            android:id="@+id/trainerExperienceLabel"
+                                            android:fontFamily="@font/poppins_medium"
+                                            android:textColor="@color/themeColourOne"
+                                            android:layout_centerHorizontal="true"
+                                            android:textAlignment="center"
+                                            android:textSize="16sp"
+                                            android:text="Experience"/>
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_below="@+id/trainerExperienceLabel"
+                                            android:id="@+id/txtExperience"
+                                            android:fontFamily="@font/poppins_light"
+                                            android:textColor="@color/themeColourOne"
+                                            android:textAlignment="center"
+                                            android:layout_centerHorizontal="true"
+                                            android:textSize="16sp"
+                                            android:text="-"/>
+                                    </RelativeLayout>
 
-                                <RelativeLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerHorizontal="true"
-                                    android:layout_marginHorizontal="10dp"
-                                    android:padding="5dp">
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_margin="5dp"
-                                        android:id="@+id/trainerTraineesCountLabel"
-                                        android:background="@drawable/round_shape"
-                                        android:fontFamily="@font/poppins_medium"
-                                        android:textAlignment="center"
-                                        android:layout_centerHorizontal="true"
-                                        android:textColor="@color/themeColourOne"
-                                        android:textSize="15sp"
-                                        android:text="Trainees"/>
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_centerHorizontal="true"
-                                        android:layout_below="@+id/trainerTraineesCountLabel"
-                                        android:id="@+id/trainerTraineesCount"
-                                        android:background="@drawable/round_shape"
-                                        android:fontFamily="@font/poppins_light"
-                                        android:textColor="@color/themeColourOne"
-                                        android:textSize="15sp"
-                                        android:textAlignment="center"
-                                        android:text="30"/>
                                 </RelativeLayout>
 
 
+
                                 <RelativeLayout
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-                                    android:layout_alignParentRight="true"
-                                    android:layout_marginRight="10dp"
-                                    android:padding="5dp">
-                                    <TextView
+                                    android:layout_weight="1"
+                                    android:paddingVertical="5dp">
+                                    <RelativeLayout
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_margin="5dp"
-                                        android:id="@+id/trainerRatingLabel"
-                                        android:background="@drawable/round_shape"
-                                        android:fontFamily="@font/poppins_medium"
-                                        android:textAlignment="center"
-                                        android:layout_centerHorizontal="true"
-                                        android:textColor="@color/themeColourOne"
-                                        android:textSize="15sp"
-                                        android:text="Rating"/>
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_below="@+id/trainerRatingLabel"
-                                        android:id="@+id/trainerRatings"
-                                        android:background="@drawable/round_shape"
-                                        android:fontFamily="@font/poppins_light"
-                                        android:layout_centerHorizontal="true"
-                                        android:textAlignment="center"
-                                        android:textColor="@color/themeColourOne"
-                                        android:textSize="15sp"
-                                        android:text="3.5"/>
+                                        android:layout_centerInParent="true"
+                                        android:layout_marginRight="10dp"
+                                        android:padding="5dp">
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_margin="5dp"
+                                            android:id="@+id/trainerRatingLabel"
+                                            android:fontFamily="@font/poppins_medium"
+                                            android:textAlignment="center"
+                                            android:layout_centerHorizontal="true"
+                                            android:textColor="@color/themeColourOne"
+                                            android:textSize="16sp"
+                                            android:text="Rating"/>
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_below="@+id/trainerRatingLabel"
+                                            android:id="@+id/trainerRatings"
+                                            android:fontFamily="@font/poppins_light"
+                                            android:layout_centerHorizontal="true"
+                                            android:textAlignment="center"
+                                            android:textColor="@color/themeColourOne"
+                                            android:textSize="16sp"
+                                            android:text="-"/>
+                                    </RelativeLayout>
                                 </RelativeLayout>
-                            </RelativeLayout>
+
+                                <RelativeLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:paddingVertical="5dp">
+
+                                    <RelativeLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentEnd="true"
+                                        android:layout_marginEnd="10dp"
+                                        android:padding="5dp">
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_margin="5dp"
+                                            android:id="@+id/trainerTraineesCountLabel"
+                                            android:fontFamily="@font/poppins_medium"
+                                            android:textAlignment="center"
+                                            android:layout_centerHorizontal="true"
+                                            android:textColor="@color/themeColourOne"
+                                            android:textSize="16sp"
+                                            android:text="Trainees"/>
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_centerHorizontal="true"
+                                            android:layout_below="@+id/trainerTraineesCountLabel"
+                                            android:id="@+id/trainerTraineesCount"
+                                            android:fontFamily="@font/poppins_light"
+                                            android:textColor="@color/themeColourOne"
+                                            android:textSize="16sp"
+                                            android:textAlignment="center"
+                                            android:text="-"/>
+                                    </RelativeLayout>
+
+                                </RelativeLayout>
+
+
+
+
+
+
+                            </LinearLayout>
+
+
                         </RelativeLayout>
 
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/trainerImageCardView"
-                        android:layout_width="167dp"
-                        android:layout_height="147dp"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="30dp"
-                        app:cardCornerRadius="100dp"
+                        app:cardCornerRadius="75dp"
                         app:cardElevation="20dp">
 
                         <RelativeLayout
@@ -198,26 +224,26 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/white"
                         android:layout_below="@+id/trainerCardView"
+                        android:layout_marginTop="15dp"
+                        android:background="@color/homeScreenBgColor"
                         android:orientation="vertical"
                         android:padding="10dp">
 
 
                         <TextView
+                            android:id="@+id/yourTrainerText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:visibility="gone"
-                            android:id="@+id/yourTrainerText"
                             android:layout_gravity="center"
                             android:fontFamily="@font/poppins_medium"
-                            />
+                            android:visibility="gone" />
 
                         <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="45dp"
                             android:layout_margin="5dp"
-                            app:cardBackgroundColor="@color/homeScreenBgColor"
+                            app:cardBackgroundColor="@color/white"
                             app:cardCornerRadius="10dp">
 
                             <RelativeLayout
@@ -229,9 +255,9 @@
                                     android:layout_width="100dp"
                                     android:layout_height="wrap_content"
                                     android:layout_centerVertical="true"
-                                    android:fontFamily="@font/poppins_medium"
                                     android:layout_marginStart="15dp"
                                     android:layout_marginTop="15dp"
+                                    android:fontFamily="@font/poppins_medium"
                                     android:text="Mobile :" />
 
                                 <TextView
@@ -239,19 +265,19 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_centerVertical="true"
-                                    android:fontFamily="@font/poppins_medium"
                                     android:layout_marginStart="15dp"
                                     android:layout_marginTop="15dp"
                                     android:layout_toRightOf="@+id/txtPhnNoLabel"
+                                    android:fontFamily="@font/poppins_medium"
                                     android:text="" />
                             </RelativeLayout>
                         </androidx.cardview.widget.CardView>
 
                         <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="45dp"
                             android:layout_margin="5dp"
-                            app:cardBackgroundColor="@color/homeScreenBgColor"
+                            app:cardBackgroundColor="@color/white"
                             app:cardCornerRadius="10dp">
 
                             <RelativeLayout
@@ -275,17 +301,17 @@
                                     android:layout_centerVertical="true"
                                     android:layout_marginStart="15dp"
                                     android:layout_marginTop="15dp"
-                                    android:fontFamily="@font/poppins_medium"
                                     android:layout_toRightOf="@+id/txtEmailLabel"
+                                    android:fontFamily="@font/poppins_medium"
                                     android:text="" />
                             </RelativeLayout>
                         </androidx.cardview.widget.CardView>
 
                         <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="45dp"
                             android:layout_margin="5dp"
-                            app:cardBackgroundColor="@color/homeScreenBgColor"
+                            app:cardBackgroundColor="@color/white"
                             app:cardCornerRadius="10dp">
 
                             <RelativeLayout
@@ -304,39 +330,41 @@
 
                                 <RatingBar
                                     android:id="@+id/ratingBar"
-                                    android:isIndicator="false"
                                     style="?android:attr/ratingBarStyleSmall"
-                                    android:theme="@style/RatingBar"
-                                    android:stepSize="0.5"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_centerVertical="true"
                                     android:layout_marginStart="15dp"
                                     android:layout_marginTop="15dp"
                                     android:layout_toRightOf="@+id/txtRatingLabel"
-                                    android:numStars="5" />
+                                    android:isIndicator="false"
+                                    android:numStars="5"
+                                    android:stepSize="0.5"
+                                    android:theme="@style/RatingBar" />
+
                                 <TextView
+                                    android:id="@+id/ratingSubmit"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:id="@+id/ratingSubmit"
-                                    android:visibility="gone"
-                                    android:src="@drawable/ic_done"
-                                    android:padding="5dp"
+                                    android:layout_alignParentEnd="true"
                                     android:layout_centerVertical="true"
                                     android:backgroundTint="@color/transparent"
-                                    android:layout_alignParentEnd="true"
+                                    android:padding="5dp"
+                                    android:layout_marginEnd="10dp"
+                                    android:src="@drawable/ic_done"
+                                    android:text="Confirm"
                                     android:textColor="@color/themeColourTwo"
-                                    android:text="Confirm"/>
+                                    android:visibility="gone" />
 
                                 <TextView
                                     android:id="@+id/txtUserCount"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_centerVertical="true"
-                                    android:fontFamily="@font/poppins_medium"
                                     android:layout_marginStart="15dp"
                                     android:layout_marginTop="15dp"
-                                    android:layout_toRightOf="@+id/ratingBar"/>
+                                    android:layout_toRightOf="@+id/ratingBar"
+                                    android:fontFamily="@font/poppins_medium" />
                             </RelativeLayout>
                         </androidx.cardview.widget.CardView>
 
@@ -344,7 +372,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="5dp"
-                            app:cardBackgroundColor="@color/homeScreenBgColor"
+                            app:cardBackgroundColor="@color/white"
                             app:cardCornerRadius="10dp">
 
                             <RelativeLayout
@@ -356,9 +384,9 @@
                                     android:layout_width="100dp"
                                     android:layout_height="wrap_content"
                                     android:layout_centerVertical="true"
-                                    android:fontFamily="@font/poppins_medium"
                                     android:layout_marginStart="15dp"
                                     android:layout_marginTop="15dp"
+                                    android:fontFamily="@font/poppins_medium"
                                     android:text="Description :" />
 
                                 <TextView
@@ -366,10 +394,10 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_centerVertical="true"
-                                    android:fontFamily="@font/poppins_medium"
                                     android:layout_marginStart="15dp"
                                     android:layout_marginTop="15dp"
                                     android:layout_toRightOf="@+id/txtDescriptionLabel"
+                                    android:fontFamily="@font/poppins_medium"
                                     android:text="Description" />
                             </RelativeLayout>
                         </androidx.cardview.widget.CardView>
@@ -379,8 +407,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:backgroundTint="@color/themeColourTwo"
                             android:layout_marginTop="50dp"
+                            android:backgroundTint="@color/themeColourTwo"
                             android:text="Request" />
                     </LinearLayout>
                 </RelativeLayout>
