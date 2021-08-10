@@ -12,6 +12,11 @@
         <item name="android:fontFamily">@font/poppins_medium</item>
     </style>
 
+    <style name="appNameFontStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">@font/poppins_medium</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
     <style name="RadioButtonStyle" parent="Theme.MaterialComponents.Light">
         <item name="colorAccent">@color/themeColourTwo</item>
     </style>
@@ -64,6 +69,7 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">14sp</item>
     </style>
+
 
     <style name="RatingBar" parent="Theme.AppCompat">
         <item name="colorControlNormal">@color/headerDark</item>

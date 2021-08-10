@@ -14,12 +14,14 @@
             android:backgroundTint="@color/themeColourOne"
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme"
-            app:title="Trainer Guide"
+            app:title="@string/app_full_name"
+            app:titleTextAppearance="@style/appNameFontStyle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:navigationIcon="@drawable/ic_menu">
+            app:navigationIcon="@drawable/ic_menu"
+            android:gravity="center">
         </androidx.appcompat.widget.Toolbar>
 
         <Button
@@ -30,7 +32,7 @@
             android:layout_centerVertical="true"
             android:layout_marginEnd="20dp"
             android:background="@mipmap/notification"
-            android:gravity="right"/>
+            android:gravity="center_vertical"/>
 
     </RelativeLayout>
 
