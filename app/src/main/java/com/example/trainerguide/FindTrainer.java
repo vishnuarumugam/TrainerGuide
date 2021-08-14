@@ -148,6 +148,7 @@ public class FindTrainer extends AppCompatActivity implements View.OnClickListen
                 break;
             case R.id.filterClear:
                 filterClear.startAnimation(buttonBounce);
+                filterClear.clearAnimation();
                 findTrainerRating.setText("0 / 5");
                 findTrainerFees.setText("0k / 100k");
                 trainerFeesSlider.setValue(0);
@@ -171,7 +172,7 @@ public class FindTrainer extends AppCompatActivity implements View.OnClickListen
                             .endAt(new Double(trainerRatingSlider.getValue()));
                 }
 
-                ValueEventListener valueEventListener = trainerFilter.addValueEventListener(new ValueEventListener() {
+                trainerFilter.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         trainerList.clear();
@@ -189,7 +190,6 @@ public class FindTrainer extends AppCompatActivity implements View.OnClickListen
 
 
                         }
-
                         if (trainerList.size()==0){
                             trainerFilterRecycler.setVisibility(View.GONE);
                             noSearchResult.setVisibility(View.VISIBLE);

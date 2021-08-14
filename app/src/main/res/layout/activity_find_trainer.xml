@@ -38,7 +38,6 @@
                 android:gravity="center"
                 android:id="@+id/filterClear"
                 android:text="CLEAR ALL"
-                android:visibility="gone"
                 android:layout_toLeftOf="@id/filterHide"
                 android:layout_marginHorizontal="5dp"
                 android:textColor="@color/themeColourTwo"
