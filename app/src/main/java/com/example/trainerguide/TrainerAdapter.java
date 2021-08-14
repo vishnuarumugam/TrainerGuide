@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -19,6 +20,7 @@ import com.example.trainerguide.models.Trainer;
 import com.google.android.material.card.MaterialCardView;
 import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,9 +43,22 @@ public class TrainerAdapter extends  RecyclerView.Adapter<TrainerAdapter.ViewHol
         if(trainers.get(position).getSubscriptionFees() != null){
             holder.fees.setText(trainers.get(position).getSubscriptionFees().toString());}
 
+        /*if(trainers.get(position).getRating()){
+            holder.ratingBar.setRating((float)trainers.get(position).getRating());
+            holder.ratingUserCount.setText("(" + String.valueOf((int) trainers.get(position).getRatedTraineescount()) + ")");
+        }
+        else
+        {
+            //ratingBar.setRating(5);
+            holder.ratingUserCount.setText("-");
+        }*/
+        System.out.println(trainers.get(position).getName() + " " +trainers.get(position).getRating() + "rating" + trainers.get(position).getRatedTraineescount());
+        holder.ratingBar.setRating((float)trainers.get(position).getRating());
+        holder.ratingUserCount.setText("(" + String.valueOf((int) trainers.get(position).getRatedTraineescount()) + ")");
+
         Picasso.get().load(trainers.get(position).getImage())
                 .fit()
-                .placeholder(R.drawable.ic_share)
+                .placeholder(R.mipmap.trainer_profile_image)
                 .centerCrop()
                 .into(holder.profileImage);
         holder.trainerProfileClick.setOnClickListener(new View.OnClickListener() {
@@ -80,11 +95,12 @@ public class TrainerAdapter extends  RecyclerView.Adapter<TrainerAdapter.ViewHol
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        TextView name, experience, fees;
+        TextView name, experience, fees, ratingUserCount;
         ImageView profileImage;
         MaterialCardView trainerProfileClick;
         RelativeLayout trainerItem;
         ConstraintLayout trainerConsItem;
+        RatingBar ratingBar;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -96,6 +112,10 @@ public class TrainerAdapter extends  RecyclerView.Adapter<TrainerAdapter.ViewHol
             trainerProfileClick = itemView.findViewById(R.id.parent);
             trainerItem = itemView.findViewById(R.id.trainerItem);
             trainerConsItem = itemView.findViewById(R.id.trainerConsItem);
+            ratingBar = itemView.findViewById(R.id.ratingBar);
+            ratingUserCount = itemView.findViewById(R.id.txtUserCount);
+            ratingBar.setEnabled(false);
+            ratingBar.setNumStars(5);
         }
     }
 

@@ -95,7 +95,6 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
     private EditText otherHealthIssue, otherFoodAllergy;
 
     //Dashboard variables
-    private RelativeLayout profileDashboard, reportDashboard, trainerDashboard, traineeDashboard, foodDashboard, pdf_dashboard;
     private RelativeLayout progressLayout, weightLayout, heightLayout, dietTypeLayout, allergicLayout, healthIssueLayout;
     private TextView dashboard_user_name;
     private ImageView dashboard_profile_pic;
@@ -103,7 +102,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
     private String selectedHomeScreenTab;
     private TabItem traineesTab, foodListTab;
     private Menu bottomMenu;
-    private CardView homeScreenGoalLayout;
+    private CardView homeScreenGoalLayout, findTrainerLayout;
     private RadioButton weightLossSubscription, weightGainSubscription, weightMaintainSubscription;;
 
     //Ad Slider
@@ -161,6 +160,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         homeScreenTabLayout = findViewById(R.id.homeScreenTabLayout);
         dashboard_user_name = findViewById(R.id.dashboard_user_name);
         homeScreenGoalLayout = findViewById(R.id.home_screen_goal_layout);
+        findTrainerLayout = findViewById(R.id.findTrainerLayout);
         weightLossSubscription = findViewById(R.id.weightLossSubscription);
         weightGainSubscription = findViewById(R.id.weightGainSubscription);
         weightMaintainSubscription = findViewById(R.id.weightMaintainSubscription);
@@ -182,6 +182,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         dietTypeLayout.setOnClickListener(this);
         allergicLayout.setOnClickListener(this);
         healthIssueLayout.setOnClickListener(this);
+        findTrainerLayout.setOnClickListener(this);
 
 
 
@@ -256,7 +257,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
         if (userType.equals("Trainer")){
             homeScreenGoalLayout.setVisibility(View.GONE);
-
+            findTrainerLayout.setVisibility(View.GONE);
            /* traineeDashboard.setVisibility(View.VISIBLE);
             foodDashboard.setVisibility(View.VISIBLE);
             //pdf_dashboard.setVisibility(View.GONE);*/
@@ -448,7 +449,10 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 updateProfile("healthIssues", null);
                 break;
 
-
+            case R.id.findTrainerLayout:
+                startActivity(new Intent(HomeScreen.this, FindTrainer.class));
+                finish();
+                break;
             case R.id.toolBarNotification:
                 option.startAnimation(buttonBounce);
                 startActivity(new Intent(HomeScreen.this,NotificationScreen.class));

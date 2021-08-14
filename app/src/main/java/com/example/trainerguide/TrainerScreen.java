@@ -459,12 +459,22 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
 
                             try{
                                 trainer.setExperience(jsonObject.getDouble("experience")) ;
-                                trainer.setSubscriptionFees(jsonObject.getDouble("subscriptionFees"));
-
                             }
                             catch (Exception e){
-                                trainer.setExperience(0.0) ;
-                                trainer.setSubscriptionFees(0.0);
+
+                            }
+                            try {
+                                trainer.setSubscriptionFees(jsonObject.getDouble("subscriptionFees"));
+                            }
+                            catch (Exception e){
+
+                            }
+                            try {
+                                trainer.setRating(jsonObject.getDouble("rating"));
+                                trainer.setRatedTraineescount(jsonObject.getDouble("ratedTraineescount"));
+                            }
+                            catch (Exception e){
+
                             }
                             //Add Data
                             trainersList.add(trainer);
@@ -564,9 +574,6 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
     @Override
     public void onAddclick(int position) {
         final Trainer trainer = trainersList.get(position);
-
-        System.out.println("***"+trainer.getUserId()+"*****"+position);
-        System.out.println("***"+trainersList.size()+"***** size");
 
         final SharedPreferences sp;
         sp= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());

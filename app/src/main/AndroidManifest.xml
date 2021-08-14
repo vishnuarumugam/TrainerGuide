@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/fitness_app_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".UserReport"></activity>
+        <activity android:name=".FindTrainer"></activity>
+        <activity android:name=".UserReport" />
         <activity android:name=".PdfCreation" />
         <activity android:name=".FoodSourceListScreen" />
         <activity android:name=".NotificationScreen" />

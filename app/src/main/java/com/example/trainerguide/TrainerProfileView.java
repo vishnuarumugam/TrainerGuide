@@ -121,7 +121,7 @@ public class TrainerProfileView extends AppCompatActivity {
 
         //Toolbar customisation
         setSupportActionBar(toolbar);
-        toolbar.setBackgroundColor(getResources().getColor(R.color.black));
+        toolbar.setBackgroundColor(getResources().getColor(R.color.themeColourOne));
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
         ActionBarDrawerToggle toggle = CommonNavigator.navigatorInitmethod(drawerLayout,navigationView,toolbar,this);
         toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.themeColourTwo));
@@ -363,6 +363,10 @@ public class TrainerProfileView extends AppCompatActivity {
                 System.out.println(navScreen.toString());
                 startActivity(new Intent(TrainerProfileView.this,NotificationScreen.class));
                 finish();}
+            else if (navScreen.equals("FindTrainer")){
+                startActivity(new Intent(TrainerProfileView.this, FindTrainer.class));
+                finish();
+            }
             else {
                 startActivity(new Intent(TrainerProfileView.this, TrainerScreen.class));
                 finish();

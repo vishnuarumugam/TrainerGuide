@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FindTrainer">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/homeScreenBgColor">
+
+        <include layout="@layout/common_back_toolbar"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:id="@+id/filterHeading"
+                android:text="Filters"
+                android:layout_alignTop="@id/filterClear"
+                android:padding="5dp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginHorizontal="10dp"
+                style="@style/fontStyle"
+                android:textSize="18sp"
+                android:textColor="@color/themeProfileSelect" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:id="@+id/filterClear"
+                android:text="CLEAR ALL"
+                android:layout_alignParentRight="true"
+                android:layout_marginHorizontal="10dp"
+                android:textColor="@color/themeColourTwo"
+                style="@style/fontStyle"
+                android:padding="5dp"
+                android:textSize="14sp"
+                android:layout_marginTop="20dp"/>
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/filterLayout"
+                android:layout_below="@id/filterClear"
+                android:layout_marginTop="10dp"
+                app:cardCornerRadius="5dp"
+                android:elevation="10dp"
+                app:cardBackgroundColor="@color/white"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginBottom="15dp">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginVertical="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_marginHorizontal="10dp"
+                        android:text="Rating"
+                        android:layout_marginTop="5dp"
+                        android:id="@+id/findTrainerRatingLabel"
+                        style="@style/fontStyle"
+                        android:textSize="14sp"
+                        android:paddingHorizontal="5dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginBottom="5dp"
+                        android:textColor="@color/themeColourOne"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:id="@+id/findTrainerRating"
+                        android:layout_alignTop="@id/findTrainerRatingLabel"
+                        android:layout_marginHorizontal="15dp"
+                        style="@style/fontStyle"
+                        android:text="2 / 5"
+                        android:paddingHorizontal="5dp"
+                        android:textSize="14sp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginBottom="5dp"
+                        android:textColor="@color/themeColourOne"/>
+
+                    <com.google.android.material.slider.Slider
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/trainerRatingSlider"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_below="@id/findTrainerRatingLabel"
+                        android:progressTint="@color/themeColourTwo"
+                        android:value="2.0"
+                        android:valueFrom="0"
+                        android:valueTo="5"
+                        android:stepSize="0.5"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10dp"
+                        android:id="@+id/findTrainerFeesLabel"
+                        android:text="Fees"
+                        android:paddingHorizontal="5dp"
+                        android:layout_below="@id/trainerRatingSlider"
+                        style="@style/fontStyle"
+                        android:textSize="14sp"
+                        android:layout_marginBottom="5dp"
+                        android:textColor="@color/themeColourOne"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:id="@+id/findTrainerFees"
+                        android:layout_alignTop="@id/findTrainerFeesLabel"
+                        android:layout_marginHorizontal="15dp"
+                        style="@style/fontStyle"
+                        android:text="1k / 10k"
+                        android:paddingHorizontal="5dp"
+                        android:textSize="14sp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginBottom="5dp"
+                        android:textColor="@color/themeColourOne"/>
+
+
+                    <com.google.android.material.slider.Slider
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/trainerFeesSlider"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:value="1"
+                        android:valueFrom="0"
+                        android:valueTo="10"
+                        android:stepSize="1"
+                        android:layout_below="@id/findTrainerFees"
+                        android:progressTint="@color/themeColourTwo"
+                        />
+                    <TextView
+                        android:layout_width="60dp"
+                        android:layout_height="30dp"
+                        android:gravity="center"
+                        android:id="@+id/findTrainer"
+                        android:padding="5dp"
+                        android:background="@drawable/theme_colour_two_round_shape"
+                        android:layout_alignParentRight="true"
+                        android:text="Search"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/poppins_medium"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_below="@id/trainerFeesSlider"/>
+
+
+
+
+                </RelativeLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/trainerFilterRecycler"
+                android:layout_below="@+id/filterLayout"
+                android:nestedScrollingEnabled="false"
+                tools:listitem="@layout/trainer_item"
+                android:visibility="visible"
+                android:background="@color/themeColourTwo"
+                android:paddingBottom="1dp"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/noSearchResult"
+                android:layout_below="@+id/trainerFilterRecycler">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="No search results"
+                    android:textSize="14sp"
+                    style="@style/fontStyle"
+                    android:layout_centerInParent="true"
+                    android:textColor="@color/themeProfileSelect"/>
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

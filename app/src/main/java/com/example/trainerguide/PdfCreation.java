@@ -3,6 +3,7 @@ package com.example.trainerguide;
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 
 import android.Manifest;
@@ -23,6 +24,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -51,6 +55,10 @@ import java.util.Locale;
 public class PdfCreation extends AppCompatActivity {
 
     private PDFView pdfView;
+    private Toolbar toolbar;
+    private Button toolBarNotification;
+    private Animation buttonBounce;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,11 +67,40 @@ public class PdfCreation extends AppCompatActivity {
 
         pdfView = findViewById(R.id.pdfView);
 
-        System.out.println(getIntent().getExtras().getString("filePath"));
+        // loading Animation from
+        buttonBounce= AnimationUtils.loadAnimation(this, R.anim.button_bounce);
+
+        //tool bar variables
+        toolBarNotification = findViewById(R.id.toolBarNotification);
+        toolbar = findViewById(R.id.back_tool_bar);
+        toolbar.setTitle("Diet Plan");
+
+        setSupportActionBar(toolbar);
+
         File filePath = new File(getIntent().getExtras().getString("filePath"));
         pdfView.fromFile(filePath).load();
 
 
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PdfCreation.this, PrepareFoodChart.class);
+                intent.putExtra("userId", getIntent().getExtras().getString("userId"));
+                intent.putExtra("userName",  getIntent().getExtras().getString("userName"));
+                intent.putExtra("totalCalories", getIntent().getExtras().getDouble("totalCalories"));
+                startActivity(intent);
+                finish();
+            }
+        });
+        toolBarNotification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toolBarNotification.startAnimation(buttonBounce);
+                startActivity(new Intent(PdfCreation.this,NotificationScreen.class));
+                finish();
+            }
+        });
 
     }
 

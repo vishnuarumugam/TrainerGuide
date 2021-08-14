@@ -18,7 +18,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material/icons/materialicons/done/baseline_done_24.xml" />
+                                      <entry key="url" value="jar:file:/Applications/Android%20Studio.app/Contents/plugins/android/lib/android.jar!/images/material/icons/materialicons/keyboard_backspace/baseline_keyboard_backspace_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -28,9 +28,9 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="color" value="4dd412" />
-                            <entry key="outputName" value="ic_done" />
-                            <entry key="sourceFile" value="C:\Sathish\TrainerGuide" />
+                            <entry key="color" value="ff725e" />
+                            <entry key="outputName" value="ic_back" />
+                            <entry key="sourceFile" value="/C:\Sathish\TrainerGuide" />
                           </map>
                         </option>
                       </PersistentState>
