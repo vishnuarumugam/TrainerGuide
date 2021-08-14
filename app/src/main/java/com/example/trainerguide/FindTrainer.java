@@ -189,11 +189,12 @@ public class FindTrainer extends AppCompatActivity implements View.OnClickListen
 
 
                         }
-                        filterClear.setVisibility(View.GONE);
+
                         if (trainerList.size()==0){
                             trainerFilterRecycler.setVisibility(View.GONE);
                             noSearchResult.setVisibility(View.VISIBLE);
                             filterClear.setVisibility(View.VISIBLE);
+                            filterHide.setBackgroundResource(R.drawable.ic_dropdown_arrow_down);
                             filterLayout.setVisibility(View.VISIBLE);
                         }
                         else{
@@ -201,6 +202,7 @@ public class FindTrainer extends AppCompatActivity implements View.OnClickListen
                             noSearchResult.setVisibility(View.GONE);
                             filterClear.setVisibility(View.GONE);
                             filterLayout.setVisibility(View.GONE);
+                            filterHide.setBackgroundResource(R.drawable.ic_baseline_arrow_drop_up);
                             trainerFilterAdapter.notifyDataSetChanged();
                         }
                         System.out.println("filterClear"+filterClear.getVisibility());
