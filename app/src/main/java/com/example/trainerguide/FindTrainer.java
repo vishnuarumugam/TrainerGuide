@@ -3,6 +3,7 @@ package com.example.trainerguide;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -38,6 +40,8 @@ public class FindTrainer extends AppCompatActivity implements View.OnClickListen
     private TextView findTrainerRating, findTrainerFees, filterClear, findTrainer;
     private Slider trainerRatingSlider, trainerFeesSlider;
     private RelativeLayout noSearchResult;
+    private ImageButton filterHide;
+    private CardView filterLayout;
 
     //Recycler view variables
     private RecyclerView trainerFilterRecycler;
@@ -56,6 +60,7 @@ public class FindTrainer extends AppCompatActivity implements View.OnClickListen
         findTrainerRating = findViewById(R.id.findTrainerRating);
         findTrainerFees = findViewById(R.id.findTrainerFees);
         filterClear = findViewById(R.id.filterClear);
+        filterClear.setVisibility(View.VISIBLE);
         findTrainer = findViewById(R.id.findTrainer);
         filterClear.setOnClickListener(this);
         findTrainer.setOnClickListener(this);
@@ -63,6 +68,11 @@ public class FindTrainer extends AppCompatActivity implements View.OnClickListen
         trainerFeesSlider = findViewById(R.id.trainerFeesSlider);
         noSearchResult = findViewById(R.id.noSearchResult);
         noSearchResult.setVisibility(View.GONE);
+        filterHide = findViewById(R.id.filterHide);
+        filterHide.setVisibility(View.GONE);
+        filterHide.setOnClickListener(this);
+        filterLayout = findViewById(R.id.filterLayout);
+        filterLayout.setVisibility(View.VISIBLE);
 
         //Recycler view variables
         trainerFilterRecycler = findViewById(R.id.trainerFilterRecycler);
@@ -119,6 +129,11 @@ public class FindTrainer extends AppCompatActivity implements View.OnClickListen
                 startActivity(new Intent(FindTrainer.this,NotificationScreen.class));
                 finish();
                 break;
+            case R.id.filterHide:
+                filterClear.setVisibility(View.VISIBLE);
+                filterLayout.setVisibility(View.VISIBLE);
+                filterHide.setVisibility(View.GONE);
+                break;
             case R.id.filterClear:
                 filterClear.startAnimation(buttonBounce);
                 findTrainerRating.setText("0 / 5");
@@ -167,6 +182,9 @@ public class FindTrainer extends AppCompatActivity implements View.OnClickListen
                         else{
                             trainerFilterRecycler.setVisibility(View.VISIBLE);
                             noSearchResult.setVisibility(View.GONE);
+                            filterClear.setVisibility(View.GONE);
+                            filterLayout.setVisibility(View.GONE);
+                            filterHide.setVisibility(View.VISIBLE);
                             trainerFilterAdapter.notifyDataSetChanged();
                         }
 
