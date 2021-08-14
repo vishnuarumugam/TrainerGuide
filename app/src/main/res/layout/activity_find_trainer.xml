@@ -38,9 +38,9 @@
                 android:gravity="center"
                 android:id="@+id/filterClear"
                 android:text="CLEAR ALL"
-                android:visibility="visible"
-                android:layout_alignParentRight="true"
-                android:layout_marginHorizontal="10dp"
+                android:visibility="gone"
+                android:layout_toLeftOf="@id/filterHide"
+                android:layout_marginHorizontal="5dp"
                 android:textColor="@color/themeColourTwo"
                 style="@style/fontStyle"
                 android:padding="5dp"
@@ -48,15 +48,15 @@
                 android:layout_marginTop="20dp"/>
 
             <ImageButton
-                android:layout_width="30dp"
-                android:layout_height="40dp"
                 android:id="@+id/filterHide"
-                android:visibility="gone"
-                android:src="@drawable/ic_dropdown_arrow_down"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:foregroundGravity="center"
                 android:layout_alignParentRight="true"
                 android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="22dp"
                 android:background="@color/homeScreenBgColor"
-                android:layout_marginTop="20dp"/>
+                />
 
 
 

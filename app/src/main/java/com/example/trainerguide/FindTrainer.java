@@ -69,8 +69,9 @@ public class FindTrainer extends AppCompatActivity implements View.OnClickListen
         noSearchResult = findViewById(R.id.noSearchResult);
         noSearchResult.setVisibility(View.GONE);
         filterHide = findViewById(R.id.filterHide);
-        filterHide.setVisibility(View.GONE);
+        filterHide.setVisibility(View.VISIBLE);
         filterHide.setOnClickListener(this);
+        filterHide.setBackgroundResource(R.drawable.ic_dropdown_arrow_down);
         filterLayout = findViewById(R.id.filterLayout);
         filterLayout.setVisibility(View.VISIBLE);
 
@@ -130,9 +131,20 @@ public class FindTrainer extends AppCompatActivity implements View.OnClickListen
                 finish();
                 break;
             case R.id.filterHide:
-                filterClear.setVisibility(View.VISIBLE);
-                filterLayout.setVisibility(View.VISIBLE);
-                filterHide.setVisibility(View.GONE);
+                System.out.println("v=g");
+                if (filterClear.getVisibility() == View.VISIBLE){
+                    System.out.println("v");
+                    filterClear.setVisibility(View.GONE);
+                    filterLayout.setVisibility(View.GONE);
+                    filterHide.setBackgroundResource(R.drawable.ic_baseline_arrow_drop_up);
+                }
+                else if (filterClear.getVisibility() == View.GONE){
+                    System.out.println("g");
+                    filterClear.setVisibility(View.VISIBLE);
+                    filterLayout.setVisibility(View.VISIBLE);
+                    filterHide.setBackgroundResource(R.drawable.ic_dropdown_arrow_down);
+                }
+
                 break;
             case R.id.filterClear:
                 filterClear.startAnimation(buttonBounce);
@@ -140,6 +152,8 @@ public class FindTrainer extends AppCompatActivity implements View.OnClickListen
                 findTrainerFees.setText("0k / 100k");
                 trainerFeesSlider.setValue(0);
                 trainerRatingSlider.setValue(0);
+                filterLayout.setVisibility(View.VISIBLE);
+                filterHide.setBackgroundResource(R.drawable.ic_dropdown_arrow_down);
                 trainerList.clear();
                 trainerFilterAdapter.notifyDataSetChanged();
                 break;
@@ -175,18 +189,21 @@ public class FindTrainer extends AppCompatActivity implements View.OnClickListen
 
 
                         }
+                        filterClear.setVisibility(View.GONE);
                         if (trainerList.size()==0){
                             trainerFilterRecycler.setVisibility(View.GONE);
                             noSearchResult.setVisibility(View.VISIBLE);
+                            filterClear.setVisibility(View.VISIBLE);
+                            filterLayout.setVisibility(View.VISIBLE);
                         }
                         else{
                             trainerFilterRecycler.setVisibility(View.VISIBLE);
                             noSearchResult.setVisibility(View.GONE);
                             filterClear.setVisibility(View.GONE);
                             filterLayout.setVisibility(View.GONE);
-                            filterHide.setVisibility(View.VISIBLE);
                             trainerFilterAdapter.notifyDataSetChanged();
                         }
+                        System.out.println("filterClear"+filterClear.getVisibility());
 
                     }
 
