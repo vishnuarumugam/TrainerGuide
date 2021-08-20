@@ -6,6 +6,7 @@
     android:background="@color/white">
 
     <TextView
+        
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/chooseProfileText"
@@ -171,7 +172,7 @@
                 android:layout_width="25dp"
                 android:layout_height="20dp"
                 android:layout_toRightOf="@id/trainerCardView"
-                android:background="@color/homeScreenBgColor"
+                android:background="@color/transparent"
                 />
 
 

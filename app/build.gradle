@@ -74,9 +74,10 @@ dependencies {
 
     //imageslider
     implementation 'com.github.smarteist:autoimageslider:1.4.0'
-
+    //pdf viewer
     implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
-
+    //view pager
+    implementation "androidx.viewpager2:viewpager2:1.0.0"
 
 
 
