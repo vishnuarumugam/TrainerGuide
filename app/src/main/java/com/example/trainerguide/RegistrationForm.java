@@ -490,7 +490,7 @@ public class RegistrationForm extends AppCompatActivity{
         // Pick the default Image from the MipMap Folder
         // Path under FireBase Storage --> FitnessGuide/(Trainer|User)/UserId.(jpg|png)
 
-        Uri file = Uri.parse("android.resource://" + this.getPackageName() + "/" + R.mipmap.profile);
+        Uri file = Uri.parse("android.resource://" + this.getPackageName() + "/" + R.drawable.profile);
         final StorageReference fileReference;
         fileUri = Uri.fromFile(new File(file.getPath()));
         if (fileUri != null) {
@@ -523,7 +523,7 @@ public class RegistrationForm extends AppCompatActivity{
         // Pick the default Image from the MipMap Folder
         // Path under FireBase Storage --> FitnessGuide/(Trainer|User)/UserId.(jpg|png)
 
-        Uri file = Uri.parse("android.resource://" + this.getPackageName() + "/" + R.mipmap.profile);
+        Uri file = Uri.parse("android.resource://" + this.getPackageName() + "/" + R.drawable.profile);
         final StorageReference fileReference;
         fileUri = Uri.fromFile(new File(file.getPath()));
         if (fileUri != null) {

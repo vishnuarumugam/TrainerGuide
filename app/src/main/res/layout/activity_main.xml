@@ -149,7 +149,7 @@
                                     android:layout_marginVertical="2dp"
                                     android:layout_marginLeft="10dp"
                                     android:background="@color/white"
-                                    android:src="@mipmap/profile_email" />
+                                    android:src="@drawable/profile_email" />
 
 
                                 <EditText
@@ -157,7 +157,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_vertical"
-                                    android:layout_marginLeft="3dp"
+                                    android:layout_marginLeft="7dp"
                                     android:layout_marginRight="7dp"
                                     android:maxLength="60"
                                     android:background="@android:color/transparent"
@@ -193,14 +193,14 @@
                                     android:layout_marginVertical="2dp"
                                     android:layout_marginLeft="10dp"
                                     android:background="@color/white"
-                                    android:src="@mipmap/profile_password" />
+                                    android:src="@drawable/profile_password" />
 
                                 <EditText
                                     android:id="@+id/userPassword_Input"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_vertical"
-                                    android:layout_marginLeft="3dp"
+                                    android:layout_marginLeft="7dp"
                                     android:layout_marginRight="7dp"
                                     android:maxLength="15"
                                     android:background="@android:color/transparent"

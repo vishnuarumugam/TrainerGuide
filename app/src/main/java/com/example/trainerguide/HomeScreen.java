@@ -107,7 +107,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
     //Ad Slider
     SliderView topAdSliderView;
-    int[] adImages = {R.mipmap.ad_image,R.mipmap.create_account_image, R.mipmap.login_image};
+    int[] adImages = {R.mipmap.ad_image,R.mipmap.create_account_image, R.mipmap.create_account_image};
 
     //User Detail variables
     private String userId, path, userType, isAdmin;

@@ -128,7 +128,7 @@
                                                 android:layout_marginLeft="2dp"
                                                 android:layout_marginTop="0dp"
                                                 android:layout_toRightOf="@id/trainerRating"
-                                                android:src="@mipmap/rating_icon" />
+                                                android:src="@drawable/rating_icon" />
 
                                         </RelativeLayout>
 
@@ -211,7 +211,7 @@
                                     android:layout_height="match_parent"
                                     android:background="@color/homeScreenBgColor"
                                     android:scaleType="centerCrop"
-                                    android:src="@mipmap/login_image" />
+                                    />
 
                             </androidx.cardview.widget.CardView>
 
@@ -276,7 +276,7 @@
                                         android:layout_height="30dp"
                                         android:layout_centerVertical="true"
                                         android:layout_margin="15dp"
-                                        android:src="@mipmap/profile_mobile" />
+                                        android:src="@drawable/profile_mobile" />
 
                                     <TextView
                                         android:id="@+id/profilePhoneNumber"
@@ -314,7 +314,7 @@
                                         android:layout_height="30dp"
                                         android:layout_centerVertical="true"
                                         android:layout_margin="15dp"
-                                        android:src="@mipmap/profile_email" />
+                                        android:src="@drawable/profile_email" />
 
                                     <TextView
                                         android:id="@+id/profileEmailId"
@@ -353,7 +353,7 @@
                                         android:layout_height="30dp"
                                         android:layout_centerVertical="true"
                                         android:layout_margin="15dp"
-                                        android:src="@mipmap/gender_male" />
+                                        android:src="@drawable/gender_male" />
 
                                     <TextView
                                         android:id="@+id/profileGender"
@@ -391,7 +391,7 @@
                                         android:layout_height="30dp"
                                         android:layout_centerVertical="true"
                                         android:layout_margin="15dp"
-                                        android:src="@mipmap/profile_password" />
+                                        android:src="@drawable/profile_password" />
 
                                     <TextView
                                         android:id="@+id/profileResetPass"
@@ -431,7 +431,7 @@
                                         android:layout_height="30dp"
                                         android:layout_centerVertical="true"
                                         android:layout_margin="15dp"
-                                        android:src="@mipmap/profile_dob" />
+                                        android:src="@drawable/profile_dob" />
 
                                     <TextView
                                         android:id="@+id/profileDob"
@@ -476,7 +476,7 @@
                                             android:layout_height="30dp"
                                             android:layout_centerVertical="true"
                                             android:layout_margin="15dp"
-                                            android:src="@mipmap/experience" />
+                                            android:src="@drawable/experience" />
 
                                         <TextView
                                             android:id="@+id/profileExperience"
@@ -514,7 +514,7 @@
                                             android:layout_height="30dp"
                                             android:layout_centerVertical="true"
                                             android:layout_margin="15dp"
-                                            android:src="@mipmap/rupee"/>
+                                            android:src="@drawable/rupee"/>
                                         <TextView
                                             android:id="@+id/profileSubscriptionFees"
                                             android:layout_width="wrap_content"
@@ -550,7 +550,7 @@
                                             android:layout_height="30dp"
                                             android:layout_centerVertical="true"
                                             android:layout_margin="15dp"
-                                            android:src="@mipmap/description"/>
+                                            android:src="@drawable/description"/>
                                         <TextView
                                             android:id="@+id/profileSubscriptionDescription"
                                             android:layout_width="wrap_content"
@@ -593,7 +593,7 @@
                                             android:layout_width="30dp"
                                             android:layout_height="30dp"
                                             android:layout_centerVertical="true"
-                                            android:src="@mipmap/trainers"
+                                            android:src="@drawable/trainers"
                                             android:layout_margin="15dp"/>
                                         <TextView
                                             android:id="@+id/profileSubscriptionTrainer"
@@ -629,7 +629,7 @@
                                             android:id="@+id/profileSubscriptionExtendImage"
                                             android:layout_width="30dp"
                                             android:layout_height="30dp"
-                                            android:src="@mipmap/end_date"
+                                            android:src="@drawable/end_date"
                                             android:layout_margin="15dp"/>
 
                                         <TextView
@@ -716,7 +716,7 @@
                                     android:id="@+id/profileLogoutImage"
                                     android:layout_width="30dp"
                                     android:layout_height="30dp"
-                                    android:src="@mipmap/logout"
+                                    android:src="@drawable/logout"
                                     />
 
                                 <TextView

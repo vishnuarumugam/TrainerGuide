@@ -47,7 +47,7 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:id="@+id/profileDobDialogImg"
-                    android:src="@mipmap/profile_dob"
+                    android:src="@drawable/profile_dob"
                     android:elevation="5dp"
                     android:layout_gravity="center"/>
 
@@ -99,7 +99,7 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:id="@+id/profileWeightDialogImg"
-                    android:src="@mipmap/weight"
+                    android:src="@drawable/weight"
                     android:elevation="5dp"
                     android:layout_gravity="center"/>
 
@@ -170,7 +170,7 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:id="@+id/profileHeightDialogImg"
-                    android:src="@mipmap/height"
+                    android:src="@drawable/height"
                     android:elevation="5dp"
                     android:layout_gravity="center"/>
 
@@ -243,7 +243,7 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:id="@+id/profileExperienceDialogImg"
-                    android:src="@mipmap/experience"
+                    android:src="@drawable/experience"
                     android:elevation="5dp"
                     android:layout_gravity="center"/>
 
@@ -317,7 +317,7 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:id="@+id/profileMobileDialogImg"
-                    android:src="@mipmap/profile_mobile"
+                    android:src="@drawable/profile_mobile"
                     android:elevation="5dp"
                     android:layout_gravity="center"/>
 
@@ -377,7 +377,7 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:id="@+id/profileFoodTypeDialogImg"
-                    android:src="@mipmap/diet_type"
+                    android:src="@drawable/diet_type"
                     android:elevation="5dp"
                     android:layout_gravity="center"/>
 
@@ -458,7 +458,7 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:id="@+id/profileFoodAllergyDialogImg"
-                    android:src="@mipmap/food_allergy"
+                    android:src="@drawable/food_allergy"
                     android:elevation="5dp"
                     android:layout_gravity="center"/>
 
@@ -609,7 +609,7 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:id="@+id/profileHealthInfoDialogImg"
-                    android:src="@mipmap/health_issues"
+                    android:src="@drawable/health_issues"
                     android:elevation="5dp"
                     android:layout_gravity="center"/>
 
@@ -841,7 +841,7 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:id="@+id/profileSubscriptionFeesDialogImg"
-                    android:src="@mipmap/rupee"
+                    android:src="@drawable/rupee"
                     android:elevation="5dp"
                     android:layout_gravity="center"/>
 
@@ -914,7 +914,7 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:id="@+id/profileSubscriptionDescDialogImg"
-                    android:src="@mipmap/description"
+                    android:src="@drawable/description"
                     android:elevation="5dp"
                     android:layout_gravity="center"/>
 

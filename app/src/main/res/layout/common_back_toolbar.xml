@@ -33,7 +33,7 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="20dp"
-            android:background="@mipmap/notification"
+            android:background="@drawable/notification"
             android:gravity="center_vertical"/>
 
     </RelativeLayout>

@@ -51,7 +51,7 @@ public class TrainerProfileView extends AppCompatActivity {
     TextView name, experience, ratingUserCount, description, email, mobile, yourTrainer, traineesCount, trainerRatings, ratingSubmit, fees;
     RatingBar ratingBar;
     ImageView profileimg;
-    Button requestbtn;
+    Button requestbtn, toolBarNotification;
     ImageButton editRatingBtn;
     private String traineruserId, path,navScreen, userType;
 
@@ -83,10 +83,12 @@ public class TrainerProfileView extends AppCompatActivity {
         buttonBounce= AnimationUtils.loadAnimation(this, R.anim.button_bounce);
 
         //Navigation view variables
-        drawerLayout = findViewById(R.id.trainer_view_drawer_layout);
-        navigationView = findViewById(R.id.nav_view);
-        toolbar = findViewById(R.id.tool_bar);
-
+        //drawerLayout = findViewById(R.id.trainer_view_drawer_layout);
+        //navigationView = findViewById(R.id.nav_view);
+        toolbar = findViewById(R.id.back_tool_bar);
+        toolBarNotification = findViewById(R.id.toolBarNotification);
+        toolBarNotification.setVisibility(View.GONE);
+        toolbar.setTitle("Trainer Profile");
         //File Storage variables
         storageReference = FirebaseStorage.getInstance().getReference();
 
@@ -126,8 +128,26 @@ public class TrainerProfileView extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setBackgroundColor(getResources().getColor(R.color.themeColourOne));
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
-        ActionBarDrawerToggle toggle = CommonNavigator.navigatorInitmethod(drawerLayout,navigationView,toolbar,this);
-        toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.themeColourTwo));
+        //ActionBarDrawerToggle toggle = CommonNavigator.navigatorInitmethod(drawerLayout,navigationView,toolbar,this);
+        //toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.themeColourTwo));
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OnBackPressed();
+            }
+        });
+
+        /*toolBarNotification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toolBarNotification.startAnimation(buttonBounce);
+                Intent intent = new Intent(TrainerProfileView.this,NotificationScreen.class);
+                intent.putExtra("Screen", "TrainerProfileViewScreen");
+                startActivity(intent);
+                finish();
+            }
+        });*/
 
         PopulateUserDetails();
         editRatingBtn.setVisibility(View.GONE);
@@ -256,7 +276,7 @@ public class TrainerProfileView extends AppCompatActivity {
         });
 
         //Method to re-direct the page from menu
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+        /*navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
@@ -264,14 +284,14 @@ public class TrainerProfileView extends AppCompatActivity {
                         startActivity(new Intent(TrainerProfileView.this,ProfileScreen.class));
                         finish();
                         break;
-                    /*case R.id.nav_trainees:
+                    *//*case R.id.nav_trainees:
                         startActivity(new Intent(TrainerProfileView.this,TraineesScreen.class));
                         finish();
                         break;
                     case R.id.nav_trainer:
                         startActivity(new Intent(TrainerProfileView.this,TrainerScreen.class));
                         finish();
-                        break;*/
+                        break;*//*
                     case R.id.nav_logout:
                         startActivity(new Intent(TrainerProfileView.this,MainActivity.class));
                         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -289,7 +309,7 @@ public class TrainerProfileView extends AppCompatActivity {
                 }
                 return false;
             }
-        });
+        });*/
 
     }
 
@@ -382,31 +402,27 @@ public class TrainerProfileView extends AppCompatActivity {
 
     }
 
+    public void OnBackPressed()
+    {
+        if(navScreen!=null && navScreen.equals("NotificationScreen")){
 
+            System.out.println(navScreen.toString());
+            startActivity(new Intent(TrainerProfileView.this,NotificationScreen.class));
+            finish();}
+        else if (navScreen.equals("FindTrainer")){
+            startActivity(new Intent(TrainerProfileView.this, FindTrainer.class));
+            finish();
+        }
+        else {
+            startActivity(new Intent(TrainerProfileView.this, TrainerScreen.class));
+            finish();
+        }
+    }
 
     @Override
     public void onBackPressed()
     {
-        if(drawerLayout.isDrawerOpen(GravityCompat.START))
-        {
-            drawerLayout.closeDrawer((GravityCompat.START));
-        }
-        else
-        {
-            if(navScreen!=null && navScreen.equals("Notification")){
-
-                System.out.println(navScreen.toString());
-                startActivity(new Intent(TrainerProfileView.this,NotificationScreen.class));
-                finish();}
-            else if (navScreen.equals("FindTrainer")){
-                startActivity(new Intent(TrainerProfileView.this, FindTrainer.class));
-                finish();
-            }
-            else {
-                startActivity(new Intent(TrainerProfileView.this, TrainerScreen.class));
-                finish();
-            }
-        }
+            OnBackPressed();
     }
 
 }

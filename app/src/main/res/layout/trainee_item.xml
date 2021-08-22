@@ -34,7 +34,7 @@
                     android:id="@+id/traineeProfileImage"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@mipmap/profile"
+                    android:src="@drawable/profile"
                     android:scaleType="centerCrop"/>
 
             </androidx.cardview.widget.CardView>

@@ -5,29 +5,29 @@
         android:id="@+id/homeTab"
         android:title="Home"
         android:textAlignment="center"
-        android:icon="@mipmap/home"/>
+        android:icon="@drawable/home"/>
 
     <item
         android:id="@+id/trainersTab"
         android:title="Trainers"
         android:textAlignment="center"
-        android:icon="@mipmap/trainers" />
+        android:icon="@drawable/trainers" />
 
     <item
         android:id="@+id/traineesTab"
         android:title="Trainees"
         android:textAlignment="center"
-        android:icon="@mipmap/trainees" />
+        android:icon="@drawable/trainees" />
     <item
         android:id="@+id/foodListTab"
         android:title="Food List"
         android:textAlignment="center"
-        android:icon="@mipmap/foodlist" />
+        android:icon="@drawable/foodlist" />
     <item
         android:id="@+id/profileTab"
         android:title="Profile"
         android:textAlignment="center"
-        android:icon="@mipmap/profile" />
+        android:icon="@drawable/profile" />
 
 
 

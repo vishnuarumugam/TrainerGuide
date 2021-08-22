@@ -240,18 +240,18 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
         if (trainer.getUserId()!=null && trainer.getUserId().length()>1 ){
             if(trainer.isTrainer())
             {
-                 intent = new Intent(NotificationScreen.this,ProfileScreen.class);
+                 intent = new Intent(NotificationScreen.this,TrainerProfileView.class);
                 intent.putExtra("userId",trainer.getUserId());
-                intent.putExtra("IsTrainer", true);
-                intent.putExtra("ReadOnly", true);
+                /*intent.putExtra("IsTrainer", true);
+                intent.putExtra("ReadOnly", true);*/
                 intent.putExtra("Screen", "NotificationScreen");
             }
             else
             {
-                intent = new Intent(NotificationScreen.this,ProfileScreen.class);
+                intent = new Intent(NotificationScreen.this,TraineeProfileview.class);
                 intent.putExtra("userId",trainer.getUserId());
-                intent.putExtra("IsTrainer", false);
-                intent.putExtra("ReadOnly", true);
+                /*intent.putExtra("IsTrainer", false);
+                intent.putExtra("ReadOnly", true);*/
                 intent.putExtra("Screen", "NotificationScreen");
           }
 

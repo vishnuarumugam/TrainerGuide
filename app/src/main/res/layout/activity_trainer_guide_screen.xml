@@ -14,7 +14,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="100dp"
         android:layout_marginEnd="10dp"
-        android:src="@mipmap/profile"
+        android:src="@drawable/profile"
         android:transitionName="logo_Img"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

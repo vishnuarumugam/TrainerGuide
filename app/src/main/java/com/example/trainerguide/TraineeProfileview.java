@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -27,6 +28,7 @@ import android.widget.Toast;
 import com.example.trainerguide.models.Notification;
 import com.example.trainerguide.models.Trainee;
 import com.example.trainerguide.models.Trainer;
+import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.database.DataSnapshot;
@@ -38,19 +40,20 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class TraineeProfileview extends AppCompatActivity{
 
-    TextView name, goal, bmi, weight, height, mobile, email, foodType;
+    TextView name, goal, bmi, weight, height, mobile, email, foodType, otherHealthIssue, otherFoodAllergy;
     ImageView profileimg;
-    Button createFoodChart;
+    Button createFoodChart, toolBarNotification;
     private String traineeuserId, path, navScreen;
     Animation buttonBounce;
     private Trainee user;
-    RecyclerView healthInfo;
-    RelativeLayout healthInfoRel, foodTypeRel;
-
+    RelativeLayout healthInfoRel, foodAllergyRel, contactRelLay;
+    private MaterialCheckBox diabetesHealthIssue, cholesterolHealthIssue, thyroidHealthIssue, bpHealthIssue, heartHealthIssue, physicalInjuriesHealthIssue;
+    private MaterialCheckBox diaryFoodAllergy, wheatFoodAllergy, nutsFoodAllergy, seaFoodAllergy, muttonFoodAllergy, chickenFoodAllergy;
 
     private ProgressDialog progressDialog;
 
@@ -58,8 +61,6 @@ public class TraineeProfileview extends AppCompatActivity{
     private StorageReference storageReference;
 
     //Navigation view variables
-    private DrawerLayout drawerLayout;
-    private NavigationView navigationView;
     private Toolbar toolbar;
     private MenuItem profileMenu, logoutMenu, shareMenu, ratingMenu, traineeMenu;
     private TabLayout traineeTabLayout;
@@ -75,9 +76,11 @@ public class TraineeProfileview extends AppCompatActivity{
         navScreen = getIntent().getStringExtra("Screen");
 
         //Navigation view variables
-        drawerLayout = findViewById(R.id.trainee_view_drawer_layout);
-        navigationView = findViewById(R.id.nav_view);
-        toolbar = findViewById(R.id.tool_bar);
+        //drawerLayout = findViewById(R.id.trainee_view_drawer_layout);
+        toolbar = findViewById(R.id.back_tool_bar);
+        toolbar.setTitle("Trainee Profile");
+        toolBarNotification = findViewById(R.id.toolBarNotification);
+        toolBarNotification.setVisibility(View.GONE);
         //File Storage variables
         storageReference = FirebaseStorage.getInstance().getReference();
 
@@ -92,39 +95,76 @@ public class TraineeProfileview extends AppCompatActivity{
         height = findViewById(R.id.txtTraineeHeight);
         mobile = findViewById(R.id.txtTraineePhnNo);
         email = findViewById(R.id.txtTraineeEmail);
-        healthInfo = findViewById(R.id.healthInfoRecycler);
         foodType = findViewById(R.id.txtTraineeFoodType);
         healthInfoRel = findViewById(R.id.healthInfoRel);
-        foodTypeRel = findViewById(R.id.foodTypeRel);
+        foodAllergyRel = findViewById(R.id.foodAllergyRelLay);
+        contactRelLay = findViewById(R.id.contactRelLay);
         //requestbtn = findViewById(R.id.btnRequest);
         profileimg = findViewById(R.id.traineeImage);
         createFoodChart = findViewById(R.id.btnCreateFoodchart);
         traineeTabLayout = findViewById(R.id.traineesTabLayout);
 
+        diaryFoodAllergy = findViewById(R.id.diaryFoodAllergy);
+        wheatFoodAllergy = findViewById(R.id.wheatFoodAllergy);
+        nutsFoodAllergy = findViewById(R.id.nutsFoodAllergy);
+        seaFoodAllergy = findViewById(R.id.seaFoodAllergy);
+        muttonFoodAllergy = findViewById(R.id.muttonFoodAllergy);
+        chickenFoodAllergy = findViewById(R.id.chickenFoodAllergy);
+        otherFoodAllergy = findViewById(R.id.otherFoodAllergy);
+
+        diabetesHealthIssue = findViewById(R.id.diabetesHealthIssue);
+        cholesterolHealthIssue = findViewById(R.id.cholesterolHealthIssue);
+        thyroidHealthIssue = findViewById(R.id.thyroidHealthIssue);
+        bpHealthIssue = findViewById(R.id.bpHealthIssue);
+        heartHealthIssue = findViewById(R.id.heartHealthIssue);
+        physicalInjuriesHealthIssue = findViewById(R.id.physicalInjuriesHealthIssue);
+        otherHealthIssue = findViewById(R.id.otherHealthIssue);
+
         //Toolbar customisation
         setSupportActionBar(toolbar);
         toolbar.setBackgroundColor(getResources().getColor(R.color.black));
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
-        ActionBarDrawerToggle toggle = CommonNavigator.navigatorInitmethod(drawerLayout, navigationView, toolbar, this);
-        toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.themeColourTwo));
+        //ActionBarDrawerToggle toggle = CommonNavigator.navigatorInitmethod(drawerLayout, navigationView, toolbar, this);
+        //toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.themeColourTwo));
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OnBackPressed();
+            }
+        });
+
+        /*toolBarNotification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toolBarNotification.startAnimation(buttonBounce);
+                startActivity(new Intent(TraineeProfileview.this,NotificationScreen.class));
+                finish();
+            }
+        });*/
 
         PopulateUserDetails();
-
-        healthInfo.setLayoutManager(new LinearLayoutManager(this));
-
 
         traineeTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                if(tab.getText().equals("Health Info"))
+                if(tab.getText().equals("Health Issues"))
                 {
                     healthInfoRel.setVisibility(View.VISIBLE);
-                    foodTypeRel.setVisibility(View.GONE);
+                    foodAllergyRel.setVisibility(View.GONE);
+                    contactRelLay.setVisibility(View.GONE);
+                }
+                else if(tab.getText().equals("Food Allergy"))
+                {
+                    healthInfoRel.setVisibility(View.GONE);
+                    foodAllergyRel.setVisibility(View.VISIBLE);
+                    contactRelLay.setVisibility(View.GONE);
                 }
                 else
                 {
                     healthInfoRel.setVisibility(View.GONE);
-                    foodTypeRel.setVisibility(View.VISIBLE);
+                    foodAllergyRel.setVisibility(View.GONE);
+                    contactRelLay.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -153,42 +193,6 @@ public class TraineeProfileview extends AppCompatActivity{
                 intent.putExtra("totalCalories", user.getBmr().doubleValue());
                 startActivity(intent);
                 finish();
-            }
-        });
-
-//Method to re-direct the page from menu
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.nav_profile:
-                        startActivity(new Intent(TraineeProfileview.this, ProfileScreen.class));
-                        finish();
-                        break;
-                    /*case R.id.nav_trainees:
-                        startActivity(new Intent(TraineeProfileview.this, TraineesScreen.class));
-                        finish();
-                        break;
-                    case R.id.nav_trainer:
-                        startActivity(new Intent(TraineeProfileview.this, TrainerScreen.class));
-                        finish();
-                        break;*/
-                    case R.id.nav_logout:
-                        startActivity(new Intent(TraineeProfileview.this, MainActivity.class));
-                        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                        SharedPreferences.Editor editor = settings.edit();
-                        editor.remove("userId");
-                        editor.remove("ProfileType");
-                        editor.remove("IsLoggedIn");
-                        //editor.putBoolean("IsLoggedIn",false);
-                        editor.commit();
-                        finish();
-                        break;
-                    default:
-                        Toast.makeText(TraineeProfileview.this, "profile", Toast.LENGTH_SHORT).show();
-                        break;
-                }
-                return false;
             }
         });
     }
@@ -226,8 +230,74 @@ public class TraineeProfileview extends AppCompatActivity{
                 mobile.setText(String.valueOf(user.getPhoneNumber()));
                 email.setText(String.valueOf(user.getEmail()));
 
-                ProfileAdapter adapter = new ProfileAdapter(user.getHealthIssues().values().stream().collect(Collectors.toList()),getApplicationContext());
-                healthInfo.setAdapter(adapter);
+                //Health Issue Recycler View Data
+                if(user.getHealthIssues()!=null) {
+
+                    for (Map.Entry healthIssue : user.getHealthIssues().entrySet()) {
+
+                        if (!"Others".equals(healthIssue.getKey())){
+
+                            if (healthIssue.getValue().toString().equals("Diabetes")){
+                                diabetesHealthIssue.setChecked(true);
+                            }
+                            if(healthIssue.getValue().toString().equals("Cholesterol")){
+                                cholesterolHealthIssue.setChecked(true);
+                            }
+                            if(healthIssue.getValue().toString().equals("Thyroid")){
+                                thyroidHealthIssue.setChecked(true);
+                            }
+                            if(healthIssue.getValue().toString().equals("Blood Pressure")){
+                                bpHealthIssue.setChecked(true);
+                            }
+                            if(healthIssue.getValue().toString().equals("Heart Problems")){
+                                heartHealthIssue.setChecked(true);
+                            }
+                            if(healthIssue.getValue().toString().equals("Physical Injuries")){
+                                physicalInjuriesHealthIssue.setChecked(true);
+                            }
+
+                        }
+                        else{
+                            otherHealthIssue.setText(healthIssue.getValue().toString());
+                        }
+
+
+                    }
+                }
+
+                //Food Allergy Recycler View Data
+                if(user.getFoodAllergy()!=null) {
+                    for (Map.Entry  foodAllergyItem : user.getFoodAllergy().entrySet()) {
+
+                        if (!"Others".equals(foodAllergyItem.getKey())){
+
+                            if (foodAllergyItem.getValue().toString().equals("Diary")){
+                                diaryFoodAllergy.setChecked(true);
+                            }
+                            if (foodAllergyItem.getValue().toString().equals("Wheat")){
+                                wheatFoodAllergy.setChecked(true);
+                            }
+                            if (foodAllergyItem.getValue().toString().equals("Nuts")){
+                                nutsFoodAllergy.setChecked(true);
+                            }
+                            if (foodAllergyItem.getValue().toString().equals("Sea Food")){
+                                seaFoodAllergy.setChecked(true);
+                            }
+                            if (foodAllergyItem.getValue().toString().equals("Mutton")){
+                                muttonFoodAllergy.setChecked(true);
+                            }
+                            if (foodAllergyItem.getValue().toString().equals("Chicken")){
+                                chickenFoodAllergy.setChecked(true);
+                            }
+
+                        }
+                        else{
+
+                            otherFoodAllergy.setText(foodAllergyItem.getValue().toString());
+
+                        }
+                    }
+                }
                 //Dismiss Progress Dialog
                 progressDialog.dismiss();
             }
@@ -239,20 +309,22 @@ public class TraineeProfileview extends AppCompatActivity{
         });
     }
 
+    public void OnBackPressed()
+    {
+        if(navScreen!=null && navScreen.equals("NotificationScreen")){
+            startActivity(new Intent(TraineeProfileview.this, NotificationScreen.class));
+            finish();
+        }
+        else {
+            startActivity(new Intent(TraineeProfileview.this, TraineesScreen.class));
+            finish();
+        }
+    }
+
     @Override
     public void onBackPressed() {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.closeDrawer((GravityCompat.START));
-        } else {
-            if(navScreen!=null && navScreen.equals("Notification")){
-                startActivity(new Intent(TraineeProfileview.this, NotificationScreen.class));
-                finish();
-            }
-            else {
-                startActivity(new Intent(TraineeProfileview.this, TraineesScreen.class));
-                finish();
-            }
-        }
+
+            OnBackPressed();
     }
 
 

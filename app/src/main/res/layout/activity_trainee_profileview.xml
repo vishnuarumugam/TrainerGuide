@@ -7,18 +7,17 @@
     android:id="@+id/trainee_view_drawer_layout"
     tools:context=".TrainerScreen">
 
-    <include layout="@layout/common_navigator"/>
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="10dp">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <include layout="@layout/common_toolbar"/>
+            <include layout="@layout/common_back_toolbar"/>
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -215,7 +214,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/traineesLinearLay"
                         android:layout_below="@+id/traineeCardView"
-                        android:background="@color/grey"
+                        android:background="@color/white"
                         android:orientation="vertical"
                         android:padding="10dp">
 
@@ -293,6 +292,8 @@
                         <com.google.android.material.tabs.TabLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:background="#F6F5F3"
+                            android:layout_margin="5dp"
                             android:layout_below="@+id/traineeCardView"
                             android:id="@+id/traineesTabLayout"
                             android:layout_marginTop="10dp"
@@ -306,7 +307,13 @@
                             <com.google.android.material.tabs.TabItem
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Health Info"
+                                android:text="Health Issues"
+                                android:textAlignment="center" />
+
+                            <com.google.android.material.tabs.TabItem
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Food Allergy"
                                 android:textAlignment="center" />
 
                             <com.google.android.material.tabs.TabItem
@@ -320,20 +327,290 @@
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:layout_margin="5dp"
                             android:id="@+id/healthInfoRel">
 
-                            <androidx.recyclerview.widget.RecyclerView
+                            <!-- Health Issues -->
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                tools:listitem="@layout/profile_recycler_item"
-                                android:id="@+id/healthInfoRecycler"/>
+                                android:orientation="vertical"
+                                android:id="@+id/profileHealthInfoDialogTitleLin"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="10dp">
+
+                                <RelativeLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginHorizontal="20dp"
+                                    android:background="@drawable/dialog_radio_round">
+
+                                    <RelativeLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:id="@+id/healthInfoRelLeft"
+                                        android:layout_marginLeft="10dp"
+                                        android:layout_alignParentLeft="true">
+
+                                        <com.google.android.material.checkbox.MaterialCheckBox
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:id="@+id/diabetesHealthIssue"
+                                            android:text="Diabetes"
+                                            android:textColor="@color/themeColourOne"
+                                            android:clickable="false"
+                                            android:theme="@style/DialogCheckBox"
+                                            android:layout_alignParentLeft="true"/>
+
+                                        <com.google.android.material.checkbox.MaterialCheckBox
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:id="@+id/cholesterolHealthIssue"
+                                            android:text="Cholesterol"
+                                            android:clickable="false"
+                                            android:textColor="@color/themeColourOne"
+                                            android:theme="@style/DialogCheckBox"
+                                            android:layout_below="@+id/diabetesHealthIssue"/>
+
+                                        <com.google.android.material.checkbox.MaterialCheckBox
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:id="@+id/thyroidHealthIssue"
+                                            android:text="Thyroid"
+                                            android:clickable="false"
+                                            android:textColor="@color/themeColourOne"
+                                            android:theme="@style/DialogCheckBox"
+                                            android:layout_below="@+id/cholesterolHealthIssue"/>
+
+                                    </RelativeLayout>
+                                    <RelativeLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:id="@+id/healthInfoRelRight"
+                                        android:layout_marginRight="10dp"
+                                        android:layout_centerInParent="true"
+                                        android:layout_alignParentRight="true">
+
+                                        <com.google.android.material.checkbox.MaterialCheckBox
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:id="@+id/bpHealthIssue"
+                                            android:text="Blood Pressure"
+                                            android:clickable="false"
+                                            android:textColor="@color/themeColourOne"
+                                            android:theme="@style/DialogCheckBox"
+                                            android:layout_alignParentLeft="true"/>
+
+                                        <com.google.android.material.checkbox.MaterialCheckBox
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:id="@+id/heartHealthIssue"
+                                            android:text="Heart Problems"
+                                            android:clickable="false"
+                                            android:textColor="@color/themeColourOne"
+                                            android:theme="@style/DialogCheckBox"
+                                            android:layout_below="@+id/bpHealthIssue"/>
+
+                                        <com.google.android.material.checkbox.MaterialCheckBox
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:id="@+id/physicalInjuriesHealthIssue"
+                                            android:text="Physical Injuries"
+                                            android:clickable="false"
+                                            android:textColor="@color/themeColourOne"
+                                            android:theme="@style/DialogCheckBox"
+                                            android:layout_below="@+id/heartHealthIssue"/>
+
+                                    </RelativeLayout>
+
+                                </RelativeLayout>
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginHorizontal="20dp">
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:id="@+id/othersHealthInfoLabel"
+                                        style="@style/DialogEditText"
+                                        android:layout_marginTop="10dp"
+                                        android:layout_marginHorizontal="20dp"
+                                        android:text="Others:"
+                                        android:background="@drawable/round_shape"
+                                        android:textColorHint="@color/themeColourTwo"
+                                        android:textColor="@color/themeColourOne"
+                                        android:fontFamily="@font/poppins_light">
+
+                                    </TextView>
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:id="@+id/otherHealthIssue"
+                                        android:layout_marginTop="10dp"
+                                        android:layout_toRightOf="@+id/othersHealthInfoLabel"
+                                        style="@style/DialogEditText"
+                                        android:background="@drawable/round_shape"
+                                        android:textColorHint="@color/themeColourTwo"
+                                        android:textColor="@color/themeColourOne"
+                                        android:fontFamily="@font/poppins_light">
+
+                                    </TextView>
+                                </RelativeLayout>
+                            </LinearLayout>
 
                         </RelativeLayout>
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:id="@+id/foodAllergyRelLay"
+                            android:background="@color/white"
                             android:visibility="gone"
-                            android:id="@+id/foodTypeRel">
+                            android:layout_margin="5dp"
+                            >
+                            <!-- Food Allergy Dialog-->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:id="@+id/profileFoodAllergyDialogTitleLin"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="10dp">
+
+                                <RelativeLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginHorizontal="20dp"
+                                    android:background="@drawable/dialog_radio_round">
+
+                                    <RelativeLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:id="@+id/foodAllergyRelLeft"
+                                        android:layout_marginLeft="10dp"
+                                        android:layout_alignParentLeft="true">
+
+                                        <com.google.android.material.checkbox.MaterialCheckBox
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:id="@+id/diaryFoodAllergy"
+                                            android:text="Diary"
+                                            android:clickable="false"
+                                            android:textColor="@color/themeColourOne"
+                                            android:theme="@style/DialogCheckBox"
+                                            android:layout_alignParentLeft="true"/>
+
+                                        <com.google.android.material.checkbox.MaterialCheckBox
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:id="@+id/wheatFoodAllergy"
+                                            android:text="Wheat"
+                                            android:clickable="false"
+                                            android:textColor="@color/themeColourOne"
+                                            android:theme="@style/DialogCheckBox"
+                                            android:layout_below="@+id/diaryFoodAllergy"/>
+
+                                        <com.google.android.material.checkbox.MaterialCheckBox
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:id="@+id/nutsFoodAllergy"
+                                            android:text="Nuts"
+                                            android:clickable="false"
+                                            android:textColor="@color/themeColourOne"
+                                            android:theme="@style/DialogCheckBox"
+                                            android:layout_below="@+id/wheatFoodAllergy"/>
+
+                                    </RelativeLayout>
+                                    <RelativeLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:id="@+id/foodAllergyRelRight"
+                                        android:layout_marginRight="10dp"
+                                        android:layout_centerInParent="true"
+                                        android:layout_alignParentRight="true">
+
+                                        <com.google.android.material.checkbox.MaterialCheckBox
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:id="@+id/seaFoodAllergy"
+                                            android:text="Sea Food"
+                                            android:clickable="false"
+                                            android:textColor="@color/themeColourOne"
+                                            android:theme="@style/DialogCheckBox"
+                                            android:layout_alignParentLeft="true"/>
+
+                                        <com.google.android.material.checkbox.MaterialCheckBox
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:id="@+id/muttonFoodAllergy"
+                                            android:text="Mutton"
+                                            android:clickable="false"
+                                            android:textColor="@color/themeColourOne"
+                                            android:theme="@style/DialogCheckBox"
+                                            android:layout_below="@+id/seaFoodAllergy"/>
+
+                                        <com.google.android.material.checkbox.MaterialCheckBox
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:id="@+id/chickenFoodAllergy"
+                                            android:text="Chicken"
+                                            android:clickable="false"
+                                            android:textColor="@color/themeColourOne"
+                                            android:theme="@style/DialogCheckBox"
+                                            android:layout_below="@+id/muttonFoodAllergy"/>
+
+                                    </RelativeLayout>
+
+                                </RelativeLayout>
+
+                                    <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="20dp">
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:id="@+id/othersFoodAllerrgyLabel"
+                                        style="@style/DialogEditText"
+                                        android:layout_marginTop="10dp"
+                                        android:layout_marginHorizontal="20dp"
+                                        android:text="Others:"
+                                        android:background="@drawable/round_shape"
+                                        android:textColorHint="@color/themeColourTwo"
+                                        android:textColor="@color/themeColourOne"
+                                        android:fontFamily="@font/poppins_light">
+
+                                    </TextView>
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:id="@+id/otherFoodAllergy"
+                                        android:layout_marginTop="10dp"
+                                        android:background="@drawable/round_shape"
+                                        android:textColorHint="@color/themeColourTwo"
+                                        style="@style/DialogEditText"
+                                        android:layout_toRightOf="@+id/othersFoodAllerrgyLabel"
+                                        android:textColor="@color/themeColourOne"
+                                        android:fontFamily="@font/poppins_light">
+
+                                    </TextView>
+
+                                </RelativeLayout>
+
+                            </LinearLayout>
+                        </RelativeLayout>
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            android:background="@color/white"
+                            android:layout_margin="5dp"
+                            android:id="@+id/contactRelLay">
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
@@ -399,7 +676,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:backgroundTint="@color/yellow"
+                            android:backgroundTint="@color/themeColourTwo"
                             android:layout_marginTop="50dp"
                             android:text="Create Food Chart" />
 

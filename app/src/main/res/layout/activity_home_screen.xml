@@ -385,7 +385,7 @@
                                                 android:layout_width="22dp"
                                                 android:layout_height="20dp"
                                                 android:layout_centerHorizontal="true"
-                                                android:src="@mipmap/weight" />
+                                                android:src="@drawable/weight" />
 
                                             <TextView
                                                 android:layout_width="wrap_content"
@@ -421,7 +421,7 @@
                                                 android:layout_width="22dp"
                                                 android:layout_height="20dp"
                                                 android:layout_centerHorizontal="true"
-                                                android:src="@mipmap/height" />
+                                                android:src="@drawable/height" />
 
                                             <TextView
                                                 android:layout_width="wrap_content"
@@ -456,7 +456,7 @@
                                                 android:layout_width="22dp"
                                                 android:layout_height="20dp"
                                                 android:layout_centerHorizontal="true"
-                                                android:src="@mipmap/progress" />
+                                                android:src="@drawable/progress" />
 
                                             <TextView
                                                 android:layout_width="wrap_content"
@@ -535,7 +535,7 @@
                                                 android:layout_width="22dp"
                                                 android:layout_height="20dp"
                                                 android:layout_centerHorizontal="true"
-                                                android:src="@mipmap/diet_type" />
+                                                android:src="@drawable/diet_type" />
 
                                             <TextView
                                                 android:layout_width="wrap_content"
@@ -570,7 +570,7 @@
                                                 android:layout_width="22dp"
                                                 android:layout_height="20dp"
                                                 android:layout_centerHorizontal="true"
-                                                android:src="@mipmap/food_allergy" />
+                                                android:src="@drawable/food_allergy" />
 
                                             <TextView
                                                 android:layout_width="wrap_content"
@@ -606,7 +606,7 @@
                                                 android:layout_width="22dp"
                                                 android:layout_height="20dp"
                                                 android:layout_centerHorizontal="true"
-                                                android:src="@mipmap/health_issues" />
+                                                android:src="@drawable/health_issues" />
 
                                             <TextView
                                                 android:layout_width="wrap_content"
@@ -615,9 +615,9 @@
                                                 android:layout_marginTop="5dp"
                                                 android:fontFamily="@font/poppins_medium"
                                                 android:text="Health Issues"
-                                                android:textSize="14sp"
                                                 android:textAlignment="center"
-                                                android:textColor="@color/themeColourOne" />
+                                                android:textColor="@color/themeColourOne"
+                                                android:textSize="14sp" />
 
 
                                         </RelativeLayout>

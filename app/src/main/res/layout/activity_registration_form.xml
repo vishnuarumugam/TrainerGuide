@@ -90,14 +90,14 @@
                                 android:layout_marginVertical="2dp"
                                 android:layout_marginLeft="10dp"
                                 android:background="@color/white"
-                                android:src="@mipmap/profile_user_name" />
+                                android:src="@drawable/profile_user_name" />
 
                             <EditText
                                 android:id="@+id/userRgrName_Input"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="3dp"
+                                android:layout_marginLeft="7dp"
                                 android:layout_marginRight="7dp"
                                 android:background="@android:color/transparent"
                                 android:hint="user name"
@@ -132,14 +132,14 @@
                                 android:layout_marginVertical="2dp"
                                 android:layout_marginLeft="10dp"
                                 android:background="@color/white"
-                                android:src="@mipmap/profile_email" />
+                                android:src="@drawable/profile_email" />
 
                             <EditText
                                 android:id="@+id/userRgrEmail_Input"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="3dp"
+                                android:layout_marginLeft="7dp"
                                 android:layout_marginRight="7dp"
                                 android:maxLength="60"
                                 android:background="@android:color/transparent"
@@ -174,14 +174,14 @@
                                 android:layout_marginVertical="2dp"
                                 android:layout_marginLeft="10dp"
                                 android:background="@color/white"
-                                android:src="@mipmap/profile_mobile" />
+                                android:src="@drawable/profile_mobile" />
 
                             <EditText
                                 android:id="@+id/userRgrMobile_Input"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="3dp"
+                                android:layout_marginLeft="7dp"
                                 android:layout_marginRight="7dp"
                                 android:background="@android:color/transparent"
                                 android:hint="mobile"
@@ -223,14 +223,14 @@
                                     android:layout_marginVertical="2dp"
                                     android:layout_marginLeft="10dp"
                                     android:background="@color/white"
-                                    android:src="@mipmap/profile_password" />
+                                    android:src="@drawable/profile_password" />
 
                                 <EditText
                                     android:id="@+id/userRgrPassword_Input"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_vertical"
-                                    android:layout_marginLeft="3dp"
+                                    android:layout_marginLeft="7dp"
                                     android:layout_marginRight="7dp"
                                     android:background="@android:color/transparent"
                                     android:hint="password"
@@ -245,15 +245,15 @@
                         </LinearLayout>
 
                         <ImageButton
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
                             android:id="@+id/userRgrPassHint"
                             android:layout_marginTop="5dp"
                             android:layout_marginRight="10dp"
                             android:background="@color/white"
                             android:layout_alignRight="@id/passwordLinear"
                             android:layout_alignParentEnd="true"
-                            android:src="@mipmap/info"/>
+                            android:src="@drawable/info"/>
 
 
                     </RelativeLayout>
@@ -282,14 +282,14 @@
                                 android:layout_marginVertical="2dp"
                                 android:layout_marginLeft="10dp"
                                 android:background="@color/white"
-                                android:src="@mipmap/profile_password" />
+                                android:src="@drawable/profile_password" />
 
                             <EditText
                                 android:id="@+id/userRgrConPassword_Input"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="3dp"
+                                android:layout_marginLeft="7dp"
                                 android:layout_marginRight="7dp"
                                 android:background="@android:color/transparent"
                                 android:hint="confirm password"
