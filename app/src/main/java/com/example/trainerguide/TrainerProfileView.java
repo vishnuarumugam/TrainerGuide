@@ -48,10 +48,11 @@ import java.util.UUID;
 
 public class TrainerProfileView extends AppCompatActivity {
 
-    TextView name, experience, ratingUserCount, description, email, mobile, yourTrainer, traineesCount, trainerRatings, ratingSubmit;
+    TextView name, experience, ratingUserCount, description, email, mobile, yourTrainer, traineesCount, trainerRatings, ratingSubmit, fees;
     RatingBar ratingBar;
     ImageView profileimg;
     Button requestbtn;
+    ImageButton editRatingBtn;
     private String traineruserId, path,navScreen, userType;
 
     Animation buttonBounce;
@@ -95,6 +96,7 @@ public class TrainerProfileView extends AppCompatActivity {
 
         name = findViewById(R.id.txtName);
         experience = findViewById(R.id.txtExperience);
+        fees = findViewById(R.id.txtFees);
         trainerRatings = findViewById(R.id.trainerRatings);
         description = findViewById(R.id.txtDescription);
         ratingUserCount = findViewById(R.id.txtUserCount);
@@ -106,6 +108,7 @@ public class TrainerProfileView extends AppCompatActivity {
         mobile = findViewById(R.id.txtPhnNo);
         ratingSubmit = findViewById(R.id.ratingSubmit);
         yourTrainer = findViewById(R.id.yourTrainerText);
+        editRatingBtn = findViewById(R.id.editRatingbtn);
 
         ratingBar.setEnabled(false);
 
@@ -127,9 +130,38 @@ public class TrainerProfileView extends AppCompatActivity {
         toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.themeColourTwo));
 
         PopulateUserDetails();
+        editRatingBtn.setVisibility(View.GONE);
 
         //Menu Item variables
         profileMenu = findViewById(R.id.nav_profile);
+
+        editRatingBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (trainee != null && trainee.getTrainerId() != null && trainee.getTrainerId().equals(traineruserId)) {
+                    if (trainee.getLastRatedDttm() == null) {
+                        ratingBar.setEnabled(true);
+                        editRatingBtn.setVisibility(View.GONE);
+                        ratingSubmit.setVisibility(View.VISIBLE);
+                    } else {
+                        long difference = Calendar.getInstance().getTimeInMillis() - trainee.getLastRatedDttm().getTime();
+                        int days = (int) (difference / (1000 * 60 * 60 * 24));
+                        if (days > 2) {
+                            ratingBar.setEnabled(true);
+                            editRatingBtn.setVisibility(View.GONE);
+                            ratingSubmit.setVisibility(View.VISIBLE);
+                        } else {
+                            if(days - 2 != 0) {
+                                Toast.makeText(TrainerProfileView.this, "You can rate " + trainer.getName() + " in " + (2 - days) + " days", Toast.LENGTH_SHORT).show();
+                            }
+                            else {
+                                Toast.makeText(TrainerProfileView.this, "You can rate " + trainer.getName() + " tomorrow", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+                }
+            }
+        });
 
         requestbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -217,6 +249,8 @@ public class TrainerProfileView extends AppCompatActivity {
                 PopulateUserDetails();
 
                 ratingSubmit.setVisibility(View.GONE);
+                ratingBar.setEnabled(false);
+                editRatingBtn.setVisibility(View.VISIBLE);
             }
 
         });
@@ -284,18 +318,26 @@ public class TrainerProfileView extends AppCompatActivity {
                         .centerCrop()
                         .into(profileimg);
                 name.setText(trainer.getName());
+                fees.setText(trainer.getSubscriptionFees() == null ? "-" : String.valueOf(trainer.getSubscriptionFees()));
                 experience.setText(String.valueOf(trainer.getExperience() == null ? "-" : trainer.getExperience() +" Yrs"));
                 description.setText(trainer.getSubscriptionDescription() != null ? trainer.getSubscriptionDescription() : "Description not provided");
                 mobile.setText(String.valueOf(trainer.getPhoneNumber()));
                 email.setText(trainer.getEmail());
                 ratingBar.setNumStars(5);
+                ratingBar.setEnabled(false);
                 if(trainer !=null) {
                     ratingBar.setRating((float)trainer.getRating());
                     DecimalFormat df = new DecimalFormat("#.#");
                     System.out.println("Rating    "+(df.format(trainer.getRating())));
                     trainerRatings.setText(trainer.getRating() <= 0 ? "-" : df.format(trainer.getRating()));
                     ratingUserCount.setText("(" + String.valueOf((int) trainer.getRatedTraineescount()) + ")");
-                    traineesCount.setText( String.valueOf((int) trainer.getRatedTraineescount() == 0 ? "-" : (int) trainer.getRatedTraineescount()));
+                    if(trainer.getUsersList() != null) {
+                        traineesCount.setText(String.valueOf((int) trainer.getUsersList().size() == 0 ? "-" : (int) trainer.getUsersList().size()));
+                    }
+                    else
+                    {
+                        traineesCount.setText("-");
+                    }
                 }
                 else
                 {
@@ -314,14 +356,7 @@ public class TrainerProfileView extends AppCompatActivity {
                             trainee = snapshot.getValue(Trainee.class);
                             if (trainee != null && trainee.getTrainerId() != null && trainee.getTrainerId().equals(traineruserId)) {
                                 System.out.println(Calendar.getInstance().getTime().getDate());
-
-                                long difference = Calendar.getInstance().getTimeInMillis() - trainee.getLastRatedDttm().getTime();
-                                int days = (int) (difference / (1000 * 60 * 60 * 24));
-                                if (trainee.getLastRatedDttm() != null) {
-                                    ratingSubmit.setVisibility(View.VISIBLE);
-                                    ratingBar.setEnabled(true);
-                                }
-
+                                editRatingBtn.setVisibility(View.VISIBLE);
                                 if (trainer != null && trainer.getUserId().equals(trainee.getTrainerId())) {
                                     requestbtn.setVisibility(View.GONE);
                                     yourTrainer.setVisibility(View.VISIBLE);

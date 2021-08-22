@@ -43,6 +43,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.HashMap;
+
 public class MainActivity extends AppCompatActivity {
 
     private EditText userEmailIn, userPasswordIn;
@@ -202,6 +204,19 @@ public class MainActivity extends AppCompatActivity {
                                                         if (profileType.equals("User")){
                                                             Trainee trainee = snapshot.getValue(Trainee.class);
                                                             editor.putString("UserGoal", trainee.getSubscriptionType());
+                                                        }
+
+                                                        if( user.getIsAdmin() == null ){
+                                                            HashMap hash= new HashMap();
+                                                            hash.put("isAdmin", "0");
+                                                            editor.putString("isAdmin","0");
+                                                            databaseReference.updateChildren(hash);
+                                                        }
+                                                        else if( user.getIsAdmin().equals("1") ){
+                                                            editor.putString("isAdmin","1");
+                                                        }
+                                                        else {
+                                                            editor.putString("isAdmin","0");
                                                         }
 
                                                         editor.putString("userId", fAuth.getCurrentUser().getUid());

@@ -110,7 +110,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
     int[] adImages = {R.mipmap.ad_image,R.mipmap.create_account_image, R.mipmap.login_image};
 
     //User Detail variables
-    private String userId, path, userType;
+    private String userId, path, userType, isAdmin;
     private SharedPreferences sp;
 
     //Progress Bar
@@ -277,7 +277,10 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 default:
                     break;
             }
-            homeScreenTabLayout.getMenu().removeItem(R.id.foodListTab);
+            isAdmin = sp.getString("isAdmin",null);
+            if (isAdmin.equals("0") || isAdmin==null){
+                homeScreenTabLayout.getMenu().removeItem(R.id.foodListTab);
+            }
             homeScreenTabLayout.getMenu().removeItem(R.id.traineesTab);
 
             /*traineeDashboard.setVisibility(View.GONE);
@@ -596,6 +599,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                         }
                     }
                 }
+
 
                 //Dismiss Progress Dialog
                 progressDialog.dismiss();

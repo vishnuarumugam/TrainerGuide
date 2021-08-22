@@ -25,6 +25,7 @@ public class User {
     private String email;
     private Long phoneNumber;
     private String foodType;
+    private String isAdmin;
 
     public Long getPhoneNumber() {
         return phoneNumber;
@@ -44,7 +45,7 @@ public class User {
     public User(String userId, String name, Double bmr, Double bmi, Date dateOfBirth, String gender,
                 Double weight, Double height, Date accCreateDttm, boolean isTrainer, Date lastModDttm,
                 String image, String email,Long phoneNumber, List<BmrProgress> bmrReport, HashMap<String,String> healthIssues,
-                HashMap<String,String> foodAllergy, HashMap<String,Notification> notifications, String foodType) {
+                HashMap<String,String> foodAllergy, HashMap<String,Notification> notifications, String foodType, String isAdmin) {
         this.userId = userId;
         this.name = name;
         this.bmr = bmr;
@@ -64,6 +65,7 @@ public class User {
         this.foodAllergy = foodAllergy;
         this.notifications = notifications;
         this.foodType=foodType;
+        this.isAdmin=isAdmin;
 
     }
 
@@ -87,6 +89,7 @@ public class User {
         this.foodAllergy = new HashMap<>();
         this.notifications = new HashMap<>();
         this.foodType = "Not mentioned";
+        this.isAdmin="0";
     }
     public User() {
     }
@@ -274,5 +277,13 @@ public class User {
 
     public void setFoodType(String foodType) {
         this.foodType = foodType;
+    }
+
+    public String getIsAdmin() {
+        return isAdmin;
+    }
+
+    public void setIsAdmin(String isAdmin) {
+        this.isAdmin = isAdmin;
     }
 }

@@ -32,19 +32,7 @@
                 android:textSize="18sp"
                 android:textColor="@color/themeProfileSelect" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:gravity="center"
-                android:id="@+id/filterClear"
-                android:text="CLEAR ALL"
-                android:layout_toLeftOf="@id/filterHide"
-                android:layout_marginHorizontal="5dp"
-                android:textColor="@color/themeColourTwo"
-                style="@style/fontStyle"
-                android:padding="5dp"
-                android:textSize="14sp"
-                android:layout_marginTop="20dp"/>
+
 
             <ImageButton
                 android:id="@+id/filterHide"
@@ -78,12 +66,27 @@
 
                     <TextView
                         android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:gravity="center"
+                        android:layout_alignParentRight="true"
+                        android:id="@+id/filterClear"
+                        android:text="CLEAR ALL"
+                        android:layout_marginHorizontal="10dp"
+                        android:textColor="@color/themeColourTwo"
+                        style="@style/fontStyle"
+                        android:padding="5dp"
+                        android:textSize="14sp"
+                        android:layout_marginTop="5dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:layout_marginHorizontal="10dp"
                         android:text="Rating"
                         android:layout_marginTop="5dp"
                         android:id="@+id/findTrainerRatingLabel"
+                        android:layout_below="@id/filterClear"
                         style="@style/fontStyle"
                         android:textSize="14sp"
                         android:paddingHorizontal="5dp"

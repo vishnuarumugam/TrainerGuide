@@ -62,9 +62,22 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
-                            android:layout_marginBottom="15dp"
+                            android:layout_marginBottom="5dp"
                             android:fontFamily="@font/poppins_medium"
                             android:textColor="@color/themeColourOne"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/dashboard_post_ad"
+                            android:layout_alignParentRight="true"
+                            android:layout_below="@id/dashboard_user_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Post ad"
+                            android:layout_marginHorizontal="15dp"
+                            android:layout_marginBottom="15dp"
+                            android:fontFamily="@font/poppins_medium"
+                            android:textColor="@color/themeColourTwo"
                             android:textSize="16sp" />
 
 
@@ -73,7 +86,7 @@
                             android:id="@+id/ad_layout_shadow"
                             android:layout_width="match_parent"
                             android:layout_height="200dp"
-                            android:layout_below="@+id/homeScreenTitle"
+                            android:layout_below="@+id/dashboard_post_ad"
                             android:layout_marginHorizontal="45dp"
                             android:layout_marginBottom="35dp"
                             android:layout_marginTop="14dp"
@@ -85,7 +98,7 @@
                         <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
                             android:layout_height="200dp"
-                            android:layout_below="@+id/homeScreenTitle"
+                            android:layout_below="@+id/dashboard_post_ad"
                             android:layout_marginHorizontal="30dp"
                             android:layout_marginTop="8dp"
                             android:backgroundTint="@color/adShadowTwo"
@@ -95,7 +108,7 @@
                             android:id="@+id/ad_layout"
                             android:layout_width="match_parent"
                             android:layout_height="200dp"
-                            android:layout_below="@+id/homeScreenTitle"
+                            android:layout_below="@+id/dashboard_post_ad"
                             android:layout_marginHorizontal="15dp"
                             android:backgroundTint="@color/adShadowThree"
                             app:cardCornerRadius="10dp">

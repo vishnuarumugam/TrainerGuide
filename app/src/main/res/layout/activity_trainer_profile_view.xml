@@ -41,7 +41,7 @@
 
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
-                        android:layout_height="250dp"
+                        android:layout_height="280dp"
                         android:id="@+id/trainerCardView"
                         android:layout_marginHorizontal="15dp"
                         android:elevation="10dp"
@@ -64,13 +64,23 @@
                                 android:textColor="@color/themeColourOne"
                                 android:textSize="18sp"
                                 />
+                            <TextView
+                                android:id="@+id/yourTrainerText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/txtName"
+                                android:layout_gravity="center"
+                                android:layout_centerInParent="true"
+                                android:fontFamily="@font/poppins_medium"
+                                android:visibility="gone"
+                                android:textColor="@color/themeColourTwo"/>
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:background="@color/white"
                                 android:layout_below="@+id/txtName"
-                                android:layout_marginTop="10dp"
+                                android:layout_marginTop="25dp"
                                 android:orientation="horizontal"
                                 android:padding="10dp">
 
@@ -231,13 +241,7 @@
                         android:padding="10dp">
 
 
-                        <TextView
-                            android:id="@+id/yourTrainerText"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:fontFamily="@font/poppins_medium"
-                            android:visibility="gone" />
+
 
                         <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
@@ -309,6 +313,41 @@
 
                         <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            app:cardBackgroundColor="@color/white"
+                            app:cardCornerRadius="10dp">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <TextView
+                                    android:id="@+id/txtFeesLabel"
+                                    android:layout_width="100dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginStart="15dp"
+                                    android:layout_marginTop="15dp"
+                                    android:fontFamily="@font/poppins_medium"
+                                    android:text="Fees :" />
+
+                                <TextView
+                                    android:id="@+id/txtFees"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginStart="15dp"
+                                    android:layout_marginTop="15dp"
+                                    android:layout_toRightOf="@+id/txtFeesLabel"
+                                    android:fontFamily="@font/poppins_medium"
+                                    android:text="-" />
+                            </RelativeLayout>
+                        </androidx.cardview.widget.CardView>
+
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
                             android:layout_height="45dp"
                             android:layout_margin="5dp"
                             app:cardBackgroundColor="@color/white"
@@ -365,6 +404,16 @@
                                     android:layout_marginTop="15dp"
                                     android:layout_toRightOf="@+id/ratingBar"
                                     android:fontFamily="@font/poppins_medium" />
+
+                                <ImageButton
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/editRatingbtn"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginHorizontal="5dp"
+                                    android:background="@color/transparent"
+                                    android:src="@drawable/ic_edit"/>
                             </RelativeLayout>
                         </androidx.cardview.widget.CardView>
 

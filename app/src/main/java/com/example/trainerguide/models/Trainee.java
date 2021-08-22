@@ -21,8 +21,8 @@ public class Trainee extends User {
     }
 
     public Trainee(String userId, String name, Long phoneNumber, Double bmr, Double bmi, Date dateOfBirth, String gender, Double weight, Double height, Date accCreateDttm, boolean isTrainer, Date lastModDttm,
-                   String image, String email, List<BmrProgress> bmrReport, HashMap<String, String> healthIssues, HashMap<String, String> foodAllergy, String trainerId, HashMap<String, Notification> notifications, String subscriptionType, String foodType) {
-        super(userId, name, bmr, bmi, dateOfBirth, gender, weight, height, accCreateDttm, isTrainer, lastModDttm, image, email,phoneNumber, bmrReport, healthIssues, foodAllergy, notifications, foodType);
+                   String image, String email, List<BmrProgress> bmrReport, HashMap<String, String> healthIssues, HashMap<String, String> foodAllergy, String trainerId, HashMap<String, Notification> notifications, String subscriptionType, String foodType, String isAdmin) {
+        super(userId, name, bmr, bmi, dateOfBirth, gender, weight, height, accCreateDttm, isTrainer, lastModDttm, image, email,phoneNumber, bmrReport, healthIssues, foodAllergy, notifications, foodType, isAdmin);
         TrainerId = trainerId;
         subscriptionType = subscriptionType;
     }

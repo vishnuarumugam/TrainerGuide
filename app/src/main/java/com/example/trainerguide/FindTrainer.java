@@ -60,7 +60,6 @@ public class FindTrainer extends AppCompatActivity implements View.OnClickListen
         findTrainerRating = findViewById(R.id.findTrainerRating);
         findTrainerFees = findViewById(R.id.findTrainerFees);
         filterClear = findViewById(R.id.filterClear);
-        filterClear.setVisibility(View.VISIBLE);
         findTrainer = findViewById(R.id.findTrainer);
         filterClear.setOnClickListener(this);
         findTrainer.setOnClickListener(this);
@@ -132,15 +131,13 @@ public class FindTrainer extends AppCompatActivity implements View.OnClickListen
                 break;
             case R.id.filterHide:
                 System.out.println("v=g");
-                if (filterClear.getVisibility() == View.VISIBLE){
+                if (filterLayout.getVisibility() == View.VISIBLE){
                     System.out.println("v");
-                    filterClear.setVisibility(View.GONE);
                     filterLayout.setVisibility(View.GONE);
                     filterHide.setBackgroundResource(R.drawable.ic_baseline_arrow_drop_up);
                 }
-                else if (filterClear.getVisibility() == View.GONE){
+                else if (filterLayout.getVisibility() == View.GONE){
                     System.out.println("g");
-                    filterClear.setVisibility(View.VISIBLE);
                     filterLayout.setVisibility(View.VISIBLE);
                     filterHide.setBackgroundResource(R.drawable.ic_dropdown_arrow_down);
                 }
@@ -193,14 +190,12 @@ public class FindTrainer extends AppCompatActivity implements View.OnClickListen
                         if (trainerList.size()==0){
                             trainerFilterRecycler.setVisibility(View.GONE);
                             noSearchResult.setVisibility(View.VISIBLE);
-                            filterClear.setVisibility(View.VISIBLE);
                             filterHide.setBackgroundResource(R.drawable.ic_dropdown_arrow_down);
                             filterLayout.setVisibility(View.VISIBLE);
                         }
                         else{
                             trainerFilterRecycler.setVisibility(View.VISIBLE);
                             noSearchResult.setVisibility(View.GONE);
-                            filterClear.setVisibility(View.GONE);
                             filterLayout.setVisibility(View.GONE);
                             filterHide.setBackgroundResource(R.drawable.ic_baseline_arrow_drop_up);
                             trainerFilterAdapter.notifyDataSetChanged();
