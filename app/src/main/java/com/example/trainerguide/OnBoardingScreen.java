@@ -109,7 +109,7 @@ public class OnBoardingScreen extends AppCompatActivity {
         OnboardingItem onBoardContent2 = new OnboardingItem();
         onBoardContent2.setTitle("Become an");
         onBoardContent2.setSubTitle("Inspiration");
-        onBoardContent2.setImage(R.mipmap.app_logo);
+        onBoardContent2.setImage(R.drawable.app_logo);
 
         onboardingItems.add(onBoardContent);
         onboardingItems.add(onBoardContent1);
