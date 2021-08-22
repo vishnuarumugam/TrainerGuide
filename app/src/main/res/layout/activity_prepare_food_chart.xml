@@ -10,9 +10,6 @@
     android:background="@color/white"
     tools:openDrawer="start">
 
-
-    <include layout="@layout/common_navigator"/>
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -21,7 +18,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <include layout="@layout/common_toolbar"/>
+            <include layout="@layout/common_back_toolbar"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"

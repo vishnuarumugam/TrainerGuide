@@ -134,6 +134,7 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
 
     //User Detail variables
     private String userId;
+    private String traineeUserId;
     private String path;
     private String selectedTab;
 
@@ -166,19 +167,19 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
         generatePdfBtn = findViewById(R.id.generatePdfBtn);
 
         //Navigation view variables
-        drawerLayout = findViewById(R.id.prepare_food_drawer_layout);
-        navigationView = findViewById(R.id.nav_view);
-        toolbar = findViewById(R.id.tool_bar);
+        /*drawerLayout = findViewById(R.id.prepare_food_drawer_layout);
+        navigationView = findViewById(R.id.nav_view);*/
+        toolbar = findViewById(R.id.back_tool_bar);
         toolBarNotification = findViewById(R.id.toolBarNotification);
         toolBarNotification.setOnClickListener(this);
 
 
         //Toolbar customisation
         setSupportActionBar(toolbar);
-        toolbar.setBackgroundColor(getResources().getColor(R.color.themeColourOne));
+        /*toolbar.setBackgroundColor(getResources().getColor(R.color.themeColourOne));
         toolbar.setTitleTextColor(getResources().getColor(R.color.themeColourThree));
         ActionBarDrawerToggle toggle = CommonNavigator.navigatorInitmethod(drawerLayout, navigationView, toolbar, this);
-        toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.themeColourTwo));
+        toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.themeColourTwo));*/
 
 
 
@@ -204,7 +205,15 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
                 getIntent().hasExtra("totalCalories"))
         {
             recommendedCalories.setText(String.valueOf(getIntent().getExtras().getDouble("totalCalories")));
+            traineeUserId = getIntent().getStringExtra("userId");
         }
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OnBackPressed();
+            }
+        });
 
 
         //Pdf Generation
@@ -246,7 +255,7 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
         });
 
 
-        //Method to re-direct the page from menu
+        /*//Method to re-direct the page from menu
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -257,16 +266,16 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
                         startActivity(intent);
                         finish();
                         break;
-                    /*case R.id.nav_trainees:
-                        break;*/
+                    *//*case R.id.nav_trainees:
+                        break;*//*
                     case R.id.nav_notification:
                         startActivity(new Intent(PrepareFoodChart.this, NotificationScreen.class));
                         finish();
                         break;
-                    /*case R.id.nav_trainer:
+                    *//*case R.id.nav_trainer:
                         startActivity(new Intent(PrepareFoodChart.this, TrainerScreen.class));
                         finish();
-                        break;*/
+                        break;*//*
                     case R.id.nav_logout:
                         startActivity(new Intent(PrepareFoodChart.this, MainActivity.class));
                         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -285,6 +294,8 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
                 return false;
             }
         });
+        */
+
         selectedTab = tablayout.getTabAt(tablayout.getSelectedTabPosition()).getText().toString();
 
         tablayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -510,14 +521,25 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
         }
 
     }
+
+    public void OnBackPressed()
+    {
+        Intent intent;
+        if(traineeUserId != null) {
+            intent = new Intent(PrepareFoodChart.this, TraineeProfileview.class);
+            intent.putExtra("userId", traineeUserId);
+        }
+        else
+        {
+            intent = new Intent(PrepareFoodChart.this, TraineesScreen.class);
+        }
+        startActivity(intent);
+        finish();
+    }
+
     @Override
     public void onBackPressed() {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.closeDrawer((GravityCompat.START));
-        } else {
-            startActivity(new Intent(PrepareFoodChart.this, TraineesScreen.class));
-            finish();
-        }
+        OnBackPressed();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)

@@ -21,7 +21,7 @@
 
                 <item
                     android:id="@+id/nav_notification"
-                    android:icon="@drawable/ic_notification"
+                    android:icon="@drawable/notification"
                     android:title="Notification" />
 
                 <!--<item
@@ -31,7 +31,7 @@
 
                 <item
                     android:id="@+id/nav_logout"
-                    android:icon="@drawable/ic_close"
+                    android:icon="@drawable/logout"
                     android:title="Logout" />
             </group>
         </menu>
@@ -48,7 +48,7 @@
 
             <item
                 android:id="@+id/nav_rating"
-                android:icon="@drawable/ic_rate"
+                android:icon="@drawable/rating_icon"
                 android:title="Rate Us" />
         </menu>
     </item>

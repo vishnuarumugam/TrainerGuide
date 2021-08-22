@@ -9,7 +9,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/homeScreenBgColor">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -214,7 +215,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/traineesLinearLay"
                         android:layout_below="@+id/traineeCardView"
-                        android:background="@color/white"
+                        android:background="@color/homeScreenBgColor"
                         android:orientation="vertical"
                         android:padding="10dp">
 
@@ -223,7 +224,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="5dp"
-                            app:cardBackgroundColor="#F6F5F3"
+                            app:cardBackgroundColor="@color/white"
                             app:cardCornerRadius="10dp">
 
                             <RelativeLayout
@@ -258,7 +259,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="5dp"
-                            app:cardBackgroundColor="#F6F5F3"
+                            app:cardBackgroundColor="@color/white"
                             app:cardCornerRadius="10dp">
 
                             <RelativeLayout
@@ -289,11 +290,13 @@
                             </RelativeLayout>
                         </androidx.cardview.widget.CardView>
 
+
+
                         <com.google.android.material.tabs.TabLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="#F6F5F3"
-                            android:layout_margin="5dp"
+                            android:background="@color/white"
+                            android:layout_marginHorizontal="5dp"
                             android:layout_below="@+id/traineeCardView"
                             android:id="@+id/traineesTabLayout"
                             android:layout_marginTop="10dp"
@@ -328,7 +331,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@color/white"
-                            android:layout_margin="5dp"
+                            android:layout_marginHorizontal="5dp"
                             android:id="@+id/healthInfoRel">
 
                             <!-- Health Issues -->
@@ -337,14 +340,13 @@
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical"
                                 android:id="@+id/profileHealthInfoDialogTitleLin"
-                                android:layout_marginTop="10dp"
                                 android:layout_marginBottom="10dp">
 
                                 <RelativeLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-                                    android:layout_marginTop="10dp"
+                                    android:layout_marginTop="5dp"
                                     android:layout_marginHorizontal="20dp"
                                     android:background="@drawable/dialog_radio_round">
 
@@ -437,7 +439,7 @@
                                         android:layout_height="match_parent"
                                         android:id="@+id/othersHealthInfoLabel"
                                         style="@style/DialogEditText"
-                                        android:layout_marginTop="10dp"
+                                        android:layout_marginTop="5dp"
                                         android:layout_marginHorizontal="20dp"
                                         android:text="Others:"
                                         android:background="@drawable/round_shape"
@@ -450,7 +452,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:id="@+id/otherHealthIssue"
-                                        android:layout_marginTop="10dp"
+                                        android:layout_marginTop="5dp"
                                         android:layout_toRightOf="@+id/othersHealthInfoLabel"
                                         style="@style/DialogEditText"
                                         android:background="@drawable/round_shape"
@@ -469,7 +471,7 @@
                             android:id="@+id/foodAllergyRelLay"
                             android:background="@color/white"
                             android:visibility="gone"
-                            android:layout_margin="5dp"
+                            android:layout_marginHorizontal="5dp"
                             >
                             <!-- Food Allergy Dialog-->
                             <LinearLayout
@@ -477,14 +479,14 @@
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical"
                                 android:id="@+id/profileFoodAllergyDialogTitleLin"
-                                android:layout_marginTop="10dp"
+                                android:layout_marginTop="5dp"
                                 android:layout_marginBottom="10dp">
 
                                 <RelativeLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-                                    android:layout_marginTop="10dp"
+                                    android:layout_marginTop="5dp"
                                     android:layout_marginHorizontal="20dp"
                                     android:background="@drawable/dialog_radio_round">
 
@@ -577,7 +579,7 @@
                                         android:layout_height="match_parent"
                                         android:id="@+id/othersFoodAllerrgyLabel"
                                         style="@style/DialogEditText"
-                                        android:layout_marginTop="10dp"
+                                        android:layout_marginTop="5dp"
                                         android:layout_marginHorizontal="20dp"
                                         android:text="Others:"
                                         android:background="@drawable/round_shape"
@@ -590,7 +592,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:id="@+id/otherFoodAllergy"
-                                        android:layout_marginTop="10dp"
+                                        android:layout_marginTop="5dp"
                                         android:background="@drawable/round_shape"
                                         android:textColorHint="@color/themeColourTwo"
                                         style="@style/DialogEditText"
@@ -609,7 +611,7 @@
                             android:layout_height="wrap_content"
                             android:visibility="gone"
                             android:background="@color/white"
-                            android:layout_margin="5dp"
+                            android:layout_marginHorizontal="5dp"
                             android:id="@+id/contactRelLay">
 
                             <RelativeLayout
@@ -677,7 +679,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:backgroundTint="@color/themeColourTwo"
-                            android:layout_marginTop="50dp"
+                            android:layout_marginTop="10dp"
                             android:text="Create Food Chart" />
 
                     </LinearLayout>
