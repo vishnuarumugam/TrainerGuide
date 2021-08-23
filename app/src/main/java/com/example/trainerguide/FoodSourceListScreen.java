@@ -67,9 +67,10 @@ public class FoodSourceListScreen extends AppCompatActivity implements View.OnCl
     private FoodListAdapter foodListAdapter;
     private List<Food> foodList = new ArrayList<>();
 
-    private String userId;
+    private String userId, isAdmin;
     private String userPath;
     private String userType;
+    private SharedPreferences sp;
     Animation buttonBounce;
     private String navigationScreen ="";
     private BottomNavigationView homeScreenTabLayout;
@@ -183,7 +184,6 @@ public class FoodSourceListScreen extends AppCompatActivity implements View.OnCl
         foodListRecycler.setAdapter(foodListAdapter);
 
         //User Info variables
-        final SharedPreferences sp;
         sp= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         userType = sp.getString("ProfileType",null);
@@ -276,11 +276,17 @@ public class FoodSourceListScreen extends AppCompatActivity implements View.OnCl
 
         homeScreenTabLayout = findViewById(R.id.homeScreenTabLayout);
 
+        isAdmin = sp.getString("isAdmin",null);
         if (userType.equals("Trainer")){
 
         }
         else{
-            homeScreenTabLayout.getMenu().removeItem(R.id.foodListTab);
+            /*homeScreenTabLayout.getMenu().removeItem(R.id.foodListTab);
+            homeScreenTabLayout.getMenu().removeItem(R.id.traineesTab);
+*/
+            if (isAdmin.equals("0") || isAdmin==null){
+                homeScreenTabLayout.getMenu().removeItem(R.id.foodListTab);
+            }
             homeScreenTabLayout.getMenu().removeItem(R.id.traineesTab);
 
         }
@@ -513,53 +519,63 @@ public class FoodSourceListScreen extends AppCompatActivity implements View.OnCl
 
     private void updateFood(){
         DatabaseReference databaseReferenceCommon;
-
+        DatabaseReference databaseReference;
         if (foodAddType.equals("Veg")){
 
-            databaseReferenceCommon = FirebaseDatabase.getInstance().getReference(foodPath + "Vegetarian").child(foodObject.getName());
+            if(isAdmin.equals("1")){
+                databaseReferenceCommon = FirebaseDatabase.getInstance().getReference(foodPath + "Vegetarian");
+                HashMap hash= new HashMap();
+                hash.put(foodObject.getName(),foodObject);
+                databaseReferenceCommon.updateChildren(hash);
+                Toast.makeText(FoodSourceListScreen.this, "Food added successfully", Toast.LENGTH_SHORT).show();
+                foodAddType = "Veg";
+                vegToggle();
+                PopulateFoodList("Veg");
+                foodSourceDialog.dismiss();
+                foodDialogClear();
+            }
+            else {
+                databaseReference = FirebaseDatabase.getInstance().getReference("Food/").child(userId +"/Vegetarian/");
+                HashMap hash= new HashMap();
+                hash.put(foodObject.getName(),foodObject);
+                databaseReference.updateChildren(hash);
+                Toast.makeText(FoodSourceListScreen.this, "Food added successfully", Toast.LENGTH_SHORT).show();
+                foodAddType = "Veg";
+                vegToggle();
+                PopulateFoodList("Veg");
+                foodSourceDialog.dismiss();
+                foodDialogClear();
+            }
 
-            databaseReferenceCommon.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.exists()){
-                        AlertDialogBox alertDialogBox = new AlertDialogBox();
-                        alertDialogBox.show(getSupportFragmentManager(),"Alert");
-
-                    }
-                    else{
-                        DatabaseReference databaseReference;
-                        databaseReference = FirebaseDatabase.getInstance().getReference("Food/").child(userId +"/Vegetarian/");
-                        HashMap hash= new HashMap();
-                        hash.put(foodObject.getName(),foodObject);
-                        databaseReference.updateChildren(hash);
-                        Toast.makeText(FoodSourceListScreen.this, "Food added successfully", Toast.LENGTH_SHORT).show();
-                        foodAddType = "Veg";
-                        vegToggle();
-                        PopulateFoodList("Veg");
-                        foodSourceDialog.dismiss();
-                        foodDialogClear();
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
         }
 
         else {
-            DatabaseReference databaseReference;
-            databaseReference = FirebaseDatabase.getInstance().getReference("Food/").child(userId +"/Nonveg/");
-            HashMap hash= new HashMap();
-            hash.put(foodObject.getName(),foodObject);
-            databaseReference.updateChildren(hash);
-            Toast.makeText(FoodSourceListScreen.this, "Food added successfully", Toast.LENGTH_SHORT).show();
-            foodAddType = "Non-Veg";
-            nonVegToggle();
-            PopulateFoodList("Non-Veg");
-            foodSourceDialog.dismiss();
-            foodDialogClear();
+
+            if (isAdmin.equals("1")){
+                databaseReferenceCommon = FirebaseDatabase.getInstance().getReference(foodPath + "Nonveg");
+                HashMap hash= new HashMap();
+                hash.put(foodObject.getName(),foodObject);
+                databaseReferenceCommon.updateChildren(hash);
+                Toast.makeText(FoodSourceListScreen.this, "Food added successfully", Toast.LENGTH_SHORT).show();
+                foodAddType = "Non-Veg";
+                nonVegToggle();
+                PopulateFoodList("Non-Veg");
+                foodSourceDialog.dismiss();
+                foodDialogClear();
+            }
+            else {
+                databaseReference = FirebaseDatabase.getInstance().getReference("Food/").child(userId +"/Nonveg/");
+                HashMap hash= new HashMap();
+                hash.put(foodObject.getName(),foodObject);
+                databaseReference.updateChildren(hash);
+                Toast.makeText(FoodSourceListScreen.this, "Food added successfully", Toast.LENGTH_SHORT).show();
+                foodAddType = "Non-Veg";
+                nonVegToggle();
+                PopulateFoodList("Non-Veg");
+                foodSourceDialog.dismiss();
+                foodDialogClear();
+            }
+
         }
 
     }

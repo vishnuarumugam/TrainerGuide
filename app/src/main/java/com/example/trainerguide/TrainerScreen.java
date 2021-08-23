@@ -77,8 +77,9 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
     Intent intent;
     TextView noTrainerText;
     Animation buttonBounce;
-    private String userType;
+    private String userType, isAdmin;
     private BottomNavigationView homeScreenTabLayout;
+    private SharedPreferences sp;
 
 
 
@@ -297,16 +298,18 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
 
         homeScreenTabLayout = findViewById(R.id.homeScreenTabLayout);
 
-        final SharedPreferences sp;
         sp= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         userType = sp.getString("ProfileType",null);
+        isAdmin = sp.getString("isAdmin",null);
 
         if (userType.equals("Trainer")){
 
         }
         else{
-            homeScreenTabLayout.getMenu().removeItem(R.id.foodListTab);
+            if (isAdmin.equals("0") || isAdmin==null){
+                homeScreenTabLayout.getMenu().removeItem(R.id.foodListTab);
+            }
             homeScreenTabLayout.getMenu().removeItem(R.id.traineesTab);
 
         }

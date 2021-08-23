@@ -255,6 +255,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
         dashboard_user_name.setText(sp.getString("UserName",null) + "!");
 
+        isAdmin = sp.getString("isAdmin",null);
         if (userType.equals("Trainer")){
             homeScreenGoalLayout.setVisibility(View.GONE);
             findTrainerLayout.setVisibility(View.GONE);
@@ -277,7 +278,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 default:
                     break;
             }
-            isAdmin = sp.getString("isAdmin",null);
+
             if (isAdmin.equals("0") || isAdmin==null){
                 homeScreenTabLayout.getMenu().removeItem(R.id.foodListTab);
             }

@@ -62,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout loginLayout, noInternetLayout;
     private Button noInternetButton;
 
+    private SharedPreferences sp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
 
         Button loginButton = findViewById(R.id.btnLogin);
 
-        final SharedPreferences sp;
         sp=PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         Boolean status = sp.getBoolean("IsLoggedIn",false);
 

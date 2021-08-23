@@ -98,7 +98,8 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
     //private FirebaseAuth userId;
     private String userId;
     private String path;
-    String userType;
+    private String userType, isAdmin;
+    private SharedPreferences sp;
 
 
     //Common variables
@@ -307,18 +308,23 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
 
         homeScreenTabLayout = findViewById(R.id.homeScreenTabLayout);
 
-        final SharedPreferences sp;
         sp= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         userType = sp.getString("ProfileType",null);
+        isAdmin = sp.getString("isAdmin",null);
 
         if (userType.equals("Trainer")){
 
         }
         else{
-            homeScreenTabLayout.getMenu().removeItem(R.id.foodListTab);
+            if (isAdmin.equals("0") || isAdmin==null){
+                homeScreenTabLayout.getMenu().removeItem(R.id.foodListTab);
+            }
             homeScreenTabLayout.getMenu().removeItem(R.id.traineesTab);
 
+            /*homeScreenTabLayout.getMenu().removeItem(R.id.foodListTab);
+            homeScreenTabLayout.getMenu().removeItem(R.id.traineesTab);
+*/
         }
 
         homeScreenTabLayout.setSelectedItemId(R.id.traineesTab);

@@ -117,11 +117,12 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
     private String userProfileUpdateValue;
     private User user;
     private String navigationScreen ="";
-    private String userType;
+    private String userType, isAdmin;
     private Boolean readonly = false;
     private Boolean IsTrainerProfile;
     Animation buttonBounce;
     private BottomNavigationView homeScreenTabLayout;
+    private SharedPreferences sp;
 
 
 
@@ -208,7 +209,6 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
 
 
         //User Info variables
-        final SharedPreferences sp;
         sp= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         IsTrainerProfile = false;
         String passedUserId = "";
@@ -449,12 +449,18 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         });
 
         homeScreenTabLayout = findViewById(R.id.homeScreenTabLayout);
+        isAdmin = sp.getString("isAdmin",null);
 
         if (userType.equals("Trainer")){
 
         }
         else{
-            homeScreenTabLayout.getMenu().removeItem(R.id.foodListTab);
+            /*homeScreenTabLayout.getMenu().removeItem(R.id.foodListTab);
+            homeScreenTabLayout.getMenu().removeItem(R.id.traineesTab);
+*/
+            if (isAdmin.equals("0") || isAdmin==null){
+                homeScreenTabLayout.getMenu().removeItem(R.id.foodListTab);
+            }
             homeScreenTabLayout.getMenu().removeItem(R.id.traineesTab);
 
         }
