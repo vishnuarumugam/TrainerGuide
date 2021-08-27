@@ -51,7 +51,7 @@ public class TrainerProfileView extends AppCompatActivity {
     TextView name, experience, ratingUserCount, description, email, mobile, yourTrainer, traineesCount, trainerRatings, ratingSubmit, fees;
     RatingBar ratingBar;
     ImageView profileimg;
-    Button requestbtn, toolBarNotification;
+    Button requestbtn;
     ImageButton editRatingBtn;
     private String traineruserId, path,navScreen, userType;
 
@@ -86,8 +86,7 @@ public class TrainerProfileView extends AppCompatActivity {
         //drawerLayout = findViewById(R.id.trainer_view_drawer_layout);
         //navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.back_tool_bar);
-        toolBarNotification = findViewById(R.id.toolBarNotification);
-        toolBarNotification.setVisibility(View.GONE);
+
         toolbar.setTitle("Trainer Profile");
         //File Storage variables
         storageReference = FirebaseStorage.getInstance().getReference();
@@ -138,16 +137,7 @@ public class TrainerProfileView extends AppCompatActivity {
             }
         });
 
-        /*toolBarNotification.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                toolBarNotification.startAnimation(buttonBounce);
-                Intent intent = new Intent(TrainerProfileView.this,NotificationScreen.class);
-                intent.putExtra("Screen", "TrainerProfileViewScreen");
-                startActivity(intent);
-                finish();
-            }
-        });*/
+
 
         PopulateUserDetails();
         editRatingBtn.setVisibility(View.GONE);

@@ -103,7 +103,6 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private Toolbar toolbar;
-    private Button toolBarNotification;
 
     private MenuItem profileMenu, logoutMenu, shareMenu, ratingMenu, traineeMenu;
 
@@ -167,12 +166,9 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
         generatePdfBtn = findViewById(R.id.generatePdfBtn);
 
         //Navigation view variables
-        /*drawerLayout = findViewById(R.id.prepare_food_drawer_layout);
-        navigationView = findViewById(R.id.nav_view);*/
+        drawerLayout = findViewById(R.id.prepare_food_drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.back_tool_bar);
-        toolBarNotification = findViewById(R.id.toolBarNotification);
-        toolBarNotification.setOnClickListener(this);
-
 
         //Toolbar customisation
         setSupportActionBar(toolbar);
@@ -253,48 +249,6 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
                 }
             }
         });
-
-
-        /*//Method to re-direct the page from menu
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.nav_profile:
-                        intent = new Intent(PrepareFoodChart.this, ProfileScreen.class);
-                        //intent.putExtra("UserId",userId);
-                        startActivity(intent);
-                        finish();
-                        break;
-                    *//*case R.id.nav_trainees:
-                        break;*//*
-                    case R.id.nav_notification:
-                        startActivity(new Intent(PrepareFoodChart.this, NotificationScreen.class));
-                        finish();
-                        break;
-                    *//*case R.id.nav_trainer:
-                        startActivity(new Intent(PrepareFoodChart.this, TrainerScreen.class));
-                        finish();
-                        break;*//*
-                    case R.id.nav_logout:
-                        startActivity(new Intent(PrepareFoodChart.this, MainActivity.class));
-                        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                        SharedPreferences.Editor editor = settings.edit();
-                        editor.remove("userId");
-                        editor.remove("ProfileType");
-                        editor.remove("IsLoggedIn");
-                        //editor.putBoolean("IsLoggedIn",false);
-                        editor.commit();
-                        finish();
-                        break;
-                    default:
-                        Toast.makeText(PrepareFoodChart.this, "Coming Soon", Toast.LENGTH_SHORT).show();
-                        break;
-                }
-                return false;
-            }
-        });
-        */
 
         selectedTab = tablayout.getTabAt(tablayout.getSelectedTabPosition()).getText().toString();
 
@@ -499,12 +453,6 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
     public void onClick(View option) {
 
         switch (option.getId()){
-
-            case R.id.toolBarNotification:
-                option.startAnimation(buttonBounce);
-                startActivity(new Intent(PrepareFoodChart.this,NotificationScreen.class));
-                finish();
-                break;
 
             case R.id.radioButtonVeg:
                 foodType = "Veg";

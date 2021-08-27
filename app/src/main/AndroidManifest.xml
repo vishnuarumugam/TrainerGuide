@@ -13,6 +13,7 @@
         android:roundIcon="@mipmap/fitness_app_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".AdPostingScreen"></activity>
         <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,7 +21,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".OnBoardingScreen"></activity>
+        <activity android:name=".OnBoardingScreen" />
         <activity android:name=".FindTrainer" />
         <activity android:name=".UserReport" />
         <activity android:name=".PdfCreation" />
@@ -39,8 +40,7 @@
         <activity android:name=".PrepareFoodChart" />
         <activity android:name=".ForgotPasswordForm" />
         <activity android:name=".RegistrationForm" />
-        <activity android:name=".MainActivity">
-        </activity>
+        <activity android:name=".MainActivity"></activity>
         <activity android:name=".SelectProfileType" />
     </application>
 

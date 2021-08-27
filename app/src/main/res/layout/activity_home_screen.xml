@@ -631,6 +631,156 @@
                             </RelativeLayout>
                         </androidx.cardview.widget.CardView>
 
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/home_screen_ad_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/home_screen_personal_layout"
+                            android:layout_marginHorizontal="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginTop="15dp"
+                            android:backgroundTint="@color/white"
+                            android:elevation="5dp"
+                            app:cardCornerRadius="10dp">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingVertical="10dp">
+
+                                <TextView
+                                    android:id="@+id/homeScreenAdTitle"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginVertical="10dp"
+                                    android:layout_marginLeft="10dp"
+                                    android:fontFamily="@font/poppins_medium"
+                                    android:text="Advertisements"
+                                    android:textColor="@color/themeColourOne"
+                                    android:textSize="16sp" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/homeScreenAdTitle"
+                                    android:layout_marginHorizontal="10dp"
+                                    android:layout_marginTop="10dp"
+                                    android:orientation="horizontal"
+                                    android:padding="5dp">
+
+                                    <RelativeLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1">
+
+                                        <RelativeLayout
+                                            android:id="@+id/postAdLayout"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_alignParentLeft="true"
+                                            android:padding="5dp">
+
+                                            <ImageView
+                                                android:id="@+id/postAdIcon"
+                                                android:layout_width="22dp"
+                                                android:layout_height="20dp"
+                                                android:layout_centerHorizontal="true"
+                                                android:src="@drawable/ad_icon" />
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_below="@+id/postAdIcon"
+                                                android:layout_marginTop="5dp"
+                                                android:fontFamily="@font/poppins_medium"
+                                                android:text="Post Ad"
+                                                android:textSize="14sp"
+                                                android:textAlignment="center"
+                                                android:textColor="@color/themeColourOne" />
+
+
+                                        </RelativeLayout>
+
+                                    </RelativeLayout>
+
+                                    <!--<RelativeLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1">
+                                        <RelativeLayout
+                                            android:id="@+id/allergicLayout"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_centerInParent="true"
+                                            android:layout_marginHorizontal="10dp"
+                                            android:padding="5dp">
+
+                                            <ImageView
+                                                android:id="@+id/allergicIcon"
+                                                android:layout_width="22dp"
+                                                android:layout_height="20dp"
+                                                android:layout_centerHorizontal="true"
+                                                android:src="@drawable/food_allergy" />
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_below="@+id/allergicIcon"
+                                                android:layout_marginTop="5dp"
+                                                android:fontFamily="@font/poppins_medium"
+                                                android:text="Allergic"
+                                                android:textSize="14sp"
+                                                android:textAlignment="center"
+                                                android:textColor="@color/themeColourOne" />
+
+
+                                        </RelativeLayout>
+                                    </RelativeLayout>
+
+
+
+                                    <RelativeLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1">
+
+                                        <RelativeLayout
+                                            android:id="@+id/healthIssueLayout"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_alignParentRight="true"
+                                            android:padding="5dp">
+
+                                            <ImageView
+                                                android:id="@+id/healthIssueIcon"
+                                                android:layout_width="22dp"
+                                                android:layout_height="20dp"
+                                                android:layout_centerHorizontal="true"
+                                                android:src="@drawable/health_issues" />
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_below="@+id/healthIssueIcon"
+                                                android:layout_marginTop="5dp"
+                                                android:fontFamily="@font/poppins_medium"
+                                                android:text="Health Issues"
+                                                android:textAlignment="center"
+                                                android:textColor="@color/themeColourOne"
+                                                android:textSize="14sp" />
+
+
+                                        </RelativeLayout>
+                                    </RelativeLayout>-->
+
+
+
+                                </LinearLayout>
+
+
+                            </RelativeLayout>
+                        </androidx.cardview.widget.CardView>
+
                     </RelativeLayout>
                 </LinearLayout>
 
@@ -652,70 +802,11 @@
 
             </com.google.android.material.bottomnavigation.BottomNavigationView>
 
-            <!--<com.google.android.material.tabs.TabLayout
-                android:id="@+id/homeScreenTabLayout"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                app:tabMode="scrollable"
-                app:tabTextColor="@color/themeColourOne"
-                app:tabIndicatorColor="@color/themeColourTwo"
-                app:tabBackground="@drawable/dashboard_tab"
-                android:background="@android:color/transparent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:id="@+id/homeTab"
-                    android:text="Home"
-                    android:textAlignment="center"
-                    android:icon="@mipmap/home"/>
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:id="@+id/trainersTab"
-                    android:text="Trainers"
-                    android:textAlignment="center"
-                    android:icon="@mipmap/trainers"/>
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:id="@+id/traineesTab"
-                    android:text="Trainees"
-                    android:textAlignment="center"
-                    android:icon="@mipmap/trainees"/>
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:id="@+id/foodListTab"
-                    android:text="Food List"
-                    android:textAlignment="center"
-                    android:icon="@mipmap/foodlist"/>
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:id="@+id/profileTab"
-                    android:text="Profile"
-                    android:textAlignment="center"
-                    android:icon="@mipmap/profile"/>
-
-
-
-            </com.google.android.material.tabs.TabLayout>-->
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-
-
-
+    
 
 </androidx.drawerlayout.widget.DrawerLayout>

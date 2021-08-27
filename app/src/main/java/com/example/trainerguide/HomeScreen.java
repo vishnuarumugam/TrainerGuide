@@ -86,22 +86,18 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
     private Dialog profileDialog;
     private ImageView profileDialogClose;
     private LinearLayout profileDobDialogTitleLin, profileWeightDialogTitleLin, profileHeightDialogTitleLin, profileExperienceDialogTitleLin, profileFoodTypeDialogTitleLin, profileFoodAllergyDialogTitleLin, profileHealthInfoDialogTitleLin, profileSubscriptionFeesDialogTitleLin, profileSubscriptionDescDialogTitleLin;
-    private TextView profileDobDialogTitle, profileWeightDialogTitle, profileHeightDialogTitle, profileExperienceDialogTitle, profileFoodTypeDialogTitle, profileFoodAllergyDialogTitle, profileHealthInfoDialogTitle, profileSubscriptionTypeDialogTitle, profileSubscriptionFeesDialogTitle, profileSubscriptionDescDialogTitle, txtSubscriptionDate;
-    private EditText profileWeightDialogInput, profileHeightDialogInput, profileExperienceDialogInput, profileSubscriptionFeesDialogInput, profileSubscriptionDescDialogInput;
-    private Button profileDobDialogUpdate, profileWeightDialogUpdate, profileHeightDialogUpdate, profileExperienceDialogUpdate, profileHealthInfoDialogUpdate, profileFoodAllergyDialogUpdate, profileFoodTypeDialogUpdate, profileSubscriptionTypeDialogUpdate, profileSubscriptionFeesDialogUpdate, profileSubscriptionDescDialogUpdate;
+    private TextView profileWeightDialogTitle, profileHeightDialogTitle, profileFoodTypeDialogTitle, profileFoodAllergyDialogTitle, profileHealthInfoDialogTitle;
+    private EditText profileWeightDialogInput, profileHeightDialogInput;
+    private Button profileWeightDialogUpdate, profileHeightDialogUpdate, profileHealthInfoDialogUpdate, profileFoodAllergyDialogUpdate, profileFoodTypeDialogUpdate;
     private MaterialCheckBox diabetesHealthIssue, cholesterolHealthIssue, thyroidHealthIssue, bpHealthIssue, heartHealthIssue, physicalInjuriesHealthIssue;
     private MaterialCheckBox diaryFoodAllergy, wheatFoodAllergy, nutsFoodAllergy, seaFoodAllergy, muttonFoodAllergy, chickenFoodAllergy;
     private RadioButton vegFoodType, vegEggFoodType, nonVegFoodType;
     private EditText otherHealthIssue, otherFoodAllergy;
 
     //Dashboard variables
-    private RelativeLayout progressLayout, weightLayout, heightLayout, dietTypeLayout, allergicLayout, healthIssueLayout;
+    private RelativeLayout progressLayout, weightLayout, heightLayout, dietTypeLayout, allergicLayout, healthIssueLayout, postAdLayout;
     private TextView dashboard_user_name;
-    private ImageView dashboard_profile_pic;
     private BottomNavigationView homeScreenTabLayout;
-    private String selectedHomeScreenTab;
-    private TabItem traineesTab, foodListTab;
-    private Menu bottomMenu;
     private CardView homeScreenGoalLayout, findTrainerLayout;
     private RadioButton weightLossSubscription, weightGainSubscription, weightMaintainSubscription;;
 
@@ -175,6 +171,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         dietTypeLayout = findViewById(R.id.dietTypeLayout);
         allergicLayout = findViewById(R.id.allergicLayout);
         healthIssueLayout = findViewById(R.id.healthIssueLayout);
+        postAdLayout = findViewById(R.id.postAdLayout);
 
         weightLayout.setOnClickListener(this);
         heightLayout.setOnClickListener(this);
@@ -183,6 +180,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         allergicLayout.setOnClickListener(this);
         healthIssueLayout.setOnClickListener(this);
         findTrainerLayout.setOnClickListener(this);
+        postAdLayout.setOnClickListener(this);
 
 
 
@@ -460,6 +458,11 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
             case R.id.toolBarNotification:
                 option.startAnimation(buttonBounce);
                 startActivity(new Intent(HomeScreen.this,NotificationScreen.class));
+                finish();
+                break;
+            case R.id.postAdLayout:
+                option.startAnimation(buttonBounce);
+                startActivity(new Intent(HomeScreen.this,AdPostingScreen.class));
                 finish();
                 break;
             default:

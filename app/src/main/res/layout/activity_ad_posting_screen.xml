@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@color/homeScreenBgColor"
+    tools:context=".AdPostingScreen"
+    tools:openDrawer="start">
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/homeScreenBgColor"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <include layout="@layout/common_back_toolbar" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center_horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Choose an image"
+                            android:fontFamily="@font/poppins_medium"
+                            android:textColor="@color/themeColourOne"
+                            android:textSize="16sp"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="40dp"
+                            android:layout_marginBottom="10dp"/>
+
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:layout_marginBottom="20dp"
+                            android:layout_marginHorizontal="15dp"
+                            android:backgroundTint="@color/adShadowThree"
+                            app:cardCornerRadius="10dp">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="200dp"
+                                android:id="@+id/postAdImage"
+                                />
+
+                        </androidx.cardview.widget.CardView>
+
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="15dp"
+                            android:backgroundTint="@color/white"
+                            app:cardCornerRadius="10dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:paddingHorizontal="2dp"
+                                    android:layout_marginTop="20dp"
+                                    android:gravity="center_vertical"
+                                    android:layout_marginHorizontal="20dp">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:id="@+id/redirectLabel"
+                                        android:text="Ad type"
+                                        android:fontFamily="@font/poppins_medium"
+                                        android:textSize="14sp"
+                                        android:textColor="@color/themeColourOne"
+                                        android:layout_alignParentLeft="true">
+
+                                    </TextView>
+                                    <Spinner
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="5dp"
+                                        android:layout_toRightOf="@id/redirectLabel"
+                                        android:layout_alignParentRight="true"
+                                        />
+
+                                </RelativeLayout>
+
+
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginHorizontal="20dp"
+                                    android:layout_marginTop="10dp"
+                                    android:id="@+id/postAdEmailLay"
+                                    android:background="@drawable/theme_colour_one_round_shape"
+                                    android:padding="1dp">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:background="@drawable/round_shape"
+                                        android:orientation="horizontal"
+                                        android:padding="1dp">
+
+                                        <ImageView
+                                            android:layout_width="30dp"
+                                            android:layout_height="30dp"
+                                            android:layout_gravity="center_vertical"
+                                            android:layout_marginVertical="2dp"
+                                            android:layout_marginLeft="10dp"
+                                            android:background="@color/white"
+                                            android:src="@drawable/profile_email" />
+
+                                        <EditText
+                                            android:id="@+id/postAdEmailInput"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center_vertical"
+                                            android:layout_marginLeft="7dp"
+                                            android:layout_marginRight="7dp"
+                                            android:background="@android:color/transparent"
+                                            android:hint="email address"
+                                            android:maxLength="15"
+                                            android:textSize="14sp"
+                                            android:inputType="text"
+                                            android:textColor="@color/themeColourTwo"
+                                            android:fontFamily="@font/poppins_medium"
+                                            />
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginHorizontal="20dp"
+                                    android:layout_marginTop="10dp"
+                                    android:id="@+id/postAdExpiryLay"
+                                    android:background="@drawable/theme_colour_one_round_shape"
+                                    android:padding="1dp">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:background="@drawable/round_shape"
+                                        android:orientation="horizontal"
+                                        android:padding="1dp">
+
+                                        <ImageView
+                                            android:layout_width="30dp"
+                                            android:layout_height="30dp"
+                                            android:layout_gravity="center_vertical"
+                                            android:layout_marginVertical="2dp"
+                                            android:layout_marginLeft="10dp"
+                                            android:background="@color/white"
+                                            android:src="@drawable/end_date" />
+
+                                        <EditText
+                                            android:id="@+id/postAdExpiryInput"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center_vertical"
+                                            android:layout_marginLeft="7dp"
+                                            android:layout_marginRight="7dp"
+                                            android:background="@android:color/transparent"
+                                            android:hint="expiry date"
+                                            android:maxLength="15"
+                                            android:textSize="14sp"
+                                            android:inputType="text"
+                                            android:textColor="@color/themeColourTwo"
+                                            android:fontFamily="@font/poppins_medium"
+                                            />
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginHorizontal="20dp"
+                                    android:layout_marginTop="10dp"
+                                    android:id="@+id/postAdAmountLay"
+                                    android:background="@drawable/theme_colour_one_round_shape"
+                                    android:padding="1dp">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:background="@drawable/round_shape"
+                                        android:orientation="horizontal"
+                                        android:padding="1dp">
+
+                                        <ImageView
+                                            android:layout_width="30dp"
+                                            android:layout_height="30dp"
+                                            android:layout_gravity="center_vertical"
+                                            android:layout_marginVertical="2dp"
+                                            android:layout_marginLeft="10dp"
+                                            android:background="@color/white"
+                                            android:src="@drawable/rupee" />
+
+                                        <EditText
+                                            android:id="@+id/postAdAmountInput"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center_vertical"
+                                            android:layout_marginLeft="7dp"
+                                            android:layout_marginRight="7dp"
+                                            android:background="@android:color/transparent"
+                                            android:hint="expiry date"
+                                            android:maxLength="15"
+                                            android:textSize="14sp"
+                                            android:inputType="text"
+                                            android:textColor="@color/themeColourTwo"
+                                            android:fontFamily="@font/poppins_medium"
+                                            />
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginHorizontal="20dp"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginBottom="20dp"
+                                    android:id="@+id/postAdUrlLay"
+                                    android:background="@drawable/theme_colour_one_round_shape"
+                                    android:padding="1dp">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:background="@drawable/round_shape"
+                                        android:orientation="horizontal"
+                                        android:padding="1dp">
+
+                                        <ImageView
+                                            android:layout_width="30dp"
+                                            android:layout_height="30dp"
+                                            android:layout_gravity="center_vertical"
+                                            android:layout_marginVertical="2dp"
+                                            android:layout_marginLeft="10dp"
+                                            android:background="@color/white"
+                                            android:src="@drawable/url" />
+
+                                        <EditText
+                                            android:id="@+id/postAdUrlInput"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center_vertical"
+                                            android:layout_marginLeft="7dp"
+                                            android:layout_marginRight="7dp"
+                                            android:background="@android:color/transparent"
+                                            android:hint="url"
+                                            android:maxLength="15"
+                                            android:textSize="14sp"
+                                            android:inputType="text"
+                                            android:textColor="@color/themeColourTwo"
+                                            android:fontFamily="@font/poppins_medium"
+                                            />
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+
+                        </androidx.cardview.widget.CardView>
+
+                        <Button
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:text="Post"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginBottom="10dp"
+                            android:fontFamily="@font/poppins_light"
+                            android:textSize="16sp"/>
+
+
+
+
+                    </LinearLayout>
+                </LinearLayout>
+
+
+            </androidx.core.widget.NestedScrollView>
+
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+
+
+</androidx.drawerlayout.widget.DrawerLayout>
+
+

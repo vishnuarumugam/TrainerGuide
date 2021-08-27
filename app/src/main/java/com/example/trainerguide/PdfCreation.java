@@ -56,7 +56,6 @@ public class PdfCreation extends AppCompatActivity {
 
     private PDFView pdfView;
     private Toolbar toolbar;
-    private Button toolBarNotification;
     private Animation buttonBounce;
 
 
@@ -71,7 +70,6 @@ public class PdfCreation extends AppCompatActivity {
         buttonBounce= AnimationUtils.loadAnimation(this, R.anim.button_bounce);
 
         //tool bar variables
-        toolBarNotification = findViewById(R.id.toolBarNotification);
         toolbar = findViewById(R.id.back_tool_bar);
         toolbar.setTitle("Diet Plan");
 
@@ -93,14 +91,7 @@ public class PdfCreation extends AppCompatActivity {
                 finish();
             }
         });
-        toolBarNotification.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                toolBarNotification.startAnimation(buttonBounce);
-                startActivity(new Intent(PdfCreation.this,NotificationScreen.class));
-                finish();
-            }
-        });
+
 
     }
 

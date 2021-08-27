@@ -47,7 +47,7 @@ public class TraineeProfileview extends AppCompatActivity{
 
     TextView name, goal, bmi, weight, height, mobile, email, foodType, otherHealthIssue, otherFoodAllergy;
     ImageView profileimg;
-    Button createFoodChart, toolBarNotification;
+    Button createFoodChart;
     private String traineeuserId, path, navScreen;
     Animation buttonBounce;
     private Trainee user;
@@ -79,8 +79,7 @@ public class TraineeProfileview extends AppCompatActivity{
         //drawerLayout = findViewById(R.id.trainee_view_drawer_layout);
         toolbar = findViewById(R.id.back_tool_bar);
         toolbar.setTitle("Trainee Profile");
-        toolBarNotification = findViewById(R.id.toolBarNotification);
-        toolBarNotification.setVisibility(View.GONE);
+
         //File Storage variables
         storageReference = FirebaseStorage.getInstance().getReference();
 
@@ -134,14 +133,7 @@ public class TraineeProfileview extends AppCompatActivity{
             }
         });
 
-        /*toolBarNotification.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                toolBarNotification.startAnimation(buttonBounce);
-                startActivity(new Intent(TraineeProfileview.this,NotificationScreen.class));
-                finish();
-            }
-        });*/
+
 
         PopulateUserDetails();
 
