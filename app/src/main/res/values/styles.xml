@@ -16,6 +16,11 @@
         <item name="android:fontFamily">@font/poppins_medium</item>
         <item name="android:textSize">20sp</item>
     </style>
+    <style name="spinnerFontStyle" parent="android:Widget.Spinner">
+        <item name="fontFamily">@font/poppins_medium</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/themeColourOne</item>
+    </style>
 
     <style name="toolbarFontStyle" parent="android:Widget.TextView">
         <item name="android:fontFamily">@font/poppins_medium</item>

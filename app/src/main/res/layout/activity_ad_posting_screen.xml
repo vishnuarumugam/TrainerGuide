@@ -45,6 +45,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:id="@+id/chooseImage"
                             android:text="Choose an image"
                             android:fontFamily="@font/poppins_medium"
                             android:textColor="@color/themeColourOne"
@@ -62,9 +63,11 @@
                             android:backgroundTint="@color/adShadowThree"
                             app:cardCornerRadius="10dp">
 
+
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="200dp"
+                                android:scaleType="centerCrop"
                                 android:id="@+id/postAdImage"
                                 />
 
@@ -95,7 +98,9 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:id="@+id/redirectLabel"
-                                        android:text="Ad type"
+                                        android:layout_marginTop="3dp"
+                                        android:text="Redirect Ad to"
+                                        android:gravity="center"
                                         android:fontFamily="@font/poppins_medium"
                                         android:textSize="14sp"
                                         android:textColor="@color/themeColourOne"
@@ -105,6 +110,9 @@
                                     <Spinner
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
+                                        android:id="@+id/redirectAd"
+                                        android:textAlignment="center"
+                                        android:backgroundTint="@color/themeColourTwo"
                                         android:layout_marginStart="5dp"
                                         android:layout_toRightOf="@id/redirectLabel"
                                         android:layout_alignParentRight="true"
@@ -112,7 +120,47 @@
 
                                 </RelativeLayout>
 
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginHorizontal="20dp"
+                                    android:layout_marginTop="10dp"
+                                    android:id="@+id/postAdUrlLay"
+                                    android:background="@drawable/theme_colour_one_round_shape"
+                                    android:padding="1dp">
 
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:background="@drawable/round_shape"
+                                        android:orientation="horizontal"
+                                        android:padding="1dp">
+
+                                        <ImageView
+                                            android:layout_width="30dp"
+                                            android:layout_height="25dp"
+                                            android:layout_gravity="center_vertical"
+                                            android:layout_marginVertical="2dp"
+                                            android:layout_marginLeft="10dp"
+                                            android:background="@color/white"
+                                            android:src="@drawable/url" />
+
+                                        <EditText
+                                            android:id="@+id/postAdUrlInput"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center_vertical"
+                                            android:layout_marginLeft="7dp"
+                                            android:layout_marginRight="7dp"
+                                            android:background="@android:color/transparent"
+                                            android:hint="url"
+                                            android:textSize="14sp"
+                                            android:inputType="text"
+                                            android:textColor="@color/themeColourTwo"
+                                            android:fontFamily="@font/poppins_medium"
+                                            />
+                                    </LinearLayout>
+                                </LinearLayout>
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -148,9 +196,9 @@
                                             android:layout_marginRight="7dp"
                                             android:background="@android:color/transparent"
                                             android:hint="email address"
-                                            android:maxLength="15"
+                                            android:maxLength="60"
                                             android:textSize="14sp"
-                                            android:inputType="text"
+                                            android:inputType="textEmailAddress"
                                             android:textColor="@color/themeColourTwo"
                                             android:fontFamily="@font/poppins_medium"
                                             />
@@ -182,7 +230,7 @@
                                             android:background="@color/white"
                                             android:src="@drawable/end_date" />
 
-                                        <EditText
+                                        <TextView
                                             android:id="@+id/postAdExpiryInput"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
@@ -191,7 +239,7 @@
                                             android:layout_marginRight="7dp"
                                             android:background="@android:color/transparent"
                                             android:hint="expiry date"
-                                            android:maxLength="15"
+                                            android:maxLength="10"
                                             android:textSize="14sp"
                                             android:inputType="text"
                                             android:textColor="@color/themeColourTwo"
@@ -205,6 +253,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginHorizontal="20dp"
                                     android:layout_marginTop="10dp"
+                                    android:layout_marginBottom="20dp"
                                     android:id="@+id/postAdAmountLay"
                                     android:background="@drawable/theme_colour_one_round_shape"
                                     android:padding="1dp">
@@ -233,59 +282,16 @@
                                             android:layout_marginLeft="7dp"
                                             android:layout_marginRight="7dp"
                                             android:background="@android:color/transparent"
-                                            android:hint="expiry date"
-                                            android:maxLength="15"
+                                            android:hint="amount"
+                                            android:maxLength="7"
                                             android:textSize="14sp"
-                                            android:inputType="text"
+                                            android:inputType="number"
                                             android:textColor="@color/themeColourTwo"
                                             android:fontFamily="@font/poppins_medium"
                                             />
                                     </LinearLayout>
                                 </LinearLayout>
 
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginHorizontal="20dp"
-                                    android:layout_marginTop="10dp"
-                                    android:layout_marginBottom="20dp"
-                                    android:id="@+id/postAdUrlLay"
-                                    android:background="@drawable/theme_colour_one_round_shape"
-                                    android:padding="1dp">
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:background="@drawable/round_shape"
-                                        android:orientation="horizontal"
-                                        android:padding="1dp">
-
-                                        <ImageView
-                                            android:layout_width="30dp"
-                                            android:layout_height="30dp"
-                                            android:layout_gravity="center_vertical"
-                                            android:layout_marginVertical="2dp"
-                                            android:layout_marginLeft="10dp"
-                                            android:background="@color/white"
-                                            android:src="@drawable/url" />
-
-                                        <EditText
-                                            android:id="@+id/postAdUrlInput"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:layout_gravity="center_vertical"
-                                            android:layout_marginLeft="7dp"
-                                            android:layout_marginRight="7dp"
-                                            android:background="@android:color/transparent"
-                                            android:hint="url"
-                                            android:maxLength="15"
-                                            android:textSize="14sp"
-                                            android:inputType="text"
-                                            android:textColor="@color/themeColourTwo"
-                                            android:fontFamily="@font/poppins_medium"
-                                            />
-                                    </LinearLayout>
-                                </LinearLayout>
 
                             </LinearLayout>
 
@@ -295,6 +301,7 @@
                         <Button
                             android:layout_width="150dp"
                             android:layout_height="wrap_content"
+                            android:id="@+id/postAdButton"
                             android:text="Post"
                             android:layout_marginTop="20dp"
                             android:layout_marginBottom="10dp"

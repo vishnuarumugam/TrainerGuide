@@ -262,7 +262,7 @@
                                 android:layout_height="wrap_content"
                                 android:id="@+id/accountTabView"
                                 android:background="@color/homeScreenBgColor"
-                                android:visibility="gone">
+                                android:visibility="visible">
 
                                 <RelativeLayout
                                     android:id="@+id/profilePhoneRelativeLay"
@@ -379,10 +379,39 @@
                                 </RelativeLayout>
 
                                 <RelativeLayout
-                                    android:id="@+id/profileResetPassRelativeLay"
+                                    android:id="@+id/profileAdRelativeLay"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_below="@+id/profileGenderRelativeLay"
+                                    android:paddingHorizontal="20dp">
+
+                                    <ImageView
+                                        android:id="@+id/profileAdImage"
+                                        android:layout_width="30dp"
+                                        android:layout_height="30dp"
+                                        android:layout_centerVertical="true"
+                                        android:layout_margin="15dp"
+                                        android:src="@drawable/ad_icon" />
+
+                                    <TextView
+                                        android:id="@+id/profileAd"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:layout_toRightOf="@id/profileAdImage"
+                                        android:fontFamily="@font/poppins_medium"
+                                        android:text="Your Ad"
+                                        android:textColor="@color/themeColourOne"
+                                        android:textSize="14sp"
+                                        android:textStyle="normal" />
+
+                                </RelativeLayout>
+
+                                <RelativeLayout
+                                    android:id="@+id/profileResetPassRelativeLay"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/profileAdRelativeLay"
                                     android:paddingHorizontal="20dp">
 
                                     <ImageView

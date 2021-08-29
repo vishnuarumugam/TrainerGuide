@@ -103,7 +103,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
     //ProfileScreen Variables
     private ImageButton profileImage;
     private TextView profileUsername, traineesNumber, trainerRating, profileType, profilePhoneNumber, profileEmailId, profileGender, profileDob, profileExperience, profileSubscriptionFees, profileSubscriptionDescription, profileSubscriptionTrainer;
-    private RelativeLayout  dobRelativeLay, experienceRelativeLay, subscriptionTrainerRelativeLay, subscriptionFeesRelativeLay, subscriptionDescriptionRelativeLay, subscriptionExtendRelativeLay, profilePhoneRelativeLay, profileResetPassRelativeLay;
+    private RelativeLayout  dobRelativeLay, experienceRelativeLay, subscriptionTrainerRelativeLay, subscriptionFeesRelativeLay, subscriptionDescriptionRelativeLay, subscriptionExtendRelativeLay, profilePhoneRelativeLay, profileResetPassRelativeLay, profileAdRelativeLay;
     private TabLayout profileTabLayout;
     private RelativeLayout accountTabView, profileTabView, profileLogoutLayout, profileTraineeDetailsLayout, profileTrainerDetailsLayout;
     private LinearLayout ratingTraineesLayout;
@@ -118,7 +118,6 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
     private User user;
     private String navigationScreen ="";
     private String userType, isAdmin;
-    private Boolean readonly = false;
     private Boolean IsTrainerProfile;
     Animation buttonBounce;
     private BottomNavigationView homeScreenTabLayout;
@@ -203,6 +202,8 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         profilePhoneRelativeLay = findViewById(R.id.profilePhoneRelativeLay);
         profileResetPassRelativeLay = findViewById(R.id.profileResetPassRelativeLay);
         subscriptionExtendRelativeLay.setVisibility(View.GONE);
+        profileAdRelativeLay = findViewById(R.id.profileAdRelativeLay);
+        profileAdRelativeLay.setOnClickListener(this);
 
 
 
@@ -409,9 +410,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
             public void onClick(View v) {
                 profileImage.startAnimation(buttonBounce);
 
-                if(!readonly) {
                     FileChooser();
-                }
             }
         });
 
@@ -807,34 +806,42 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                 case R.id.profilePhoneRelativeLay:
                     ShowDialog("PhoneNumber");
                     break;
-            case R.id.profileResetPassRelativeLay:
-                FirebaseAuth fAuth;
-                fAuth = FirebaseAuth.getInstance();
+                case R.id.profileResetPassRelativeLay:
+                    FirebaseAuth fAuth;
+                    fAuth = FirebaseAuth.getInstance();
 
-                fAuth.sendPasswordResetEmail(user.getEmail().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(ProfileScreen.this, "Password Link sent to your Email. Please reset your password and login again", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(),MainActivity.class));
-                            SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                            SharedPreferences.Editor editor = settings.edit();
-                            editor.remove("userId");
-                            editor.remove("ProfileType");
-                            editor.remove("IsLoggedIn");
-                            editor.commit();
-                            finish();
+                    fAuth.sendPasswordResetEmail(user.getEmail().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(ProfileScreen.this, "Password Link sent to your Email. Please reset your password and login again", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                                SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                                SharedPreferences.Editor editor = settings.edit();
+                                editor.remove("userId");
+                                editor.remove("ProfileType");
+                                editor.remove("IsLoggedIn");
+                                editor.commit();
+                                finish();
 
-                        } else {
-                            //Toast.makeText(ForgotPasswordForm.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                            Toast.makeText(ProfileScreen.this, "Some error occurred. Please try after sometime", Toast.LENGTH_SHORT).show();
+                            } else {
+                                //Toast.makeText(ForgotPasswordForm.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ProfileScreen.this, "Some error occurred. Please try after sometime", Toast.LENGTH_SHORT).show();
+
+                            }
 
                         }
+                    });
 
-                    }
-                });
+                    break;
 
-                break;
+                case R.id.profileAdRelativeLay:
+                    Intent intent = new Intent(ProfileScreen.this, AdListScreen.class);
+                    System.out.println("getEmail"+user.getEmail());
+                    intent.putExtra("userEmail",user.getEmail());
+                    startActivity(intent);
+                    finish();
+                    break;
                 case R.id.profileDobDialogUpdate:
                     option.startAnimation(buttonBounce);
                     updateProfile("dateOfBirth", userProfileUpdateValue);

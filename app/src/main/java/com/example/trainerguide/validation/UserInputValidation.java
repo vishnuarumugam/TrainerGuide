@@ -14,7 +14,7 @@ public class UserInputValidation {
         }
 
         else if(!email.matches(emailRegex)){
-            return "Invalid email address";
+            return "Please provide a valid email address";
         }
         /*else if(email.trim().isEmpty()){
             return "White space is not allowed";
@@ -75,7 +75,7 @@ public class UserInputValidation {
             return "White space is not allowed";
         }
         else if (!userName.matches(userNameRegex)){
-            return "Invalid username";
+            return "Please provide a valid username";
         }
 
         return "Valid";
@@ -90,7 +90,7 @@ public class UserInputValidation {
         }
 
         else if ((mobileNumber.matches(characters)) || (mobileNumber.length()<10)){
-            return "Invalid Mobile number";
+            return "Please provide a valid mobile number";
         }
 
         return "Valid";
@@ -104,8 +104,31 @@ public class UserInputValidation {
         }
 
         else if ((otpNumber.toString().matches(characters)) || (otpNumber.length()<6)){
-            return "Invalid OTP number";
+            return "Please provide a valid OTP number";
         }
+        return "Valid";
+    }
+
+    public String urlValidation(String url){
+        if (url.isEmpty()){
+            return "Web link cannot be empty";
+        }
+        else if (url.length()<5){
+            return "Please provide a valid link";
+        }
+        return "Valid";
+    }
+    public String amountValidation(String amount){
+        if (amount.isEmpty()){
+            return "Amount cannot be empty";
+        }
+        else if(!amount.isEmpty()){
+            Double inputAmount = new Double(amount);
+            if (inputAmount<0){
+                return "Please provide a valid amount";
+            }
+        }
+
         return "Valid";
     }
 

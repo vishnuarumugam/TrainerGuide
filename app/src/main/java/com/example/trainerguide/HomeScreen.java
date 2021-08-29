@@ -98,7 +98,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
     private RelativeLayout progressLayout, weightLayout, heightLayout, dietTypeLayout, allergicLayout, healthIssueLayout, postAdLayout;
     private TextView dashboard_user_name;
     private BottomNavigationView homeScreenTabLayout;
-    private CardView homeScreenGoalLayout, findTrainerLayout;
+    private CardView homeScreenGoalLayout, findTrainerLayout, home_screen_ad_layout;
     private RadioButton weightLossSubscription, weightGainSubscription, weightMaintainSubscription;;
 
     //Ad Slider
@@ -173,6 +173,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         healthIssueLayout = findViewById(R.id.healthIssueLayout);
         postAdLayout = findViewById(R.id.postAdLayout);
 
+
         weightLayout.setOnClickListener(this);
         heightLayout.setOnClickListener(this);
         progressLayout.setOnClickListener(this);
@@ -181,6 +182,9 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         healthIssueLayout.setOnClickListener(this);
         findTrainerLayout.setOnClickListener(this);
         postAdLayout.setOnClickListener(this);
+
+        home_screen_ad_layout = findViewById(R.id.home_screen_ad_layout);
+        home_screen_ad_layout.setVisibility(View.GONE);
 
 
 
@@ -279,6 +283,9 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
             if (isAdmin.equals("0") || isAdmin==null){
                 homeScreenTabLayout.getMenu().removeItem(R.id.foodListTab);
+            }
+            else if(isAdmin.equals("1")){
+                home_screen_ad_layout.setVisibility(View.VISIBLE);
             }
             homeScreenTabLayout.getMenu().removeItem(R.id.traineesTab);
 
@@ -461,7 +468,6 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 finish();
                 break;
             case R.id.postAdLayout:
-                option.startAnimation(buttonBounce);
                 startActivity(new Intent(HomeScreen.this,AdPostingScreen.class));
                 finish();
                 break;
