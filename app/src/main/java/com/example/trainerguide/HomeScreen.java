@@ -32,6 +32,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.trainerguide.models.Ad;
 import com.example.trainerguide.models.BmrProgress;
 import com.example.trainerguide.models.Trainee;
 import com.example.trainerguide.models.Trainer;
@@ -70,7 +71,6 @@ import static java.lang.Math.round;
 public class HomeScreen extends AppCompatActivity implements View.OnClickListener {
 
     //Homescreen variables
-
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private Toolbar toolbar;
@@ -102,8 +102,11 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
     private RadioButton weightLossSubscription, weightGainSubscription, weightMaintainSubscription;;
 
     //Ad Slider
+    List<Ad> adList = new ArrayList<>();
     SliderView topAdSliderView;
-    int[] adImages = {R.mipmap.ad_image,R.mipmap.create_account_image, R.mipmap.create_account_image};
+    //int[] adImages = {R.mipmap.ad_image,R.mipmap.create_account_image, R.mipmap.create_account_image};
+    int[] adImages;
+    private AdSliderAdapter topAdSliderAdapter;
 
     //User Detail variables
     private String userId, path, userType, isAdmin;
@@ -334,14 +337,9 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
             }
         });
 
-        AdSliderAdapter topAdSliderAdapter = new AdSliderAdapter(adImages);
-
-        topAdSliderView.setSliderAdapter(topAdSliderAdapter);
-        topAdSliderView.setIndicatorAnimation(IndicatorAnimationType.WORM);
-        topAdSliderView.setSliderTransformAnimation(SliderAnimations.DEPTHTRANSFORMATION);
-        topAdSliderView.startAutoCycle();
-
-
+        populateAds();
+        topAdSliderAdapter = new AdSliderAdapter(adList);
+        
         PopulateUserDetails();
 
 
@@ -919,6 +917,30 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+
+    private void populateAds() {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Ad");
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    Ad ad = dataSnapshot.getValue(Ad.class);
+                    adList.add(ad);
+                }
+                topAdSliderView.setSliderAdapter(topAdSliderAdapter);
+                topAdSliderView.setIndicatorAnimation(IndicatorAnimationType.WORM);
+                topAdSliderView.setSliderTransformAnimation(SliderAnimations.DEPTHTRANSFORMATION);
+                topAdSliderView.startAutoCycle();
+            }
+
+            @Override
+            public void onCancelled(@NonNull  DatabaseError error) {
 
             }
         });

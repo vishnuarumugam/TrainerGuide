@@ -6,14 +6,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.example.trainerguide.models.Ad;
 import com.smarteist.autoimageslider.SliderViewAdapter;
+import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AdSliderAdapter extends SliderViewAdapter<AdSliderAdapter.ViewHolder> {
 
-    int[] images;
+    //int[] images;
+    private List<Ad> adList = new ArrayList<>();
 
-    public AdSliderAdapter(int[] images){
+    /*public AdSliderAdapter(int[] images){
         this.images = images;
+    }
+*/
+    public AdSliderAdapter(List<Ad> adList) {
+        this.adList = adList;
     }
 
     @Override
@@ -29,12 +39,22 @@ public class AdSliderAdapter extends SliderViewAdapter<AdSliderAdapter.ViewHolde
     @Override
     public void onBindViewHolder(AdSliderAdapter.ViewHolder viewHolder, int position) {
 
-        viewHolder.imageView.setImageResource(images[position]);
+        //viewHolder.imageView.setImageResource(images[position]);
+        /*Picasso.get().load(adList.indexOf(position))
+                .fit()
+                .centerCrop()
+                .into(viewHolder.imageView);*/
+
+        Picasso.get().load(adList.get(position).getImage())
+                .fit()
+                .centerCrop()
+                .into(viewHolder.imageView);
     }
 
     @Override
     public int getCount() {
-        return images.length;
+        //return images.length;
+        return adList.size();
     }
 
     public class ViewHolder extends SliderViewAdapter.ViewHolder{
