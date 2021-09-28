@@ -33,7 +33,7 @@ import java.util.List;
 public class FindTrainer extends AppCompatActivity implements View.OnClickListener, TrainerAdapter.OnAddClickListener {
 
     private Toolbar toolbar;
-    private Button toolBarNotification;
+    //private Button toolBarNotification;
     private Animation buttonBounce;
 
     //FindTrainer Screen variables
@@ -83,11 +83,11 @@ public class FindTrainer extends AppCompatActivity implements View.OnClickListen
         trainerFilterAdapter.setOnAddClickListener(FindTrainer.this);
 
         //tool bar variables
-        toolBarNotification = findViewById(R.id.toolBarNotification);
+        //toolBarNotification = findViewById(R.id.toolBarNotification);
         toolbar = findViewById(R.id.back_tool_bar);
         toolbar.setTitle("Find Trainer");
         setSupportActionBar(toolbar);
-        toolBarNotification.setOnClickListener(this);
+        //toolBarNotification.setOnClickListener(this);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -124,11 +124,11 @@ public class FindTrainer extends AppCompatActivity implements View.OnClickListen
     public void onClick(View option) {
 
         switch (option.getId()){
-            case R.id.toolBarNotification:
+            /*case R.id.toolBarNotification:
                 toolBarNotification.startAnimation(buttonBounce);
                 startActivity(new Intent(FindTrainer.this,NotificationScreen.class));
                 finish();
-                break;
+                break;*/
             case R.id.filterHide:
                 System.out.println("v=g");
                 if (filterLayout.getVisibility() == View.VISIBLE){

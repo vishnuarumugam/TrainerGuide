@@ -242,10 +242,16 @@ public class AdPostingScreen extends AppCompatActivity implements AdapterView.On
 
         switch (parent.getItemAtPosition(position).toString()) {
 
+            case "Company":
+                postAdUrlLay.setVisibility(View.GONE);
+                redirectType="Company";
+                break;
+
             case "Profile":
                 postAdUrlLay.setVisibility(View.GONE);
                 redirectType="Profile";
                 break;
+
             case "Web Page":
                 postAdUrlLay.setVisibility(View.VISIBLE);
                 redirectType="Web Page";

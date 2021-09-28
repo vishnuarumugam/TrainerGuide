@@ -16,9 +16,11 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.pdf.PdfDocument;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.StrictMode;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Menu;
@@ -28,6 +30,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -49,6 +52,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
@@ -57,6 +61,7 @@ public class PdfCreation extends AppCompatActivity {
     private PDFView pdfView;
     private Toolbar toolbar;
     private Animation buttonBounce;
+    private ImageButton pdfShare;
 
 
     @Override
@@ -65,6 +70,7 @@ public class PdfCreation extends AppCompatActivity {
         setContentView(R.layout.activity_pdf_creation);
 
         pdfView = findViewById(R.id.pdfView);
+        pdfShare = findViewById(R.id.pdfShare);
 
         // loading Animation from
         buttonBounce= AnimationUtils.loadAnimation(this, R.anim.button_bounce);
@@ -78,6 +84,10 @@ public class PdfCreation extends AppCompatActivity {
         File filePath = new File(getIntent().getExtras().getString("filePath"));
         pdfView.fromFile(filePath).load();
 
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
+
+        builder.detectFileUriExposure();
 
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -89,6 +99,20 @@ public class PdfCreation extends AppCompatActivity {
                 intent.putExtra("totalCalories", getIntent().getExtras().getDouble("totalCalories"));
                 startActivity(intent);
                 finish();
+            }
+        });
+
+        pdfShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pdfShare.startAnimation(buttonBounce);
+                Uri uri = Uri.fromFile(new File(getIntent().getExtras().getString("filePath").replaceAll("file///","")));
+
+                Intent share = new Intent();
+                share.setAction(Intent.ACTION_SEND);
+                share.setType("application/pdf");
+                share.putExtra(Intent.EXTRA_STREAM, uri);
+                startActivity(share);
             }
         });
 

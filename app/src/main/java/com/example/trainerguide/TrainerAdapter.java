@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -58,9 +59,9 @@ public class TrainerAdapter extends  RecyclerView.Adapter<TrainerAdapter.ViewHol
 
         Picasso.get().load(trainers.get(position).getImage())
                 .fit()
-                .placeholder(R.mipmap.trainer_profile_image)
                 .centerCrop()
                 .into(holder.profileImage);
+        holder.trainerPicLoad.setVisibility(View.GONE);
         holder.trainerProfileClick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,6 +102,7 @@ public class TrainerAdapter extends  RecyclerView.Adapter<TrainerAdapter.ViewHol
         RelativeLayout trainerItem;
         ConstraintLayout trainerConsItem;
         RatingBar ratingBar;
+        ProgressBar trainerPicLoad;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -114,6 +116,7 @@ public class TrainerAdapter extends  RecyclerView.Adapter<TrainerAdapter.ViewHol
             trainerConsItem = itemView.findViewById(R.id.trainerConsItem);
             ratingBar = itemView.findViewById(R.id.ratingBar);
             ratingUserCount = itemView.findViewById(R.id.txtUserCount);
+            trainerPicLoad = itemView.findViewById(R.id.trainerPicLoad);
             ratingBar.setEnabled(false);
             ratingBar.setNumStars(5);
         }

@@ -226,6 +226,7 @@
                                 android:id="@+id/trainerimage"
                                 android:layout_width="match_parent"
                                 android:layout_height="200dp"
+                                android:scaleType="centerCrop"
                                 android:layout_marginTop="-50dp"/>
                         </RelativeLayout>
                     </androidx.cardview.widget.CardView>
@@ -271,8 +272,24 @@
                                     android:layout_marginStart="15dp"
                                     android:layout_marginTop="15dp"
                                     android:layout_toRightOf="@+id/txtPhnNoLabel"
+                                    android:layout_toLeftOf="@+id/makeCall"
                                     android:fontFamily="@font/poppins_medium"
                                     android:text="" />
+
+                                <TextView
+                                    android:id="@+id/makeCall"
+                                    android:gravity="center"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginStart="5dp"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_marginEnd="10dp"
+                                    android:textSize="12sp"
+                                    android:textColor="@color/themeColourTwo"
+                                    android:fontFamily="@font/poppins_medium"
+                                    android:text="CALL"/>
+
                             </RelativeLayout>
                         </androidx.cardview.widget.CardView>
 
@@ -305,8 +322,23 @@
                                     android:layout_marginStart="15dp"
                                     android:layout_marginTop="15dp"
                                     android:layout_toRightOf="@+id/txtEmailLabel"
+                                    android:layout_toLeftOf="@id/makeEmail"
                                     android:fontFamily="@font/poppins_medium"
                                     android:text="" />
+
+                                <TextView
+                                    android:id="@+id/makeEmail"
+                                    android:gravity="center"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginStart="5dp"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_marginEnd="10dp"
+                                    android:textColor="@color/themeColourTwo"
+                                    android:textSize="12sp"
+                                    android:fontFamily="@font/poppins_medium"
+                                    android:text="MAIL"/>
                             </RelativeLayout>
                         </androidx.cardview.widget.CardView>
 
@@ -353,7 +385,7 @@
                             app:cardCornerRadius="10dp">
 
                             <RelativeLayout
-                                android:layout_width="match_parent"
+                                android:layout_width="399dp"
                                 android:layout_height="match_parent">
 
                                 <TextView
@@ -386,9 +418,9 @@
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentEnd="true"
                                     android:layout_centerVertical="true"
+                                    android:layout_marginEnd="10dp"
                                     android:backgroundTint="@color/transparent"
                                     android:padding="5dp"
-                                    android:layout_marginEnd="10dp"
                                     android:src="@drawable/ic_done"
                                     android:text="Confirm"
                                     android:textColor="@color/themeColourTwo"
@@ -405,14 +437,15 @@
                                     android:fontFamily="@font/poppins_medium" />
 
                                 <ImageButton
+                                    android:id="@+id/editRatingbtn"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:id="@+id/editRatingbtn"
                                     android:layout_alignParentEnd="true"
                                     android:layout_centerVertical="true"
                                     android:layout_marginHorizontal="5dp"
                                     android:background="@color/transparent"
-                                    android:src="@drawable/ic_edit"/>
+                                    android:scaleType="centerCrop"
+                                    android:src="@drawable/ic_edit" />
                             </RelativeLayout>
                         </androidx.cardview.widget.CardView>
 
@@ -446,7 +479,7 @@
                                     android:layout_marginTop="15dp"
                                     android:layout_toRightOf="@+id/txtDescriptionLabel"
                                     android:fontFamily="@font/poppins_medium"
-                                    android:text="Description" />
+                                    android:text="-" />
                             </RelativeLayout>
                         </androidx.cardview.widget.CardView>
 

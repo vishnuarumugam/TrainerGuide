@@ -4,14 +4,19 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.MenuItem;
@@ -45,13 +50,14 @@ import java.util.stream.Collectors;
 
 public class TraineeProfileview extends AppCompatActivity{
 
-    TextView name, goal, bmi, weight, height, mobile, email, foodType, otherHealthIssue, otherFoodAllergy;
-    ImageView profileimg;
-    Button createFoodChart;
+    private TextView name, goal, bmi, weight, height, mobile, email, foodType, otherHealthIssue, otherFoodAllergy;
+    private TextView makeCall, makeEmail;
+    private ImageView profileimg;
+    private Button createFoodChart;
     private String traineeuserId, path, navScreen;
-    Animation buttonBounce;
+    private Animation buttonBounce;
     private Trainee user;
-    RelativeLayout healthInfoRel, foodAllergyRel, contactRelLay;
+    private RelativeLayout healthInfoRel, foodAllergyRel, contactRelLay;
     private MaterialCheckBox diabetesHealthIssue, cholesterolHealthIssue, thyroidHealthIssue, bpHealthIssue, heartHealthIssue, physicalInjuriesHealthIssue;
     private MaterialCheckBox diaryFoodAllergy, wheatFoodAllergy, nutsFoodAllergy, seaFoodAllergy, muttonFoodAllergy, chickenFoodAllergy;
 
@@ -64,6 +70,8 @@ public class TraineeProfileview extends AppCompatActivity{
     private Toolbar toolbar;
     private MenuItem profileMenu, logoutMenu, shareMenu, ratingMenu, traineeMenu;
     private TabLayout traineeTabLayout;
+
+    static int PERMISSION_CODE=100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,6 +127,10 @@ public class TraineeProfileview extends AppCompatActivity{
         physicalInjuriesHealthIssue = findViewById(R.id.physicalInjuriesHealthIssue);
         otherHealthIssue = findViewById(R.id.otherHealthIssue);
 
+        makeCall = findViewById(R.id.makeCall);
+        makeEmail = findViewById(R.id.makeEmail);
+
+
         //Toolbar customisation
         setSupportActionBar(toolbar);
         /*toolbar.setBackgroundColor(getResources().getColor(R.color.black));
@@ -133,7 +145,25 @@ public class TraineeProfileview extends AppCompatActivity{
             }
         });
 
+        makeCall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                if (ContextCompat.checkSelfPermission(TraineeProfileview.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(TraineeProfileview.this, new String[]{Manifest.permission.CALL_PHONE}, PERMISSION_CODE);
+                }
+                else{
+                    makeCall();
+                }
+
+            }
+        });
+        makeEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendEmail();
+            }
+        });
 
         PopulateUserDetails();
 
@@ -311,6 +341,26 @@ public class TraineeProfileview extends AppCompatActivity{
             startActivity(new Intent(TraineeProfileview.this, TraineesScreen.class));
             finish();
         }
+    }
+
+    public void makeCall(){
+        Intent intent = new Intent(Intent.ACTION_CALL);
+        intent.setData(Uri.parse("tel:"+mobile.getText()));
+        startActivity(intent);
+
+    }
+    public void sendEmail(){
+        String emailSend = email.getText().toString();
+
+
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{email.getText().toString()});
+        intent.setType("text/plain");
+
+
+        startActivity(Intent.createChooser(intent, "Choose an Email client :"));
+
+
     }
 
     @Override

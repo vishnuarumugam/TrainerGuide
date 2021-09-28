@@ -4,14 +4,20 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.net.MailTo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.MenuItem;
@@ -48,11 +54,12 @@ import java.util.UUID;
 
 public class TrainerProfileView extends AppCompatActivity {
 
-    TextView name, experience, ratingUserCount, description, email, mobile, yourTrainer, traineesCount, trainerRatings, ratingSubmit, fees;
-    RatingBar ratingBar;
-    ImageView profileimg;
-    Button requestbtn;
-    ImageButton editRatingBtn;
+    private TextView name, experience, ratingUserCount, description, email, mobile, yourTrainer, traineesCount, trainerRatings, ratingSubmit, fees;
+    private TextView makeCall, makeEmail;
+    private RatingBar ratingBar;
+    private ImageView profileimg;
+    private Button requestbtn;
+    private ImageButton editRatingBtn;
     private String traineruserId, path,navScreen, userType;
 
     Animation buttonBounce;
@@ -70,6 +77,7 @@ public class TrainerProfileView extends AppCompatActivity {
     private Trainee trainee;
     private Trainer trainer;
 
+    static int PERMISSION_CODE=100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +119,9 @@ public class TrainerProfileView extends AppCompatActivity {
         yourTrainer = findViewById(R.id.yourTrainerText);
         editRatingBtn = findViewById(R.id.editRatingbtn);
 
+        makeCall = findViewById(R.id.makeCall);
+        makeEmail = findViewById(R.id.makeEmail);
+
         ratingBar.setEnabled(false);
 
         final SharedPreferences sp;
@@ -144,6 +155,28 @@ public class TrainerProfileView extends AppCompatActivity {
 
         //Menu Item variables
         profileMenu = findViewById(R.id.nav_profile);
+
+
+
+        makeCall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (ContextCompat.checkSelfPermission(TrainerProfileView.this,Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(TrainerProfileView.this, new String[]{Manifest.permission.CALL_PHONE}, PERMISSION_CODE);
+                }
+                else{
+                    makeCall();
+                }
+
+            }
+        });
+        makeEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendEmail();
+            }
+        });
 
         editRatingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -409,6 +442,25 @@ public class TrainerProfileView extends AppCompatActivity {
         }
     }
 
+    public void makeCall(){
+        Intent intent = new Intent(Intent.ACTION_CALL);
+        intent.setData(Uri.parse("tel:"+mobile.getText()));
+        startActivity(intent);
+
+    }
+    public void sendEmail(){
+        String emailSend = email.getText().toString();
+
+
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{email.getText().toString()});
+        intent.setType("text/plain");
+
+
+        startActivity(Intent.createChooser(intent, "Choose an Email client :"));
+
+
+    }
     @Override
     public void onBackPressed()
     {

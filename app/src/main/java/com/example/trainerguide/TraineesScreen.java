@@ -637,7 +637,8 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
         }
     }
 
-    @Override
+
+
     public void onAddclick(int position) {
         final UserMetaData trainee = traineesList.get(position);
 
@@ -737,4 +738,5 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
             }
         });*/
     }
+
 }

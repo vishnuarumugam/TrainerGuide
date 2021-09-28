@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -68,7 +69,7 @@ import java.util.Map;
 
 import static java.lang.Math.round;
 
-public class HomeScreen extends AppCompatActivity implements View.OnClickListener {
+public class HomeScreen extends AppCompatActivity implements View.OnClickListener, AdSliderAdapter.OnClickAdListener {
 
     //Homescreen variables
     private DrawerLayout drawerLayout;
@@ -339,7 +340,8 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
         populateAds();
         topAdSliderAdapter = new AdSliderAdapter(adList);
-        
+        topAdSliderAdapter.setOnClickAdListener(HomeScreen.this);
+
         PopulateUserDetails();
 
 
@@ -948,4 +950,24 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
     }
 
 
+    @Override
+    public void onClickAd(int position) {
+        Ad ad = adList.get(position);
+
+        if (ad.getRedirectTo().equals("Web Page")){
+            String urlLink = ad.getUrl();
+            Uri uri = Uri.parse(urlLink);
+            startActivity(new Intent(Intent.ACTION_VIEW,uri));
+        }
+        else if (ad.getRedirectTo().equals("Profile")){
+            Intent intent = new Intent(HomeScreen.this, AdViewScreen.class);
+            intent.putExtra("ad",ad);
+            intent.putExtra("userEmail",user.getEmail());
+            startActivity(intent);
+        }
+        else {
+
+        }
+
+    }
 }

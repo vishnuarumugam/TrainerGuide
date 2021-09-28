@@ -27,6 +27,7 @@
     <string-array name="ad_redirect">
         <item>Profile</item>
         <item>Web Page</item>
+        <item>Company</item>
     </string-array>
 
     <string name="urlLink">https://www.google.com/search?q=how+many+calories+are+in+</string>

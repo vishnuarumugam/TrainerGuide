@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -71,10 +72,10 @@ public class TraineeAdapter extends RecyclerView.Adapter<TraineeAdapter.ViewHold
         holder.name.setText(trainee.get(position).getName());
         holder.bmi.setText(trainee.get(position).getBmi().toString());
         Picasso.get().load(trainee.get(position).getImage())
-                .placeholder(R.drawable.profile)
                 .fit()
                 .centerCrop()
                 .into(holder.profilePic);
+        holder.traineePicLoad.setVisibility(View.GONE);
         holder.traineeProfileClick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -139,6 +140,7 @@ public class TraineeAdapter extends RecyclerView.Adapter<TraineeAdapter.ViewHold
         RelativeLayout traineeItem;
         CardView traineeItemThemeLine;
         ImageButton deleteTrainee;
+        ProgressBar traineePicLoad;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -152,6 +154,7 @@ public class TraineeAdapter extends RecyclerView.Adapter<TraineeAdapter.ViewHold
             traineeReportView = itemView.findViewById(R.id.traineeReportView);
             deleteTrainee = itemView.findViewById(R.id.deleteTrainee);
             traineeSubscriptionStatus = itemView.findViewById(R.id.traineeSubscriptionStatus);
+            traineePicLoad = itemView.findViewById(R.id.traineePicLoad);
 
         }
 

@@ -304,6 +304,7 @@
                             app:tabGravity="fill"
                             app:tabIndicatorColor="@color/themeColourTwo"
                             app:tabMaxWidth="0dp"
+                            app:tabTextAppearance="@style/TraineeTabStyle"
                             app:tabSelectedTextColor="@color/themeColourOne"
                             app:tabTextColor="@color/themeColourFour">
 
@@ -639,7 +640,23 @@
                                 android:layout_marginStart="15dp"
                                 android:layout_marginTop="15dp"
                                 android:layout_toRightOf="@+id/txtPhnNoLabelTrainee"
+                                android:layout_toLeftOf="@id/makeCall"
                                 android:text="" />
+
+                                <TextView
+                                    android:id="@+id/makeCall"
+                                    android:gravity="center"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginStart="5dp"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_marginEnd="10dp"
+                                    android:textSize="12sp"
+                                    android:textColor="@color/themeColourTwo"
+                                    android:fontFamily="@font/poppins_medium"
+                                    android:text="CALL"/>
+
                             </RelativeLayout>
                             <RelativeLayout
                                 android:layout_width="match_parent"
@@ -667,7 +684,22 @@
                                     android:layout_marginStart="15dp"
                                     android:layout_marginTop="15dp"
                                     android:layout_toRightOf="@+id/txtEmailLabel"
+                                    android:layout_toLeftOf="@id/makeEmail"
                                     android:text="" />
+
+                                <TextView
+                                    android:id="@+id/makeEmail"
+                                    android:gravity="center"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginStart="5dp"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_marginEnd="10dp"
+                                    android:textColor="@color/themeColourTwo"
+                                    android:textSize="12sp"
+                                    android:fontFamily="@font/poppins_medium"
+                                    android:text="MAIL"/>
 
                             </RelativeLayout>
 

@@ -1,8 +1,9 @@
 package com.example.trainerguide.models;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Ad {
+public class Ad implements Serializable {
 
     private String adId;
     private String image;

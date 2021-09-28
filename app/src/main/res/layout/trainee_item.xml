@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="1dp"
+    app:cardCornerRadius="0dp"
     android:padding="5dp"
     android:backgroundTint="@color/white">
 
@@ -30,12 +31,18 @@
                 android:layout_centerVertical="true"
                 android:elevation="5dp">
 
+                <ProgressBar
+                    android:id="@+id/traineePicLoad"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:visibility="visible"/>
+
                 <ImageView
                     android:id="@+id/traineeProfileImage"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/profile"
-                    android:scaleType="centerCrop"/>
+                    android:scaleType="centerCrop" />
 
             </androidx.cardview.widget.CardView>
 
@@ -57,8 +64,9 @@
                 android:layout_marginTop="20dp"
                 android:layout_toRightOf="@id/traineeItemThemeLine"
                 android:text="Name"
-                android:textColor="@color/black"
-                android:textStyle="italic"/>
+                android:textSize="14sp"
+                style="@style/fontStyle"
+                android:textColor="@color/themeColourOne"/>
             <TextView
                 android:id="@+id/traineeItemName"
                 android:layout_width="wrap_content"
@@ -66,9 +74,11 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="20dp"
                 android:layout_toRightOf="@id/traineeItemNameLabel"
-                android:hint="Vishnu"
-                android:textColor="@color/black"
-                android:textStyle="bold|italic"/>
+                android:text=" --"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                style="@style/fontStyle"
+                android:textColor="@color/themeColourOne"/>
 
             <TextView
                 android:id="@+id/traineeItemBmiLabel"
@@ -79,8 +89,9 @@
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/traineeItemThemeLine"
                 android:text="BMI:"
-                android:textColor="@color/black"
-                android:textStyle="italic"/>
+                android:textSize="14sp"
+                style="@style/fontStyle"
+                android:textColor="@color/themeColourOne"/>
 
             <TextView
                 android:id="@+id/traineeItemBmi"
@@ -90,19 +101,23 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/traineeItemBmiLabel"
-                android:hint="25"
-                android:textColor="@color/black"
-                android:textStyle="bold|italic"/>
+                android:text=" --"
+                android:textSize="14sp"
+                style="@style/fontStyle"
+                android:textColor="@color/themeColourOne"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/traineeReportView"
+                android:gravity="center"
                 android:text="View Report"
-                android:paddingHorizontal="4dp"
+                android:paddingHorizontal="6dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
+                android:textSize="12sp"
                 android:textStyle="bold"
+                android:fontFamily="@font/poppins_light"
                 android:background="@drawable/theme_colour_two_round_shape"
                 android:textColor="@color/white"
                 android:layout_below="@id/traineeItemBmiLabel"
@@ -114,8 +129,9 @@
                 android:id="@+id/traineeSubscriptionStatus"
                 android:text="Status"
                 android:paddingHorizontal="4dp"
-                android:textStyle="normal|italic"
                 android:layout_marginRight="10dp"
+                android:textSize="14sp"
+                style="@style/fontStyle"
                 android:textColor="@color/themeColourOne"
                 android:layout_alignParentEnd="true"
                 android:layout_alignTop="@id/traineeReportView"
