@@ -36,6 +36,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.trainerguide.models.Ad;
 import com.example.trainerguide.models.BmrProgress;
 import com.example.trainerguide.models.Trainee;
@@ -54,12 +61,16 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.jjoe64.graphview.GraphView;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.WormAnimation;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -126,6 +137,9 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
     //Progress Bar
     private ProgressDialog progressDialog;
 
+    private RequestQueue requestQueue;
+    private String notificationURl = "https://fcm.googleapis.com/fcm/send";
+
 
 
     @SuppressLint("UnsafeExperimentalUsageError")
@@ -133,6 +147,12 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
+
+
+        //notification
+        requestQueue = Volley.newRequestQueue(this);
+
+
 
         // loading Animation from
         buttonBounce= AnimationUtils.loadAnimation(this, R.anim.button_bounce);
@@ -304,6 +324,9 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         userId = sp.getString("userId",null);
         path = userType+ "/" + userId;
         checkNotification(path);
+
+        FirebaseMessaging.getInstance().subscribeToTopic(userId.toString());
+
 
         if (getIntent().hasExtra("Screen")){
             navigationScreen = getIntent().getExtras().getString("Screen", "");
@@ -483,11 +506,11 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 finish();
                 break;
             case R.id.postAdLayout:
-                startActivity(new Intent(HomeScreen.this,AdPostingScreen.class));
-                finish();
+                sendNotification();
+                /*startActivity(new Intent(HomeScreen.this,AdPostingScreen.class));
+                finish();*/
                 break;
             case R.id.dashboard_post_ad:
-                System.out.println(getString(R.string.companyEmail));
                 Intent emailIntent = new Intent(Intent.ACTION_SEND);
                 emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{getString(R.string.companyEmail)});
                 emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Fittify Me Ad details");
@@ -1035,5 +1058,46 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
         });
 
+    }
+
+    public void sendNotification(){
+        JSONObject messageObject = new JSONObject();
+        try {
+
+            System.out.println(userId + "userId" + "SM9pomAjfoX7k5XC65z9JrrSaFo2");
+            messageObject.put("to","/topics/"+"SM9pomAjfoX7k5XC65z9JrrSaFo2");
+            JSONObject notificationObject = new JSONObject();
+            notificationObject.put("title","Notify");
+            notificationObject.put("body","new request");
+            messageObject.put("notification",notificationObject);
+
+            JsonObjectRequest  request = new JsonObjectRequest(Request.Method.POST, notificationURl,
+                    messageObject,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+
+                        }
+
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                }
+            }){
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String,String> header = new HashMap<>();
+                    header.put("content-type", "application/json");
+                    header.put("authorization", "key=AAAAQPsfOgo:APA91bG8Xy-sfM3ua8fd5CycH0ucemi7AgOUQ4-b-EwzpQutlXanKM_pHWpybDqIutacxItiuplb-MYRK28MwaRqzVyfhLLER7TYMKjHYfF_KYd4s1n2wWcRSIRSqB1VfzjQDn5f86Xj");
+                    return header;
+                }
+            };
+
+            requestQueue.add(request);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

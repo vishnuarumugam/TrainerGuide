@@ -415,7 +415,8 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
                             notifyTrainee.setNotificationType("");
                             notifyTrainee.setNotificationHeader("Notification");
                             notifyTrainee.setTrainer(false);
-                            notifyTrainee.setUserId(trainee.getUserId());
+                            //notifyTrainee.setUserId(trainee.getUserId());
+                            notifyTrainee.setUserId("");
 
                             databaseReferenceTrainer.child("/Notification/" +notify.getNotificationId()).setValue(notify);
                             databaseReferenceTrainer.child("/usersList/" + trainee.getUserId()).setValue(traineeMetadata);
