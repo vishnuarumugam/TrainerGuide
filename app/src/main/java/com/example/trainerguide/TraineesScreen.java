@@ -81,6 +81,8 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
     private NavigationView navigationView;
     private Toolbar toolbar;
     private Button toolBarNotification;
+    public String notificationFlag="";
+    private TextView toolBarBadge;
     private MenuItem profileMenu, logoutMenu, shareMenu, ratingMenu, traineeMenu;
     private EditText searchTxt;
     private Button searchClear;
@@ -139,7 +141,16 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
         toolbar = findViewById(R.id.tool_bar);
         toolBarNotification = findViewById(R.id.toolBarNotification);
         toolBarNotification.setOnClickListener(this);
+        toolBarBadge = findViewById(R.id.toolBarBadge);
 
+        if (getIntent().hasExtra("notificationFlag")){
+            notificationFlag = getIntent().getExtras().getString("notificationFlag", "");
+        }
+
+        if (notificationFlag.equals("present"))
+            toolBarBadge.setVisibility(View.VISIBLE);
+        else
+            toolBarBadge.setVisibility(View.INVISIBLE);
 
         //Toolbar customisation
         setSupportActionBar(toolbar);
@@ -165,24 +176,14 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
                 switch (item.getItemId()){
                     case R.id.nav_profile:
                         intent=new Intent(TraineesScreen.this,ProfileScreen.class);
-                        //intent.putExtra("UserId",userId);
                         startActivity(intent);
                         finish();
                         break;
-                    /*case R.id.nav_trainees:
-                        break;*/
+
                     case R.id.nav_notification:
                         startActivity(new Intent(TraineesScreen.this,NotificationScreen.class));
                         finish();
                         break;
-                    /*case R.id.nav_trainer:
-                        startActivity(new Intent(TraineesScreen.this,TrainerScreen.class));
-                        finish();
-                        break;*/
-                    /*case R.id.nav_foodPrep:
-                        startActivity(new Intent(TraineesScreen.this,PrepareFoodChart.class));
-                        finish();
-                        break;*/
                     case R.id.nav_logout:
                         startActivity(new Intent(TraineesScreen.this,MainActivity.class));
                         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -214,6 +215,7 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         path = "Trainer/" + userId + "/usersList";
         //path = userId + "/usersList";
+        checkNotification("Trainer/" + userId );
         System.out.println("***userId***"+userId+"******");
         //populateTraineesData();
 
@@ -333,25 +335,30 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
                 switch (item.getItemId()){
+
                     case R.id.homeTab:
-                        startActivity(new Intent(TraineesScreen.this,HomeScreen.class));
+                        //startActivity(new Intent(TraineesScreen.this,HomeScreen.class));
+                        intent = new Intent(TraineesScreen.this,HomeScreen.class);
+                        intent.putExtra("Screen", "TraineesScreen");
+                        intent.putExtra("notificationFlag", notificationFlag);
+                        startActivity(intent);
                         overridePendingTransition(0,0);
                         finish();
                         break;
                     case R.id.trainersTab:
-                        startActivity(new Intent(TraineesScreen.this,TrainerScreen.class));
+                        startActivity(new Intent(TraineesScreen.this,TrainerScreen.class).putExtra("notificationFlag", notificationFlag));
                         overridePendingTransition(0,0);
                         finish();
                         break;
                     case R.id.traineesTab:
                         break;
                     case R.id.foodListTab:
-                        startActivity(new Intent(TraineesScreen.this,FoodSourceListScreen.class));
+                        startActivity(new Intent(TraineesScreen.this,FoodSourceListScreen.class).putExtra("notificationFlag", notificationFlag));
                         overridePendingTransition(0,0);
                         finish();
                         break;
                     case R.id.profileTab:
-                        startActivity(new Intent(TraineesScreen.this,ProfileScreen.class));
+                        startActivity(new Intent(TraineesScreen.this,ProfileScreen.class).putExtra("notificationFlag", notificationFlag));
                         overridePendingTransition(0,0);
                         finish();
                         break;
@@ -527,20 +534,6 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
                         }
                     }
 
-
-
-
-
-                    /*System.out.println("inside array");
-                    jsonObject1 = jsonArray.getJSONObject(jsonArray.length()-1);
-                    UserMetaData userMetaData = new UserMetaData();
-                    System.out.println("user"+jsonObject1.getString("userId"));
-                    //SetImage
-                    userMetaData.setImage(jsonObject1.getString("image"));
-                    userMetaData.setName(jsonObject1.getString("name"));
-                    userMetaData.setBmi(jsonObject1.getDouble("bmi"));
-                    userMetaData.setUserId(jsonObject1.getString("userId"));
-*/
                     //Add Data
                     scroll=false;
                     //traineesList.add(userMetaData);
@@ -604,12 +597,6 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
                 traineeAdapter.notifyDataSetChanged();
                 traineeRefresh.setRefreshing(false);
 
-                /*UserMetaData user = new UserMetaData("Satha" + System.currentTimeMillis(), "Satha", 0.00, "image");
-                 *//*trainerobj.setUser(user);
-                databaseReference.setValue(trainerobj);*//*
-                HashMap hash= new HashMap();
-                hash.put(user.getUserId(),user);
-                databaseReference.child(user.getUserId()).setValue(user);*/
             }
 
             @Override
@@ -668,7 +655,7 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
 
             case R.id.toolBarNotification:
                 option.startAnimation(buttonBounce);
-                startActivity(new Intent(TraineesScreen.this,NotificationScreen.class));
+                startActivity(new Intent(TraineesScreen.this,NotificationScreen.class).putExtra("Screen","TraineesScreen"));
                 finish();
                 break;
             default:
@@ -737,6 +724,34 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
                 return o1.getAddedDate().compareTo(o2.getAddedDate());
             }
         });*/
+    }
+
+    public void checkNotification(String notificationPath){
+
+        DatabaseReference databaseReferenceNotify = FirebaseDatabase.getInstance().getReference(notificationPath + "/Notification");
+        databaseReferenceNotify.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.getValue()!=null){
+                    System.out.println("present");
+                    notificationFlag="present";
+                    toolBarBadge.setVisibility(View.VISIBLE);
+                }
+                else {
+                    System.out.println("empty");
+                    notificationFlag="empty";
+                    toolBarBadge.setVisibility(View.INVISIBLE);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+
+        });
+
     }
 
 }

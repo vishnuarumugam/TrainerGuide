@@ -47,7 +47,8 @@
                         android:background="@color/themeColourFour"
                         android:textColor="@color/white"
                         android:gravity="center"
-                        style="@style/TextAppearance.AppCompat.Medium"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/poppins_medium"
                         android:layout_gravity="center"/>
 
                     <com.google.android.material.card.MaterialCardView
@@ -55,15 +56,17 @@
                         android:layout_height="40dp">
                         <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical">
                             <EditText
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:hint="Search Name"
-                                android:padding="5dp"
                                 android:imeOptions="actionSearch"
                                 android:background="@color/homeScreenBgColor"
-                                android:fontFamily="@font/poppins_medium"
+                                android:textSize="14sp"
+                                android:padding="5dp"
+                                android:fontFamily="@font/poppins_light"
                                 android:inputType="text"
                                 android:maxLines="1"
                                 android:id="@+id/searchNametxt"
@@ -72,6 +75,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:id="@+id/searchClear"
+                                android:gravity="center"
+                                android:textSize="12sp"
+                                android:layout_marginEnd="5dp"
                                 android:fontFamily="@font/poppins_medium"
                                 android:layout_alignTop="@+id/searchNametxt"
                                 android:layout_alignBottom="@+id/searchNametxt"

@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:context=".NotificationScreen"
     android:id="@+id/notification_drawer_layout">
 
-    <include layout="@layout/common_navigator"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -17,7 +17,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <include layout="@layout/common_toolbar"/>
+                <include layout="@layout/common_back_toolbar"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -29,7 +29,8 @@
                     android:background="@color/themeColourFour"
                     android:textColor="@color/white"
                     android:gravity="center"
-                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/poppins_medium"
                     android:layout_gravity="center"/>
 
                 <TextView

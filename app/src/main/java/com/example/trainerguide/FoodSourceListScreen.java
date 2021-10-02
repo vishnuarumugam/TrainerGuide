@@ -74,6 +74,7 @@ public class FoodSourceListScreen extends AppCompatActivity implements View.OnCl
     Animation buttonBounce;
     private String navigationScreen ="";
     private BottomNavigationView homeScreenTabLayout;
+    private Intent intent;
 
 
 
@@ -96,6 +97,8 @@ public class FoodSourceListScreen extends AppCompatActivity implements View.OnCl
     private NavigationView navigationView;
     private Toolbar toolbar;
     private Button toolBarNotification;
+    public String notificationFlag="";
+    private TextView toolBarBadge;
     private MenuItem profileMenu, logoutMenu, shareMenu, ratingMenu, traineeMenu;
 
 
@@ -205,6 +208,18 @@ public class FoodSourceListScreen extends AppCompatActivity implements View.OnCl
         toolbar = findViewById(R.id.tool_bar);
         toolBarNotification = findViewById(R.id.toolBarNotification);
         toolBarNotification.setOnClickListener(this);
+        toolBarBadge = findViewById(R.id.toolBarBadge);
+
+        if (getIntent().hasExtra("notificationFlag")){
+            notificationFlag = getIntent().getExtras().getString("notificationFlag", "");
+        }
+
+        if (notificationFlag.equals("present"))
+            toolBarBadge.setVisibility(View.VISIBLE);
+        else
+            toolBarBadge.setVisibility(View.INVISIBLE);
+
+        checkNotification(userPath);
 
         //Toolbar customisation
         setSupportActionBar(toolbar);
@@ -297,24 +312,28 @@ public class FoodSourceListScreen extends AppCompatActivity implements View.OnCl
 
                 switch (item.getItemId()){
                     case R.id.homeTab:
-                        startActivity(new Intent(FoodSourceListScreen.this,HomeScreen.class));
+                        //startActivity(new Intent(FoodSourceListScreen.this,HomeScreen.class));
+                        intent = new Intent(FoodSourceListScreen.this,HomeScreen.class);
+                        intent.putExtra("Screen", "FoodSourceListScreen");
+                        intent.putExtra("notificationFlag", notificationFlag);
+                        startActivity(intent);
                         overridePendingTransition(0,0);
                         finish();
                         break;
                     case R.id.trainersTab:
-                        startActivity(new Intent(FoodSourceListScreen.this,TrainerScreen.class));
+                        startActivity(new Intent(FoodSourceListScreen.this,TrainerScreen.class).putExtra("notificationFlag", notificationFlag));
                         overridePendingTransition(0,0);
                         finish();
                         break;
                     case R.id.traineesTab:
-                        startActivity(new Intent(FoodSourceListScreen.this,TraineesScreen.class));
+                        startActivity(new Intent(FoodSourceListScreen.this,TraineesScreen.class).putExtra("notificationFlag", notificationFlag));
                         overridePendingTransition(0,0);
                         finish();
                         break;
                     case R.id.foodListTab:
                         break;
                     case R.id.profileTab:
-                        startActivity(new Intent(FoodSourceListScreen.this,ProfileScreen.class));
+                        startActivity(new Intent(FoodSourceListScreen.this,ProfileScreen.class).putExtra("notificationFlag", notificationFlag));
                         overridePendingTransition(0,0);
                         finish();
                         break;
@@ -401,7 +420,7 @@ public class FoodSourceListScreen extends AppCompatActivity implements View.OnCl
 
             case R.id.toolBarNotification:
                 option.startAnimation(buttonBounce);
-                startActivity(new Intent(FoodSourceListScreen.this,NotificationScreen.class));
+                startActivity(new Intent(FoodSourceListScreen.this,NotificationScreen.class).putExtra("Screen","FoodSourceListScreen"));
                 finish();
                 break;
 
@@ -667,5 +686,34 @@ public class FoodSourceListScreen extends AppCompatActivity implements View.OnCl
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
+
+    public void checkNotification(String notificationPath){
+
+        DatabaseReference databaseReferenceNotify = FirebaseDatabase.getInstance().getReference(notificationPath + "/Notification");
+        databaseReferenceNotify.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.getValue()!=null){
+                    System.out.println("present");
+                    notificationFlag="present";
+                    toolBarBadge.setVisibility(View.VISIBLE);
+                }
+                else {
+                    System.out.println("empty");
+                    notificationFlag="empty";
+                    toolBarBadge.setVisibility(View.INVISIBLE);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+
+        });
+
+    }
+
 
 }

@@ -55,7 +55,7 @@ import java.util.Date;
 import java.util.List;
 
 
-public class UserReport extends AppCompatActivity implements View.OnClickListener {
+public class UserReport extends AppCompatActivity {
 
     //User Detail variables
     private String userId, path, userType;
@@ -97,22 +97,21 @@ public class UserReport extends AppCompatActivity implements View.OnClickListene
         buttonBounce= AnimationUtils.loadAnimation(this, R.anim.button_bounce);
 
 
-        navigationView = findViewById(R.id.nav_view);
         drawerLayout = findViewById(R.id.drawer_layout);
         toolBarNotification = findViewById(R.id.toolBarNotification);
-        toolbar = findViewById(R.id.tool_bar);
+        toolbar = findViewById(R.id.back_tool_bar);
+        toolbar.setTitle("Progress");
         //sideUserName = navigationView.findViewById(R.id.sideUserName);
 
         setSupportActionBar(toolbar);
-        toolbar.setBackgroundColor(getResources().getColor(R.color.themeColourOne));
-        toolbar.setTitleTextColor(getResources().getColor(R.color.themeColourThree));
 
         //toolBarNotification.setBackgroundColor(getResources().getColor(R.color.white));
-        toolBarNotification.setOnClickListener(this);
-
-        ActionBarDrawerToggle toggle = CommonNavigator.navigatorInitmethod(drawerLayout,navigationView,toolbar,this);
-        toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.themeColourTwo));
-
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(UserReport.this,HomeScreen.class).putExtra("Screen","UserReport"));
+            }
+        });
         //toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.themeLightPink));
 
         //User Info variables
@@ -186,43 +185,6 @@ public class UserReport extends AppCompatActivity implements View.OnClickListene
         DisableView();
         PopulateUserDetails();
 
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.nav_profile:
-                        startActivity(new Intent(UserReport.this,ProfileScreen.class));
-                        finish();
-                        break;
-                    /*case R.id.nav_trainees:
-                        intent=new Intent(ProfileScreen.this,TraineesScreen.class);
-                        //intent.putExtra("UserId",userId);
-                        startActivity(intent);
-                        finish();
-                        break;*/
-                    case R.id.nav_notification:
-                        startActivity(new Intent(UserReport.this,NotificationScreen.class));
-                        finish();
-                        break;
-
-                    case R.id.nav_logout:
-                        startActivity(new Intent(UserReport.this,MainActivity.class));
-                        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                        SharedPreferences.Editor editor = settings.edit();
-                        editor.remove("userId");
-                        editor.remove("ProfileType");
-                        editor.remove("IsLoggedIn");
-                        //editor.putBoolean("IsLoggedIn",false);
-                        editor.commit();
-                        finish();
-                        break;
-                    default:
-                        Toast.makeText(UserReport.this, "Coming Soon", Toast.LENGTH_SHORT).show();
-                        break;
-                }
-                return false;
-            }
-        });
 
         bmiCategoryReport.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -491,7 +453,7 @@ public class UserReport extends AppCompatActivity implements View.OnClickListene
                     finish();
                     break;
                 default:
-                    intent = new Intent(UserReport.this,HomeScreen.class);
+                    intent = new Intent(UserReport.this,HomeScreen.class).putExtra("Screen","UserReport");
                     startActivity(intent);
                     finish();
                     break;
@@ -501,17 +463,5 @@ public class UserReport extends AppCompatActivity implements View.OnClickListene
         }
     }
 
-    @Override
-    public void onClick(View option) {
-        switch (option.getId()) {
 
-            case R.id.toolBarNotification:
-                option.startAnimation(buttonBounce);
-                startActivity(new Intent(UserReport.this,NotificationScreen.class));
-                finish();
-                break;
-            default:
-                break;
-        }
-    }
 }

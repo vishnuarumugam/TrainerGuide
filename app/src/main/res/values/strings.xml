@@ -32,6 +32,21 @@
 
     <string name="urlLink">https://www.google.com/search?q=how+many+calories+are+in+</string>
 
+    <string name="companyEmail">vishnuarumugam95@gmail.com</string>
+    <string name="adEmail">Hope you\'re doing well. Thank you for showing interest in posting your Ad in our App.\n\n
+We need few details of your Ad.\n\n
+Please fill the below details and reply to the same email.\n\n
+1. EmailID.\n
+2. How many number of days the Ad should be posted.\n
+3. How do you want to redirect your Ad? WebPage or Email.\n
+4. Provide your webpage link if you want to redirect the Ad to your Webpage.\n
+4. Ad Image. (Please provide a High quality Landscape image)\n
+5. Will your Ad contain 18+ contents?\n\n
+We will respond back to you shortly. \n\n
+Regards,\n
+Ad team\n
+Fittify Me</string>
+
 
     <string name="underweight">A BMI of under 18.5 indicates that you have an insufficient weight, so you may need to put on some weight. Consult a doctor or with a trainer in the app for advice.</string>
     <string name="healthy">A BMI of 18.5–24.9 indicates that you have healthy weight for your height. By maintaining a healthy weight, you can lower your risk of developing serious health problems.</string>

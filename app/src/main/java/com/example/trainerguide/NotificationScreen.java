@@ -19,7 +19,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,11 +35,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -102,9 +98,22 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
         }
 
         //Navigation view variables
-        drawerLayout = findViewById(R.id.notification_drawer_layout);
+       // drawerLayout = findViewById(R.id.prepare_food_drawer_layout);
         navigationView = findViewById(R.id.nav_view);
-        toolbar = findViewById(R.id.tool_bar);
+        toolbar = findViewById(R.id.back_tool_bar);
+
+        //Toolbar customisation
+
+        toolbar.setTitle("Notification");
+
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OnBackPressed();
+            }
+        });
+
 
         //Common variables
         noNotificationText = findViewById(R.id.noNotificationText);
@@ -121,14 +130,14 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
         });
 
         //Toolbar customisation
-        setSupportActionBar(toolbar);
-        toolbar.setBackgroundColor(getResources().getColor(R.color.themeColourOne));
+        //setSupportActionBar(toolbar);
+        /*toolbar.setBackgroundColor(getResources().getColor(R.color.themeColourOne));
         toolbar.setTitleTextColor(getResources().getColor(R.color.themeColourThree));
         ActionBarDrawerToggle toggle = CommonNavigator.navigatorInitmethod(drawerLayout,navigationView,toolbar,this);
-        toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.themeColourTwo));
+        toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.themeColourTwo));*/
 
         //Method to re-direct the page from menu
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+        /*navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
@@ -136,18 +145,18 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
                         startActivity(new Intent(NotificationScreen.this,ProfileScreen.class));
                         finish();
                         break;
-                    /*case R.id.nav_trainees:
+                    *//*case R.id.nav_trainees:
                         intent=new Intent(NotificationScreen.this,TraineesScreen.class);
                         //intent.putExtra("UserId",userId);
                         startActivity(intent);
                         finish();
-                        break;*/
+                        break;*//*
                     case R.id.nav_notification:
                         break;
-                    /*case R.id.nav_trainer:
+                    *//*case R.id.nav_trainer:
                         startActivity(new Intent(NotificationScreen.this,TrainerScreen.class));
                         finish();
-                        break;*/
+                        break;*//*
                     case R.id.nav_logout:
                         startActivity(new Intent(NotificationScreen.this,MainActivity.class));
                         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -165,7 +174,7 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
                 }
                 return false;
             }
-        });
+        });*/
 
         //Recycler view variables
         notificationRecycler = findViewById(R.id.notificationRecycler);
@@ -178,6 +187,8 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
         notificationAdapter.setOnRejectClickListener(NotificationScreen.this);
         notificationAdapter.setOnDeleteClickListener(this);
     }
+
+
 
     public void sortNotification(){
 
@@ -220,6 +231,8 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
 
         //EnableNoNotification();
     }
+
+
     public void EnableNoNotification(){
 
         if (notificationsList.isEmpty()){
@@ -737,45 +750,47 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
 
     @Override
     public void onBackPressed() {
-        if(drawerLayout.isDrawerOpen(GravityCompat.START))
-        {
-            drawerLayout.closeDrawer((GravityCompat.START));
-        }
-        else
-        {
-            {
-                Intent intent;
-                switch(navigationScreen){
+        Intent intent;
+        switch(navigationScreen){
 
-                    case "TraineesScreen":
-                        intent = new Intent(NotificationScreen.this,TraineesScreen.class);
-                        startActivity(intent);
-                        finish();
-                        break;
-                    case "TrainerScreen":
-                        intent = new Intent(NotificationScreen.this,TrainerScreen.class);
-                        startActivity(intent);
-                        finish();
-                        break;
-                    case  "NotificationScreen":
-                        intent = new Intent(NotificationScreen.this,NotificationScreen.class);
-                        startActivity(intent);
-                        finish();
-                        break;
-                    case "FoodSourceListScreen":
-                        intent = new Intent(NotificationScreen.this,FoodSourceListScreen.class);
-                        startActivity(intent);
-                        finish();
-                        break;
-                    default:
-                        intent = new Intent(NotificationScreen.this,HomeScreen.class);
-                        startActivity(intent);
-                        finish();
-                        break;
-                }
-
-            }
+            case "TraineesScreen":
+                intent = new Intent(NotificationScreen.this,TraineesScreen.class);
+                startActivity(intent);
+                finish();
+                break;
+            case "TrainerScreen":
+                intent = new Intent(NotificationScreen.this,TrainerScreen.class);
+                startActivity(intent);
+                finish();
+                break;
+            case  "NotificationScreen":
+                intent = new Intent(NotificationScreen.this,NotificationScreen.class);
+                startActivity(intent);
+                finish();
+                break;
+            case "FoodSourceListScreen":
+                intent = new Intent(NotificationScreen.this,FoodSourceListScreen.class);
+                startActivity(intent);
+                finish();
+                break;
+            case "ProfileScreen":
+                intent = new Intent(NotificationScreen.this,ProfileScreen.class);
+                startActivity(intent);
+                finish();
+                break;
+            case "HomeScreen":
+                intent = new Intent(NotificationScreen.this,HomeScreen.class).putExtra("Screen","NotificationScreen");
+                startActivity(intent);
+                finish();
+                break;
+            default:
+                intent = new Intent(NotificationScreen.this,HomeScreen.class);
+                startActivity(intent);
+                finish();
+                break;
         }
+
+
     }
 
     @Override
@@ -812,6 +827,49 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
             }
         });
 
+
+    }
+
+    private void OnBackPressed() {
+        Intent intent;
+        switch(navigationScreen){
+
+            case "TraineesScreen":
+                intent = new Intent(NotificationScreen.this,TraineesScreen.class);
+                startActivity(intent);
+                finish();
+                break;
+            case "TrainerScreen":
+                intent = new Intent(NotificationScreen.this,TrainerScreen.class);
+                startActivity(intent);
+                finish();
+                break;
+            case  "NotificationScreen":
+                intent = new Intent(NotificationScreen.this,NotificationScreen.class);
+                startActivity(intent);
+                finish();
+                break;
+            case "FoodSourceListScreen":
+                intent = new Intent(NotificationScreen.this,FoodSourceListScreen.class);
+                startActivity(intent);
+                finish();
+                break;
+            case "ProfileScreen":
+                intent = new Intent(NotificationScreen.this,ProfileScreen.class);
+                startActivity(intent);
+                finish();
+                break;
+            case "HomeScreen":
+                intent = new Intent(NotificationScreen.this,HomeScreen.class).putExtra("Screen","NotificationScreen");
+                startActivity(intent);
+                finish();
+                break;
+            default:
+                intent = new Intent(NotificationScreen.this,HomeScreen.class);
+                startActivity(intent);
+                finish();
+                break;
+        }
 
     }
 

@@ -69,6 +69,8 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
     private NavigationView navigationView;
     private Toolbar toolbar;
     private Button toolBarNotification;
+    public String notificationFlag="";
+    private TextView toolBarBadge;
     private MenuItem profileMenu, logoutMenu, shareMenu, ratingMenu, traineeMenu;
     private EditText searchTxt;
     private Button searchClear;
@@ -77,9 +79,10 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
     Intent intent;
     TextView noTrainerText;
     Animation buttonBounce;
-    private String userType, isAdmin;
+    private String userId, userType, isAdmin, path;
     private BottomNavigationView homeScreenTabLayout;
     private SharedPreferences sp;
+
 
 
 
@@ -115,6 +118,16 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
         toolbar = findViewById(R.id.tool_bar);
         toolBarNotification = findViewById(R.id.toolBarNotification);
         toolBarNotification.setOnClickListener(this);
+        toolBarBadge = findViewById(R.id.toolBarBadge);
+
+        if (getIntent().hasExtra("notificationFlag")){
+            notificationFlag = getIntent().getExtras().getString("notificationFlag", "");
+        }
+
+        if (notificationFlag.equals("present"))
+            toolBarBadge.setVisibility(View.VISIBLE);
+        else
+            toolBarBadge.setVisibility(View.INVISIBLE);
 
         //Common variables
         noTrainerText = findViewById(R.id.noTrainerText);
@@ -279,30 +292,15 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
             }
         });
 
-        /*valueEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot:snapshot.getChildren()){
-                    Trainer trainer = dataSnapshot.getValue(Trainer.class);
-                    trainersList.add(trainer);
-                }
-                trainerAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-*/
-
         homeScreenTabLayout = findViewById(R.id.homeScreenTabLayout);
 
         sp= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         userType = sp.getString("ProfileType",null);
+        userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        path = userType+ "/" + userId;
         isAdmin = sp.getString("isAdmin",null);
-
+        checkNotification(path);
         if (userType.equals("Trainer")){
 
         }
@@ -321,23 +319,27 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
 
                 switch (item.getItemId()){
                     case R.id.homeTab:
-                        startActivity(new Intent(TrainerScreen.this,HomeScreen.class));
+                        //startActivity(new Intent(TrainerScreen.this,HomeScreen.class));
+                        intent = new Intent(TrainerScreen.this,HomeScreen.class);
+                        intent.putExtra("Screen", "TrainerScreen");
+                        intent.putExtra("notificationFlag", notificationFlag);
+                        startActivity(intent);
                         overridePendingTransition(0,0);
                         finish();
                         break;
                     case R.id.trainersTab:
                         break;
                     case R.id.traineesTab:
-                        startActivity(new Intent(TrainerScreen.this,TraineesScreen.class));
+                        startActivity(new Intent(TrainerScreen.this,TraineesScreen.class).putExtra("notificationFlag", notificationFlag));
                         overridePendingTransition(0,0);
                         finish();
                         break;
-                    case R.id.foodListTab:startActivity(new Intent(TrainerScreen.this,FoodSourceListScreen.class));
+                    case R.id.foodListTab:startActivity(new Intent(TrainerScreen.this,FoodSourceListScreen.class).putExtra("notificationFlag", notificationFlag));
                         overridePendingTransition(0,0);
                         finish();
                         break;
                     case R.id.profileTab:
-                        startActivity(new Intent(TrainerScreen.this,ProfileScreen.class));
+                        startActivity(new Intent(TrainerScreen.this,ProfileScreen.class).putExtra("notificationFlag", notificationFlag));
                         overridePendingTransition(0,0);
                         finish();
                         break;
@@ -603,12 +605,39 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
 
             case R.id.toolBarNotification:
                 option.startAnimation(buttonBounce);
-                startActivity(new Intent(TrainerScreen.this,NotificationScreen.class));
+                startActivity(new Intent(TrainerScreen.this,NotificationScreen.class).putExtra("Screen","TrainerScreen"));
                 finish();
                 break;
             default:
                 break;
         }
+    }
+    public void checkNotification(String notificationPath){
+
+        DatabaseReference databaseReferenceNotify = FirebaseDatabase.getInstance().getReference(notificationPath + "/Notification");
+        databaseReferenceNotify.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.getValue()!=null){
+                    System.out.println("present");
+                    notificationFlag="present";
+                    toolBarBadge.setVisibility(View.VISIBLE);
+                }
+                else {
+                    System.out.println("empty");
+                    notificationFlag="empty";
+                    toolBarBadge.setVisibility(View.INVISIBLE);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+
+        });
+
     }
 
 }

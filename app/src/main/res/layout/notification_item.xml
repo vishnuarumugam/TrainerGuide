@@ -21,13 +21,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/notificationTextRel"
-            android:layout_marginRight="110dp">
+            android:layout_marginRight="110dp"
+            android:paddingLeft="10dp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/notificationHeaderText"
-                style="@style/TextAppearance.AppCompat.Title"
+                android:fontFamily="@font/poppins_medium"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/themeColourOne"
                 android:text="Notification"/>
 
             <TextView
@@ -35,6 +39,10 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/notificationText"
                 android:layout_marginTop="5dp"
+                android:fontFamily="@font/poppins_light"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="@color/themeColourOne"
                 android:layout_below="@+id/notificationHeaderText"
                 android:text="Notification"/>
 

@@ -93,6 +93,8 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
     private NavigationView navigationView;
     private Toolbar toolbar;
     private Button toolBarNotification;
+    public String notificationFlag="";
+    private TextView toolBarBadge;
     private ProgressDialog progressDialog;
 
 
@@ -155,6 +157,17 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.tool_bar);
         toolBarNotification = findViewById(R.id.toolBarNotification);
+        toolBarBadge = findViewById(R.id.toolBarBadge);
+
+        if (getIntent().hasExtra("notificationFlag")){
+            notificationFlag = getIntent().getExtras().getString("notificationFlag", "");
+        }
+
+        if (notificationFlag.equals("present"))
+            toolBarBadge.setVisibility(View.VISIBLE);
+        else
+            toolBarBadge.setVisibility(View.INVISIBLE);
+
 
         //Toolbar customisation
         setSupportActionBar(toolbar);
@@ -222,6 +235,8 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
         }
 
         path = userType+ "/" + userId;
+
+        checkNotification(path);
 
         if (userType.equals("Trainer")){
             ratingTraineesLayout.setVisibility(View.VISIBLE);
@@ -470,22 +485,26 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
 
                 switch (item.getItemId()){
                     case R.id.homeTab:
-                        startActivity(new Intent(ProfileScreen.this,HomeScreen.class));
+                        //startActivity(new Intent(ProfileScreen.this,HomeScreen.class));
+                        intent = new Intent(ProfileScreen.this,HomeScreen.class);
+                        intent.putExtra("Screen", "ProfileScreen");
+                        intent.putExtra("notificationFlag", notificationFlag);
+                        startActivity(intent);
                         overridePendingTransition(0,0);
                         finish();
                         break;
                     case R.id.trainersTab:
-                        startActivity(new Intent(ProfileScreen.this,TrainerScreen.class));
+                        startActivity(new Intent(ProfileScreen.this,TrainerScreen.class).putExtra("notificationFlag", notificationFlag));
                         overridePendingTransition(0,0);
                         finish();
                         break;
                     case R.id.traineesTab:
-                        startActivity(new Intent(ProfileScreen.this,TraineesScreen.class));
+                        startActivity(new Intent(ProfileScreen.this,TraineesScreen.class).putExtra("notificationFlag", notificationFlag));
                         overridePendingTransition(0,0);
                         finish();
                         break;
                     case R.id.foodListTab:
-                        startActivity(new Intent(ProfileScreen.this,FoodSourceListScreen.class));
+                        startActivity(new Intent(ProfileScreen.this,FoodSourceListScreen.class).putExtra("notificationFlag", notificationFlag));
                         overridePendingTransition(0,0);
                         finish();
                         break;
@@ -788,7 +807,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                 case R.id.toolBarNotification:
                     option.startAnimation(buttonBounce);
                     System.out.println("toolbar");
-                    startActivity(new Intent(ProfileScreen.this,NotificationScreen.class));
+                    startActivity(new Intent(ProfileScreen.this,NotificationScreen.class).putExtra("Screen","ProfileScreen"));
                     finish();
                     break;
                 case R.id.dobRelativeLay:
@@ -1156,5 +1175,34 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
             });
 
     }
+
+    public void checkNotification(String notificationPath){
+
+        DatabaseReference databaseReferenceNotify = FirebaseDatabase.getInstance().getReference(notificationPath + "/Notification");
+        databaseReferenceNotify.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.getValue()!=null){
+                    System.out.println("present");
+                    notificationFlag="present";
+                    toolBarBadge.setVisibility(View.VISIBLE);
+                }
+                else {
+                    System.out.println("empty");
+                    notificationFlag="empty";
+                    toolBarBadge.setVisibility(View.INVISIBLE);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+
+        });
+
+    }
+
 
 }

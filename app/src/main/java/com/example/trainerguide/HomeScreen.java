@@ -5,10 +5,13 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
+import androidx.core.app.NotificationCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.app.Notification;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -38,6 +41,8 @@ import com.example.trainerguide.models.BmrProgress;
 import com.example.trainerguide.models.Trainee;
 import com.example.trainerguide.models.Trainer;
 import com.example.trainerguide.models.User;
+import com.google.android.material.badge.BadgeDrawable;
+import com.google.android.material.badge.BadgeUtils;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.checkbox.MaterialCheckBox;
@@ -60,6 +65,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -76,6 +82,9 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
     private NavigationView navigationView;
     private Toolbar toolbar;
     private Button toolBarNotification;
+    private String navigationScreen ="";
+    public String notificationFlag="";
+    private TextView toolBarBadge;
     private TextView sideUserName;
     private MenuItem profileMenu, logoutMenu, shareMenu, ratingMenu, traineeMenu;
     Intent intent;
@@ -107,6 +116,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
     SliderView topAdSliderView;
     //int[] adImages = {R.mipmap.ad_image,R.mipmap.create_account_image, R.mipmap.create_account_image};
     int[] adImages;
+    private TextView dashboard_post_ad;
     private AdSliderAdapter topAdSliderAdapter;
 
     //User Detail variables
@@ -118,6 +128,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
 
 
+    @SuppressLint("UnsafeExperimentalUsageError")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -133,6 +144,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         drawerLayout = findViewById(R.id.drawer_layout);
         toolBarNotification = findViewById(R.id.toolBarNotification);
         toolbar = findViewById(R.id.tool_bar);
+        toolBarBadge = findViewById(R.id.toolBarBadge);
         //sideUserName = navigationView.findViewById(R.id.sideUserName);
 
         setSupportActionBar(toolbar);
@@ -250,24 +262,19 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
         //Ad Slider Variables
         topAdSliderView = findViewById(R.id.homeScreenTopAdSlider);
-
+        dashboard_post_ad = findViewById(R.id.dashboard_post_ad);
+        dashboard_post_ad.setOnClickListener(this);
         toolBarNotification.setOnClickListener(this);
 
 
-
         sp= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-
         userType = sp.getString("ProfileType",null);
-
         dashboard_user_name.setText(sp.getString("UserName",null) + "!");
 
         isAdmin = sp.getString("isAdmin",null);
         if (userType.equals("Trainer")){
             homeScreenGoalLayout.setVisibility(View.GONE);
             findTrainerLayout.setVisibility(View.GONE);
-           /* traineeDashboard.setVisibility(View.VISIBLE);
-            foodDashboard.setVisibility(View.VISIBLE);
-            //pdf_dashboard.setVisibility(View.GONE);*/
         }
         else{
 
@@ -292,16 +299,24 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 home_screen_ad_layout.setVisibility(View.VISIBLE);
             }
             homeScreenTabLayout.getMenu().removeItem(R.id.traineesTab);
-
-            /*traineeDashboard.setVisibility(View.GONE);
-            foodDashboard.setVisibility(View.GONE);
-            //pdf_dashboard.setVisibility(View.GONE);*/
         }
 
         userId = sp.getString("userId",null);
         path = userType+ "/" + userId;
+        checkNotification(path);
 
+        if (getIntent().hasExtra("Screen")){
+            navigationScreen = getIntent().getExtras().getString("Screen", "");
+        }
 
+        if (getIntent().hasExtra("notificationFlag")){
+            notificationFlag = getIntent().getExtras().getString("notificationFlag", "");
+        }
+
+        if (notificationFlag.equals("present"))
+            toolBarBadge.setVisibility(View.VISIBLE);
+        else
+            toolBarBadge.setVisibility(View.INVISIBLE);
 
         homeScreenTabLayout.setSelectedItemId(R.id.homeTab);
         homeScreenTabLayout.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -312,21 +327,21 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                     case R.id.homeTab:
                         break;
                     case R.id.trainersTab:
-                        startActivity(new Intent(HomeScreen.this,TrainerScreen.class));
+                        startActivity(new Intent(HomeScreen.this,TrainerScreen.class).putExtra("notificationFlag", notificationFlag));
                         overridePendingTransition(0,0);
                         finish();
                         break;
                     case R.id.traineesTab:
-                        startActivity(new Intent(HomeScreen.this,TraineesScreen.class));
+                        startActivity(new Intent(HomeScreen.this,TraineesScreen.class).putExtra("notificationFlag", notificationFlag));
                         overridePendingTransition(0,0);
                         finish();
                         break;
-                    case R.id.foodListTab:startActivity(new Intent(HomeScreen.this,FoodSourceListScreen.class));
+                    case R.id.foodListTab:startActivity(new Intent(HomeScreen.this,FoodSourceListScreen.class).putExtra("notificationFlag", notificationFlag));
                         overridePendingTransition(0,0);
                         finish();
                         break;
                     case R.id.profileTab:
-                        startActivity(new Intent(HomeScreen.this,ProfileScreen.class));
+                        startActivity(new Intent(HomeScreen.this,ProfileScreen.class).putExtra("notificationFlag", notificationFlag));
                         overridePendingTransition(0,0);
                         finish();
                         break;
@@ -464,12 +479,21 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 break;
             case R.id.toolBarNotification:
                 option.startAnimation(buttonBounce);
-                startActivity(new Intent(HomeScreen.this,NotificationScreen.class));
+                startActivity(new Intent(HomeScreen.this,NotificationScreen.class).putExtra("Screen","HomeScreen"));
                 finish();
                 break;
             case R.id.postAdLayout:
                 startActivity(new Intent(HomeScreen.this,AdPostingScreen.class));
                 finish();
+                break;
+            case R.id.dashboard_post_ad:
+                System.out.println(getString(R.string.companyEmail));
+                Intent emailIntent = new Intent(Intent.ACTION_SEND);
+                emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{getString(R.string.companyEmail)});
+                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Fittify Me Ad details");
+                emailIntent.putExtra(Intent.EXTRA_TEXT, "Hello "+dashboard_user_name.getText().toString()+"\n\n" + getString(R.string.adEmail));
+                emailIntent.setType("text/plain");
+                startActivity(Intent.createChooser(emailIntent, "Choose an Email client :"));
                 break;
             default:
                 break;
@@ -479,6 +503,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
     public void PopulateUserDetails(){
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(path);
+
         //Show Progress Dialog
         //progressDialog.show();
         //Set Content
@@ -486,13 +511,27 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         //Set Transparent Background
         progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 
+
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 System.out.println("********OnDataChange*******");
                 user = snapshot.getValue(User.class);
+                String pattern = "dd-MM-yyyy";
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+                Long noOfDays = ChronoUnit.DAYS.between(Calendar.getInstance().toInstant(), user.getLastModDttm().toInstant());
 
-                //dashboard_user_name.setText(user.getName().toString() + " !");
+                if (navigationScreen.equals("")){
+                    if (noOfDays>7 || noOfDays<0){
+                        CustomDialogClass customDialogClass = new CustomDialogClass(HomeScreen.this, "Weight Alert!", "Hey! You have not updated your weight since a week. Please update it every week to track your progress", "Normal");
+                        customDialogClass.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        customDialogClass.show();
+                    }
+                }
+                else{
+                    System.out.println("navigationScreen" + navigationScreen);
+                }
+
 
                 if (user.getFoodType()!=null){
                     switch (user.getFoodType()){
@@ -510,8 +549,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                     }
                 }
 
-                String pattern = "dd-MM-yyyy";
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+
 
                 //Health Issue Recycler View Data
                 if(user.getHealthIssues()!=null) {
@@ -968,6 +1006,34 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         else {
 
         }
+
+    }
+
+    public void checkNotification(String notificationPath){
+
+        DatabaseReference databaseReferenceNotify = FirebaseDatabase.getInstance().getReference(notificationPath + "/Notification");
+        databaseReferenceNotify.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.getValue()!=null){
+                    System.out.println("present");
+                    notificationFlag="present";
+                    toolBarBadge.setVisibility(View.VISIBLE);
+                }
+                else {
+                    System.out.println("empty");
+                    notificationFlag="empty";
+                    toolBarBadge.setVisibility(View.INVISIBLE);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+
+        });
 
     }
 }

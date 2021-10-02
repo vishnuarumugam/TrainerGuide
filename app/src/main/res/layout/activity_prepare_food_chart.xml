@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".ProfileScreen"
+    tools:context=".PrepareFoodChart"
     android:background="@color/white"
     tools:openDrawer="start">
 
@@ -43,7 +43,10 @@
                         android:layout_height="wrap_content"
                         android:padding="10dp"
                         android:text="VEG"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:fontFamily="@font/poppins_medium"
+                        android:textSize="14sp"
+                        android:textColor="@color/themeColourOne"/>
 
                     <RadioButton
                         android:id="@+id/radioButtonNV"
@@ -51,7 +54,10 @@
                         android:layout_height="wrap_content"
                         android:padding="10dp"
                         android:text="NON VEG"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:fontFamily="@font/poppins_medium"
+                        android:textSize="14sp"
+                        android:textColor="@color/themeColourOne" />
 
                 </RadioGroup>
                 <!--<SearchView
@@ -77,6 +83,9 @@
                     android:background="@color/white"
                     android:elevation="20dp"
                     android:hint="Search Food Items"
+                    android:textSize="14sp"
+                    android:padding="5dp"
+                    android:fontFamily="@font/poppins_light"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/radioFoodChartGroup" />
@@ -122,6 +131,7 @@
                     app:tabTextColor="@color/themeColourTwo"
                     app:tabIndicatorColor="@color/themeColourTwo"
                     app:tabBackground="@drawable/food_chart_tab"
+                    app:tabTextAppearance="@style/FoodTimeTabStyle"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/nestedScrollViewSource">
@@ -129,7 +139,8 @@
                     <com.google.android.material.tabs.TabItem
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Break Fast"/>
+                        android:text="Break Fast"
+                        />
 
                     <com.google.android.material.tabs.TabItem
                         android:layout_width="wrap_content"
@@ -167,6 +178,9 @@
                         android:layout_height="match_parent"
                         android:layout_marginLeft="5dp"
                         android:layout_marginTop="3dp"
+                        android:textSize="14sp"
+                        android:textColor="@color/themeColourOne"
+                        android:fontFamily="@font/poppins_light"
                         android:text="Activity Level: "/>
 
                     <Spinner
@@ -183,15 +197,22 @@
                         android:layout_below="@id/activityLevelSpin"
                         android:layout_marginLeft="5dp"
                         android:layout_marginTop="5dp"
+                        android:textSize="14sp"
+                        android:textColor="@color/themeColourOne"
+                        android:fontFamily="@font/poppins_light"
                         android:text="Maintenance Calories: "/>
 
                     <TextView
                         android:id="@+id/recommendedCalories"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/themeColourOne"
+                        android:fontFamily="@font/poppins_light"
                         android:layout_alignTop="@id/recommendedCaloriesLabel"
                         android:layout_toRightOf="@+id/recommendedCaloriesLabel"
-                        android:text="450"/>
+                        android:text="--"/>
 
                     <TextView
                         android:id="@+id/totalCaloriesLabel"
@@ -199,6 +220,9 @@
                         android:layout_height="match_parent"
                         android:layout_marginLeft="5dp"
                         android:layout_marginTop="5dp"
+                        android:textSize="14sp"
+                        android:textColor="@color/themeColourOne"
+                        android:fontFamily="@font/poppins_light"
                         android:layout_below="@+id/recommendedCaloriesLabel"
                         android:text="Added Calories: "/>
 
@@ -208,8 +232,12 @@
                         android:layout_height="wrap_content"
                         android:layout_alignTop="@id/totalCaloriesLabel"
                         android:layout_marginLeft="0dp"
+                        android:textSize="14sp"
+                        android:textColor="@color/themeColourOne"
+                        android:fontFamily="@font/poppins_light"
+                        android:textStyle="bold"
                         android:layout_toRightOf="@+id/totalCaloriesLabel"
-                        android:text="450" />
+                        android:text="--" />
 
 
                     <ImageButton
