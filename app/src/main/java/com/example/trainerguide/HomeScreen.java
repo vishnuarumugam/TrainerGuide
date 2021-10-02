@@ -48,6 +48,8 @@ import com.example.trainerguide.models.BmrProgress;
 import com.example.trainerguide.models.Trainee;
 import com.example.trainerguide.models.Trainer;
 import com.example.trainerguide.models.User;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.badge.BadgeUtils;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -325,8 +327,6 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         path = userType+ "/" + userId;
         checkNotification(path);
 
-        FirebaseMessaging.getInstance().subscribeToTopic(userId.toString());
-
 
         if (getIntent().hasExtra("Screen")){
             navigationScreen = getIntent().getExtras().getString("Screen", "");
@@ -506,9 +506,9 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 finish();
                 break;
             case R.id.postAdLayout:
-                sendNotification();
-                /*startActivity(new Intent(HomeScreen.this,AdPostingScreen.class));
-                finish();*/
+                //sendNotification();
+                startActivity(new Intent(HomeScreen.this,AdPostingScreen.class));
+                finish();
                 break;
             case R.id.dashboard_post_ad:
                 Intent emailIntent = new Intent(Intent.ACTION_SEND);
@@ -540,6 +540,8 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 System.out.println("********OnDataChange*******");
                 user = snapshot.getValue(User.class);
+                FirebaseMessaging.getInstance().subscribeToTopic(user.getName());
+
                 String pattern = "dd-MM-yyyy";
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
                 Long noOfDays = ChronoUnit.DAYS.between(Calendar.getInstance().toInstant(), user.getLastModDttm().toInstant());
@@ -1063,9 +1065,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
     public void sendNotification(){
         JSONObject messageObject = new JSONObject();
         try {
-
-            System.out.println(userId + "userId" + "SM9pomAjfoX7k5XC65z9JrrSaFo2");
-            messageObject.put("to","/topics/"+"SM9pomAjfoX7k5XC65z9JrrSaFo2");
+            messageObject.put("to","/topics/"+"Vishnukumar");
             JSONObject notificationObject = new JSONObject();
             notificationObject.put("title","Notify");
             notificationObject.put("body","new request");
@@ -1076,13 +1076,13 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
-
+                            System.out.println("response" + response);
                         }
 
                     }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-
+                    System.out.println("error" + error);
                 }
             }){
                 @Override

@@ -23,6 +23,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.trainerguide.models.Notification;
 import com.example.trainerguide.models.Trainee;
 import com.example.trainerguide.models.Trainer;
@@ -35,6 +42,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -42,6 +52,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public class NotificationScreen extends AppCompatActivity implements NotificationAdapter.OnAddClickListener,
@@ -76,12 +87,17 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
     SwipeRefreshLayout notificationRefresh;
     private String navigationScreen ="";
 
+    private RequestQueue requestQueue;
+    private String notificationURl = "https://fcm.googleapis.com/fcm/send";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification_screen);
+
+        //notification
+        requestQueue = Volley.newRequestQueue(this);
 
         //User Info variables
         userId = getIntent().getStringExtra("UserId");
@@ -872,6 +888,45 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
                 break;
         }
 
+    }
+
+    public void sendNotification(String userName, String title, String body){
+        JSONObject messageObject = new JSONObject();
+        try {
+            messageObject.put("to","/topics/"+ userName);
+            JSONObject notificationObject = new JSONObject();
+            notificationObject.put("title",title);
+            notificationObject.put("body",body);
+            messageObject.put("notification",notificationObject);
+
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, notificationURl,
+                    messageObject,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            System.out.println("response" + response);
+                        }
+
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    System.out.println("error" + error);
+                }
+            }){
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String,String> header = new HashMap<>();
+                    header.put("content-type", "application/json");
+                    header.put("authorization", "key=AAAAQPsfOgo:APA91bG8Xy-sfM3ua8fd5CycH0ucemi7AgOUQ4-b-EwzpQutlXanKM_pHWpybDqIutacxItiuplb-MYRK28MwaRqzVyfhLLER7TYMKjHYfF_KYd4s1n2wWcRSIRSqB1VfzjQDn5f86Xj");
+                    return header;
+                }
+            };
+
+            requestQueue.add(request);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
 
