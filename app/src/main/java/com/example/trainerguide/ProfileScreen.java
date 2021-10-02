@@ -38,6 +38,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.trainerguide.models.BmrProgress;
 import com.example.trainerguide.models.Notification;
 import com.example.trainerguide.models.Trainee;
@@ -65,6 +72,9 @@ import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.ParseException;
@@ -74,6 +84,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import static java.lang.Math.round;
@@ -100,6 +111,9 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
 
     //Trainer Data
     private static Trainer trainer = new Trainer();
+
+    private RequestQueue requestQueue;
+    private String notificationURl = "https://fcm.googleapis.com/fcm/send";
 
 
     //ProfileScreen Variables
@@ -141,6 +155,9 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_screen);
+
+        //notification
+        requestQueue = Volley.newRequestQueue(this);
 
         // loading Animation from
         buttonBounce= AnimationUtils.loadAnimation(this, R.anim.button_bounce);
@@ -281,7 +298,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                                 DatabaseReference trainerDatabaseReference = FirebaseDatabase.getInstance().getReference("Trainer/"+trainee.getTrainerId()+"/Notification/"+notify.getNotificationId());
 
                                 trainerDatabaseReference.setValue(notify);
-
+                                sendNotification(profileSubscriptionTrainer.getText().toString(),"Extend subscription request notification",trainee.getName() + " requested for extending subscription for 30 Days");
                                 Toast.makeText(ProfileScreen.this, "Extend Request sent to Trainer", Toast.LENGTH_SHORT).show();
 
                                 //startActivity(new Intent(ProfileScreen.this,ProfileScreen.class));
@@ -342,6 +359,7 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                                 DatabaseReference trainerDatabaseReference = FirebaseDatabase.getInstance().getReference("Trainer/"+trainee.getTrainerId()+"/Notification/"+notify.getNotificationId());
 
                                 trainerDatabaseReference.setValue(notify);
+                                sendNotification(profileSubscriptionTrainer.getText().toString(),"Remove subscription request notification",trainee.getName() + " requested for ending the subscription");
 
                                 Toast.makeText(ProfileScreen.this, "Remove request sent to Trainer", Toast.LENGTH_SHORT).show();
 
@@ -1202,6 +1220,44 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
 
         });
 
+    }
+    public void sendNotification(String userName, String title, String body){
+        JSONObject messageObject = new JSONObject();
+        try {
+            messageObject.put("to","/topics/"+ userName);
+            JSONObject notificationObject = new JSONObject();
+            notificationObject.put("title",title);
+            notificationObject.put("body",body);
+            messageObject.put("notification",notificationObject);
+
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, notificationURl,
+                    messageObject,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            System.out.println("response" + response);
+                        }
+
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    System.out.println("error" + error);
+                }
+            }){
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String,String> header = new HashMap<>();
+                    header.put("content-type", "application/json");
+                    header.put("authorization", "key=AAAAQPsfOgo:APA91bG8Xy-sfM3ua8fd5CycH0ucemi7AgOUQ4-b-EwzpQutlXanKM_pHWpybDqIutacxItiuplb-MYRK28MwaRqzVyfhLLER7TYMKjHYfF_KYd4s1n2wWcRSIRSqB1VfzjQDn5f86Xj");
+                    return header;
+                }
+            };
+
+            requestQueue.add(request);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
 

@@ -31,6 +31,13 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.trainerguide.models.Notification;
 import com.example.trainerguide.models.Trainee;
 import com.example.trainerguide.models.Trainer;
@@ -45,6 +52,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.DecimalFormat;
 import java.util.Calendar;
@@ -79,10 +89,17 @@ public class TrainerProfileView extends AppCompatActivity {
 
     static int PERMISSION_CODE=100;
 
+    private RequestQueue requestQueue;
+    private String notificationURl = "https://fcm.googleapis.com/fcm/send";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trainer_profile_view);
+
+        //notification
+        requestQueue = Volley.newRequestQueue(this);
 
         traineruserId = getIntent().getStringExtra("userId");
         navScreen = getIntent().getStringExtra("Screen");
@@ -233,7 +250,7 @@ public class TrainerProfileView extends AppCompatActivity {
                                 notify.setUserId(trainee.getUserId());
 
                                 databaseReferenceTrainer.child(notify.getNotificationId()).setValue(notify);
-
+                                sendNotification(trainer.getName(), "New subscription request notification",trainee.getName() + " requested for joining as your trainee" );
                                 Toast.makeText(TrainerProfileView.this, "Request sent to Trainer", Toast.LENGTH_SHORT).show();
                                 requestbtn.setEnabled(false);
                                 requestbtn.setBackgroundColor(getResources().getColor(R.color.themeColourFour));
@@ -465,6 +482,45 @@ public class TrainerProfileView extends AppCompatActivity {
     public void onBackPressed()
     {
             OnBackPressed();
+    }
+
+    public void sendNotification(String userName, String title, String body){
+        JSONObject messageObject = new JSONObject();
+        try {
+            messageObject.put("to","/topics/"+ userName);
+            JSONObject notificationObject = new JSONObject();
+            notificationObject.put("title",title);
+            notificationObject.put("body",body);
+            messageObject.put("notification",notificationObject);
+
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, notificationURl,
+                    messageObject,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            System.out.println("response" + response);
+                        }
+
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    System.out.println("error" + error);
+                }
+            }){
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String,String> header = new HashMap<>();
+                    header.put("content-type", "application/json");
+                    header.put("authorization", "key=AAAAQPsfOgo:APA91bG8Xy-sfM3ua8fd5CycH0ucemi7AgOUQ4-b-EwzpQutlXanKM_pHWpybDqIutacxItiuplb-MYRK28MwaRqzVyfhLLER7TYMKjHYfF_KYd4s1n2wWcRSIRSqB1VfzjQDn5f86Xj");
+                    return header;
+                }
+            };
+
+            requestQueue.add(request);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
 }

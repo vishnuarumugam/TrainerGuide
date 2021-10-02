@@ -114,7 +114,7 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
         }
 
         //Navigation view variables
-       // drawerLayout = findViewById(R.id.prepare_food_drawer_layout);
+        // drawerLayout = findViewById(R.id.prepare_food_drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.back_tool_bar);
 
@@ -229,7 +229,7 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
                 for (DataSnapshot dataSnapshot:snapshot.getChildren()) {
                     Notification notification = dataSnapshot.getValue(Notification.class);
                     if(notification.getUserId()!=null){
-                    notificationsList.add(notification);}
+                        notificationsList.add(notification);}
                     System.out.println(notification);
                 }
                 sortNotification();
@@ -269,7 +269,7 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
         if (trainer.getUserId()!=null && trainer.getUserId().length()>1 ){
             if(trainer.isTrainer())
             {
-                 intent = new Intent(NotificationScreen.this,TrainerProfileView.class);
+                intent = new Intent(NotificationScreen.this,TrainerProfileView.class);
                 intent.putExtra("userId",trainer.getUserId());
                 /*intent.putExtra("IsTrainer", true);
                 intent.putExtra("ReadOnly", true);*/
@@ -282,7 +282,7 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
                 /*intent.putExtra("IsTrainer", false);
                 intent.putExtra("ReadOnly", true);*/
                 intent.putExtra("Screen", "NotificationScreen");
-          }
+            }
 
             startActivity(intent);
             finish();
@@ -357,6 +357,7 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
                             databaseReferenceUser.child("trainerId").removeValue();
                             databaseReferenceUser.child("subscriptionEndDate").removeValue();
                             databaseReferenceUser.child("/Notification/" +notifyTrainee.getNotificationId()).setValue(notifyTrainee);
+                            sendNotification(trainer[0].getName(),"Notification", trainee[0].getName()  + " removed as Trainee.");
                         }
 
 
@@ -438,6 +439,7 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
                             databaseReferenceTrainer.child("/usersList/" + trainee.getUserId()).setValue(traineeMetadata);
                             databaseReferenceUser.updateChildren(trainerId);
                             databaseReferenceUser.child("/Notification/" +notifyTrainee.getNotificationId()).setValue(notifyTrainee);
+                            sendNotification(traineeMetadata.getName(), "Notfication", "Your request has been accepted. Please check your Profile.");
                         }
                     }
                     else if (notification.getNotificationType().equals("Extend")){
@@ -465,7 +467,7 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
 
                             Notification notifyTrainee = new Notification();
                             notifyTrainee.setNotificationId(UUID.randomUUID().toString());
-                            notifyTrainee.setNotification(" Your subscription has been extended for 30 Days");
+                            notifyTrainee.setNotification("Your subscription has been extended for 30 Days");
                             notifyTrainee.setAddedDate(Calendar.getInstance().getTime());
                             notifyTrainee.setNotificationHeader("Notification");
                             notifyTrainee.setNotificationType("");
@@ -476,6 +478,7 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
                             databaseReferenceTrainer.child("/usersList/" + trainee.getUserId()).updateChildren(hash);
                             databaseReferenceUser.child("/Notification/" +notifyTrainee.getNotificationId()).setValue(notifyTrainee);
                             databaseReferenceUser.updateChildren(hash);
+                            sendNotification(trainee.getUserId(), "Notification", "Your subscription has been extended for 30 Days");
 
                         }
                         else {
@@ -536,6 +539,7 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
                             databaseReferenceUser.child("trainerId").removeValue();
                             databaseReferenceUser.child("subscriptionEndDate").removeValue();
                             databaseReferenceUser.child("/Notification/" +notifyTrainee.getNotificationId()).setValue(notifyTrainee);
+                            sendNotification(trainee.getName(), "Notification", "Your remove request has been accepted by Trainer.");
                         }
                         else{
                             CustomDialogClass customDialogClass = new CustomDialogClass(NotificationScreen.this, "Attention", "Requested user has been already removed from your subscription", "Normal");
@@ -547,9 +551,9 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
                     }
                     else {
 
-                            CustomDialogClass customDialogClass = new CustomDialogClass(NotificationScreen.this, "Attention", "Requested user has been already assigned to a trainer", "Normal");
-                            customDialogClass.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                            customDialogClass.show();
+                        CustomDialogClass customDialogClass = new CustomDialogClass(NotificationScreen.this, "Attention", "Requested user has been already assigned to a trainer", "Normal");
+                        customDialogClass.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        customDialogClass.show();
 
 
                     }
