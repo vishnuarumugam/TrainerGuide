@@ -25,6 +25,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -52,7 +53,7 @@ import java.util.stream.Collectors;
 public class TraineeProfileview extends AppCompatActivity{
 
     private TextView name, goal, bmi, weight, height, mobile, email, foodType, otherHealthIssue, otherFoodAllergy;
-    private TextView makeCall, makeEmail;
+    private ImageButton makeCall, makeEmail;
     private ImageView profileimg;
     private Button createFoodChart;
     private String traineeuserId, path, navScreen;

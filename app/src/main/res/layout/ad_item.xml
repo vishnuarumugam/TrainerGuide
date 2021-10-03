@@ -30,6 +30,17 @@
                 android:layout_centerVertical="true"
                 android:elevation="5dp">
 
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/ad_image_shimmer"
+                    app:shimmer_duration="800">
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/adShadowTwo"/>
+                </com.facebook.shimmer.ShimmerFrameLayout>
+
                 <ImageView
                     android:id="@+id/adImage"
                     android:layout_width="match_parent"

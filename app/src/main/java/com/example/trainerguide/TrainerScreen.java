@@ -38,6 +38,7 @@ import com.example.trainerguide.models.Trainee;
 import com.example.trainerguide.models.Trainer;
 import com.example.trainerguide.models.User;
 import com.example.trainerguide.models.UserMetaData;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -84,8 +85,6 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
     private SharedPreferences sp;
 
 
-
-
     //Recycler view variables
     private RecyclerView trainerRecycler;
     private List<Trainer> trainersList = new ArrayList<>();
@@ -110,7 +109,6 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
         setContentView(R.layout.activity_trainer_screen);
         // loading Animation from
         buttonBounce= AnimationUtils.loadAnimation(this, R.anim.button_bounce);
-
 
         //Navigation view variables
         drawerLayout = findViewById(R.id.trainer_drawer_layout);

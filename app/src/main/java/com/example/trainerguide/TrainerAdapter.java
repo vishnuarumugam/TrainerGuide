@@ -58,10 +58,12 @@ public class TrainerAdapter extends  RecyclerView.Adapter<TrainerAdapter.ViewHol
         holder.ratingBar.setRating((float)trainers.get(position).getRating());
         holder.ratingUserCount.setText("(" + String.valueOf((int) trainers.get(position).getRatedTraineescount()) + ")");
 
+        holder.trainerImageShimmer.stopShimmer();
         Picasso.get().load(trainers.get(position).getImage())
                 .fit()
                 .centerCrop()
                 .into(holder.profileImage);
+
         holder.trainerProfileClick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,7 +72,6 @@ public class TrainerAdapter extends  RecyclerView.Adapter<TrainerAdapter.ViewHol
                 addlistener.onAddclick(position);
             }
         });
-        //holder.trainerImageShimmer.stopShimmer();
         //holder.trainerImageShimmer.setVisibility(View.GONE);
     }
 

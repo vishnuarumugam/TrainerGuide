@@ -131,6 +131,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
     int[] adImages;
     private TextView dashboard_post_ad;
     private AdSliderAdapter topAdSliderAdapter;
+    private boolean showDialogClicked = false;
 
     //User Detail variables
     private String userId, path, userType, isAdmin;
@@ -288,7 +289,6 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         dashboard_post_ad.setOnClickListener(this);
         toolBarNotification.setOnClickListener(this);
 
-
         sp= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         userType = sp.getString("ProfileType",null);
         dashboard_user_name.setText(sp.getString("UserName",null) + "!");
@@ -434,38 +434,102 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         switch (option.getId()) {
 
             case R.id.weightLossSubscription:
-                editor.putString("UserGoal", "Weight Loss");
-                trainee.setSubscriptionType("Weight Loss");
-                updateProfile("subscriptionType", "Weight Loss");
+                if(user != null) {
+                    editor.putString("UserGoal", "Weight Loss");
+                    trainee.setSubscriptionType("Weight Loss");
+                    updateProfile("subscriptionType", "Weight Loss");
+                }
+                else
+                {
+                    weightLossSubscription.setEnabled(false);
+                    weightGainSubscription.setEnabled(false);
+                    weightMaintainSubscription.setEnabled(false);
+                    showDialogClicked = true;
+                    Toast.makeText(HomeScreen.this, "Please wait !", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.weightGainSubscription:
+                if(user != null) {
                 editor.putString("UserGoal", "Weight Gain");
                 trainee.setSubscriptionType("Weight Gain");
                 updateProfile("subscriptionType", "Weight Gain");
+                }
+                else
+                {
+                    weightLossSubscription.setEnabled(false);
+                    weightGainSubscription.setEnabled(false);
+                    weightMaintainSubscription.setEnabled(false);
+                    showDialogClicked = true;
+                    Toast.makeText(HomeScreen.this, "Please wait !", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.weightMaintainSubscription:
+                if(user != null) {
                 editor.putString("UserGoal", "Stay Fit");
                 trainee.setSubscriptionType("Stay Fit");
                 updateProfile("subscriptionType", "Stay Fit");
+                }
+                else
+                {
+                    weightLossSubscription.setEnabled(false);
+                    weightGainSubscription.setEnabled(false);
+                    weightMaintainSubscription.setEnabled(false);
+                    showDialogClicked = true;
+                    Toast.makeText(HomeScreen.this, "Please wait !", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.weightLayout:
-                ShowDialog("Weight");
+                if(user != null) {
+                    ShowDialog("Weight");
+                }
+                else
+                {
+                    Toast.makeText(HomeScreen.this, "Please wait !", Toast.LENGTH_SHORT).show();
+                    showDialogClicked = true;
+                }
                 break;
             case R.id.heightLayout:
-                ShowDialog("Height");
+                if(user != null) {
+                ShowDialog("Height");}
+                else
+                {
+                    Toast.makeText(HomeScreen.this, "Please wait !", Toast.LENGTH_SHORT).show();
+                    showDialogClicked = true;
+                }
                 break;
             case R.id.progressLayout:
                 startActivity(new Intent(HomeScreen.this,UserReport.class));
                 finish();
                 break;
             case R.id.dietTypeLayout:
+                if(user != null) {
                 ShowDialog("FoodType");
+                }
+                else
+                {
+                    Toast.makeText(HomeScreen.this, "Please wait !", Toast.LENGTH_SHORT).show();
+                    showDialogClicked = true;
+                }
                 break;
             case R.id.allergicLayout:
+                if(user != null) {
                 ShowDialog("FoodAllergy");
+                }
+                else
+                {
+                    Toast.makeText(HomeScreen.this, "Please wait !", Toast.LENGTH_SHORT).show();
+                    showDialogClicked = true;
+                }
                 break;
             case R.id.healthIssueLayout:
+                if(user != null) {
                 ShowDialog("HealthIssues");
+                }
+                else
+                {
+                    Toast.makeText(HomeScreen.this, "Please wait !", Toast.LENGTH_SHORT).show();
+                    showDialogClicked = true;
+                }
                 break;
             case R.id.profileWeightDialogUpdate:
                 option.startAnimation(buttonBounce);
@@ -541,7 +605,13 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 System.out.println("********OnDataChange*******");
                 user = snapshot.getValue(User.class);
                 FirebaseMessaging.getInstance().subscribeToTopic(user.getName());
-
+                if(showDialogClicked == true) {
+                    showDialogClicked = false;
+                    weightLossSubscription.setEnabled(true);
+                    weightGainSubscription.setEnabled(true);
+                    weightMaintainSubscription.setEnabled(true);
+                    Toast.makeText(HomeScreen.this, "Please try now !", Toast.LENGTH_SHORT).show();
+                }
                 String pattern = "dd-MM-yyyy";
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
                 Long noOfDays = ChronoUnit.DAYS.between(Calendar.getInstance().toInstant(), user.getLastModDttm().toInstant());

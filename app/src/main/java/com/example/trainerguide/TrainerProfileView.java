@@ -66,7 +66,7 @@ import java.util.UUID;
 public class TrainerProfileView extends AppCompatActivity {
 
     private TextView name, experience, ratingUserCount, description, email, mobile, yourTrainer, traineesCount, trainerRatings, ratingSubmit, fees;
-    private TextView makeCall, makeEmail;
+    private ImageButton makeCall, makeEmail;
     private RatingBar ratingBar;
     private ImageView profileimg;
     private Button requestbtn;

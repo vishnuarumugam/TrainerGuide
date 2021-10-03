@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.trainerguide.models.Ad;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
@@ -52,6 +53,8 @@ public class AdAdapter extends RecyclerView.Adapter<AdAdapter.ViewHolder> {
                 .fit()
                 .centerCrop()
                 .into(holder.adImage);
+
+        holder.adImageShimmer.stopShimmer();
     }
 
     @Override
@@ -63,6 +66,7 @@ public class AdAdapter extends RecyclerView.Adapter<AdAdapter.ViewHolder> {
 
         TextView adEmail, adExpiry, adAmount;
         ImageView adImage;
+        ShimmerFrameLayout adImageShimmer;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -70,7 +74,8 @@ public class AdAdapter extends RecyclerView.Adapter<AdAdapter.ViewHolder> {
             adExpiry = itemView.findViewById(R.id.adExpiry);
             adAmount = itemView.findViewById(R.id.adAmount);
             adImage = itemView.findViewById(R.id.adImage);
-
+            adImageShimmer = itemView.findViewById(R.id.ad_image_shimmer);
+            adImageShimmer.startShimmer();
         }
     }
 }
