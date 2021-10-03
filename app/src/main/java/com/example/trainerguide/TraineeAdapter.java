@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.trainerguide.models.User;
 import com.example.trainerguide.models.UserMetaData;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.card.MaterialCardView;
 import com.squareup.picasso.Picasso;
 
@@ -75,7 +76,8 @@ public class TraineeAdapter extends RecyclerView.Adapter<TraineeAdapter.ViewHold
                 .fit()
                 .centerCrop()
                 .into(holder.profilePic);
-        holder.traineePicLoad.setVisibility(View.GONE);
+
+
         holder.traineeProfileClick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,8 +122,8 @@ public class TraineeAdapter extends RecyclerView.Adapter<TraineeAdapter.ViewHold
             holder.traineeSubscriptionStatus.setTextColor(subscriptionStatusColours[1]);
         }
 
-
-
+        holder.traineeImageShimmer.stopShimmer();
+        //holder.traineeImageShimmer.setVisibility(View.GONE);
         /*holder.traineeSubscriptionStatus.setBackgroundColor();
         holder.traineeSubscriptionStatus.setText();
 */
@@ -140,7 +142,7 @@ public class TraineeAdapter extends RecyclerView.Adapter<TraineeAdapter.ViewHold
         RelativeLayout traineeItem;
         CardView traineeItemThemeLine;
         ImageButton deleteTrainee;
-        ProgressBar traineePicLoad;
+        ShimmerFrameLayout traineeImageShimmer;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -154,7 +156,9 @@ public class TraineeAdapter extends RecyclerView.Adapter<TraineeAdapter.ViewHold
             traineeReportView = itemView.findViewById(R.id.traineeReportView);
             deleteTrainee = itemView.findViewById(R.id.deleteTrainee);
             traineeSubscriptionStatus = itemView.findViewById(R.id.traineeSubscriptionStatus);
-            traineePicLoad = itemView.findViewById(R.id.traineePicLoad);
+            traineeImageShimmer = itemView.findViewById(R.id.trainee_image_shimmer);
+
+            traineeImageShimmer.startShimmer();
 
         }
 

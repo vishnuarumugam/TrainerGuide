@@ -377,7 +377,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         });
 
         populateAds();
-        topAdSliderAdapter = new AdSliderAdapter(adList);
+        topAdSliderAdapter = new AdSliderAdapter(HomeScreen.this,adList);
         topAdSliderAdapter.setOnClickAdListener(HomeScreen.this);
 
         PopulateUserDetails();

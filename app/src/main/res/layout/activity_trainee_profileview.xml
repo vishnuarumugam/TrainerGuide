@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/trainee_view_drawer_layout"
-    tools:context=".TrainerScreen">
+    tools:context=".TraineeProfileview">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -36,7 +36,7 @@
 
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
-                        android:layout_height="250dp"
+                        android:layout_height="280dp"
                         android:id="@+id/traineeCardView"
                         android:layout_marginHorizontal="15dp"
                         android:elevation="10dp"
@@ -57,7 +57,7 @@
                                 android:text="-"
                                 android:fontFamily="@font/poppins_medium"
                                 android:textColor="@color/themeColourOne"
-                                android:textSize="18sp"
+                                android:textSize="16sp"
                                 />
 
                             <LinearLayout
@@ -80,17 +80,19 @@
                                         android:layout_alignParentStart="true"
                                         android:layout_marginStart="10dp"
                                         android:padding="5dp">
+
                                         <TextView
+                                            android:id="@+id/trainerWeightLabel"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:layout_margin="5dp"
-                                            android:id="@+id/trainerWeightLabel"
-                                            android:fontFamily="@font/poppins_medium"
-                                            android:textColor="@color/themeColourOne"
                                             android:layout_centerHorizontal="true"
+                                            android:layout_margin="5dp"
+                                            android:fontFamily="@font/poppins_medium"
+                                            android:text="Weight"
                                             android:textAlignment="center"
-                                            android:textSize="16sp"
-                                            android:text="Weight"/>
+                                            android:textColor="@color/themeColourOne"
+                                            android:textSize="14sp"
+                                            android:textStyle="normal"/>
                                         <TextView
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
@@ -100,7 +102,7 @@
                                             android:textColor="@color/themeColourOne"
                                             android:textAlignment="center"
                                             android:layout_centerHorizontal="true"
-                                            android:textSize="16sp"
+                                            android:textSize="14sp"
                                             android:text="-"/>
                                     </RelativeLayout>
 
@@ -128,7 +130,8 @@
                                             android:textAlignment="center"
                                             android:layout_centerHorizontal="true"
                                             android:textColor="@color/themeColourOne"
-                                            android:textSize="16sp"
+                                            android:textSize="14sp"
+                                            android:textStyle="normal"
                                             android:text="Height"/>
                                         <TextView
                                             android:layout_width="wrap_content"
@@ -139,7 +142,7 @@
                                             android:layout_centerHorizontal="true"
                                             android:textAlignment="center"
                                             android:textColor="@color/themeColourOne"
-                                            android:textSize="16sp"
+                                            android:textSize="14sp"
                                             android:text="-"/>
                                     </RelativeLayout>
                                 </RelativeLayout>
@@ -165,7 +168,8 @@
                                             android:textAlignment="center"
                                             android:layout_centerHorizontal="true"
                                             android:textColor="@color/themeColourOne"
-                                            android:textSize="16sp"
+                                            android:textSize="14sp"
+                                            android:textStyle="normal"
                                             android:text="Bmi"/>
                                         <TextView
                                             android:layout_width="wrap_content"
@@ -175,7 +179,7 @@
                                             android:id="@+id/txtTraineeBmi"
                                             android:fontFamily="@font/poppins_light"
                                             android:textColor="@color/themeColourOne"
-                                            android:textSize="16sp"
+                                            android:textSize="14sp"
                                             android:textAlignment="center"
                                             android:text="-"/>
                                     </RelativeLayout>
@@ -198,15 +202,32 @@
                         app:cardCornerRadius="75dp"
                         app:cardElevation="20dp">
 
+
+
                         <RelativeLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content">
+
+                            <com.facebook.shimmer.ShimmerFrameLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:id="@+id/trainee_image_shimmer"
+                                app:shimmer_duration="800">
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/adShadowTwo"
+                                    android:id="@+id/trainee_image_shimmer_view"/>
+
+
+                            </com.facebook.shimmer.ShimmerFrameLayout>
 
                             <ImageView
                                 android:id="@+id/traineeImage"
                                 android:layout_width="match_parent"
                                 android:layout_height="200dp"
-                                android:layout_marginTop="-50dp"/>
+                                />
                         </RelativeLayout>
                     </androidx.cardview.widget.CardView>
 
@@ -236,6 +257,7 @@
                                     android:layout_width="100dp"
                                     android:layout_height="wrap_content"
                                     android:layout_centerVertical="true"
+                                    android:textSize="14sp"
                                     android:fontFamily="@font/poppins_medium"
                                     android:layout_marginStart="15dp"
                                     android:layout_marginTop="15dp"
@@ -247,6 +269,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_centerVertical="true"
                                     android:fontFamily="@font/poppins_medium"
+                                    android:textSize="14sp"
                                     android:layout_marginStart="15dp"
                                     android:layout_marginTop="15dp"
                                     android:layout_toRightOf="@+id/txtGoalsLabel"
@@ -273,6 +296,7 @@
                                     android:layout_centerVertical="true"
                                     android:fontFamily="@font/poppins_medium"
                                     android:layout_marginStart="15dp"
+                                    android:textSize="14sp"
                                     android:layout_marginTop="15dp"
                                     android:text="FoodType :" />
 
@@ -284,6 +308,7 @@
                                     android:fontFamily="@font/poppins_medium"
                                     android:layout_marginStart="15dp"
                                     android:layout_marginTop="15dp"
+                                    android:textSize="14sp"
                                     android:layout_toRightOf="@+id/txtFoodTypeLabelTrainee"
                                     android:text="" />
 
@@ -446,7 +471,7 @@
                                         android:background="@drawable/round_shape"
                                         android:textColorHint="@color/themeColourTwo"
                                         android:textColor="@color/themeColourOne"
-                                        android:fontFamily="@font/poppins_light">
+                                        >
 
                                     </TextView>
                                     <TextView
@@ -459,7 +484,7 @@
                                         android:background="@drawable/round_shape"
                                         android:textColorHint="@color/themeColourTwo"
                                         android:textColor="@color/themeColourOne"
-                                        android:fontFamily="@font/poppins_light">
+                                        >
 
                                     </TextView>
                                 </RelativeLayout>
@@ -710,6 +735,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
+                            android:fontFamily="@font/poppins_medium"
+                            android:textSize="14sp"
                             android:backgroundTint="@color/themeColourTwo"
                             android:layout_marginTop="10dp"
                             android:text="Create Food Chart" />

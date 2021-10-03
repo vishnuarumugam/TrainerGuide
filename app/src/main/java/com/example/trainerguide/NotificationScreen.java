@@ -15,6 +15,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.MenuItem;
@@ -472,7 +473,7 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
                             notifyTrainee.setNotificationHeader("Notification");
                             notifyTrainee.setNotificationType("");
                             notifyTrainee.setTrainer(false);
-                            notifyTrainee.setUserId(trainee.getUserId());
+                            //notifyTrainee.setUserId(trainee.getUserId());
 
                             databaseReferenceTrainer.child("/Notification/" +notify.getNotificationId()).setValue(notify);
                             databaseReferenceTrainer.child("/usersList/" + trainee.getUserId()).updateChildren(hash);
@@ -518,7 +519,7 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
                             notifyTrainee.setNotificationType("");
                             notifyTrainee.setNotificationHeader("Notification");
                             notifyTrainee.setTrainer(false);
-                            notifyTrainee.setUserId(trainee.getUserId());
+                            //notifyTrainee.setUserId(trainee.getUserId());
 
                             databaseReferenceTrainer.child("/Notification/" +notify.getNotificationId()).setValue(notify);
                             databaseReferenceTrainer.child("/usersList/").orderByKey().equalTo(notification.getUserId()).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -901,6 +902,7 @@ public class NotificationScreen extends AppCompatActivity implements Notificatio
             JSONObject notificationObject = new JSONObject();
             notificationObject.put("title",title);
             notificationObject.put("body",body);
+            notificationObject.put("icon",R.drawable.app_logo);
             messageObject.put("notification",notificationObject);
 
             JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, notificationURl,

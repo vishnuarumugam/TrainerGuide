@@ -167,8 +167,8 @@
                         android:progressTint="@color/themeColourTwo"
                         />
                     <TextView
-                        android:layout_width="60dp"
-                        android:layout_height="30dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:gravity="center"
                         android:id="@+id/findTrainer"
                         android:padding="5dp"
@@ -176,6 +176,7 @@
                         android:layout_alignParentRight="true"
                         android:text="Search"
                         android:textColor="@color/white"
+                        android:textSize="14sp"
                         android:fontFamily="@font/poppins_medium"
                         android:layout_marginHorizontal="15dp"
                         android:layout_marginBottom="5dp"

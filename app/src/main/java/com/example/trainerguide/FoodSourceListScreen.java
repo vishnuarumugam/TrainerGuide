@@ -115,13 +115,14 @@ public class FoodSourceListScreen extends AppCompatActivity implements View.OnCl
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        List<Food> foodAdd = new ArrayList<>();
+        /*List<Food> foodAdd = new ArrayList<>();
 
-         foodAdd.add(new Food("Capsicum - tiny chopped", "NA", 0.0, "Vegetarian", "cup", 0.5));
+         //foodAdd.add(new Food("Capsicum - tiny chopped", "NA", 0.0, "Vegetarian", "cup", 0.5));
 
         for (Food food : foodAdd){
+            System.out.println("databaseReference.child(\"Food\").child(\"Common\").child(food.getFoodType()).child(food.getName()).setValue(food);");
             databaseReference.child("Food").child("Common").child(food.getFoodType()).child(food.getName()).setValue(food);
-        }
+        }*/
 
 
         //Food- Recycler view variables

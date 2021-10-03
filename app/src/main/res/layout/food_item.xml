@@ -21,7 +21,7 @@
                 android:layout_width="2dp"
                 android:layout_height="70dp"
                 app:cardCornerRadius="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_centerVertical="true"
                 android:id="@+id/foodItemThemeLine"
                 app:cardBackgroundColor="@color/themeColourOne"
                 android:layout_marginLeft="20dp"
@@ -29,38 +29,41 @@
 
             <TextView
                 android:id="@+id/foodItemNameLabel"
-                android:layout_width="70dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="10dp"
                 android:text="Name:"
                 android:layout_alignTop="@id/foodItemThemeLine"
                 android:layout_toRightOf="@id/foodItemThemeLine"
-                android:textStyle="normal"
-                style="@style/TextAppearance.AppCompat.Body1"
-                android:textColor="@color/black"/>
+                android:textColor="@color/themeColourOne"
+                android:fontFamily="@font/poppins_medium"
+                android:textSize="14sp"/>
             <TextView
                 android:id="@+id/foodItemName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="30dp"
                 android:layout_alignTop="@id/foodItemNameLabel"
                 android:layout_toRightOf="@id/foodItemNameLabel"
                 android:text=""
                 android:textColor="@color/themeColourOne"
-                style="@style/TextAppearance.AppCompat.Body1"
+                android:fontFamily="@font/poppins_medium"
+                android:textSize="14sp"
                 android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/foodItemNtLabel"
-                android:layout_width="70dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/foodItemNameLabel"
-                android:layout_margin="5dp"
-                android:textStyle="normal"
-                style="@style/TextAppearance.AppCompat.Body1"
+                android:layout_alignStart="@id/foodItemNameLabel"
+                android:layout_marginVertical="5dp"
+                android:textColor="@color/themeColourOne"
+                android:fontFamily="@font/poppins_medium"
+                android:textSize="14sp"
                 android:text="Nutrition:"
                 android:layout_toRightOf="@id/foodItemThemeLine"
-                android:textColor="@color/black"/>
+                />
 
             <TextView
                 android:id="@+id/foodItemNt"
@@ -69,22 +72,25 @@
                 android:layout_below="@id/foodItemName"
                 android:layout_alignTop="@id/foodItemNtLabel"
                 android:layout_toRightOf="@id/foodItemNtLabel"
+                android:layout_alignStart="@id/foodItemName"
                 android:text=""
-                style="@style/TextAppearance.AppCompat.Body1"
-                android:textColor="@color/black"
-                android:textStyle="normal"/>
+                android:textColor="@color/themeColourOne"
+                android:fontFamily="@font/poppins_medium"
+                android:textSize="14sp"/>
 
             <TextView
                 android:id="@+id/foodItemCalorieLabel"
-                android:layout_width="70dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/foodItemNt"
                 android:layout_toRightOf="@id/foodItemThemeLine"
-                android:layout_margin="5dp"
+                android:layout_alignStart="@id/foodItemNameLabel"
+                android:layout_marginVertical="5dp"
                 android:textStyle="normal"
                 android:text="Calorie:"
-                style="@style/TextAppearance.AppCompat.Body1"
-                android:textColor="@color/black" />
+                android:textColor="@color/themeColourOne"
+                android:fontFamily="@font/poppins_medium"
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/foodItemCalorie"
@@ -92,10 +98,11 @@
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/foodItemCalorieLabel"
                 android:layout_toRightOf="@id/foodItemCalorieLabel"
+                android:layout_alignStart="@id/foodItemName"
                 android:text=""
-                style="@style/TextAppearance.AppCompat.Body1"
-                android:textColor="@color/black"
-                android:textStyle="normal"/>
+                android:textColor="@color/themeColourOne"
+                android:fontFamily="@font/poppins_medium"
+                android:textSize="14sp"/>
 
 
 

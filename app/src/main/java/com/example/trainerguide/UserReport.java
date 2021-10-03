@@ -109,7 +109,8 @@ public class UserReport extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(UserReport.this,HomeScreen.class).putExtra("Screen","UserReport"));
+                onBackPressed();
+                //startActivity(new Intent(UserReport.this,HomeScreen.class).putExtra("Screen","UserReport"));
             }
         });
         //toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.themeLightPink));

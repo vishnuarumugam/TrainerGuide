@@ -31,12 +31,19 @@
                 android:layout_centerVertical="true"
                 android:elevation="5dp">
 
-                <ProgressBar
-                    android:id="@+id/trainerPicLoad"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center"
-                    android:visibility="visible"/>
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/trainer_image_shimmer"
+                    app:shimmer_duration="800">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/adShadowTwo"/>
+
+
+                </com.facebook.shimmer.ShimmerFrameLayout>
 
                 <ImageView
                     android:id="@+id/trainerProfileImage"
@@ -49,13 +56,13 @@
 
             <androidx.cardview.widget.CardView
                 android:layout_width="2dp"
-                android:layout_height="95dp"
+                android:layout_height="100dp"
                 app:cardCornerRadius="10dp"
+                android:layout_centerVertical="true"
                 android:id="@+id/trainerItemThemeLine"
                 app:cardBackgroundColor="@color/themeColourOne"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginTop="15dp"
                 android:layout_alignTop="@+id/trainerProfileImageCard"
                 android:layout_toRightOf="@+id/trainerProfileImageCard"/>
 

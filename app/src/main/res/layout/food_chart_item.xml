@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_margin="1dp"
     app:cardCornerRadius="0dp"
-    android:layout_height="50dp">
+    android:layout_height="wrap_content">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -61,6 +61,7 @@
                 android:textColor="@color/themeColourOne"
                 android:textSize="12sp"
                 android:textStyle="bold"
+                android:layout_alignTop="@id/itemName"
                 android:fontFamily="@font/poppins_light"
                 android:id="@+id/calorieLabel"
                 android:gravity="center_vertical"
@@ -75,6 +76,7 @@
                 android:fontFamily="@font/poppins_light"
                 android:gravity="center_vertical"
                 android:id="@+id/calorie"
+                android:layout_alignTop="@id/calorieLabel"
                 android:layout_toRightOf="@+id/calorieLabel"/>
         </RelativeLayout>
 
@@ -83,6 +85,7 @@
             android:layout_height="match_parent"
             android:backgroundTint="@color/white"
             android:id="@+id/addfoodItemBtn"
+            android:layout_centerVertical="true"
             android:text="Add"
             android:layout_alignParentEnd="true"
             android:src="@drawable/ic_add"

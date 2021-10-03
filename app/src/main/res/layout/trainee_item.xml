@@ -23,6 +23,8 @@
             android:padding="10dp"
             android:layout_height="match_parent">
 
+
+
             <androidx.cardview.widget.CardView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
@@ -31,12 +33,19 @@
                 android:layout_centerVertical="true"
                 android:elevation="5dp">
 
-                <ProgressBar
-                    android:id="@+id/traineePicLoad"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center"
-                    android:visibility="visible"/>
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/trainee_image_shimmer"
+                    app:shimmer_duration="800">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/adShadowTwo"/>
+
+
+                </com.facebook.shimmer.ShimmerFrameLayout>
 
                 <ImageView
                     android:id="@+id/traineeProfileImage"
@@ -50,6 +59,7 @@
                 android:layout_width="2dp"
                 android:layout_height="100dp"
                 app:cardCornerRadius="10dp"
+                android:layout_centerVertical="true"
                 android:id="@+id/traineeItemThemeLine"
                 app:cardBackgroundColor="@color/themeColourOne"
                 android:layout_marginLeft="20dp"
@@ -61,9 +71,9 @@
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/traineeItemThemeLine"
-                android:text="Name"
+                android:text="Name:"
                 android:textSize="14sp"
                 style="@style/fontStyle"
                 android:textColor="@color/themeColourOne"/>
@@ -72,7 +82,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/traineeItemNameLabel"
                 android:text=" --"
                 android:textSize="14sp"

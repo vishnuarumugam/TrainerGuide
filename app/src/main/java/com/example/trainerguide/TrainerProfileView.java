@@ -42,6 +42,7 @@ import com.example.trainerguide.models.Notification;
 import com.example.trainerguide.models.Trainee;
 import com.example.trainerguide.models.Trainer;
 import com.example.trainerguide.models.UserMetaData;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -86,6 +87,8 @@ public class TrainerProfileView extends AppCompatActivity {
     private MenuItem profileMenu, logoutMenu, shareMenu, ratingMenu, traineeMenu;
     private Trainee trainee;
     private Trainer trainer;
+    private ShimmerFrameLayout trainerImageShimmer;
+    private View trainerShimmerView;
 
     static int PERMISSION_CODE=100;
 
@@ -100,6 +103,10 @@ public class TrainerProfileView extends AppCompatActivity {
 
         //notification
         requestQueue = Volley.newRequestQueue(this);
+
+        trainerImageShimmer = findViewById(R.id.trainer_image_shimmer);
+        trainerShimmerView = findViewById(R.id.trainer_image_shimmer_view);
+        trainerImageShimmer.startShimmer();
 
         traineruserId = getIntent().getStringExtra("userId");
         navScreen = getIntent().getStringExtra("Screen");
@@ -373,10 +380,10 @@ public class TrainerProfileView extends AppCompatActivity {
                 System.out.println("********"+trainer+"*******");
 
                 Picasso.get().load(trainer.getImage())
-                        .placeholder(R.drawable.ic_share)
                         .fit()
                         .centerCrop()
                         .into(profileimg);
+
                 name.setText(trainer.getName());
                 fees.setText(trainer.getSubscriptionFees() == null ? "-" : String.valueOf(trainer.getSubscriptionFees()));
                 experience.setText(String.valueOf(trainer.getExperience() == null ? "-" : trainer.getExperience() +" Yrs"));
@@ -431,6 +438,9 @@ public class TrainerProfileView extends AppCompatActivity {
                         }
                     });
                 }
+                trainerImageShimmer.stopShimmer();
+                trainerShimmerView.setBackgroundColor(getResources().getColor(R.color.transparent));
+                //traineeImageShimmer.setVisibility(View.GONE);
             }
 
             @Override
@@ -491,6 +501,7 @@ public class TrainerProfileView extends AppCompatActivity {
             JSONObject notificationObject = new JSONObject();
             notificationObject.put("title",title);
             notificationObject.put("body",body);
+            notificationObject.put("icon",R.drawable.app_logo);
             messageObject.put("notification",notificationObject);
 
             JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, notificationURl,

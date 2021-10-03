@@ -94,7 +94,8 @@
                         android:textColor="@color/white"
                         android:textAlignment="center"
                         android:fontFamily="@font/poppins_light"
-                        android:textSize="14sp"
+                        android:textSize="12sp"
+                        android:autoSizeTextType="none"
                         android:text="A person who wants to tone the weight with the diet and fitness steps with the help of a trainercan chose this profile."/>
 
                 </RelativeLayout>
@@ -161,7 +162,8 @@
                         android:textColor="@color/white"
                         android:textAlignment="center"
                         android:fontFamily="@font/poppins_light"
-                        android:textSize="14sp"
+                        android:autoSizeTextType="none"
+                        android:textSize="12sp"
                         android:text="A professinal trainer or nutritionist who can suggest diet plan in changing the people’s weight can choose this profile."/>
 
 

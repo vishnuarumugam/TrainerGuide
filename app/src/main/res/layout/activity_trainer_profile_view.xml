@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/homeScreenBgColor"
     android:id="@+id/trainer_view_drawer_layout"
-    tools:context=".TrainerScreen">
+    tools:context=".TrainerProfileView">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -61,7 +61,7 @@
                                 android:text="-"
                                 android:fontFamily="@font/poppins_medium"
                                 android:textColor="@color/themeColourOne"
-                                android:textSize="18sp"
+                                android:textSize="16sp"
                                 />
                             <TextView
                                 android:id="@+id/yourTrainerText"
@@ -81,13 +81,14 @@
                                 android:layout_below="@+id/txtName"
                                 android:layout_marginTop="25dp"
                                 android:orientation="horizontal"
-                                android:padding="10dp">
+                                android:gravity="center"
+                                android:padding="5dp">
 
                                 <RelativeLayout
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:paddingVertical="5dp">
+                                    android:paddingVertical="1dp">
                                     <RelativeLayout
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
@@ -103,7 +104,8 @@
                                             android:textColor="@color/themeColourOne"
                                             android:layout_centerHorizontal="true"
                                             android:textAlignment="center"
-                                            android:textSize="16sp"
+                                            android:textStyle="normal"
+                                            android:textSize="14sp"
                                             android:text="Experience"/>
                                         <TextView
                                             android:layout_width="wrap_content"
@@ -114,7 +116,7 @@
                                             android:textColor="@color/themeColourOne"
                                             android:textAlignment="center"
                                             android:layout_centerHorizontal="true"
-                                            android:textSize="16sp"
+                                            android:textSize="14sp"
                                             android:text="-"/>
                                     </RelativeLayout>
 
@@ -126,7 +128,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:paddingVertical="5dp">
+                                    android:paddingVertical="1dp">
                                     <RelativeLayout
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
@@ -140,9 +142,10 @@
                                             android:id="@+id/trainerRatingLabel"
                                             android:fontFamily="@font/poppins_medium"
                                             android:textAlignment="center"
+                                            android:textStyle="normal"
                                             android:layout_centerHorizontal="true"
                                             android:textColor="@color/themeColourOne"
-                                            android:textSize="16sp"
+                                            android:textSize="14sp"
                                             android:text="Rating"/>
                                         <TextView
                                             android:layout_width="wrap_content"
@@ -153,7 +156,7 @@
                                             android:layout_centerHorizontal="true"
                                             android:textAlignment="center"
                                             android:textColor="@color/themeColourOne"
-                                            android:textSize="16sp"
+                                            android:textSize="14sp"
                                             android:text="-"/>
                                     </RelativeLayout>
                                 </RelativeLayout>
@@ -162,7 +165,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:paddingVertical="5dp">
+                                    android:paddingVertical="1dp">
 
                                     <RelativeLayout
                                         android:layout_width="wrap_content"
@@ -179,7 +182,8 @@
                                             android:textAlignment="center"
                                             android:layout_centerHorizontal="true"
                                             android:textColor="@color/themeColourOne"
-                                            android:textSize="16sp"
+                                            android:textSize="14sp"
+                                            android:textStyle="normal"
                                             android:text="Trainees"/>
                                         <TextView
                                             android:layout_width="wrap_content"
@@ -189,7 +193,7 @@
                                             android:id="@+id/trainerTraineesCount"
                                             android:fontFamily="@font/poppins_light"
                                             android:textColor="@color/themeColourOne"
-                                            android:textSize="16sp"
+                                            android:textSize="14sp"
                                             android:textAlignment="center"
                                             android:text="-"/>
                                     </RelativeLayout>
@@ -222,12 +226,26 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content">
 
+                            <com.facebook.shimmer.ShimmerFrameLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:id="@+id/trainer_image_shimmer"
+                                app:shimmer_duration="800">
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:id="@+id/trainer_image_shimmer_view"
+                                    android:background="@color/adShadowTwo"/>
+
+
+                            </com.facebook.shimmer.ShimmerFrameLayout>
+
                             <ImageView
                                 android:id="@+id/trainerimage"
                                 android:layout_width="match_parent"
                                 android:layout_height="200dp"
-                                android:scaleType="centerCrop"
-                                android:layout_marginTop="-50dp"/>
+                                android:scaleType="centerCrop" />
                         </RelativeLayout>
                     </androidx.cardview.widget.CardView>
 
@@ -256,11 +274,12 @@
 
                                 <TextView
                                     android:id="@+id/txtPhnNoLabel"
-                                    android:layout_width="100dp"
+                                    android:layout_width="95dp"
                                     android:layout_height="wrap_content"
                                     android:layout_centerVertical="true"
-                                    android:layout_marginStart="15dp"
+                                    android:layout_marginStart="10dp"
                                     android:layout_marginTop="15dp"
+                                    android:textSize="14sp"
                                     android:fontFamily="@font/poppins_medium"
                                     android:text="Mobile :" />
 
@@ -271,6 +290,7 @@
                                     android:layout_centerVertical="true"
                                     android:layout_marginStart="15dp"
                                     android:layout_marginTop="15dp"
+                                    android:textSize="14sp"
                                     android:layout_toRightOf="@+id/txtPhnNoLabel"
                                     android:layout_toLeftOf="@+id/makeCall"
                                     android:fontFamily="@font/poppins_medium"
@@ -306,11 +326,12 @@
 
                                 <TextView
                                     android:id="@+id/txtEmailLabel"
-                                    android:layout_width="100dp"
+                                    android:layout_width="95dp"
                                     android:layout_height="wrap_content"
                                     android:layout_centerVertical="true"
-                                    android:layout_marginStart="15dp"
+                                    android:layout_marginStart="10dp"
                                     android:layout_marginTop="15dp"
+                                    android:textSize="14sp"
                                     android:fontFamily="@font/poppins_medium"
                                     android:text="Email :" />
 
@@ -321,6 +342,7 @@
                                     android:layout_centerVertical="true"
                                     android:layout_marginStart="15dp"
                                     android:layout_marginTop="15dp"
+                                    android:textSize="14sp"
                                     android:layout_toRightOf="@+id/txtEmailLabel"
                                     android:layout_toLeftOf="@id/makeEmail"
                                     android:fontFamily="@font/poppins_medium"
@@ -355,11 +377,12 @@
 
                                 <TextView
                                     android:id="@+id/txtFeesLabel"
-                                    android:layout_width="100dp"
+                                    android:layout_width="95dp"
                                     android:layout_height="wrap_content"
                                     android:layout_centerVertical="true"
-                                    android:layout_marginStart="15dp"
+                                    android:layout_marginStart="10dp"
                                     android:layout_marginTop="15dp"
+                                    android:textSize="14sp"
                                     android:fontFamily="@font/poppins_medium"
                                     android:text="Fees :" />
 
@@ -370,6 +393,7 @@
                                     android:layout_centerVertical="true"
                                     android:layout_marginStart="15dp"
                                     android:layout_marginTop="15dp"
+                                    android:textSize="14sp"
                                     android:layout_toRightOf="@+id/txtFeesLabel"
                                     android:fontFamily="@font/poppins_medium"
                                     android:text="-" />
@@ -390,11 +414,12 @@
 
                                 <TextView
                                     android:id="@+id/txtRatingLabel"
-                                    android:layout_width="100dp"
+                                    android:layout_width="95dp"
                                     android:layout_height="wrap_content"
                                     android:layout_centerVertical="true"
-                                    android:layout_marginStart="15dp"
+                                    android:layout_marginStart="10dp"
                                     android:layout_marginTop="15dp"
+                                    android:textSize="14sp"
                                     android:fontFamily="@font/poppins_medium"
                                     android:text="Rate :" />
 
@@ -421,6 +446,7 @@
                                     android:layout_marginEnd="10dp"
                                     android:backgroundTint="@color/transparent"
                                     android:padding="5dp"
+                                    android:textSize="14sp"
                                     android:src="@drawable/ic_done"
                                     android:text="Confirm"
                                     android:textColor="@color/themeColourTwo"
@@ -462,11 +488,12 @@
 
                                 <TextView
                                     android:id="@+id/txtDescriptionLabel"
-                                    android:layout_width="100dp"
+                                    android:layout_width="95dp"
                                     android:layout_height="wrap_content"
                                     android:layout_centerVertical="true"
-                                    android:layout_marginStart="15dp"
+                                    android:layout_marginStart="10dp"
                                     android:layout_marginTop="15dp"
+                                    android:textSize="14sp"
                                     android:fontFamily="@font/poppins_medium"
                                     android:text="Description :" />
 
@@ -477,6 +504,7 @@
                                     android:layout_centerVertical="true"
                                     android:layout_marginStart="15dp"
                                     android:layout_marginTop="15dp"
+                                    android:textSize="14sp"
                                     android:layout_toRightOf="@+id/txtDescriptionLabel"
                                     android:fontFamily="@font/poppins_medium"
                                     android:text="-" />
@@ -489,6 +517,8 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginTop="50dp"
+                            android:fontFamily="@font/poppins_medium"
+                            android:textSize="14sp"
                             android:backgroundTint="@color/themeColourTwo"
                             android:text="Request" />
                     </LinearLayout>

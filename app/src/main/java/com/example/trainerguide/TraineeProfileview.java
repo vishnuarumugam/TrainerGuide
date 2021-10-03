@@ -33,6 +33,7 @@ import android.widget.Toast;
 import com.example.trainerguide.models.Notification;
 import com.example.trainerguide.models.Trainee;
 import com.example.trainerguide.models.Trainer;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
@@ -70,6 +71,8 @@ public class TraineeProfileview extends AppCompatActivity{
     private Toolbar toolbar;
     private MenuItem profileMenu, logoutMenu, shareMenu, ratingMenu, traineeMenu;
     private TabLayout traineeTabLayout;
+    private ShimmerFrameLayout traineeImageShimmer;
+    private View traineeShimmerView;
 
     static int PERMISSION_CODE=100;
 
@@ -79,6 +82,10 @@ public class TraineeProfileview extends AppCompatActivity{
         setContentView(R.layout.activity_trainee_profileview);
 
         buttonBounce= AnimationUtils.loadAnimation(this, R.anim.button_bounce);
+
+        traineeImageShimmer = findViewById(R.id.trainee_image_shimmer);
+        traineeShimmerView = findViewById(R.id.trainee_image_shimmer_view);
+        traineeImageShimmer.startShimmer();
 
         traineeuserId = getIntent().getStringExtra("userId");
         navScreen = getIntent().getStringExtra("Screen");
@@ -238,7 +245,6 @@ public class TraineeProfileview extends AppCompatActivity{
                 System.out.println("********" + user + "*******");
 
                 Picasso.get().load(user.getImage())
-                        .placeholder(R.drawable.ic_share)
                         .fit()
                         .centerCrop()
                         .into(profileimg);
@@ -320,6 +326,12 @@ public class TraineeProfileview extends AppCompatActivity{
                         }
                     }
                 }
+                traineeImageShimmer.stopShimmer();
+                traineeShimmerView.setBackgroundColor(getResources().getColor(R.color.transparent));
+                /*if (traineeImageShimmer.isShimmerStarted()){
+                    traineeImageShimmer.hideShimmer();
+
+                }*/
                 //Dismiss Progress Dialog
                 progressDialog.dismiss();
             }

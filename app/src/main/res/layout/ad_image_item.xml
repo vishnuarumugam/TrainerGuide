@@ -12,12 +12,26 @@
         android:layout_height="match_parent"
         app:cardCornerRadius="5dp">
 
-        <ImageView
+        <com.facebook.shimmer.ShimmerFrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/ad_image_item"
-            android:scaleType="centerCrop"
-            android:adjustViewBounds="true" />
+            android:id="@+id/ad_image_item_shimmer"
+            app:shimmer_duration="800">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/adShadowTwo"/>
+
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/ad_image_item"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true" />
 
     </androidx.cardview.widget.CardView>
 

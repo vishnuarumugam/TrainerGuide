@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/app_name"
         android:padding="3dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="300dp"
         android:fontFamily="@font/poppins_medium"
         android:gravity="center"
         android:text="@string/app_full_name"

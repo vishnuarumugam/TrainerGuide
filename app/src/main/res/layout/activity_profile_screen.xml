@@ -205,6 +205,8 @@
                                 android:backgroundTint="@color/themeColourTwo"
                                 app:cardCornerRadius="18dp">
 
+
+
                                 <ImageButton
                                     android:id="@+id/profileImage"
                                     android:layout_width="match_parent"
@@ -213,7 +215,23 @@
                                     android:scaleType="centerCrop"
                                     />
 
+                                <com.facebook.shimmer.ShimmerFrameLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:id="@+id/profile_image_shimmer"
+                                    app:shimmer_duration="800">
+
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:id="@+id/profile_image_shimmer_view"
+                                        android:background="@color/adShadowTwo"/>
+
+
+                                </com.facebook.shimmer.ShimmerFrameLayout>
+
                             </androidx.cardview.widget.CardView>
+
 
 
                         </androidx.cardview.widget.CardView>

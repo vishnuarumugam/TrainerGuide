@@ -18,6 +18,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.trainerguide.models.Trainer;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.card.MaterialCardView;
 import com.squareup.picasso.Picasso;
 
@@ -61,7 +62,6 @@ public class TrainerAdapter extends  RecyclerView.Adapter<TrainerAdapter.ViewHol
                 .fit()
                 .centerCrop()
                 .into(holder.profileImage);
-        holder.trainerPicLoad.setVisibility(View.GONE);
         holder.trainerProfileClick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,6 +70,8 @@ public class TrainerAdapter extends  RecyclerView.Adapter<TrainerAdapter.ViewHol
                 addlistener.onAddclick(position);
             }
         });
+        //holder.trainerImageShimmer.stopShimmer();
+        //holder.trainerImageShimmer.setVisibility(View.GONE);
     }
 
     @NonNull
@@ -102,7 +104,7 @@ public class TrainerAdapter extends  RecyclerView.Adapter<TrainerAdapter.ViewHol
         RelativeLayout trainerItem;
         ConstraintLayout trainerConsItem;
         RatingBar ratingBar;
-        ProgressBar trainerPicLoad;
+        ShimmerFrameLayout trainerImageShimmer;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -116,9 +118,10 @@ public class TrainerAdapter extends  RecyclerView.Adapter<TrainerAdapter.ViewHol
             trainerConsItem = itemView.findViewById(R.id.trainerConsItem);
             ratingBar = itemView.findViewById(R.id.ratingBar);
             ratingUserCount = itemView.findViewById(R.id.txtUserCount);
-            trainerPicLoad = itemView.findViewById(R.id.trainerPicLoad);
+            trainerImageShimmer = itemView.findViewById(R.id.trainer_image_shimmer);
             ratingBar.setEnabled(false);
             ratingBar.setNumStars(5);
+            trainerImageShimmer.startShimmer();
         }
     }
 

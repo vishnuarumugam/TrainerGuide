@@ -90,7 +90,7 @@
                             android:layout_marginHorizontal="45dp"
                             android:layout_marginBottom="35dp"
                             android:layout_marginTop="14dp"
-                            android:backgroundTint="@color/adShadowOne"
+                            android:backgroundTint="@color/adShadowThree"
                             app:cardCornerRadius="10dp">
 
                         </androidx.cardview.widget.CardView>
@@ -110,27 +110,30 @@
                             android:layout_height="200dp"
                             android:layout_below="@+id/dashboard_post_ad"
                             android:layout_marginHorizontal="15dp"
-                            android:backgroundTint="@color/adShadowThree"
+                            android:backgroundTint="@color/adShadowOne"
                             app:cardCornerRadius="10dp">
 
-                            <com.smarteist.autoimageslider.SliderView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:id="@+id/homeScreenTopAdSlider"
-                                app:sliderAnimationDuration="600"
-                                app:sliderAutoCycleDirection="back_and_forth"
-                                app:sliderAutoCycleEnabled="true"
-                                app:sliderIndicatorAnimationDuration="600"
-                                app:sliderIndicatorGravity="center_horizontal|bottom"
-                                app:sliderIndicatorOrientation="horizontal"
-                                app:sliderIndicatorPadding="3dp"
-                                app:sliderIndicatorRadius="2dp"
-                                app:sliderIndicatorSelectedColor="@color/themeColourTwo"
-                                app:sliderIndicatorUnselectedColor="@color/homeScreenBgColor"
-                                app:sliderScrollTimeInSec="2"
-                                app:sliderStartAutoCycle="true"
-                                android:layout_marginVertical="15dp"
-                                android:layout_marginHorizontal="15dp" />
+                                <com.smarteist.autoimageslider.SliderView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:id="@+id/homeScreenTopAdSlider"
+                                    app:sliderAnimationDuration="600"
+                                    app:sliderAutoCycleDirection="back_and_forth"
+                                    app:sliderAutoCycleEnabled="true"
+                                    app:sliderIndicatorAnimationDuration="600"
+                                    app:sliderIndicatorGravity="center_horizontal|bottom"
+                                    app:sliderIndicatorOrientation="horizontal"
+                                    app:sliderIndicatorPadding="3dp"
+                                    app:sliderIndicatorRadius="2dp"
+                                    app:sliderIndicatorSelectedColor="@color/themeColourTwo"
+                                    app:sliderIndicatorUnselectedColor="@color/homeScreenBgColor"
+                                    app:sliderScrollTimeInSec="2"
+                                    app:sliderStartAutoCycle="true"
+                                    android:layout_marginVertical="15dp"
+                                    android:layout_marginHorizontal="15dp" />
+
+
+
 
                             <!--<androidx.viewpager.widget.ViewPager
                                 android:layout_width="match_parent"
@@ -245,13 +248,16 @@
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
+                                        android:layout_marginVertical="5dp"
                                         android:id="@+id/weightLossSubscription"
                                         android:background="@drawable/radio_button_selector"
                                         android:button="@android:color/transparent"
                                         android:elevation="4dp"
                                         android:fontFamily="@font/poppins_medium"
                                         android:padding="5dp"
+                                        android:textSize="14sp"
                                         android:text="Weight Loss"
+                                        android:autoSizeTextType="none"
                                         android:textAlignment="center"
                                         android:textColor="@drawable/radio_button_text_selector" />
 
@@ -259,12 +265,15 @@
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
+                                        android:layout_marginVertical="5dp"
                                         android:id="@+id/weightGainSubscription"
                                         android:background="@drawable/radio_button_selector"
                                         android:button="@android:color/transparent"
                                         android:elevation="4dp"
                                         android:layout_marginHorizontal="15dp"
                                         android:fontFamily="@font/poppins_medium"
+                                        android:textSize="14sp"
+                                        android:autoSizeTextType="none"
                                         android:padding="5dp"
                                         android:text="Weight Gain"
                                         android:textAlignment="center"
@@ -274,12 +283,15 @@
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
+                                        android:layout_marginVertical="5dp"
                                         android:id="@+id/weightMaintainSubscription"
                                         android:background="@drawable/radio_button_selector"
                                         android:button="@android:color/transparent"
                                         android:elevation="4dp"
                                         android:fontFamily="@font/poppins_medium"
                                         android:padding="5dp"
+                                        android:textSize="14sp"
+                                        android:autoSizeTextType="none"
                                         android:text="Stay Fit"
                                         android:textAlignment="center"
                                         android:textColor="@drawable/radio_button_text_selector" />

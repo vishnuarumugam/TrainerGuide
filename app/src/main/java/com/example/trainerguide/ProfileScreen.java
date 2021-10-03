@@ -45,12 +45,14 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.example.trainerguide.models.BmrProgress;
 import com.example.trainerguide.models.Notification;
 import com.example.trainerguide.models.Trainee;
 import com.example.trainerguide.models.Trainer;
 import com.example.trainerguide.models.User;
 import com.example.trainerguide.validation.UserInputValidation;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -139,7 +141,8 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
     private BottomNavigationView homeScreenTabLayout;
     private SharedPreferences sp;
 
-
+    private ShimmerFrameLayout profileImageShimmer;
+    private View profileShimmerView;
 
     //PopUp Dialog
     Dialog profileDialog;
@@ -158,6 +161,10 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
 
         //notification
         requestQueue = Volley.newRequestQueue(this);
+
+        profileImageShimmer = findViewById(R.id.profile_image_shimmer);
+        profileImageShimmer.startShimmer();
+        profileShimmerView = findViewById(R.id.profile_image_shimmer_view);
 
         // loading Animation from
         buttonBounce= AnimationUtils.loadAnimation(this, R.anim.button_bounce);
@@ -683,10 +690,10 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                 profilePhoneNumber.setText(user.getPhoneNumber().toString());
                 profileDob.setText(simpleDateFormat.format(user.getDateOfBirth()));
                 Picasso.get().load(user.getImage())
-                        .placeholder(R.drawable.ic_share)
                         .fit()
                         .centerCrop()
                         .into(profileImage);
+
 
                 if (userType.equals("Trainer")){
                     Trainer trainer = snapshot.getValue(Trainer.class);
@@ -747,6 +754,8 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
 
                 //Dismiss Progress Dialog
                 progressDialog.dismiss();
+                profileImageShimmer.stopShimmer();
+                profileShimmerView.setBackgroundColor(getResources().getColor(R.color.transparent));
 
             }
 
@@ -1228,7 +1237,10 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
             JSONObject notificationObject = new JSONObject();
             notificationObject.put("title",title);
             notificationObject.put("body",body);
+            notificationObject.put("icon",R.drawable.app_logo);
+            notificationObject.put("colour",R.color.themeColourTwo);
             messageObject.put("notification",notificationObject);
+
 
             JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, notificationURl,
                     messageObject,
