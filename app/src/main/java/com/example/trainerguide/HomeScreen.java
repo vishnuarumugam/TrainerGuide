@@ -32,6 +32,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -116,6 +117,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
     private MaterialCheckBox diaryFoodAllergy, wheatFoodAllergy, nutsFoodAllergy, seaFoodAllergy, muttonFoodAllergy, chickenFoodAllergy;
     private RadioButton vegFoodType, vegEggFoodType, nonVegFoodType;
     private EditText otherHealthIssue, otherFoodAllergy;
+    private RadioGroup subscriptionRadioGroup;
 
     //Dashboard variables
     private RelativeLayout progressLayout, weightLayout, heightLayout, dietTypeLayout, allergicLayout, healthIssueLayout, postAdLayout;
@@ -199,6 +201,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         weightLossSubscription = findViewById(R.id.weightLossSubscription);
         weightGainSubscription = findViewById(R.id.weightGainSubscription);
         weightMaintainSubscription = findViewById(R.id.weightMaintainSubscription);
+        subscriptionRadioGroup = findViewById(R.id.subscriptionRadioGroup);
 
         weightLossSubscription.setOnClickListener(this);
         weightGainSubscription.setOnClickListener(this);
@@ -441,9 +444,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 }
                 else
                 {
-                    weightLossSubscription.setEnabled(false);
-                    weightGainSubscription.setEnabled(false);
-                    weightMaintainSubscription.setEnabled(false);
+                    subscriptionRadioGroup.setEnabled(false);
                     showDialogClicked = true;
                     Toast.makeText(HomeScreen.this, "Please wait !", Toast.LENGTH_SHORT).show();
                 }
@@ -456,9 +457,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 }
                 else
                 {
-                    weightLossSubscription.setEnabled(false);
-                    weightGainSubscription.setEnabled(false);
-                    weightMaintainSubscription.setEnabled(false);
+                    subscriptionRadioGroup.setEnabled(false);
                     showDialogClicked = true;
                     Toast.makeText(HomeScreen.this, "Please wait !", Toast.LENGTH_SHORT).show();
                 }
@@ -471,9 +470,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 }
                 else
                 {
-                    weightLossSubscription.setEnabled(false);
-                    weightGainSubscription.setEnabled(false);
-                    weightMaintainSubscription.setEnabled(false);
+                    subscriptionRadioGroup.setEnabled(false);
                     showDialogClicked = true;
                     Toast.makeText(HomeScreen.this, "Please wait !", Toast.LENGTH_SHORT).show();
                 }
@@ -607,9 +604,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 FirebaseMessaging.getInstance().subscribeToTopic(user.getName());
                 if(showDialogClicked == true) {
                     showDialogClicked = false;
-                    weightLossSubscription.setEnabled(true);
-                    weightGainSubscription.setEnabled(true);
-                    weightMaintainSubscription.setEnabled(true);
+                    subscriptionRadioGroup.setEnabled(true);
                     Toast.makeText(HomeScreen.this, "Please try now !", Toast.LENGTH_SHORT).show();
                 }
                 String pattern = "dd-MM-yyyy";

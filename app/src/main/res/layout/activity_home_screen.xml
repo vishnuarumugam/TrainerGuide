@@ -241,6 +241,7 @@
                                     android:layout_marginHorizontal="10dp"
                                     android:layout_marginBottom="10dp"
                                     android:padding="8dp"
+                                    android:id="@+id/subscriptionRadioGroup"
                                     android:layout_below="@+id/homeScreenGoalTitle"
                                     android:orientation="horizontal">
 
