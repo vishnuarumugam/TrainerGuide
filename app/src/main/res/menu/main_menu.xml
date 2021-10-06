@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:title="Profile">
+   <!-- <item android:title="Profile">
         <menu>
             <group android:checkableBehavior="single">
                 <item
@@ -9,25 +10,16 @@
                     android:icon="@drawable/ic_person"
                     android:title="Profile"/>
 
-                <!--<item
-                    android:id="@+id/nav_trainees"
-                    android:icon="@drawable/ic_trainees"
-                    android:title="Trainees" />
-
-                <item
-                    android:id="@+id/nav_trainer"
-                    android:icon="@drawable/ic_trainees"
-                    android:title="Trainer" />-->
 
                 <item
                     android:id="@+id/nav_notification"
                     android:icon="@drawable/notification"
                     android:title="Notification" />
 
-                <!--<item
+                &lt;!&ndash;<item
                     android:id="@+id/nav_foodPrep"
                     android:icon="@drawable/ic_trainees"
-                    android:title="FoodChart" />-->
+                    android:title="FoodChart" />&ndash;&gt;
 
                 <item
                     android:id="@+id/nav_logout"
@@ -37,9 +29,10 @@
         </menu>
 
     </item>
+-->
 
-
-    <item android:title="Communicate">
+    <item android:title="Communicate"
+        >
         <menu>
             <item
                 android:id="@+id/nav_share"

@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.trainerguide.models.Ad;
@@ -21,6 +22,8 @@ import java.util.List;
 
 public class AdAdapter extends RecyclerView.Adapter<AdAdapter.ViewHolder> {
     private List<Ad> adList = new ArrayList<>();
+    private AdAdapter.OnClickAdListener adListener;
+    //private AdAdapter.OnAddClickListener addlistener;
     private Context context;
 
     public AdAdapter(List<Ad> adList, Context context) {
@@ -54,6 +57,22 @@ public class AdAdapter extends RecyclerView.Adapter<AdAdapter.ViewHolder> {
                 .centerCrop()
                 .into(holder.adImage);
 
+        holder.adConsItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adList.get(position);
+                adListener.onClickAd(position);
+            }
+        });
+
+        /*holder.adConsItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adList.get(position);
+                System.out.println(position);
+                addlistener.onAddclick(position);
+            }
+        });*/
         holder.adImageShimmer.stopShimmer();
     }
 
@@ -67,6 +86,8 @@ public class AdAdapter extends RecyclerView.Adapter<AdAdapter.ViewHolder> {
         TextView adEmail, adExpiry, adAmount;
         ImageView adImage;
         ShimmerFrameLayout adImageShimmer;
+        ConstraintLayout adConsItem;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -74,8 +95,23 @@ public class AdAdapter extends RecyclerView.Adapter<AdAdapter.ViewHolder> {
             adExpiry = itemView.findViewById(R.id.adExpiry);
             adAmount = itemView.findViewById(R.id.adAmount);
             adImage = itemView.findViewById(R.id.adImage);
+            adConsItem = itemView.findViewById(R.id.adConsItem);
+
             adImageShimmer = itemView.findViewById(R.id.ad_image_shimmer);
             adImageShimmer.startShimmer();
         }
     }
+    public interface OnClickAdListener{
+        void onClickAd(int position);
+    }
+    public void setOnClickAdListener(AdAdapter.OnClickAdListener listener){
+        adListener = listener;
+    }
+   /* public interface OnAddClickListener{
+        void onAddclick(int position);
+    }
+
+    public void setOnAddClickListener(AdAdapter.OnAddClickListener listener){
+        addlistener = listener;
+    }*/
 }

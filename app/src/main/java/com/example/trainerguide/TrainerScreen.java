@@ -15,6 +15,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Editable;
@@ -72,7 +73,6 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
     private Button toolBarNotification;
     public String notificationFlag="";
     private TextView toolBarBadge;
-    private MenuItem profileMenu, logoutMenu, shareMenu, ratingMenu, traineeMenu;
     private EditText searchTxt;
     private Button searchClear;
 
@@ -143,9 +143,6 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
         searchClear = findViewById(R.id.searchClear);
         searchClear.setVisibility(View.GONE);
 
-        //Menu Item variables
-        profileMenu = findViewById(R.id.nav_profile);
-//        traineeMenu = findViewById(R.id.nav_trainees);
 
         //Pagination
         nestedScrollView = findViewById(R.id.scroll_view);
@@ -156,28 +153,17 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
-                    case R.id.nav_profile:
+                    /*case R.id.nav_profile:
                         intent=new Intent(TrainerScreen.this,ProfileScreen.class);
                         //intent.putExtra("UserId",userId);
                         startActivity(intent);
                         finish();
                         break;
-                    /*case R.id.nav_trainees:
-                        intent=new Intent(TrainerScreen.this,TraineesScreen.class);
-                        //intent.putExtra("UserId",userId);
-                        startActivity(intent);
-                        finish();
-                        break;*/
+
                     case R.id.nav_notification:
                         startActivity(new Intent(TrainerScreen.this,NotificationScreen.class));
                         finish();
-                        break;
-                    /*case R.id.nav_trainer:
-                        break;*/
-                    /*case R.id.nav_foodPrep:
-                        startActivity(new Intent(TrainerScreen.this,PrepareFoodChart.class));
-                        finish();
-                        break;*/
+
                     case R.id.nav_logout:
                         startActivity(new Intent(TrainerScreen.this,MainActivity.class));
                         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -187,6 +173,11 @@ public class TrainerScreen extends AppCompatActivity implements TrainerAdapter.O
                         editor.remove("IsLoggedIn");
                         //editor.putBoolean("IsLoggedIn",false);
                         editor.commit();
+                        finish();
+                        break;*/
+                    case R.id.nav_share:
+                    case R.id.nav_rating:
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/")));
                         finish();
                         break;
                     default:

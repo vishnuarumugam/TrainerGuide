@@ -23,7 +23,8 @@ public class AdViewScreen extends AppCompatActivity {
     private TextView adType, adEmail, adUrl, adAmount, adCreated, adPosted, adExpired;
 
     private Ad receivedAd;
-    private String userEmail;
+    private String userEmail, isAdmin;
+    private String navigationScreen="";
 
     private Toolbar toolbar;
 
@@ -37,12 +38,7 @@ public class AdViewScreen extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(AdViewScreen.this, HomeScreen.class));
-            }
-        });
+
 
 
         adUserView  = findViewById(R.id.adUserView);
@@ -59,15 +55,32 @@ public class AdViewScreen extends AppCompatActivity {
         if (getIntent().hasExtra("ad")){
             receivedAd = (Ad) getIntent().getExtras().getSerializable("ad");
         }
-        System.out.println(receivedAd.getAmount()+"amountad");
         if (getIntent().hasExtra("userEmail")){
             userEmail = getIntent().getExtras().getString("userEmail");
         }
+        if (getIntent().hasExtra("Screen")){
+            navigationScreen = getIntent().getExtras().getString("Screen", "");
+        }
+        if (getIntent().hasExtra("isAdmin")){
+            isAdmin = getIntent().getExtras().getString("isAdmin");
+        }
 
-        System.out.println(userEmail + receivedAd.getEmailAddress());
-        if (!userEmail.equals(receivedAd.getEmailAddress())){
+
+        if (!userEmail.equals(receivedAd.getEmailAddress()) && isAdmin.equals("0")){
             adUserView.setVisibility(View.GONE);
         }
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (navigationScreen.equals("AdListScreen")){
+                    startActivity(new Intent(AdViewScreen.this, AdListScreen.class).putExtra("userEmail",userEmail));
+                }
+                else {
+                    startActivity(new Intent(AdViewScreen.this, HomeScreen.class));
+                }
+
+            }
+        });
         populateAdDetails(receivedAd);
 
 
@@ -83,7 +96,7 @@ public class AdViewScreen extends AppCompatActivity {
                 .into(adImage);
         adEmail.setText(receivedAd.getEmailAddress());
 
-        if (userEmail.equals(receivedAd.getEmailAddress())){
+        if (userEmail.equals(receivedAd.getEmailAddress()) || isAdmin.equals("1")){
             adAmount.setText(receivedAd.getAmount().toString());
             adCreated.setText(formatDate.format(receivedAd.getCreateDate()));
             adPosted.setText(formatDate.format(receivedAd.getPostedDate()));
@@ -95,4 +108,5 @@ public class AdViewScreen extends AppCompatActivity {
         }
 
     }
+
 }

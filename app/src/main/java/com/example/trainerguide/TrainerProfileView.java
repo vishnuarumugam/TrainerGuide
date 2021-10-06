@@ -16,6 +16,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.MailTo;
 import android.net.Uri;
 import android.os.Bundle;
@@ -177,9 +179,6 @@ public class TrainerProfileView extends AppCompatActivity {
         PopulateUserDetails();
         editRatingBtn.setVisibility(View.GONE);
 
-        //Menu Item variables
-        profileMenu = findViewById(R.id.nav_profile);
-
 
 
         makeCall.setOnClickListener(new View.OnClickListener() {
@@ -263,8 +262,11 @@ public class TrainerProfileView extends AppCompatActivity {
                                 requestbtn.setBackgroundColor(getResources().getColor(R.color.themeColourFour));
                             }
                         } else {
-                            AlertDialogBox alertDialogBox = new AlertDialogBox();
-                            alertDialogBox.show(getSupportFragmentManager(), "Alert");
+                            /*AlertDialogBox alertDialogBox = new AlertDialogBox();
+                            alertDialogBox.show(getSupportFragmentManager(), "Alert");*/
+                            CustomDialogClass customDialogClass = new CustomDialogClass(TrainerProfileView.this, "Multiple Trainer Alert!", "Hey! You cannot be under two trainers", "Normal");
+                            customDialogClass.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                            customDialogClass.show();
                         }
 
                     }

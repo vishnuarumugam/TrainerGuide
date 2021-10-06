@@ -29,11 +29,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/alertDialogTitle"
-                android:text="Title"
-                android:textColor="@color/grey"
-                android:textStyle="bold"
-                style="@style/TextAppearance.AppCompat.Body1"
-                android:textSize="20dp"
+                android:textAlignment="center"
+                android:textColor="@color/themeColourTwo"
+                android:textStyle="normal"
+                android:fontFamily="@font/poppins_medium"
+                android:textSize="16sp"
+                android:paddingHorizontal="5dp"
                 android:layout_marginTop="15dp"
                 android:layout_gravity="center" />
 
@@ -44,11 +45,11 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="20dp"
-                android:text="Message"
+                android:text=""
                 android:textAlignment="center"
-                style="@style/TextAppearance.AppCompat"
-                android:textSize="14dp"
-                android:textColor="@android:color/black" />
+                android:fontFamily="@font/poppins_medium"
+                android:textSize="14sp"
+                android:textColor="@color/themeColourOne" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -63,6 +64,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:id="@+id/alertDialogBtnLeft"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textSize="14sp"
                     android:text="Yes"
                     android:backgroundTint="@color/themeColourFour"/>
 
@@ -72,6 +75,8 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="5dp"
                     android:id="@+id/alertDialogBtnRight"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textSize="14sp"
                     android:text="No"
                     android:backgroundTint="@color/themeColourTwo"/>
 

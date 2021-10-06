@@ -42,6 +42,7 @@
     <color name="themeColourThree">#DCD6D6</color>
      <color name="themeColourFour">#A4A4A4</color>
     <color name="homeScreenBgColor">#F5F4F4</color>
+    <color name="themeColourFive">#9ACE1E</color>
 
     <color name="adShadowOne">#DDDDDD</color>
     <color name="adShadowTwo">#D1D0D0</color>

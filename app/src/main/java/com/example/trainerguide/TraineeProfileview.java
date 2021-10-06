@@ -70,7 +70,6 @@ public class TraineeProfileview extends AppCompatActivity{
 
     //Navigation view variables
     private Toolbar toolbar;
-    private MenuItem profileMenu, logoutMenu, shareMenu, ratingMenu, traineeMenu;
     private TabLayout traineeTabLayout;
     private ShimmerFrameLayout traineeImageShimmer;
     private View traineeShimmerView;
@@ -209,9 +208,6 @@ public class TraineeProfileview extends AppCompatActivity{
             }
         });
 
-        //Menu Item variables
-        profileMenu = findViewById(R.id.nav_profile);
-        //traineeMenu = findViewById(R.id.nav_trainees);
 
         createFoodChart.setOnClickListener(new View.OnClickListener() {
             @Override

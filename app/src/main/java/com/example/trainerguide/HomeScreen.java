@@ -100,7 +100,6 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
     public String notificationFlag="";
     private TextView toolBarBadge;
     private TextView sideUserName;
-    private MenuItem profileMenu, logoutMenu, shareMenu, ratingMenu, traineeMenu;
     Intent intent;
     Animation buttonBounce;
     private User user;
@@ -137,6 +136,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
     //User Detail variables
     private String userId, path, userType, isAdmin;
+    private String isDialogLoaded="";
     private SharedPreferences sp;
 
     //Progress Bar
@@ -189,9 +189,6 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         //Initialize Progress Dialog
         progressDialog = new ProgressDialog(this);
 
-        //Menu Items
-        profileMenu = findViewById(R.id.nav_profile);
-        //traineeMenu = findViewById(R.id.nav_trainees);
 
         //Dashboard variables
         homeScreenTabLayout = findViewById(R.id.homeScreenTabLayout);
@@ -349,32 +346,39 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-                switch (item.getItemId()){
-                    case R.id.homeTab:
-                        break;
-                    case R.id.trainersTab:
-                        startActivity(new Intent(HomeScreen.this,TrainerScreen.class).putExtra("notificationFlag", notificationFlag));
-                        overridePendingTransition(0,0);
-                        finish();
-                        break;
-                    case R.id.traineesTab:
-                        startActivity(new Intent(HomeScreen.this,TraineesScreen.class).putExtra("notificationFlag", notificationFlag));
-                        overridePendingTransition(0,0);
-                        finish();
-                        break;
-                    case R.id.foodListTab:startActivity(new Intent(HomeScreen.this,FoodSourceListScreen.class).putExtra("notificationFlag", notificationFlag));
-                        overridePendingTransition(0,0);
-                        finish();
-                        break;
-                    case R.id.profileTab:
-                        startActivity(new Intent(HomeScreen.this,ProfileScreen.class).putExtra("notificationFlag", notificationFlag));
-                        overridePendingTransition(0,0);
-                        finish();
-                        break;
-                    default:
-                        break;
+                if ( !(isDialogLoaded.equals("")) || !(navigationScreen.equals(""))){
+                    switch (item.getItemId()){
+                        case R.id.homeTab:
+                            break;
+                        case R.id.trainersTab:
+                            startActivity(new Intent(HomeScreen.this,TrainerScreen.class).putExtra("notificationFlag", notificationFlag));
+                            overridePendingTransition(0,0);
+                            finish();
+                            break;
+                        case R.id.traineesTab:
+                            startActivity(new Intent(HomeScreen.this,TraineesScreen.class).putExtra("notificationFlag", notificationFlag));
+                            overridePendingTransition(0,0);
+                            finish();
+                            break;
+                        case R.id.foodListTab:startActivity(new Intent(HomeScreen.this,FoodSourceListScreen.class).putExtra("notificationFlag", notificationFlag));
+                            overridePendingTransition(0,0);
+                            finish();
+                            break;
+                        case R.id.profileTab:
+                            startActivity(new Intent(HomeScreen.this,ProfileScreen.class).putExtra("notificationFlag", notificationFlag));
+                            overridePendingTransition(0,0);
+                            finish();
+                            break;
+                        default:
+                            break;
 
+                    }
                 }
+                else {
+                    isDialogLoaded = "0";
+                    Toast.makeText(HomeScreen.this, "Please wait", Toast.LENGTH_SHORT).show();
+                }
+               
                 return false;
             }
         });
@@ -391,18 +395,13 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
-                    case R.id.nav_profile:
+                    /*case R.id.nav_profile:
                         intent=new Intent(HomeScreen.this,ProfileScreen.class);
                         intent.putExtra("UserId",userId);
                         startActivity(intent);
                         finish();
                         break;
-                    /*case R.id.nav_trainees:
-                        intent=new Intent(HomeScreen.this,TraineesScreen.class);
-                        intent.putExtra("UserId",userId);
-                        startActivity(intent);
-                        finish();
-                        break;*/
+
                     case R.id.nav_notification:
                         startActivity(new Intent(HomeScreen.this,NotificationScreen.class));
                         finish();
@@ -417,6 +416,11 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                         editor.remove("IsLoggedIn");
                         //editor.putBoolean("IsLoggedIn",false);
                         editor.commit();
+                        finish();
+                        break;*/
+                    case R.id.nav_share:
+                    case R.id.nav_rating:
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/")));
                         finish();
                         break;
                     default:
@@ -446,7 +450,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 {
                     subscriptionRadioGroup.setEnabled(false);
                     showDialogClicked = true;
-                    Toast.makeText(HomeScreen.this, "Please wait !", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HomeScreen.this, "Please wait!", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.weightGainSubscription:
@@ -459,7 +463,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 {
                     subscriptionRadioGroup.setEnabled(false);
                     showDialogClicked = true;
-                    Toast.makeText(HomeScreen.this, "Please wait !", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HomeScreen.this, "Please wait!", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.weightMaintainSubscription:
@@ -472,7 +476,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 {
                     subscriptionRadioGroup.setEnabled(false);
                     showDialogClicked = true;
-                    Toast.makeText(HomeScreen.this, "Please wait !", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HomeScreen.this, "Please wait!", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.weightLayout:
@@ -481,7 +485,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 }
                 else
                 {
-                    Toast.makeText(HomeScreen.this, "Please wait !", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HomeScreen.this, "Please wait!", Toast.LENGTH_SHORT).show();
                     showDialogClicked = true;
                 }
                 break;
@@ -490,7 +494,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 ShowDialog("Height");}
                 else
                 {
-                    Toast.makeText(HomeScreen.this, "Please wait !", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HomeScreen.this, "Please wait!", Toast.LENGTH_SHORT).show();
                     showDialogClicked = true;
                 }
                 break;
@@ -504,7 +508,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 }
                 else
                 {
-                    Toast.makeText(HomeScreen.this, "Please wait !", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HomeScreen.this, "Please wait!", Toast.LENGTH_SHORT).show();
                     showDialogClicked = true;
                 }
                 break;
@@ -514,7 +518,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 }
                 else
                 {
-                    Toast.makeText(HomeScreen.this, "Please wait !", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HomeScreen.this, "Please wait!", Toast.LENGTH_SHORT).show();
                     showDialogClicked = true;
                 }
                 break;
@@ -524,7 +528,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 }
                 else
                 {
-                    Toast.makeText(HomeScreen.this, "Please wait !", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HomeScreen.this, "Please wait!", Toast.LENGTH_SHORT).show();
                     showDialogClicked = true;
                 }
                 break;
@@ -562,23 +566,39 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 finish();
                 break;
             case R.id.toolBarNotification:
-                option.startAnimation(buttonBounce);
-                startActivity(new Intent(HomeScreen.this,NotificationScreen.class).putExtra("Screen","HomeScreen"));
-                finish();
-                break;
+                if ( !(isDialogLoaded.equals("")) || !(navigationScreen.equals(""))){
+                    option.startAnimation(buttonBounce);
+                    startActivity(new Intent(HomeScreen.this,NotificationScreen.class).putExtra("Screen","HomeScreen"));
+                    finish();
+                    break;
+                }
+
+                else {
+                    isDialogLoaded = "0";
+                    Toast.makeText(HomeScreen.this, "Please wait", Toast.LENGTH_SHORT).show();
+                }
+
             case R.id.postAdLayout:
                 //sendNotification();
                 startActivity(new Intent(HomeScreen.this,AdPostingScreen.class));
                 finish();
                 break;
             case R.id.dashboard_post_ad:
-                Intent emailIntent = new Intent(Intent.ACTION_SEND);
-                emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{getString(R.string.companyEmail)});
-                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Fittify Me Ad details");
-                emailIntent.putExtra(Intent.EXTRA_TEXT, "Hello "+dashboard_user_name.getText().toString()+"\n\n" + getString(R.string.adEmail));
-                emailIntent.setType("text/plain");
-                startActivity(Intent.createChooser(emailIntent, "Choose an Email client :"));
-                break;
+                if ( !(isDialogLoaded.equals("")) || !(navigationScreen.equals(""))){
+                    Intent emailIntent = new Intent(Intent.ACTION_SEND);
+                    emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{getString(R.string.companyEmail)});
+                    emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Fittify Me Ad details");
+                    emailIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.adEmailTop) + "Hello "+dashboard_user_name.getText().toString()+"\n\n" + getString(R.string.adEmail));
+                    emailIntent.setType("text/plain");
+                    startActivity(Intent.createChooser(emailIntent, "Choose an Email client :"));
+                    break;
+                }
+                else {
+                    isDialogLoaded = "0";
+                    Toast.makeText(HomeScreen.this, "Please wait", Toast.LENGTH_SHORT).show();
+
+                }
+
             default:
                 break;
         }
@@ -612,16 +632,39 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                 Long noOfDays = ChronoUnit.DAYS.between(Calendar.getInstance().toInstant(), user.getLastModDttm().toInstant());
 
                 if (navigationScreen.equals("")){
-                    if (noOfDays>7 || noOfDays<0){
-                        CustomDialogClass customDialogClass = new CustomDialogClass(HomeScreen.this, "Weight Alert!", "Hey! You have not updated your weight since a week. Please update it every week to track your progress", "Normal");
+
+                    if ((user.getWeight()==0) && (user.getHeight()==0)){
+                        CustomDialogClass customDialogClass = new CustomDialogClass(HomeScreen.this, "Progress Alert!", "Hey! You have not updated your weight and height. Please update to track your progress", "Normal");
                         customDialogClass.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                         customDialogClass.show();
                     }
-                }
-                else{
-                    System.out.println("navigationScreen" + navigationScreen);
-                }
+                    else if (user.getWeight()==0){
+                        CustomDialogClass customDialogClass = new CustomDialogClass(HomeScreen.this, "Weight Alert!", "Hey! You have not updated your weight. Please update to track your progress", "Normal");
+                        customDialogClass.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        customDialogClass.show();
+                    }
+                    else if (user.getHeight()==0){
+                        CustomDialogClass customDialogClass = new CustomDialogClass(HomeScreen.this, "Height Alert!", "Hey! You have not updated your height. Please update to track your progress", "Normal");
+                        customDialogClass.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        customDialogClass.show();
+                    }
+                    else {
+                        if (noOfDays>7 || noOfDays<-7){
+                            CustomDialogClass customDialogClass = new CustomDialogClass(HomeScreen.this, "Weight Alert!", "Hey! You have not updated your weight since a week. Please update it every week to track your progress", "Normal");
+                            customDialogClass.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                            customDialogClass.show();
+                        }
+                    }
 
+                    if (isDialogLoaded.equals("0")){
+                        Toast.makeText(HomeScreen.this, "Please try now", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        isDialogLoaded="1";
+                    }
+
+
+                }
 
                 if (user.getFoodType()!=null){
                     switch (user.getFoodType()){
@@ -1083,14 +1126,25 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         Ad ad = adList.get(position);
 
         if (ad.getRedirectTo().equals("Web Page")){
-            String urlLink = ad.getUrl();
-            Uri uri = Uri.parse(urlLink);
-            startActivity(new Intent(Intent.ACTION_VIEW,uri));
+            if(ad.getEmailAddress().equals(user.getEmail()) || isAdmin.equals("1")){
+                Intent intent = new Intent(HomeScreen.this, AdViewScreen.class);
+                intent.putExtra("ad",ad);
+                intent.putExtra("userEmail",user.getEmail());
+                intent.putExtra("isAdmin",isAdmin);
+                startActivity(intent);
+            }
+            else {
+                String urlLink = ad.getUrl();
+                Uri uri = Uri.parse(urlLink);
+                startActivity(new Intent(Intent.ACTION_VIEW,uri));
+            }
+
         }
         else if (ad.getRedirectTo().equals("Profile")){
             Intent intent = new Intent(HomeScreen.this, AdViewScreen.class);
             intent.putExtra("ad",ad);
             intent.putExtra("userEmail",user.getEmail());
+            intent.putExtra("isAdmin",isAdmin);
             startActivity(intent);
         }
         else {

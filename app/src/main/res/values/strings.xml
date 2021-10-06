@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Fittify</string>
     <string name="app_full_name">Fittify Me</string>
-    <string name="appSubLine"><u>We make you feel better</u></string>
+    <string name="appSubLine">We make you feel better</string>
     <string name="Navigation_Drawer_Open">Open Navigation Drawer</string>
     <string name="Navigation_Drawer_Close">Close Navigation Drawer</string>
 
@@ -33,6 +33,7 @@
     <string name="urlLink">https://www.google.com/search?q=how+many+calories+are+in+</string>
 
     <string name="companyEmail">vishnuarumugam95@gmail.com</string>
+    <string name="adEmailTop">{Write your content here}\n\n\n=====================================\nFrom Fittify Me Team:\n </string>
     <string name="adEmail">Hope you\'re doing well. Thank you for showing interest in posting your Ad in our App.\n\n
 We need few details of your Ad.\n\n
 Please fill the below details and reply to the same email.\n\n

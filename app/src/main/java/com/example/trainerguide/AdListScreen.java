@@ -25,7 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdListScreen extends AppCompatActivity {
+public class AdListScreen extends AppCompatActivity implements AdAdapter.OnClickAdListener {
 
     private RecyclerView adRecycler;
     private AdAdapter adAdapter;
@@ -65,6 +65,7 @@ public class AdListScreen extends AppCompatActivity {
         adRecycler = findViewById(R.id.adRecycler);
         adRecycler.setLayoutManager(new LinearLayoutManager(this));
         adAdapter = new AdAdapter(adList,AdListScreen.this);
+        adAdapter.setOnClickAdListener(this);
         adRecycler.setAdapter(adAdapter);
 
         //tool bar variables
@@ -149,5 +150,18 @@ public class AdListScreen extends AppCompatActivity {
         super.onBackPressed();
         startActivity(new Intent(AdListScreen.this, ProfileScreen.class));
 
+    }
+
+
+    @Override
+    public void onClickAd(int position) {
+        Ad ad = adList.get(position);
+
+        Intent intent = new Intent(AdListScreen.this, AdViewScreen.class);
+        intent.putExtra("ad",ad);
+        intent.putExtra("userEmail",userEmail);
+        intent.putExtra("isAdmin",isAdmin);
+        intent.putExtra("Screen","AdListScreen");
+        startActivity(intent);
     }
 }

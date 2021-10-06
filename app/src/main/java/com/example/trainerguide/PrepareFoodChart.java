@@ -180,9 +180,6 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
 
 
 
-        //Menu Item variables
-        profileMenu = findViewById(R.id.nav_profile);
-//        traineeMenu = findViewById(R.id.nav_trainees);
 
         //Common variables
         tablayout = findViewById(R.id.foodTimingTabs);

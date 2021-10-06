@@ -18,6 +18,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Editable;
@@ -165,16 +166,13 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
         searchClear.setVisibility(View.GONE);
 
 
-        //Menu Item variables
-        profileMenu = findViewById(R.id.nav_profile);
-//        traineeMenu = findViewById(R.id.nav_trainees);
 
         //Method to re-direct the page from menu
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
-                    case R.id.nav_profile:
+                    /*case R.id.nav_profile:
                         intent=new Intent(TraineesScreen.this,ProfileScreen.class);
                         startActivity(intent);
                         finish();
@@ -193,6 +191,11 @@ public class TraineesScreen extends AppCompatActivity implements TraineeAdapter.
                         editor.remove("IsLoggedIn");
                         //editor.putBoolean("IsLoggedIn",false);
                         editor.commit();
+                        finish();
+                        break;*/
+                    case R.id.nav_share:
+                    case R.id.nav_rating:
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/")));
                         finish();
                         break;
                     default:

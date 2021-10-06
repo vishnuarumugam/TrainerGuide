@@ -460,15 +460,15 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
-                    case R.id.nav_profile:
+                    /*case R.id.nav_profile:
                         break;
 
                     case R.id.nav_notification:
                         startActivity(new Intent(ProfileScreen.this,NotificationScreen.class));
                         finish();
                         break;
-
-                    case R.id.nav_logout:
+*/
+                    /*case R.id.nav_logout:
                         startActivity(new Intent(ProfileScreen.this,MainActivity.class));
                         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                         SharedPreferences.Editor editor = settings.edit();
@@ -477,6 +477,11 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
                         editor.remove("IsLoggedIn");
                         //editor.putBoolean("IsLoggedIn",false);
                         editor.commit();
+                        finish();
+                        break;*/
+                    case R.id.nav_share:
+                    case R.id.nav_rating:
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/")));
                         finish();
                         break;
                     default:
@@ -883,7 +888,6 @@ public class ProfileScreen extends AppCompatActivity implements View.OnClickList
 
                 case R.id.profileAdRelativeLay:
                     Intent intent = new Intent(ProfileScreen.this, AdListScreen.class);
-                    System.out.println("getEmail"+user.getEmail());
                     intent.putExtra("userEmail",user.getEmail());
                     startActivity(intent);
                     finish();

@@ -66,7 +66,6 @@ public class AdSliderAdapter extends SliderViewAdapter<AdSliderAdapter.ViewHolde
             @Override
             public void onClick(View v) {
                 adList.get(position);
-                System.out.println("binderClick"+position);
                 adListener.onClickAd(position);
             }
         });

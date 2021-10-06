@@ -237,17 +237,13 @@ public class FoodSourceListScreen extends AppCompatActivity implements View.OnCl
                 Intent intent;
                 switch (item.getItemId()){
 
-                    case R.id.nav_profile:
+                    /*case R.id.nav_profile:
                         intent = new Intent(FoodSourceListScreen.this,ProfileScreen.class);
                         intent.putExtra("Screen", "FoodSourceListScreen");
                         startActivity(intent);
                         finish();
                         break;
-                    /*case R.id.nav_trainees:
 
-                        startActivity(new Intent(FoodSourceListScreen.this,TraineesScreen.class));
-                        finish();
-                        break;*/
                     case R.id.nav_notification:
 
                         intent = new Intent(FoodSourceListScreen.this,NotificationScreen.class);
@@ -255,10 +251,7 @@ public class FoodSourceListScreen extends AppCompatActivity implements View.OnCl
                         startActivity(intent);
                         finish();
                         break;
-                    /*case R.id.nav_trainer:
-                        startActivity(new Intent(FoodSourceListScreen.this,TrainerScreen.class));
-                        finish();
-                        break;*/
+
                     case R.id.nav_logout:
                         startActivity(new Intent(FoodSourceListScreen.this,MainActivity.class));
                         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -268,6 +261,11 @@ public class FoodSourceListScreen extends AppCompatActivity implements View.OnCl
                         editor.remove("IsLoggedIn");
                         //editor.putBoolean("IsLoggedIn",false);
                         editor.commit();
+                        finish();
+                        break;*/
+                    case R.id.nav_share:
+                    case R.id.nav_rating:
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/")));
                         finish();
                         break;
                     default:
