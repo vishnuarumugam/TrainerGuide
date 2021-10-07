@@ -18,73 +18,81 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true">
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:padding="10dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/alertDialogTitle"
-                android:textAlignment="center"
-                android:textColor="@color/themeColourTwo"
-                android:textStyle="normal"
-                android:fontFamily="@font/poppins_medium"
-                android:textSize="16sp"
-                android:paddingHorizontal="5dp"
-                android:layout_marginTop="15dp"
-                android:layout_gravity="center" />
-
-
-            <TextView
-                android:id="@+id/alertDialogMsg"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="20dp"
-                android:text=""
-                android:textAlignment="center"
-                android:fontFamily="@font/poppins_medium"
-                android:textSize="14sp"
-                android:textColor="@color/themeColourOne" />
+            android:layout_height="match_parent">
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_gravity="center_horizontal"
-                android:background="@color/white"
-                android:orientation="horizontal" >
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:padding="10dp"
+                android:orientation="vertical">
 
-                <com.google.android.material.button.MaterialButton
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/alertDialogTitle"
+                    android:textAlignment="center"
+                    android:textColor="@color/themeColourTwo"
+                    android:textStyle="normal"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textSize="16sp"
+                    android:paddingHorizontal="5dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_gravity="center" />
+
+
+                <TextView
+                    android:id="@+id/alertDialogMsg"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:id="@+id/alertDialogBtnLeft"
+                    android:layout_margin="20dp"
+                    android:text=""
+                    android:textAlignment="center"
                     android:fontFamily="@font/poppins_medium"
                     android:textSize="14sp"
-                    android:text="Yes"
-                    android:backgroundTint="@color/themeColourFour"/>
+                    android:textColor="@color/themeColourOne" />
 
-                <com.google.android.material.button.MaterialButton
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="5dp"
-                    android:id="@+id/alertDialogBtnRight"
-                    android:fontFamily="@font/poppins_medium"
-                    android:textSize="14sp"
-                    android:text="No"
-                    android:backgroundTint="@color/themeColourTwo"/>
+                    android:layout_marginTop="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@color/white"
+                    android:orientation="horizontal" >
+
+                    <com.google.android.material.button.MaterialButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:id="@+id/alertDialogBtnLeft"
+                        android:fontFamily="@font/poppins_medium"
+                        android:textSize="14sp"
+                        android:text="Yes"
+                        android:backgroundTint="@color/themeColourFour"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="5dp"
+                        android:id="@+id/alertDialogBtnRight"
+                        android:fontFamily="@font/poppins_medium"
+                        android:textSize="14sp"
+                        android:text="No"
+                        android:backgroundTint="@color/themeColourTwo"/>
+
+
+                </LinearLayout>
 
 
             </LinearLayout>
 
+        </ScrollView>
 
-        </LinearLayout>
+
 
 
     </com.google.android.material.card.MaterialCardView>

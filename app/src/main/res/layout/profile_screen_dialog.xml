@@ -28,958 +28,966 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true">
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <!-- DOB Dialog-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/profileDobDialogTitleLin"
-                android:orientation="vertical"
-                android:layout_marginTop="25dp"
-                android:layout_marginBottom="20dp"
-                android:visibility="gone">
+                android:orientation="vertical">
 
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:id="@+id/profileDobDialogImg"
-                    android:src="@drawable/profile_dob"
-                    android:elevation="5dp"
-                    android:layout_gravity="center"/>
-
-                <TextView
+                <!-- DOB Dialog-->
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/profileDobDialogTitle"
-                    android:layout_marginHorizontal="20dp"
-                    android:textAlignment="center"
-                    android:layout_marginTop="15dp"
-                    android:elevation="10dp"
-                    android:text="Date of Birth"
-                    android:textColor="@color/themeColourFour"
-                    android:textStyle="bold"
-                    android:textSize="16sp"
-                    android:fontFamily="@font/poppins_medium"/>
-
-                <DatePicker
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/profileDobDialogDatePicker"
-                    android:layout_marginTop="15dp"
-                    android:layout_gravity="center"
-                    android:calendarTextColor="@color/themeColourOne"
-                    android:theme="@style/DialogDatePicker"/>
-
-
-                <com.google.android.material.button.MaterialButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/profileDobDialogUpdate"
-                    android:layout_gravity="center"
-                    android:text="UPDATE"
-                    style="@style/DialogUpdateButton"/>
-
-            </LinearLayout>
-
-            <!-- Weight Dialog-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:id="@+id/profileWeightDialogTitleLin"
-                android:layout_marginTop="25dp"
-                android:visibility="gone"
-                android:layout_marginBottom="25dp">
-
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:id="@+id/profileWeightDialogImg"
-                    android:src="@drawable/weight"
-                    android:elevation="5dp"
-                    android:layout_gravity="center"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/profileWeightDialogTitle"
-                    android:layout_marginHorizontal="20dp"
-                    android:textAlignment="center"
-                    android:layout_marginTop="15dp"
-                    android:elevation="10dp"
-                    android:text="Weight"
-                    android:textColor="@color/themeColourOne"
-                    android:textStyle="bold"
-                    android:textSize="16sp"
-                    android:fontFamily="@font/poppins_medium"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/profileWeightDialogUnit"
-                    android:layout_marginHorizontal="20dp"
-                    android:textAlignment="center"
-                    android:layout_marginTop="15dp"
-                    android:elevation="10dp"
-                    android:text="(in kgs)"
-                    android:fontFamily="@font/poppins_light"
-                    android:textColor="@color/themeColourFour"
-                    android:textStyle="bold"
-                    android:textSize="14sp"/>
-
-                <EditText
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/profileWeightDialogInput"
-                    android:theme="@style/DialogEditText"
-                    android:textAlignment="center"
-                    android:inputType="numberDecimal"
-                    android:maxLength="6"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="15dp"
-                    android:textColor="@color/themeColourTwo"/>
-
-                <com.google.android.material.button.MaterialButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:id="@+id/profileWeightDialogUpdate"
-                    android:layout_marginTop="10dp"
-                    android:text="UPDATE"
-                    style="@style/DialogUpdateButton"
-                    />
-
-
-            </LinearLayout>
-
-            <!-- Height Dialog-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:id="@+id/profileHeightDialogTitleLin"
-                android:layout_marginTop="25dp"
-                android:visibility="gone"
-                android:layout_marginBottom="25dp">
-
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:id="@+id/profileHeightDialogImg"
-                    android:src="@drawable/height"
-                    android:elevation="5dp"
-                    android:layout_gravity="center"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/profileHeightDialogTitle"
-                    android:layout_marginHorizontal="20dp"
-                    android:textAlignment="center"
-                    android:layout_marginTop="15dp"
-                    android:elevation="10dp"
-                    android:text="Height"
-                    android:textColor="@color/themeColourOne"
-                    android:textStyle="bold"
-                    android:textSize="16sp"
-                    android:fontFamily="@font/poppins_medium"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/profileHeightDialogUnit"
-                    android:layout_marginHorizontal="20dp"
-                    android:textAlignment="center"
-                    android:layout_marginTop="15dp"
-                    android:elevation="10dp"
-                    android:text="(in cms)"
-                    android:fontFamily="@font/poppins_light"
-                    android:textColor="@color/themeColourFour"
-                    android:textStyle="bold"
-                    android:textSize="14sp"  />
-
-
-                <EditText
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/profileHeightDialogInput"
-                    android:hint="Height"
-                    android:inputType="numberDecimal"
-                    android:maxLength="6"
-                    android:theme="@style/DialogEditText"
-                    android:textAlignment="center"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="15dp"
-                    android:textColor="@color/themeColourTwo"/>
-
-
-                <com.google.android.material.button.MaterialButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:id="@+id/profileHeightDialogUpdate"
-                    android:layout_marginTop="10dp"
-                    android:text="UPDATE"
-                    style="@style/DialogUpdateButton"/>
-
-
-            </LinearLayout>
-
-            <!-- Experience Dialog-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:id="@+id/profileExperienceDialogTitleLin"
-                android:layout_marginTop="25dp"
-                android:visibility="gone"
-                android:layout_marginBottom="25dp">
-
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:id="@+id/profileExperienceDialogImg"
-                    android:src="@drawable/experience"
-                    android:elevation="5dp"
-                    android:layout_gravity="center"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/profileExperienceDialogTitle"
-                    android:layout_marginHorizontal="20dp"
-                    android:textAlignment="center"
-                    android:layout_marginTop="15dp"
-                    android:elevation="10dp"
-                    android:text="Experience"
-                    android:textColor="@color/themeColourOne"
-                    android:textStyle="bold"
-                    android:textSize="16sp"
-                    android:fontFamily="@font/poppins_medium"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/profileExperienceDialogUnit"
-                    android:layout_marginHorizontal="20dp"
-                    android:textAlignment="center"
-                    android:layout_marginTop="15dp"
-                    android:elevation="10dp"
-                    android:text="(in years)"
-                    android:fontFamily="@font/poppins_light"
-                    android:textColor="@color/themeColourFour"
-                    android:textStyle="bold"
-                    android:textSize="14sp"/>
-
-
-                <EditText
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/profileExperienceDialogInput"
-                    android:hint="Experience"
-                    android:theme="@style/DialogEditText"
-                    android:inputType="numberDecimal"
-                    android:maxLength="5"
-                    android:textAlignment="center"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="15dp"
-                    android:textColor="@color/themeColourTwo"
-                    />
-
-
-                <com.google.android.material.button.MaterialButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:id="@+id/profileExperienceDialogUpdate"
-                    android:layout_marginTop="10dp"
-                    android:text="UPDATE"
-                    style="@style/DialogUpdateButton"/>
-
-
-            </LinearLayout>
-
-            <!-- Mobile Dialog-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:id="@+id/profileMobileDialogTitleLin"
-                android:layout_marginTop="25dp"
-                android:visibility="gone"
-                android:layout_marginBottom="25dp">
-
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:id="@+id/profileMobileDialogImg"
-                    android:src="@drawable/profile_mobile"
-                    android:elevation="5dp"
-                    android:layout_gravity="center"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/profileMobileDialogTitle"
-                    android:layout_marginHorizontal="20dp"
-                    android:textAlignment="center"
-                    android:layout_marginTop="15dp"
-                    android:elevation="10dp"
-                    android:text="Mobile No"
-                    android:textColor="@color/themeColourOne"
-                    android:textStyle="bold"
-                    android:textSize="16sp"
-                    android:fontFamily="@font/poppins_medium"/>
-
-
-
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/profileMobileDialogInput"
-                    android:hint="mobile no"
-                    android:theme="@style/DialogEditText"
-                    android:inputType="number"
-                    android:textAlignment="center"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="15dp"
-                    android:textColor="@color/themeColourTwo"
-                    />
-
-
-                <com.google.android.material.button.MaterialButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:id="@+id/profileMobileDialogUpdate"
-                    android:layout_marginTop="10dp"
-                    android:text="UPDATE"
-                    style="@style/DialogUpdateButton"/>
-
-            </LinearLayout>
-
-
-            <!-- Food Type Dialog-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:id="@+id/profileFoodTypeDialogTitleLin"
-                android:layout_marginTop="25dp"
-                android:visibility="gone"
-                android:layout_marginBottom="25dp">
-
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:id="@+id/profileFoodTypeDialogImg"
-                    android:src="@drawable/diet_type"
-                    android:elevation="5dp"
-                    android:layout_gravity="center"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/profileFoodTypeDialogTitle"
-                    android:layout_marginHorizontal="20dp"
-                    android:textAlignment="center"
-                    android:layout_marginTop="15dp"
-                    android:elevation="10dp"
-                    android:text="Food Type"
-                    android:textColor="@color/themeColourOne"
-                    android:textStyle="bold"
-                    android:textSize="16sp"
-                    android:fontFamily="@font/poppins_medium"/>
-
-                <RadioGroup
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:elevation="0dp"
-                    android:background="@drawable/dialog_radio_round"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/vegFoodType"
-                        android:theme="@style/DialogRadioButton"
-                        android:layout_margin="5dp"
-                        android:text="Veg"
-                        android:textColor="@color/themeColourOne"
-                        />
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/vegEggFoodType"
-                        android:text="Veg with Egg"
-                        android:theme="@style/DialogRadioButton"
-                        android:textColor="@color/themeColourOne"
-                        android:layout_margin="5dp"/>
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/nonVegFoodType"
-                        android:text="Non - Veg"
-                        android:theme="@style/DialogRadioButton"
-                        android:textColor="@color/themeColourOne"
-                        android:layout_margin="5dp"/>
-
-                </RadioGroup>
-
-                <com.google.android.material.button.MaterialButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:id="@+id/profileFoodTypeDialogUpdate"
-                    android:layout_marginTop="10dp"
-                    android:text="UPDATE"
-                    style="@style/DialogUpdateButton"/>
-
-
-            </LinearLayout>
-
-            <!-- Food Allergy Dialog-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:id="@+id/profileFoodAllergyDialogTitleLin"
-                android:layout_marginTop="25dp"
-                android:visibility="gone"
-                android:layout_marginBottom="25dp">
-
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:id="@+id/profileFoodAllergyDialogImg"
-                    android:src="@drawable/food_allergy"
-                    android:elevation="5dp"
-                    android:layout_gravity="center"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/profileFoodAllergyDialogTitle"
-                    android:layout_marginHorizontal="20dp"
-                    android:textAlignment="center"
-                    android:layout_marginTop="15dp"
-                    android:elevation="10dp"
-                    android:text="Food Allergies"
-                    android:textColor="@color/themeColourOne"
-                    android:textStyle="bold"
-                    android:textSize="16sp"
-                    android:fontFamily="@font/poppins_medium"/>
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginHorizontal="20dp"
-                    android:background="@drawable/dialog_radio_round">
-
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/foodAllergyRelLeft"
-                        android:layout_marginLeft="10dp"
-                        android:layout_alignParentLeft="true">
-
-                        <com.google.android.material.checkbox.MaterialCheckBox
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/diaryFoodAllergy"
-                            android:text="Diary"
-                            android:textColor="@color/themeColourOne"
-                            android:theme="@style/DialogCheckBox"
-                            android:layout_alignParentLeft="true"/>
-
-                        <com.google.android.material.checkbox.MaterialCheckBox
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/wheatFoodAllergy"
-                            android:text="Wheat"
-                            android:textColor="@color/themeColourOne"
-                            android:theme="@style/DialogCheckBox"
-                            android:layout_below="@+id/diaryFoodAllergy"/>
-
-                        <com.google.android.material.checkbox.MaterialCheckBox
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/nutsFoodAllergy"
-                            android:text="Nuts"
-                            android:textColor="@color/themeColourOne"
-                            android:theme="@style/DialogCheckBox"
-                            android:layout_below="@+id/wheatFoodAllergy"/>
-
-                    </RelativeLayout>
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/foodAllergyRelRight"
-                        android:layout_marginRight="10dp"
-                        android:layout_centerInParent="true"
-                        android:layout_alignParentRight="true">
-
-                        <com.google.android.material.checkbox.MaterialCheckBox
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/seaFoodAllergy"
-                            android:text="Sea Food"
-                            android:textColor="@color/themeColourOne"
-                            android:theme="@style/DialogCheckBox"
-                            android:layout_alignParentLeft="true"/>
-
-                        <com.google.android.material.checkbox.MaterialCheckBox
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/muttonFoodAllergy"
-                            android:text="Mutton"
-                            android:textColor="@color/themeColourOne"
-                            android:theme="@style/DialogCheckBox"
-                            android:layout_below="@+id/seaFoodAllergy"/>
-
-                        <com.google.android.material.checkbox.MaterialCheckBox
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/chickenFoodAllergy"
-                            android:text="Chicken"
-                            android:textColor="@color/themeColourOne"
-                            android:theme="@style/DialogCheckBox"
-                            android:layout_below="@+id/muttonFoodAllergy"/>
-
-                    </RelativeLayout>
-
-                </RelativeLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:counterEnabled="true"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginHorizontal="15dp"
-                    app:counterMaxLength="30">
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:id="@+id/otherFoodAllergy"
-                        android:hint="Other"
-                        android:maxLength="30"
-                        android:background="@drawable/round_shape"
-                        android:textColorHint="@color/themeColourTwo"
-                        style="@style/DialogEditText"
-                        android:textColor="@color/themeColourOne"
-                        android:fontFamily="@font/poppins_light">
-
-                    </EditText>
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-
-                <com.google.android.material.button.MaterialButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:id="@+id/profileFoodAllergyDialogUpdate"
-                    android:layout_marginTop="10dp"
-                    android:text="UPDATE"
-                    style="@style/DialogUpdateButton"/>
-
-
-            </LinearLayout>
-
-            <!-- Health Issues Dialog-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:id="@+id/profileHealthInfoDialogTitleLin"
-                android:layout_marginTop="25dp"
-                android:visibility="gone"
-                android:layout_marginBottom="25dp">
-
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:id="@+id/profileHealthInfoDialogImg"
-                    android:src="@drawable/health_issues"
-                    android:elevation="5dp"
-                    android:layout_gravity="center"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/profileHealthInfoDialogTitle"
-                    android:layout_marginHorizontal="20dp"
-                    android:textAlignment="center"
-                    android:layout_marginTop="15dp"
-                    android:elevation="10dp"
-                    android:text="Health Issues"
-                    android:textColor="@color/themeColourOne"
-                    android:textStyle="bold"
-                    android:textSize="16sp"
-                    android:fontFamily="@font/poppins_medium"/>
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginHorizontal="20dp"
-                    android:background="@drawable/dialog_radio_round">
-
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/healthInfoRelLeft"
-                        android:layout_marginLeft="10dp"
-                        android:layout_alignParentLeft="true">
-
-                        <com.google.android.material.checkbox.MaterialCheckBox
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/diabetesHealthIssue"
-                            android:text="Diabetes"
-                            android:textColor="@color/themeColourOne"
-                            android:theme="@style/DialogCheckBox"
-                            android:layout_alignParentLeft="true"/>
-
-                        <com.google.android.material.checkbox.MaterialCheckBox
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/cholesterolHealthIssue"
-                            android:text="Cholesterol"
-                            android:textColor="@color/themeColourOne"
-                            android:theme="@style/DialogCheckBox"
-                            android:layout_below="@+id/diabetesHealthIssue"/>
-
-                        <com.google.android.material.checkbox.MaterialCheckBox
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/thyroidHealthIssue"
-                            android:text="Thyroid"
-                            android:textColor="@color/themeColourOne"
-                            android:theme="@style/DialogCheckBox"
-                            android:layout_below="@+id/cholesterolHealthIssue"/>
-
-                    </RelativeLayout>
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/healthInfoRelRight"
-                        android:layout_marginRight="10dp"
-                        android:layout_centerInParent="true"
-                        android:layout_alignParentRight="true">
-
-                        <com.google.android.material.checkbox.MaterialCheckBox
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/bpHealthIssue"
-                            android:text="Blood Pressure"
-                            android:textColor="@color/themeColourOne"
-                            android:theme="@style/DialogCheckBox"
-                            android:layout_alignParentLeft="true"/>
-
-                        <com.google.android.material.checkbox.MaterialCheckBox
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/heartHealthIssue"
-                            android:text="Heart Problems"
-                            android:textColor="@color/themeColourOne"
-                            android:theme="@style/DialogCheckBox"
-                            android:layout_below="@+id/bpHealthIssue"/>
-
-                        <com.google.android.material.checkbox.MaterialCheckBox
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/physicalInjuriesHealthIssue"
-                            android:text="Physical Injuries"
-                            android:textColor="@color/themeColourOne"
-                            android:theme="@style/DialogCheckBox"
-                            android:layout_below="@+id/heartHealthIssue"/>
-
-                    </RelativeLayout>
-
-                </RelativeLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:counterEnabled="true"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginHorizontal="15dp"
-                    app:counterMaxLength="30">
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:id="@+id/otherHealthIssue"
-                        android:hint="Other"
-                        android:maxLength="30"
-                        style="@style/DialogEditText"
-                        android:background="@drawable/round_shape"
-                        android:textColorHint="@color/themeColourTwo"
-                        android:textColor="@color/themeColourOne"
-                        android:fontFamily="@font/poppins_light">
-
-                    </EditText>
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-
-                <com.google.android.material.button.MaterialButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:id="@+id/profileHealthInfoDialogUpdate"
-                    android:layout_marginTop="10dp"
-                    android:text="UPDATE"
-                    style="@style/DialogUpdateButton"/>
-
-
-            </LinearLayout>
-
-            <!-- Subscription Type Dialog-->
-            <!--<LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:id="@+id/profileSubscriptionTypeDialogTitleLin"
-                android:layout_marginTop="25dp"
-                android:visibility="gone"
-                android:layout_marginBottom="25dp">
-
-                <ImageView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:id="@+id/profileSubscriptionTypeDialogImg"
-                    android:src="@mipmap/food_type"
-                    android:elevation="5dp"
-                    android:layout_gravity="center"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/profileSubscriptionTypeDialogTitle"
-                    android:layout_marginHorizontal="20dp"
-                    android:textAlignment="center"
-                    android:layout_marginTop="15dp"
-                    android:elevation="10dp"
-                    android:text="Subscription Type"
-                    android:textColor="@color/grey"
-                    android:textStyle="bold"
-                    style="@style/TextAppearance.AppCompat.Body1"
-                    android:textSize="25dp"/>
-
-                <RadioGroup
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:elevation="0dp"
-                    android:background="@drawable/dialog_radio_round"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/weightLossSubscription"
-                        android:theme="@style/DialogRadioButton"
-                        android:layout_margin="5dp"
-                        android:text="Weight Loss"
-                        style="@style/TextAppearance.AppCompat.Body1"/>
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/weightGainSubscription"
-                        android:text="Weight Gain"
-                        android:theme="@style/DialogRadioButton"
-                        android:layout_margin="5dp"
-                        style="@style/TextAppearance.AppCompat.Body1"/>
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/weightMaintainSubscription"
-                        android:text="Weight Maintain"
-                        android:theme="@style/DialogRadioButton"
-                        android:layout_margin="5dp"
-                        android:visibility="gone"
-                        style="@style/TextAppearance.AppCompat.Body1"/>
-
-                </RadioGroup>
-
-                <com.google.android.material.button.MaterialButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:id="@+id/profileSubscriptionTypeDialogUpdate"
-                    android:layout_marginTop="10dp"
-                    android:text="UPDATE"
-                    android:backgroundTint="@color/themeColourOne"/>
-
-
-            </LinearLayout>-->
-
-            <!-- Subscription Fees Dialog-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:id="@+id/profileSubscriptionFeesDialogTitleLin"
-                android:layout_marginTop="25dp"
-                android:visibility="gone"
-                android:layout_marginBottom="25dp">
-
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:id="@+id/profileSubscriptionFeesDialogImg"
-                    android:src="@drawable/rupee"
-                    android:elevation="5dp"
-                    android:layout_gravity="center"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/profileSubscriptionFeesDialogTitle"
-                    android:layout_marginHorizontal="20dp"
-                    android:textAlignment="center"
-                    android:layout_marginTop="15dp"
-                    android:elevation="10dp"
-                    android:text="Subscription Fees"
-                    android:textColor="@color/themeColourOne"
-                    android:textStyle="bold"
-                    android:textSize="16sp"
-                    android:fontFamily="@font/poppins_medium"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/profileSubscriptionFeesDialogUnit"
-                    android:layout_marginHorizontal="20dp"
-                    android:textAlignment="center"
-                    android:layout_marginTop="15dp"
-                    android:elevation="10dp"
-                    android:text="(in rupees per month)"
-                    android:fontFamily="@font/poppins_light"
-                    android:textColor="@color/themeColourFour"
-                    android:textStyle="bold"
-                    android:textSize="14sp"/>
-
-
-                <EditText
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/profileSubscriptionFeesDialogInput"
-                    android:hint="Amount"
-                    android:theme="@style/DialogEditText"
-                    android:maxLength="7"
-                    android:inputType="numberDecimal"
-                    android:textAlignment="center"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="15dp"
-                    android:textColor="@color/themeColourTwo"/>
-
-
-                <com.google.android.material.button.MaterialButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:id="@+id/profileSubscriptionFeesDialogUpdate"
-                    android:layout_marginTop="10dp"
-                    android:text="UPDATE"
-                    style="@style/DialogUpdateButton"/>
-
-
-            </LinearLayout>
-
-            <!-- Subscription Desc Dialog-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:id="@+id/profileSubscriptionDescDialogTitleLin"
-                android:layout_marginTop="25dp"
-                android:visibility="gone"
-                android:layout_marginBottom="25dp">
-
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:id="@+id/profileSubscriptionDescDialogImg"
-                    android:src="@drawable/description"
-                    android:elevation="5dp"
-                    android:layout_gravity="center"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/profileSubscriptionDescDialogTitle"
-                    android:layout_marginHorizontal="20dp"
-                    android:textAlignment="center"
-                    android:layout_marginTop="15dp"
-                    android:elevation="10dp"
-                    android:text="Description"
-                    android:textColor="@color/themeColourOne"
-                    android:textStyle="bold"
-                    android:textSize="16sp"
-                    android:fontFamily="@font/poppins_medium"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/profileSubscriptionDescDialogUnit"
-                    android:layout_marginHorizontal="20dp"
-                    android:textAlignment="center"
-                    android:layout_marginTop="15dp"
-                    android:elevation="10dp"
-                    android:text="(your training details)"
-                    android:fontFamily="@font/poppins_light"
-                    android:textColor="@color/themeColourFour"
-                    android:textStyle="bold"
-                    android:textSize="14sp" />
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    app:counterEnabled="true"
-                    android:layout_marginHorizontal="15dp"
-                    app:counterMaxLength="300"
-                    android:layout_gravity="center"
-                    android:backgroundTint="@color/lightGrey">
-
-                    <EditText
+                    android:id="@+id/profileDobDialogTitleLin"
+                    android:orientation="vertical"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginBottom="20dp"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:id="@+id/profileDobDialogImg"
+                        android:src="@drawable/profile_dob"
+                        android:elevation="5dp"
+                        android:layout_gravity="center"/>
+
+                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/profileSubscriptionDescDialogInput"
+                        android:id="@+id/profileDobDialogTitle"
+                        android:layout_marginHorizontal="20dp"
+                        android:textAlignment="center"
+                        android:layout_marginTop="15dp"
+                        android:elevation="10dp"
+                        android:text="Date of Birth"
+                        android:textColor="@color/themeColourFour"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/poppins_medium"/>
+
+                    <DatePicker
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/profileDobDialogDatePicker"
+                        android:layout_marginTop="15dp"
+                        android:layout_gravity="center"
+                        android:calendarTextColor="@color/themeColourOne"
+                        android:theme="@style/DialogDatePicker"/>
+
+
+                    <com.google.android.material.button.MaterialButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/profileDobDialogUpdate"
+                        android:layout_gravity="center"
+                        android:text="UPDATE"
+                        style="@style/DialogUpdateButton"/>
+
+                </LinearLayout>
+
+                <!-- Weight Dialog-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:id="@+id/profileWeightDialogTitleLin"
+                    android:layout_marginTop="25dp"
+                    android:visibility="gone"
+                    android:layout_marginBottom="25dp">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:id="@+id/profileWeightDialogImg"
+                        android:src="@drawable/weight"
+                        android:elevation="5dp"
+                        android:layout_gravity="center"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/profileWeightDialogTitle"
+                        android:layout_marginHorizontal="20dp"
+                        android:textAlignment="center"
+                        android:layout_marginTop="15dp"
+                        android:elevation="10dp"
+                        android:text="Weight"
+                        android:textColor="@color/themeColourOne"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/poppins_medium"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/profileWeightDialogUnit"
+                        android:layout_marginHorizontal="20dp"
+                        android:textAlignment="center"
+                        android:layout_marginTop="15dp"
+                        android:elevation="10dp"
+                        android:text="(in kgs)"
+                        android:fontFamily="@font/poppins_light"
+                        android:textColor="@color/themeColourFour"
+                        android:textStyle="bold"
+                        android:textSize="14sp"/>
+
+                    <EditText
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/profileWeightDialogInput"
                         android:theme="@style/DialogEditText"
                         android:textAlignment="center"
-                        android:layout_margin="15dp"
-                        android:maxLength="300"
-                        android:textColor="@color/themeColourTwo"
-                        android:background="@drawable/round_shape"/>
+                        android:inputType="numberDecimal"
+                        android:maxLength="6"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="15dp"
+                        android:textColor="@color/themeColourTwo"/>
 
-                </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.button.MaterialButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:id="@+id/profileWeightDialogUpdate"
+                        android:layout_marginTop="10dp"
+                        android:text="UPDATE"
+                        style="@style/DialogUpdateButton"
+                        />
 
-                <com.google.android.material.button.MaterialButton
-                    android:layout_width="wrap_content"
+
+                </LinearLayout>
+
+                <!-- Height Dialog-->
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:id="@+id/profileSubscriptionDescDialogUpdate"
-                    android:layout_marginTop="10dp"
-                    android:text="UPDATE"
-                    style="@style/DialogUpdateButton"/>
+                    android:orientation="vertical"
+                    android:id="@+id/profileHeightDialogTitleLin"
+                    android:layout_marginTop="25dp"
+                    android:visibility="gone"
+                    android:layout_marginBottom="25dp">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:id="@+id/profileHeightDialogImg"
+                        android:src="@drawable/height"
+                        android:elevation="5dp"
+                        android:layout_gravity="center"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/profileHeightDialogTitle"
+                        android:layout_marginHorizontal="20dp"
+                        android:textAlignment="center"
+                        android:layout_marginTop="15dp"
+                        android:elevation="10dp"
+                        android:text="Height"
+                        android:textColor="@color/themeColourOne"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/poppins_medium"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/profileHeightDialogUnit"
+                        android:layout_marginHorizontal="20dp"
+                        android:textAlignment="center"
+                        android:layout_marginTop="15dp"
+                        android:elevation="10dp"
+                        android:text="(in cms)"
+                        android:fontFamily="@font/poppins_light"
+                        android:textColor="@color/themeColourFour"
+                        android:textStyle="bold"
+                        android:textSize="14sp"  />
 
 
+                    <EditText
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/profileHeightDialogInput"
+                        android:hint="Height"
+                        android:inputType="numberDecimal"
+                        android:maxLength="6"
+                        android:theme="@style/DialogEditText"
+                        android:textAlignment="center"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="15dp"
+                        android:textColor="@color/themeColourTwo"/>
+
+
+                    <com.google.android.material.button.MaterialButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:id="@+id/profileHeightDialogUpdate"
+                        android:layout_marginTop="10dp"
+                        android:text="UPDATE"
+                        style="@style/DialogUpdateButton"/>
+
+
+                </LinearLayout>
+
+                <!-- Experience Dialog-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:id="@+id/profileExperienceDialogTitleLin"
+                    android:layout_marginTop="25dp"
+                    android:visibility="gone"
+                    android:layout_marginBottom="25dp">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:id="@+id/profileExperienceDialogImg"
+                        android:src="@drawable/experience"
+                        android:elevation="5dp"
+                        android:layout_gravity="center"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/profileExperienceDialogTitle"
+                        android:layout_marginHorizontal="20dp"
+                        android:textAlignment="center"
+                        android:layout_marginTop="15dp"
+                        android:elevation="10dp"
+                        android:text="Experience"
+                        android:textColor="@color/themeColourOne"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/poppins_medium"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/profileExperienceDialogUnit"
+                        android:layout_marginHorizontal="20dp"
+                        android:textAlignment="center"
+                        android:layout_marginTop="15dp"
+                        android:elevation="10dp"
+                        android:text="(in years)"
+                        android:fontFamily="@font/poppins_light"
+                        android:textColor="@color/themeColourFour"
+                        android:textStyle="bold"
+                        android:textSize="14sp"/>
+
+
+                    <EditText
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/profileExperienceDialogInput"
+                        android:hint="Experience"
+                        android:theme="@style/DialogEditText"
+                        android:inputType="numberDecimal"
+                        android:maxLength="5"
+                        android:textAlignment="center"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="15dp"
+                        android:textColor="@color/themeColourTwo"
+                        />
+
+
+                    <com.google.android.material.button.MaterialButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:id="@+id/profileExperienceDialogUpdate"
+                        android:layout_marginTop="10dp"
+                        android:text="UPDATE"
+                        style="@style/DialogUpdateButton"/>
+
+
+                </LinearLayout>
+
+                <!-- Mobile Dialog-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:id="@+id/profileMobileDialogTitleLin"
+                    android:layout_marginTop="25dp"
+                    android:visibility="gone"
+                    android:layout_marginBottom="25dp">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:id="@+id/profileMobileDialogImg"
+                        android:src="@drawable/profile_mobile"
+                        android:elevation="5dp"
+                        android:layout_gravity="center"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/profileMobileDialogTitle"
+                        android:layout_marginHorizontal="20dp"
+                        android:textAlignment="center"
+                        android:layout_marginTop="15dp"
+                        android:elevation="10dp"
+                        android:text="Mobile No"
+                        android:textColor="@color/themeColourOne"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/poppins_medium"/>
+
+
+
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/profileMobileDialogInput"
+                        android:hint="mobile no"
+                        android:theme="@style/DialogEditText"
+                        android:inputType="number"
+                        android:textAlignment="center"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="15dp"
+                        android:textColor="@color/themeColourTwo"
+                        />
+
+
+                    <com.google.android.material.button.MaterialButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:id="@+id/profileMobileDialogUpdate"
+                        android:layout_marginTop="10dp"
+                        android:text="UPDATE"
+                        style="@style/DialogUpdateButton"/>
+
+                </LinearLayout>
+
+
+                <!-- Food Type Dialog-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:id="@+id/profileFoodTypeDialogTitleLin"
+                    android:layout_marginTop="25dp"
+                    android:visibility="gone"
+                    android:layout_marginBottom="25dp">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:id="@+id/profileFoodTypeDialogImg"
+                        android:src="@drawable/diet_type"
+                        android:elevation="5dp"
+                        android:layout_gravity="center"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/profileFoodTypeDialogTitle"
+                        android:layout_marginHorizontal="20dp"
+                        android:textAlignment="center"
+                        android:layout_marginTop="15dp"
+                        android:elevation="10dp"
+                        android:text="Food Type"
+                        android:textColor="@color/themeColourOne"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/poppins_medium"/>
+
+                    <RadioGroup
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:elevation="0dp"
+                        android:background="@drawable/dialog_radio_round"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/vegFoodType"
+                            android:theme="@style/DialogRadioButton"
+                            android:layout_margin="5dp"
+                            android:text="Veg"
+                            android:textColor="@color/themeColourOne"
+                            />
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/vegEggFoodType"
+                            android:text="Veg with Egg"
+                            android:theme="@style/DialogRadioButton"
+                            android:textColor="@color/themeColourOne"
+                            android:layout_margin="5dp"/>
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/nonVegFoodType"
+                            android:text="Non - Veg"
+                            android:theme="@style/DialogRadioButton"
+                            android:textColor="@color/themeColourOne"
+                            android:layout_margin="5dp"/>
+
+                    </RadioGroup>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:id="@+id/profileFoodTypeDialogUpdate"
+                        android:layout_marginTop="10dp"
+                        android:text="UPDATE"
+                        style="@style/DialogUpdateButton"/>
+
+
+                </LinearLayout>
+
+                <!-- Food Allergy Dialog-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:id="@+id/profileFoodAllergyDialogTitleLin"
+                    android:layout_marginTop="25dp"
+                    android:visibility="gone"
+                    android:layout_marginBottom="25dp">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:id="@+id/profileFoodAllergyDialogImg"
+                        android:src="@drawable/food_allergy"
+                        android:elevation="5dp"
+                        android:layout_gravity="center"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/profileFoodAllergyDialogTitle"
+                        android:layout_marginHorizontal="20dp"
+                        android:textAlignment="center"
+                        android:layout_marginTop="15dp"
+                        android:elevation="10dp"
+                        android:text="Food Allergies"
+                        android:textColor="@color/themeColourOne"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/poppins_medium"/>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginHorizontal="20dp"
+                        android:background="@drawable/dialog_radio_round">
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/foodAllergyRelLeft"
+                            android:layout_marginLeft="10dp"
+                            android:layout_alignParentLeft="true">
+
+                            <com.google.android.material.checkbox.MaterialCheckBox
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/diaryFoodAllergy"
+                                android:text="Diary"
+                                android:textColor="@color/themeColourOne"
+                                android:theme="@style/DialogCheckBox"
+                                android:layout_alignParentLeft="true"/>
+
+                            <com.google.android.material.checkbox.MaterialCheckBox
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/wheatFoodAllergy"
+                                android:text="Wheat"
+                                android:textColor="@color/themeColourOne"
+                                android:theme="@style/DialogCheckBox"
+                                android:layout_below="@+id/diaryFoodAllergy"/>
+
+                            <com.google.android.material.checkbox.MaterialCheckBox
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/nutsFoodAllergy"
+                                android:text="Nuts"
+                                android:textColor="@color/themeColourOne"
+                                android:theme="@style/DialogCheckBox"
+                                android:layout_below="@+id/wheatFoodAllergy"/>
+
+                        </RelativeLayout>
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/foodAllergyRelRight"
+                            android:layout_marginRight="10dp"
+                            android:layout_centerInParent="true"
+                            android:layout_alignParentRight="true">
+
+                            <com.google.android.material.checkbox.MaterialCheckBox
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/seaFoodAllergy"
+                                android:text="Sea Food"
+                                android:textColor="@color/themeColourOne"
+                                android:theme="@style/DialogCheckBox"
+                                android:layout_alignParentLeft="true"/>
+
+                            <com.google.android.material.checkbox.MaterialCheckBox
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/muttonFoodAllergy"
+                                android:text="Mutton"
+                                android:textColor="@color/themeColourOne"
+                                android:theme="@style/DialogCheckBox"
+                                android:layout_below="@+id/seaFoodAllergy"/>
+
+                            <com.google.android.material.checkbox.MaterialCheckBox
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/chickenFoodAllergy"
+                                android:text="Chicken"
+                                android:textColor="@color/themeColourOne"
+                                android:theme="@style/DialogCheckBox"
+                                android:layout_below="@+id/muttonFoodAllergy"/>
+
+                        </RelativeLayout>
+
+                    </RelativeLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:counterEnabled="true"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginHorizontal="15dp"
+                        app:counterMaxLength="30">
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/otherFoodAllergy"
+                            android:hint="Other"
+                            android:maxLength="30"
+                            android:background="@drawable/round_shape"
+                            android:textColorHint="@color/themeColourTwo"
+                            style="@style/DialogEditText"
+                            android:textColor="@color/themeColourOne"
+                            android:fontFamily="@font/poppins_light">
+
+                        </EditText>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <com.google.android.material.button.MaterialButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:id="@+id/profileFoodAllergyDialogUpdate"
+                        android:layout_marginTop="10dp"
+                        android:text="UPDATE"
+                        style="@style/DialogUpdateButton"/>
+
+
+                </LinearLayout>
+
+                <!-- Health Issues Dialog-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:id="@+id/profileHealthInfoDialogTitleLin"
+                    android:layout_marginTop="25dp"
+                    android:visibility="gone"
+                    android:layout_marginBottom="25dp">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:id="@+id/profileHealthInfoDialogImg"
+                        android:src="@drawable/health_issues"
+                        android:elevation="5dp"
+                        android:layout_gravity="center"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/profileHealthInfoDialogTitle"
+                        android:layout_marginHorizontal="20dp"
+                        android:textAlignment="center"
+                        android:layout_marginTop="15dp"
+                        android:elevation="10dp"
+                        android:text="Health Issues"
+                        android:textColor="@color/themeColourOne"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/poppins_medium"/>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginHorizontal="20dp"
+                        android:background="@drawable/dialog_radio_round">
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/healthInfoRelLeft"
+                            android:layout_marginLeft="10dp"
+                            android:layout_alignParentLeft="true">
+
+                            <com.google.android.material.checkbox.MaterialCheckBox
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/diabetesHealthIssue"
+                                android:text="Diabetes"
+                                android:textColor="@color/themeColourOne"
+                                android:theme="@style/DialogCheckBox"
+                                android:layout_alignParentLeft="true"/>
+
+                            <com.google.android.material.checkbox.MaterialCheckBox
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/cholesterolHealthIssue"
+                                android:text="Cholesterol"
+                                android:textColor="@color/themeColourOne"
+                                android:theme="@style/DialogCheckBox"
+                                android:layout_below="@+id/diabetesHealthIssue"/>
+
+                            <com.google.android.material.checkbox.MaterialCheckBox
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/thyroidHealthIssue"
+                                android:text="Thyroid"
+                                android:textColor="@color/themeColourOne"
+                                android:theme="@style/DialogCheckBox"
+                                android:layout_below="@+id/cholesterolHealthIssue"/>
+
+                        </RelativeLayout>
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/healthInfoRelRight"
+                            android:layout_marginRight="10dp"
+                            android:layout_centerInParent="true"
+                            android:layout_alignParentRight="true">
+
+                            <com.google.android.material.checkbox.MaterialCheckBox
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/bpHealthIssue"
+                                android:text="Blood Pressure"
+                                android:textColor="@color/themeColourOne"
+                                android:theme="@style/DialogCheckBox"
+                                android:layout_alignParentLeft="true"/>
+
+                            <com.google.android.material.checkbox.MaterialCheckBox
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/heartHealthIssue"
+                                android:text="Heart Problems"
+                                android:textColor="@color/themeColourOne"
+                                android:theme="@style/DialogCheckBox"
+                                android:layout_below="@+id/bpHealthIssue"/>
+
+                            <com.google.android.material.checkbox.MaterialCheckBox
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/physicalInjuriesHealthIssue"
+                                android:text="Physical Injuries"
+                                android:textColor="@color/themeColourOne"
+                                android:theme="@style/DialogCheckBox"
+                                android:layout_below="@+id/heartHealthIssue"/>
+
+                        </RelativeLayout>
+
+                    </RelativeLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:counterEnabled="true"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginHorizontal="15dp"
+                        app:counterMaxLength="30">
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/otherHealthIssue"
+                            android:hint="Other"
+                            android:maxLength="30"
+                            style="@style/DialogEditText"
+                            android:background="@drawable/round_shape"
+                            android:textColorHint="@color/themeColourTwo"
+                            android:textColor="@color/themeColourOne"
+                            android:fontFamily="@font/poppins_light">
+
+                        </EditText>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <com.google.android.material.button.MaterialButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:id="@+id/profileHealthInfoDialogUpdate"
+                        android:layout_marginTop="10dp"
+                        android:text="UPDATE"
+                        style="@style/DialogUpdateButton"/>
+
+
+                </LinearLayout>
+
+                <!-- Subscription Type Dialog-->
+                <!--<LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:id="@+id/profileSubscriptionTypeDialogTitleLin"
+                    android:layout_marginTop="25dp"
+                    android:visibility="gone"
+                    android:layout_marginBottom="25dp">
+
+                    <ImageView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:id="@+id/profileSubscriptionTypeDialogImg"
+                        android:src="@mipmap/food_type"
+                        android:elevation="5dp"
+                        android:layout_gravity="center"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/profileSubscriptionTypeDialogTitle"
+                        android:layout_marginHorizontal="20dp"
+                        android:textAlignment="center"
+                        android:layout_marginTop="15dp"
+                        android:elevation="10dp"
+                        android:text="Subscription Type"
+                        android:textColor="@color/grey"
+                        android:textStyle="bold"
+                        style="@style/TextAppearance.AppCompat.Body1"
+                        android:textSize="25dp"/>
+
+                    <RadioGroup
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:elevation="0dp"
+                        android:background="@drawable/dialog_radio_round"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/weightLossSubscription"
+                            android:theme="@style/DialogRadioButton"
+                            android:layout_margin="5dp"
+                            android:text="Weight Loss"
+                            style="@style/TextAppearance.AppCompat.Body1"/>
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/weightGainSubscription"
+                            android:text="Weight Gain"
+                            android:theme="@style/DialogRadioButton"
+                            android:layout_margin="5dp"
+                            style="@style/TextAppearance.AppCompat.Body1"/>
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/weightMaintainSubscription"
+                            android:text="Weight Maintain"
+                            android:theme="@style/DialogRadioButton"
+                            android:layout_margin="5dp"
+                            android:visibility="gone"
+                            style="@style/TextAppearance.AppCompat.Body1"/>
+
+                    </RadioGroup>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:id="@+id/profileSubscriptionTypeDialogUpdate"
+                        android:layout_marginTop="10dp"
+                        android:text="UPDATE"
+                        android:backgroundTint="@color/themeColourOne"/>
+
+
+                </LinearLayout>-->
+
+                <!-- Subscription Fees Dialog-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:id="@+id/profileSubscriptionFeesDialogTitleLin"
+                    android:layout_marginTop="25dp"
+                    android:visibility="gone"
+                    android:layout_marginBottom="25dp">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:id="@+id/profileSubscriptionFeesDialogImg"
+                        android:src="@drawable/rupee"
+                        android:elevation="5dp"
+                        android:layout_gravity="center"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/profileSubscriptionFeesDialogTitle"
+                        android:layout_marginHorizontal="20dp"
+                        android:textAlignment="center"
+                        android:layout_marginTop="15dp"
+                        android:elevation="10dp"
+                        android:text="Subscription Fees"
+                        android:textColor="@color/themeColourOne"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/poppins_medium"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/profileSubscriptionFeesDialogUnit"
+                        android:layout_marginHorizontal="20dp"
+                        android:textAlignment="center"
+                        android:layout_marginTop="15dp"
+                        android:elevation="10dp"
+                        android:text="(in rupees per month)"
+                        android:fontFamily="@font/poppins_light"
+                        android:textColor="@color/themeColourFour"
+                        android:textStyle="bold"
+                        android:textSize="14sp"/>
+
+
+                    <EditText
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/profileSubscriptionFeesDialogInput"
+                        android:hint="Amount"
+                        android:theme="@style/DialogEditText"
+                        android:maxLength="7"
+                        android:inputType="numberDecimal"
+                        android:textAlignment="center"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="15dp"
+                        android:textColor="@color/themeColourTwo"/>
+
+
+                    <com.google.android.material.button.MaterialButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:id="@+id/profileSubscriptionFeesDialogUpdate"
+                        android:layout_marginTop="10dp"
+                        android:text="UPDATE"
+                        style="@style/DialogUpdateButton"/>
+
+
+                </LinearLayout>
+
+                <!-- Subscription Desc Dialog-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:id="@+id/profileSubscriptionDescDialogTitleLin"
+                    android:layout_marginTop="25dp"
+                    android:visibility="gone"
+                    android:layout_marginBottom="25dp">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:id="@+id/profileSubscriptionDescDialogImg"
+                        android:src="@drawable/description"
+                        android:elevation="5dp"
+                        android:layout_gravity="center"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/profileSubscriptionDescDialogTitle"
+                        android:layout_marginHorizontal="20dp"
+                        android:textAlignment="center"
+                        android:layout_marginTop="15dp"
+                        android:elevation="10dp"
+                        android:text="Description"
+                        android:textColor="@color/themeColourOne"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/poppins_medium"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/profileSubscriptionDescDialogUnit"
+                        android:layout_marginHorizontal="20dp"
+                        android:textAlignment="center"
+                        android:layout_marginTop="15dp"
+                        android:elevation="10dp"
+                        android:text="(your training details)"
+                        android:fontFamily="@font/poppins_light"
+                        android:textColor="@color/themeColourFour"
+                        android:textStyle="bold"
+                        android:textSize="14sp" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        app:counterEnabled="true"
+                        android:layout_marginHorizontal="15dp"
+                        app:counterMaxLength="300"
+                        android:layout_gravity="center"
+                        android:backgroundTint="@color/lightGrey">
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/profileSubscriptionDescDialogInput"
+                            android:theme="@style/DialogEditText"
+                            android:textAlignment="center"
+                            android:layout_margin="15dp"
+                            android:maxLength="300"
+                            android:textColor="@color/themeColourTwo"
+                            android:background="@drawable/round_shape"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:id="@+id/profileSubscriptionDescDialogUpdate"
+                        android:layout_marginTop="10dp"
+                        android:text="UPDATE"
+                        style="@style/DialogUpdateButton"/>
+
+
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
+
+        </ScrollView>
+
+
 
 
     </com.google.android.material.card.MaterialCardView>

@@ -14,7 +14,7 @@
         app:layout_constraintBottom_toTopOf="@+id/onBoardingBottomLay"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        android:layout_marginBottom="120dp"
+        android:layout_marginBottom="110dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:background="@color/homeScreenBgColor">

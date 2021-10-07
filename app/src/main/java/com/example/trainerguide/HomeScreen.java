@@ -814,33 +814,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         }
 
 
-
-        if (userField.equals("dateOfBirth")|| userField.equals("lastModDttm")){
-            /*Date dateUpdate = null;
-            Double userBmi = null;
-            Double userBmr = null;
-
-            try {
-                dateUpdate = simpleDateFormat.parse(value);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            hash.put(userField,dateUpdate);
-            databaseReference.updateChildren(hash);
-
-            if ((new Double(user.getWeight())>0) && (new Double(user.getHeight())>0)){
-                userBmr = userBmValue.bmrCalculation(user.getWeight(), user.getHeight());
-
-                hash.put("bmr", new Double(round(userBmr)));
-                hash.put("lastModDttm", Calendar.getInstance().getTime());
-
-
-            }
-
-*/
-        }
-
-        else if (userField.equals("weight") || userField.equals("height")){
+        if (userField.equals("weight") || userField.equals("height")){
             if( !(value.isEmpty()) && (new Double(value)>0)) {
                 Double userProfileValue = new Double(new BigDecimal(value).setScale(2, RoundingMode.HALF_UP).doubleValue());
                 Double userBmi = null;

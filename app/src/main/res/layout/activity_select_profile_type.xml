@@ -3,184 +3,206 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".SelectProfileType"
     android:background="@color/white">
 
-    <TextView
-        
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/chooseProfileText"
-        android:layout_marginTop="75dp"
-        android:text="Choose yourself"
-        android:fontFamily="@font/poppins_medium"
-        android:textSize="16sp"
-        android:textColor="@color/themeColourOne"
-        android:textStyle="bold"
+    <ScrollView
+        android:id="@+id/profileTypeVerticalLay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <HorizontalScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingVertical="10dp"
-        android:layout_marginTop="40dp"
-        android:id="@+id/profileTypeHorizontalLay"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:scrollbars="none"
-        app:layout_constraintTop_toBottomOf="@+id/chooseProfileText">
-
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="15dp"
-            android:paddingHorizontal="10dp"
-            >
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="200dp"
-                android:layout_height="450dp"
-                android:id="@+id/traineeCardView"
-                android:layout_marginLeft="10dp"
-                app:cardCornerRadius="30dp"
-                android:layout_marginVertical="10dp"
-                android:elevation="10dp"
-                android:paddingVertical="5dp">
+            <TextView
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/traineeCardViewLay">
-
-
-                    <ImageView
-                        android:layout_width="120dp"
-                        android:layout_height="120dp"
-                        android:id="@+id/userProfileImage"
-                        android:layout_marginTop="50dp"
-                        android:layout_centerHorizontal="true"
-                        android:src="@mipmap/user_profile_image" />
-
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:id="@+id/userProfileCheck"
-                        android:layout_marginLeft="120dp"
-                        android:layout_marginTop="50dp"
-                        android:visibility="invisible"
-                        android:src="@drawable/profile_check_image" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/userProfileTitle"
-                        android:text="User"
-                        android:fontFamily="@font/poppins_medium"
-                        android:textSize="18sp"
-                        android:textStyle="normal"
-                        android:layout_centerHorizontal="true"
-                        android:layout_below="@id/userProfileImage"
-                        android:layout_marginTop="30dp"
-                        android:textColor="@color/themeColourTwo"/>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="30dp"
-                        android:layout_marginHorizontal="15dp"
-                        android:layout_below="@id/userProfileTitle"
-                        android:layout_centerHorizontal="true"
-                        android:textColor="@color/white"
-                        android:textAlignment="center"
-                        android:fontFamily="@font/poppins_light"
-                        android:textSize="12sp"
-                        android:autoSizeTextType="none"
-                        android:text="A person who wants to tone the weight with the diet and fitness steps with the help of a trainercan chose this profile."/>
-
-                </RelativeLayout>
-            </com.google.android.material.card.MaterialCardView>
+                android:id="@+id/chooseProfileText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="75dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="Choose yourself"
+                android:textColor="@color/themeColourOne"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
 
-
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="200dp"
-                android:layout_height="450dp"
-                android:layout_marginLeft="30dp"
-                android:id="@+id/trainerCardView"
-                app:cardCornerRadius="30dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginVertical="10dp"
-                android:elevation="10dp"
-                android:paddingVertical="5dp"
-                android:layout_toRightOf="@id/traineeCardView">
+            <HorizontalScrollView
+                android:id="@+id/profileTypeHorizontalLay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:paddingVertical="10dp"
+                android:scrollbars="none"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/chooseProfileText">
 
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/trainerCardViewLay">
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:paddingHorizontal="10dp">
 
-                    <ImageView
-                        android:layout_width="120dp"
-                        android:layout_height="120dp"
-                        android:id="@+id/trainerProfileImage"
-                        android:layout_marginTop="50dp"
-                        android:layout_centerHorizontal="true"
-                        android:src="@mipmap/trainer_profile_image" />
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/traineeCardView"
+                        android:layout_width="200dp"
+                        android:layout_height="450dp"
+                        android:layout_marginVertical="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:elevation="10dp"
+                        android:paddingVertical="5dp"
+                        app:cardCornerRadius="30dp">
 
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:id="@+id/trainerProfileCheck"
-                        android:layout_marginLeft="120dp"
-                        android:layout_marginTop="50dp"
-                        android:visibility="invisible"
-                        android:src="@drawable/profile_check_image" />
+                        <RelativeLayout
+                            android:id="@+id/traineeCardViewLay"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
 
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/trainerProfileTitle"
-                        android:text="Trainer"
-                        android:fontFamily="@font/poppins_medium"
-                        android:textSize="18sp"
-                        android:textStyle="normal"
-                        android:layout_centerHorizontal="true"
-                        android:layout_below="@id/trainerProfileImage"
-                        android:layout_marginTop="30dp"
-                        android:textColor="@color/themeColourTwo"/>
+                            <ImageView
+                                android:id="@+id/userProfileImage"
+                                android:layout_width="120dp"
+                                android:layout_height="120dp"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="50dp"
+                                android:src="@mipmap/user_profile_image" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="30dp"
-                        android:layout_marginHorizontal="15dp"
-                        android:layout_below="@id/trainerProfileTitle"
-                        android:layout_centerHorizontal="true"
-                        android:textColor="@color/white"
-                        android:textAlignment="center"
-                        android:fontFamily="@font/poppins_light"
-                        android:autoSizeTextType="none"
-                        android:textSize="12sp"
-                        android:text="A professinal trainer or nutritionist who can suggest diet plan in changing the people’s weight can choose this profile."/>
+                            <ImageView
+                                android:id="@+id/userProfileCheck"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginLeft="120dp"
+                                android:layout_marginTop="50dp"
+                                android:src="@drawable/profile_check_image"
+                                android:visibility="invisible" />
+
+                            <TextView
+                                android:id="@+id/userProfileTitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/userProfileImage"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="30dp"
+                                android:fontFamily="@font/poppins_medium"
+                                android:text="User"
+                                android:textColor="@color/themeColourTwo"
+                                android:textSize="18sp"
+                                android:textStyle="normal" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/userProfileTitle"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginHorizontal="15dp"
+                                android:layout_marginTop="30dp"
+                                android:autoSizeTextType="none"
+                                android:fontFamily="@font/poppins_light"
+                                android:text="A person who wants to tone the weight with the diet and fitness steps with the help of a trainercan chose this profile."
+                                android:textAlignment="center"
+                                android:textColor="@color/white"
+                                android:textSize="12sp" />
+
+                        </RelativeLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/trainerCardView"
+                        android:layout_width="200dp"
+                        android:layout_height="450dp"
+                        android:layout_marginVertical="10dp"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_toRightOf="@id/traineeCardView"
+                        android:elevation="10dp"
+                        android:paddingVertical="5dp"
+                        app:cardCornerRadius="30dp">
+
+
+                        <RelativeLayout
+                            android:id="@+id/trainerCardViewLay"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <ImageView
+                                android:id="@+id/trainerProfileImage"
+                                android:layout_width="120dp"
+                                android:layout_height="120dp"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="50dp"
+                                android:src="@mipmap/trainer_profile_image" />
+
+                            <ImageView
+                                android:id="@+id/trainerProfileCheck"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginLeft="120dp"
+                                android:layout_marginTop="50dp"
+                                android:src="@drawable/profile_check_image"
+                                android:visibility="invisible" />
+
+
+                            <TextView
+                                android:id="@+id/trainerProfileTitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/trainerProfileImage"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="30dp"
+                                android:fontFamily="@font/poppins_medium"
+                                android:text="Trainer"
+                                android:textColor="@color/themeColourTwo"
+                                android:textSize="18sp"
+                                android:textStyle="normal" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/trainerProfileTitle"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginHorizontal="15dp"
+                                android:layout_marginTop="30dp"
+                                android:autoSizeTextType="none"
+                                android:fontFamily="@font/poppins_light"
+                                android:text="A professinal trainer or nutritionist who can suggest diet plan in changing the people’s weight can choose this profile."
+                                android:textAlignment="center"
+                                android:textColor="@color/white"
+                                android:textSize="12sp" />
+
+
+                        </RelativeLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <View
+                        android:layout_width="25dp"
+                        android:layout_height="20dp"
+                        android:layout_toRightOf="@id/trainerCardView"
+                        android:background="@color/transparent" />
 
 
                 </RelativeLayout>
-            </com.google.android.material.card.MaterialCardView>
 
-            <View
-                android:layout_width="25dp"
-                android:layout_height="20dp"
-                android:layout_toRightOf="@id/trainerCardView"
-                android:background="@color/transparent"
-                />
+            </HorizontalScrollView>
 
+        </LinearLayout>
 
-        </RelativeLayout>
+    </ScrollView>
 
-    </HorizontalScrollView>
 
     <Button
         android:layout_width="150dp"
@@ -197,6 +219,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profileTypeHorizontalLay" />
+        app:layout_constraintTop_toBottomOf="@+id/profileTypeVerticalLay" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

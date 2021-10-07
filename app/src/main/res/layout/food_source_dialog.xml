@@ -30,252 +30,261 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true">
 
-        <LinearLayout
+
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:id="@+id/foodSourceAddDialogTitleLin"
-                android:layout_marginTop="25dp"
-                android:visibility="visible"
-                android:layout_marginBottom="25dp">
+                android:orientation="vertical">
 
-                <ImageView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:id="@+id/foodSourceAddDialogImg"
-                    android:src="@drawable/ic_food"
-                    android:elevation="5dp"
-                    android:layout_gravity="center"/>
-
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/foodSourceAddDialogTitle"
-                    android:layout_marginHorizontal="20dp"
-                    android:textAlignment="center"
-                    android:layout_marginTop="15dp"
-                    android:elevation="10dp"
-                    android:text="Custom Food"
-                    android:textColor="@color/grey"
-                    android:textStyle="bold"
-                    android:fontFamily="@font/poppins_medium"
-                    android:textSize="16sp"/>
+                    android:orientation="vertical"
+                    android:id="@+id/foodSourceAddDialogTitleLin"
+                    android:layout_marginTop="25dp"
+                    android:visibility="visible"
+                    android:layout_marginBottom="25dp">
 
-                <com.google.android.material.button.MaterialButtonToggleGroup
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:orientation="horizontal"
-                    android:elevation="5dp"
-                    android:layout_marginTop="10dp"
-                    app:singleSelection="true">
+                    <ImageView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:id="@+id/foodSourceAddDialogImg"
+                        android:src="@drawable/ic_food"
+                        android:elevation="5dp"
+                        android:layout_gravity="center"/>
 
-                    <Button
-                        android:layout_width="wrap_content"
+                    <TextView
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/foodAddVegToggle"
+                        android:id="@+id/foodSourceAddDialogTitle"
+                        android:layout_marginHorizontal="20dp"
+                        android:textAlignment="center"
+                        android:layout_marginTop="15dp"
+                        android:elevation="10dp"
+                        android:text="Custom Food"
+                        android:textColor="@color/grey"
                         android:textStyle="bold"
-                        android:fontFamily="@font/poppins_light"
-                        android:textSize="14sp"
-                        android:textColor="@color/white"
-                        android:text="VEG"/>
-                    <Button
+                        android:fontFamily="@font/poppins_medium"
+                        android:textSize="16sp"/>
+
+                    <com.google.android.material.button.MaterialButtonToggleGroup
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/foodAddNonVegToggle"
-                        android:textStyle="bold"
-                        android:fontFamily="@font/poppins_light"
-                        android:textSize="14sp"
-                        android:textColor="@color/white"
-                        android:text="NON-VEG"/>
-
-                </com.google.android.material.button.MaterialButtonToggleGroup>
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginHorizontal="10dp"
-                    android:padding="5dp">
-
-
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
                         android:orientation="horizontal"
-                        android:id="@+id/foodAddNameLin">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textStyle="normal"
-                            android:textColor="@color/themeColourOne"
-                            android:id="@+id/foodSourceAddNameLabel"
-                            android:text="Name: "
-                            android:fontFamily="@font/poppins_medium"
-                            android:textSize="14sp"/>
-
-                        <EditText
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/foodSourceAddName"
-                            android:hint="ex: Soya chunks"
-                            android:fontFamily="@font/poppins_medium"
-                            android:textSize="14sp"
-                            android:maxLength="20"
-                            android:backgroundTint="@color/themeColourOne"
-                            android:layout_marginLeft="5dp"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/foodAddNutritionLin"
-                        android:orientation="horizontal"
-                        android:layout_below="@id/foodAddNameLin">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/foodSourceAddNutritionLabel"
-                            android:textStyle="normal"
-                            android:fontFamily="@font/poppins_medium"
-                            android:textSize="14sp"
-                            android:textColor="@color/themeColourOne"
-                            android:text="Macro Nutrition: "/>
-
-                        <Spinner
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/foodSourceAddNutritionSpin"
-                            />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/foodAddCalorieLin"
-                        android:orientation="horizontal"
-                        android:layout_below="@id/foodAddNutritionLin">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textStyle="normal"
-                            android:textColor="@color/themeColourOne"
-                            android:id="@+id/foodSourceAddCalorieLabel"
-                            android:text="Calorie: "
-                            android:fontFamily="@font/poppins_medium"
-                            android:textSize="14sp"/>
-
-                        <EditText
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:hint="ex: 169.0"
-                            android:inputType="numberDecimal"
-                            android:maxLength="4"
-                            android:id="@+id/foodSourceAddCalorie"
-                            android:backgroundTint="@color/themeColourOne"
-                            android:fontFamily="@font/poppins_medium"
-                            android:textSize="14sp"
-                            android:layout_marginLeft="5dp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Check"
-                            android:layout_marginEnd="5dp"
-                            android:textStyle="normal"
-                            android:fontFamily="@font/poppins_medium"
-                            android:textSize="14sp"
-                            android:id="@+id/searchCalories"
-                            android:textColor="@color/themeColourTwo"
-                            android:layout_marginLeft="10dp"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/foodAddQuantityLin"
-                        android:orientation="horizontal"
-                        android:layout_below="@id/foodAddCalorieLin">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textStyle="normal"
-                            android:fontFamily="@font/poppins_medium"
-                            android:textSize="14sp"
-                            android:textColor="@color/themeColourOne"
-                            android:id="@+id/foodSourceAddQuantityLabel"
-                            android:text="Quantity: "/>
-
-                        <EditText
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:hint="ex: 50.0"
-                            android:inputType="numberDecimal"
-                            android:id="@+id/foodSourceAddQuantity"
-                            android:maxLength="4"
-                            android:fontFamily="@font/poppins_medium"
-                            android:textSize="14sp"
-                            android:backgroundTint="@color/themeColourOne"
-                            android:layout_marginLeft="5dp" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/foodAddUnitLin"
-                        android:orientation="horizontal"
+                        android:elevation="5dp"
                         android:layout_marginTop="10dp"
-                        android:layout_below="@id/foodAddQuantityLin">
+                        app:singleSelection="true">
 
-                        <TextView
+                        <Button
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textStyle="normal"
-                            android:fontFamily="@font/poppins_medium"
+                            android:id="@+id/foodAddVegToggle"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/poppins_light"
                             android:textSize="14sp"
-                            android:textColor="@color/themeColourOne"
-                            android:id="@+id/foodSourceAddUnitLabel"
-                            android:text="Measurement: "/>
-
-                        <Spinner
+                            android:textColor="@color/white"
+                            android:text="VEG"/>
+                        <Button
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/foodSourceAddUnitSpin" />
+                            android:id="@+id/foodAddNonVegToggle"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/poppins_light"
+                            android:textSize="14sp"
+                            android:textColor="@color/white"
+                            android:text="NON-VEG"/>
 
-                    </LinearLayout>
+                    </com.google.android.material.button.MaterialButtonToggleGroup>
 
-         </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginHorizontal="10dp"
+                        android:padding="5dp">
 
 
 
-                <com.google.android.material.button.MaterialButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:id="@+id/foodSourceAddDialogUpdate"
-                    android:layout_marginTop="10dp"
-                    android:text="UPDATE"
-                    android:backgroundTint="@color/themeColourOne"/>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:id="@+id/foodAddNameLin">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textStyle="normal"
+                                android:textColor="@color/themeColourOne"
+                                android:id="@+id/foodSourceAddNameLabel"
+                                android:text="Name: "
+                                android:fontFamily="@font/poppins_medium"
+                                android:textSize="14sp"/>
+
+                            <EditText
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/foodSourceAddName"
+                                android:hint="ex: Soya chunks"
+                                android:fontFamily="@font/poppins_medium"
+                                android:textSize="14sp"
+                                android:maxLength="20"
+                                android:backgroundTint="@color/themeColourOne"
+                                android:layout_marginLeft="5dp"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/foodAddNutritionLin"
+                            android:orientation="horizontal"
+                            android:layout_below="@id/foodAddNameLin">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/foodSourceAddNutritionLabel"
+                                android:textStyle="normal"
+                                android:fontFamily="@font/poppins_medium"
+                                android:textSize="14sp"
+                                android:textColor="@color/themeColourOne"
+                                android:text="Macro Nutrition: "/>
+
+                            <Spinner
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/foodSourceAddNutritionSpin"
+                                />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/foodAddCalorieLin"
+                            android:orientation="horizontal"
+                            android:layout_below="@id/foodAddNutritionLin">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textStyle="normal"
+                                android:textColor="@color/themeColourOne"
+                                android:id="@+id/foodSourceAddCalorieLabel"
+                                android:text="Calorie: "
+                                android:fontFamily="@font/poppins_medium"
+                                android:textSize="14sp"/>
+
+                            <EditText
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:hint="ex: 169.0"
+                                android:inputType="numberDecimal"
+                                android:maxLength="4"
+                                android:id="@+id/foodSourceAddCalorie"
+                                android:backgroundTint="@color/themeColourOne"
+                                android:fontFamily="@font/poppins_medium"
+                                android:textSize="14sp"
+                                android:layout_marginLeft="5dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Check"
+                                android:layout_marginEnd="5dp"
+                                android:textStyle="normal"
+                                android:fontFamily="@font/poppins_medium"
+                                android:textSize="14sp"
+                                android:id="@+id/searchCalories"
+                                android:textColor="@color/themeColourTwo"
+                                android:layout_marginLeft="10dp"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/foodAddQuantityLin"
+                            android:orientation="horizontal"
+                            android:layout_below="@id/foodAddCalorieLin">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textStyle="normal"
+                                android:fontFamily="@font/poppins_medium"
+                                android:textSize="14sp"
+                                android:textColor="@color/themeColourOne"
+                                android:id="@+id/foodSourceAddQuantityLabel"
+                                android:text="Quantity: "/>
+
+                            <EditText
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:hint="ex: 50.0"
+                                android:inputType="numberDecimal"
+                                android:id="@+id/foodSourceAddQuantity"
+                                android:maxLength="4"
+                                android:fontFamily="@font/poppins_medium"
+                                android:textSize="14sp"
+                                android:backgroundTint="@color/themeColourOne"
+                                android:layout_marginLeft="5dp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/foodAddUnitLin"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="10dp"
+                            android:layout_below="@id/foodAddQuantityLin">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textStyle="normal"
+                                android:fontFamily="@font/poppins_medium"
+                                android:textSize="14sp"
+                                android:textColor="@color/themeColourOne"
+                                android:id="@+id/foodSourceAddUnitLabel"
+                                android:text="Measurement: "/>
+
+                            <Spinner
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/foodSourceAddUnitSpin" />
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+
+
+                    <com.google.android.material.button.MaterialButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:id="@+id/foodSourceAddDialogUpdate"
+                        android:layout_marginTop="10dp"
+                        android:text="UPDATE"
+                        android:backgroundTint="@color/themeColourOne"/>
+
+
+                </LinearLayout>
 
 
             </LinearLayout>
 
+        </ScrollView>
 
-        </LinearLayout>
+
 
 
     </com.google.android.material.card.MaterialCardView>

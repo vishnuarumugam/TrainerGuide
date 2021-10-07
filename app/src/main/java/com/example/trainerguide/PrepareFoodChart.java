@@ -594,7 +594,7 @@ public class PrepareFoodChart extends AppCompatActivity implements FoodSourceAda
             Font itemNameFont = new Font(fontName, 20, Font.BOLD, themeOne);
 
             //Create title of Doc
-            addNewItem(document, "Fittify", Element.ALIGN_CENTER, appTitleFont);
+            addNewItem(document, "Fittify Me", Element.ALIGN_CENTER, appTitleFont);
             addLineSpace(document);
             addLineSeparator(document);
             addLineSpace(document);
